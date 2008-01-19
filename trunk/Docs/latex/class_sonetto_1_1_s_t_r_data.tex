@@ -1,0 +1,152 @@
+\section{Sonetto::STRData Class Reference}
+\label{class_sonetto_1_1_s_t_r_data}\index{Sonetto::STRData@{Sonetto::STRData}}
+{\tt \#include $<$SonettoSTR.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\bf STRData} (Ogre::ResourceManager $\ast$creator, const Ogre::String \&name, Ogre::ResourceHandle handle, const Ogre::String \&group, bool isManual=false, Ogre::ManualResourceLoader $\ast$loader=0)
+\item 
+virtual {\bf $\sim$STRData} ()
+\item 
+Ogre::String $\ast$ {\bf getMessage} (size\_\-t msg\_\-id)
+\item 
+void {\bf setMessage} (Ogre::String \&msg, size\_\-t position)
+\item 
+size\_\-t {\bf insertMessageAtBack} (Ogre::String \&msg)
+\item 
+void {\bf removeMessageAtBack} ()
+\begin{CompactList}\small\item\em Remove a message from the back of the vector. \item\end{CompactList}\item 
+void {\bf insertMessage} (Ogre::String \&msg, size\_\-t position)
+\item 
+void {\bf removeMessage} (size\_\-t position)
+\end{CompactItemize}
+\subsection*{Protected Member Functions}
+\begin{CompactItemize}
+\item 
+void {\bf loadImpl} ()
+\item 
+void {\bf unloadImpl} ()
+\item 
+size\_\-t {\bf calculateSize} () const 
+\end{CompactItemize}
+\subsection*{Private Attributes}
+\begin{CompactItemize}
+\item 
+std::vector$<$ Ogre::String $>$ {\bf mStringList}
+\begin{CompactList}\small\item\em The Vector containing all strings for this STR File. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Sonetto::STRData@{Sonetto::STRData}!STRData@{STRData}}
+\index{STRData@{STRData}!Sonetto::STRData@{Sonetto::STRData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Sonetto::STRData::STRData (Ogre::ResourceManager $\ast$ {\em creator}, const Ogre::String \& {\em name}, Ogre::ResourceHandle {\em handle}, const Ogre::String \& {\em group}, bool {\em isManual} = {\tt false}, Ogre::ManualResourceLoader $\ast$ {\em loader} = {\tt 0})}\label{class_sonetto_1_1_s_t_r_data_0282365c8e4439a79c3def01f81f2e80}
+
+
+Standard constructor. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em creator}]Pointer to the ResourceManager that is creating this resource \item[{\em name}]The unique name of the resource \item[{\em group}]The name of the resource group to which this resource belongs \item[{\em isManual}]Is this resource manually loaded? If so, you should really populate the loader parameter in order that the load process can call the loader back when loading is required. \item[{\em loader}]Pointer to a ManualResourceLoader implementation which will be called when the Resource wishes to load (should be supplied if you set isManual to true). You can in fact leave this parameter null if you wish, but the Resource will never be able to reload if anything ever causes it to unload. Therefore provision of a proper ManualResourceLoader instance is strongly recommended. \end{description}
+\end{Desc}
+\index{Sonetto::STRData@{Sonetto::STRData}!$\sim$STRData@{$\sim$STRData}}
+\index{$\sim$STRData@{$\sim$STRData}!Sonetto::STRData@{Sonetto::STRData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual Sonetto::STRData::$\sim$STRData ()\hspace{0.3cm}{\tt  [virtual]}}\label{class_sonetto_1_1_s_t_r_data_e85c5d00b20565485fe8964c02345270}
+
+
+Virtual destructor. Shouldn't need to be overloaded, as the resource deallocation code should reside in unload() \begin{Desc}
+\item[See also:]STRData::unload() \end{Desc}
+
+
+\subsection{Member Function Documentation}
+\index{Sonetto::STRData@{Sonetto::STRData}!loadImpl@{loadImpl}}
+\index{loadImpl@{loadImpl}!Sonetto::STRData@{Sonetto::STRData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::STRData::loadImpl ()\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_s_t_r_data_75827b8b7c95e9e735679d89fd8467a1}
+
+
+Internal implementation of the meat of the 'load' action, only called if this resource is not being loaded from a ManualResourceLoader. \index{Sonetto::STRData@{Sonetto::STRData}!unloadImpl@{unloadImpl}}
+\index{unloadImpl@{unloadImpl}!Sonetto::STRData@{Sonetto::STRData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::STRData::unloadImpl ()\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_s_t_r_data_6109ca680426d6380c1f571b9946525b}
+
+
+Internal implementation of the 'unload' action; called regardless of whether this resource is being loaded from a ManualResourceLoader. \index{Sonetto::STRData@{Sonetto::STRData}!calculateSize@{calculateSize}}
+\index{calculateSize@{calculateSize}!Sonetto::STRData@{Sonetto::STRData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}size\_\-t Sonetto::STRData::calculateSize () const\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_s_t_r_data_cf3c2c87b3ba0af6746e7d595d9ed3ef}
+
+
+Calculate the size of a resource; this will only be called after 'load' \index{Sonetto::STRData@{Sonetto::STRData}!getMessage@{getMessage}}
+\index{getMessage@{getMessage}!Sonetto::STRData@{Sonetto::STRData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::String$\ast$ Sonetto::STRData::getMessage (size\_\-t {\em msg\_\-id})}\label{class_sonetto_1_1_s_t_r_data_8fab08faa4ba54c1d686d2de411f34ca}
+
+
+Get a message from the vector. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em msg\_\-id}]The message ID. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]A pointer to the string. \end{Desc}
+\index{Sonetto::STRData@{Sonetto::STRData}!setMessage@{setMessage}}
+\index{setMessage@{setMessage}!Sonetto::STRData@{Sonetto::STRData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::STRData::setMessage (Ogre::String \& {\em msg}, size\_\-t {\em position})}\label{class_sonetto_1_1_s_t_r_data_aa5f0973cf45c9f188efe13e925c4a72}
+
+
+Change a message contained in this STR. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em msg}]The message to put in the STR. \item[{\em position}]The position of the message you want to replace. \end{description}
+\end{Desc}
+\index{Sonetto::STRData@{Sonetto::STRData}!insertMessageAtBack@{insertMessageAtBack}}
+\index{insertMessageAtBack@{insertMessageAtBack}!Sonetto::STRData@{Sonetto::STRData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}size\_\-t Sonetto::STRData::insertMessageAtBack (Ogre::String \& {\em msg})}\label{class_sonetto_1_1_s_t_r_data_beb85ab8afd9513924ae124556ac08a2}
+
+
+Add a new message to the STR. \begin{Desc}
+\item[Remarks:]The message will be added at last. \end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em msg}]The message to put in the STR. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[Returns:]The message ID. \end{Desc}
+\index{Sonetto::STRData@{Sonetto::STRData}!removeMessageAtBack@{removeMessageAtBack}}
+\index{removeMessageAtBack@{removeMessageAtBack}!Sonetto::STRData@{Sonetto::STRData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::STRData::removeMessageAtBack ()}\label{class_sonetto_1_1_s_t_r_data_99b3c5f4b515840f755d8b194fe4f30f}
+
+
+Remove a message from the back of the vector. 
+
+\index{Sonetto::STRData@{Sonetto::STRData}!insertMessage@{insertMessage}}
+\index{insertMessage@{insertMessage}!Sonetto::STRData@{Sonetto::STRData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::STRData::insertMessage (Ogre::String \& {\em msg}, size\_\-t {\em position})}\label{class_sonetto_1_1_s_t_r_data_1aa3c4ed87091a6f55f7d3cb45830289}
+
+
+Insert a message at an specified position on the STR. \begin{Desc}
+\item[Remarks:]This will change all ids after this one. \end{Desc}
+\begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em msg}]The message to put in the STR. \item[{\em position}]The position where you want to put it. \end{description}
+\end{Desc}
+\index{Sonetto::STRData@{Sonetto::STRData}!removeMessage@{removeMessage}}
+\index{removeMessage@{removeMessage}!Sonetto::STRData@{Sonetto::STRData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::STRData::removeMessage (size\_\-t {\em position})}\label{class_sonetto_1_1_s_t_r_data_1a51848724e72fd94f8e0817b9c37a4c}
+
+
+Remove a message from a specified position at the STR. \begin{Desc}
+\item[Remarks:]This will change all ids after this one. \end{Desc}
+
+
+\subsection{Member Data Documentation}
+\index{Sonetto::STRData@{Sonetto::STRData}!mStringList@{mStringList}}
+\index{mStringList@{mStringList}!Sonetto::STRData@{Sonetto::STRData}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}std::vector$<$Ogre::String$>$ {\bf Sonetto::STRData::mStringList}\hspace{0.3cm}{\tt  [private]}}\label{class_sonetto_1_1_s_t_r_data_ccb9aa4b3db05bc82fb23026d6ed8110}
+
+
+The Vector containing all strings for this STR File. 
+
+
+
+The documentation for this class was generated from the following file:\begin{CompactItemize}
+\item 
+C:/Yoasakura/Projects/SonettoDevLab/include/{\bf SonettoSTR.h}\end{CompactItemize}

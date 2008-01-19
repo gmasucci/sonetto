@@ -1,0 +1,92 @@
+\section{Sonetto::SlimBorderRenderable Class Reference}
+\label{class_sonetto_1_1_slim_border_renderable}\index{Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}}
+{\tt \#include $<$SonettoSlimWindow.h$>$}
+
+Collaboration diagram for Sonetto::SlimBorderRenderable:\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\bf SlimBorderRenderable} ({\bf SlimWindow} $\ast$parent)
+\item 
+const Ogre::MaterialPtr \& {\bf getMaterial} (void) const 
+\item 
+void {\bf getRenderOperation} (Ogre::RenderOperation \&op)
+\item 
+void {\bf getWorldTransforms} (Ogre::Matrix4 $\ast$xform) const 
+\item 
+unsigned short {\bf getNumWorldTransforms} (void) const 
+\item 
+Ogre::Real {\bf getSquaredViewDepth} (const Ogre::Camera $\ast$cam) const 
+\item 
+const Ogre::LightList \& {\bf getLights} (void) const 
+\item 
+bool {\bf getPolygonModeOverrideable} (void) const 
+\end{CompactItemize}
+\subsection*{Protected Attributes}
+\begin{CompactItemize}
+\item 
+{\bf SlimWindow} $\ast$ {\bf mParent}
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+Class for rendering the border of a \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window}. \begin{Desc}
+\item[Remarks:]We need this because we have to render twice, once with the inner panel's repeating material (handled by superclass) and once for the border's separate meterial. \end{Desc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}!SlimBorderRenderable@{SlimBorderRenderable}}
+\index{SlimBorderRenderable@{SlimBorderRenderable}!Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Sonetto::SlimBorderRenderable::SlimBorderRenderable ({\bf SlimWindow} $\ast$ {\em parent})\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_slim_border_renderable_542f9e9d6b02fb9581c1dc22576e287e}
+
+
+Constructed with pointers to parent. 
+
+\subsection{Member Function Documentation}
+\index{Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}!getMaterial@{getMaterial}}
+\index{getMaterial@{getMaterial}!Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const Ogre::MaterialPtr\& Sonetto::SlimBorderRenderable::getMaterial (void) const\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_slim_border_renderable_e795de951db0a8a01b992cf2dd9e9306}
+
+
+\index{Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}!getRenderOperation@{getRenderOperation}}
+\index{getRenderOperation@{getRenderOperation}!Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimBorderRenderable::getRenderOperation (Ogre::RenderOperation \& {\em op})\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_slim_border_renderable_9b39a21e746ad90d60256c38e63518c3}
+
+
+\index{Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}!getWorldTransforms@{getWorldTransforms}}
+\index{getWorldTransforms@{getWorldTransforms}!Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimBorderRenderable::getWorldTransforms (Ogre::Matrix4 $\ast$ {\em xform}) const\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_slim_border_renderable_d30d5010cf2b933d30a7a9c9f1863a55}
+
+
+\index{Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}!getNumWorldTransforms@{getNumWorldTransforms}}
+\index{getNumWorldTransforms@{getNumWorldTransforms}!Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}unsigned short Sonetto::SlimBorderRenderable::getNumWorldTransforms (void) const\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_slim_border_renderable_a167031364e304b716e24765905fcbbd}
+
+
+\index{Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}!getSquaredViewDepth@{getSquaredViewDepth}}
+\index{getSquaredViewDepth@{getSquaredViewDepth}!Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::Real Sonetto::SlimBorderRenderable::getSquaredViewDepth (const Ogre::Camera $\ast$ {\em cam}) const\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_slim_border_renderable_0f6dcb166818975c21469b64f401e400}
+
+
+\index{Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}!getLights@{getLights}}
+\index{getLights@{getLights}!Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const Ogre::LightList\& Sonetto::SlimBorderRenderable::getLights (void) const\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_slim_border_renderable_b500e5e0dc9ef2ab6f8e114f96b1a688}
+
+
+\index{Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}!getPolygonModeOverrideable@{getPolygonModeOverrideable}}
+\index{getPolygonModeOverrideable@{getPolygonModeOverrideable}!Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool Sonetto::SlimBorderRenderable::getPolygonModeOverrideable (void) const\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_slim_border_renderable_1f9e6cb44768f7f1975b3b2bb6265817}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}!mParent@{mParent}}
+\index{mParent@{mParent}!Sonetto::SlimBorderRenderable@{Sonetto::SlimBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf SlimWindow}$\ast$ {\bf Sonetto::SlimBorderRenderable::mParent}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_border_renderable_98a60f63c821e156da40c30f40aea296}
+
+
+
+
+The documentation for this class was generated from the following file:\begin{CompactItemize}
+\item 
+C:/Yoasakura/Projects/SonettoDevLab/include/{\bf SonettoSlimWindow.h}\end{CompactItemize}

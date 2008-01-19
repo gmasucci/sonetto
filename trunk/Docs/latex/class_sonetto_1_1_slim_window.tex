@@ -1,0 +1,495 @@
+\section{Sonetto::SlimWindow Class Reference}
+\label{class_sonetto_1_1_slim_window}\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+{\tt \#include $<$SonettoSlimWindow.h$>$}
+
+Collaboration diagram for Sonetto::SlimWindow:\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\bf SlimWindow} (const Ogre::String \&name)
+\begin{CompactList}\small\item\em Constructor. \item\end{CompactList}\item 
+virtual {\bf $\sim$SlimWindow} ()
+\begin{CompactList}\small\item\em Destructor. \item\end{CompactList}\item 
+virtual void {\bf initialise} (void)
+\begin{CompactList}\small\item\em Initialise. \item\end{CompactList}\item 
+void {\bf setScrMetricsMode} ({\bf ScreenMetricsMode} smm)
+\begin{CompactList}\small\item\em Tells this element how to interpret the position and dimension values it is given. \item\end{CompactList}\item 
+void {\bf setBorderSize} (const Ogre::Real sizeX, const Ogre::Real sizeY)
+\item 
+void {\bf setBorderSize} (const Ogre::Real size)
+\item 
+const Ogre::Vector2 {\bf getBorderSize} ()
+\item 
+void {\bf setTexCoords} ({\bf WindowTexCoord} $\ast$texcoord)
+\item 
+void {\bf setTileMode} (bool mode)
+\item 
+bool {\bf getTileMode} ()
+\begin{CompactList}\small\item\em Get the tile mode. \item\end{CompactList}\item 
+void {\bf setTiling} (const Ogre::Real tileX, const Ogre::Real tileY)
+\begin{CompactList}\small\item\em Set the number of times the texture will tile. \item\end{CompactList}\item 
+void {\bf setTiling} (const Ogre::Vector2 tile)
+\begin{CompactList}\small\item\em Set the number of times the texture will tile. \item\end{CompactList}\item 
+Ogre::Vector2 {\bf getTiling} ()
+\begin{CompactList}\small\item\em Get the number of times the texture will tile. \item\end{CompactList}\item 
+void {\bf setBackgroundColor} (const Ogre::ColourValue \&col)
+\begin{CompactList}\small\item\em Set the \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} background color. \item\end{CompactList}\item 
+void {\bf setBackgroundColor} (const Ogre::Real r=1.0f, const Ogre::Real g=1.0f, const Ogre::Real b=1.0f, const Ogre::Real a=1.0f)
+\begin{CompactList}\small\item\em Set the \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} background color. \item\end{CompactList}\item 
+const Ogre::ColourValue \& {\bf getBackgroundColor} ()
+\begin{CompactList}\small\item\em Get the \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} background color. \item\end{CompactList}\item 
+void {\bf setBorderColor} (const Ogre::ColourValue \&col)
+\begin{CompactList}\small\item\em Set the \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} border color. \item\end{CompactList}\item 
+void {\bf setBorderColor} (const Ogre::Real r=1.0f, const Ogre::Real g=1.0f, const Ogre::Real b=1.0f, const Ogre::Real a=1.0f)
+\begin{CompactList}\small\item\em Set the \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} border color. \item\end{CompactList}\item 
+const Ogre::ColourValue \& {\bf getBorderColor} ()
+\begin{CompactList}\small\item\em Get the \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} border color. \item\end{CompactList}\item 
+void {\bf setBorderMaterialName} (const Ogre::String \&name)
+\item 
+const Ogre::String \& {\bf getBorderMaterialName} (void) const 
+\item 
+virtual const Ogre::String \& {\bf getTypeName} (void) const 
+\item 
+void {\bf getRenderOperation} (Ogre::RenderOperation \&op)
+\item 
+void {\bf setMaterialName} (const Ogre::String \&matName)
+\item 
+void {\bf \_\-updateRenderQueue} (Ogre::RenderQueue $\ast$queue)
+\item 
+void {\bf visitRenderables} (Ogre::Renderable::Visitor $\ast$visitor, bool debugRenderables=false)
+\begin{CompactList}\small\item\em Visit Renderables. \item\end{CompactList}\item 
+void {\bf \_\-update} (void)
+\end{CompactItemize}
+\subsection*{Protected Member Functions}
+\begin{CompactItemize}
+\item 
+virtual void {\bf updatePositionGeometry} (void)
+\begin{CompactList}\small\item\em internal method for setting up geometry, called by OverlayElement::update \item\end{CompactList}\item 
+virtual void {\bf updateTextureGeometry} (void)
+\begin{CompactList}\small\item\em Called to update the texture coords. \item\end{CompactList}\item 
+void {\bf updateBorderColors} (void)
+\begin{CompactList}\small\item\em Called to update the border colors. \item\end{CompactList}\item 
+void {\bf updateBackgroundColors} (void)
+\begin{CompactList}\small\item\em Called to update the background colors. \item\end{CompactList}\item 
+void {\bf calculatePosition} (void)
+\begin{CompactList}\small\item\em Called to calculate the SlimWindow's vertexes. \item\end{CompactList}\item 
+void {\bf calculateTexCoord} (void)
+\begin{CompactList}\small\item\em Called to calculate the SlimWindow's background texture coordinates. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Protected Attributes}
+\begin{CompactItemize}
+\item 
+bool {\bf mUpdateBorderColors}
+\item 
+bool {\bf mUpdateBackgroundColors}
+\item 
+{\bf SlimBorderRenderable} $\ast$ {\bf mBorderRenderable}
+\begin{CompactList}\small\item\em Border Renderable Pointer. \item\end{CompactList}\item 
+Ogre::String {\bf mBorderMaterialName}
+\begin{CompactList}\small\item\em Border Material Name. \item\end{CompactList}\item 
+Ogre::MaterialPtr {\bf mpBorderMaterial}
+\begin{CompactList}\small\item\em Border Material Pointer. \item\end{CompactList}\item 
+Ogre::Vector2 {\bf mBorderSize}
+\begin{CompactList}\small\item\em Border Size. \item\end{CompactList}\item 
+Ogre::ColourValue {\bf mBackgroundColor}
+\begin{CompactList}\small\item\em Background Color. \item\end{CompactList}\item 
+Ogre::ColourValue {\bf mBorderColor}
+\begin{CompactList}\small\item\em Border Color. \item\end{CompactList}\item 
+bool {\bf mTileMode}
+\begin{CompactList}\small\item\em Background Tile Mode. \item\end{CompactList}\item 
+Ogre::Vector2 {\bf mTiling}
+\begin{CompactList}\small\item\em Background Tiling. \item\end{CompactList}\item 
+Ogre::Vector2 {\bf mPosCoord} [SLIM\_\-NUM\_\-VERTEX]
+\begin{CompactList}\small\item\em \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} vertex coordinates. \item\end{CompactList}\item 
+{\bf WindowTexCoord} $\ast$ {\bf mTexCoord0}
+\begin{CompactList}\small\item\em Border and Mask coordinates. \item\end{CompactList}\item 
+Ogre::Vector2 {\bf mTexCoord1} [SLIM\_\-NUM\_\-VERTEX]
+\begin{CompactList}\small\item\em Background coordinates. \item\end{CompactList}\item 
+{\bf ScreenMetricsMode} {\bf mScrMetricsMode}
+\begin{CompactList}\small\item\em Screen Metrics Mode. \item\end{CompactList}\item 
+Ogre::Real {\bf mAspectRatio}
+\begin{CompactList}\small\item\em Viewport Aspect Ratio. \item\end{CompactList}\item 
+Ogre::RenderOperation {\bf mRenderOp}
+\begin{CompactList}\small\item\em Background Render Operation. \item\end{CompactList}\item 
+Ogre::RenderOperation {\bf mRenderOp2}
+\begin{CompactList}\small\item\em Border Render Operation. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{CompactItemize}
+\item 
+static Ogre::String {\bf msTypeName}
+\begin{CompactList}\small\item\em Type Name. \item\end{CompactList}\end{CompactItemize}
+\subsection*{Friends}
+\begin{CompactItemize}
+\item 
+class {\bf SlimBorderRenderable}
+\end{CompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!SlimWindow@{SlimWindow}}
+\index{SlimWindow@{SlimWindow}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Sonetto::SlimWindow::SlimWindow (const Ogre::String \& {\em name})}\label{class_sonetto_1_1_slim_window_619f1ed6a8df17ac35513e7fc57e2e18}
+
+
+Constructor. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!$\sim$SlimWindow@{$\sim$SlimWindow}}
+\index{$\sim$SlimWindow@{$\sim$SlimWindow}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual Sonetto::SlimWindow::$\sim$SlimWindow ()\hspace{0.3cm}{\tt  [virtual]}}\label{class_sonetto_1_1_slim_window_7f781e165b10bdba8588f66f6c077fd5}
+
+
+Destructor. 
+
+
+
+\subsection{Member Function Documentation}
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!initialise@{initialise}}
+\index{initialise@{initialise}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual void Sonetto::SlimWindow::initialise (void)\hspace{0.3cm}{\tt  [virtual]}}\label{class_sonetto_1_1_slim_window_d06237ceda6bb1d0d2dc4ffeae867b6e}
+
+
+Initialise. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setScrMetricsMode@{setScrMetricsMode}}
+\index{setScrMetricsMode@{setScrMetricsMode}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setScrMetricsMode ({\bf ScreenMetricsMode} {\em smm})}\label{class_sonetto_1_1_slim_window_b3e35bebf4446e83caad5c4f4e7add4c}
+
+
+Tells this element how to interpret the position and dimension values it is given. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setBorderSize@{setBorderSize}}
+\index{setBorderSize@{setBorderSize}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setBorderSize (const Ogre::Real {\em sizeX}, const Ogre::Real {\em sizeY})}\label{class_sonetto_1_1_slim_window_7d46dd201dac146c7f7fc3d8a512791d}
+
+
+Set the border size. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em sizeX}]The border width \item[{\em sizeY}]The border height \end{description}
+\end{Desc}
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setBorderSize@{setBorderSize}}
+\index{setBorderSize@{setBorderSize}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setBorderSize (const Ogre::Real {\em size})}\label{class_sonetto_1_1_slim_window_90a854a8fa1b063deb7062d2cca0c81f}
+
+
+Set the border size. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em size}]The border size \end{description}
+\end{Desc}
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!getBorderSize@{getBorderSize}}
+\index{getBorderSize@{getBorderSize}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const Ogre::Vector2 Sonetto::SlimWindow::getBorderSize ()}\label{class_sonetto_1_1_slim_window_e2f9a3361912a1e830fa76eecc0b7874}
+
+
+Get the border size. \begin{Desc}
+\item[Returns:]The border size (X and Y) \end{Desc}
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setTexCoords@{setTexCoords}}
+\index{setTexCoords@{setTexCoords}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setTexCoords ({\bf WindowTexCoord} $\ast$ {\em texcoord})}\label{class_sonetto_1_1_slim_window_cebe707ab7c9558afdef18c16909d27a}
+
+
+Set the Border and Mask texture coordinates.
+
+\begin{Desc}
+\item[Remarks:]This function copies all the content from the address to the class. \end{Desc}
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setTileMode@{setTileMode}}
+\index{setTileMode@{setTileMode}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setTileMode (bool {\em mode})}\label{class_sonetto_1_1_slim_window_dc3ae6d50296e05837b0895a66939c22}
+
+
+Set the background tile mode. \begin{Desc}
+\item[Parameters:]
+\begin{description}
+\item[{\em mode}]The way this \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} will texturize the background False: Stretch the texture to the border of the object True: This will map the baground based on the screen (note: the result depends upon the Screen Metrics Mode for this object) \end{description}
+\end{Desc}
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!getTileMode@{getTileMode}}
+\index{getTileMode@{getTileMode}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool Sonetto::SlimWindow::getTileMode ()}\label{class_sonetto_1_1_slim_window_369bea9398e29f214f1f04e7adedf969}
+
+
+Get the tile mode. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setTiling@{setTiling}}
+\index{setTiling@{setTiling}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setTiling (const Ogre::Real {\em tileX}, const Ogre::Real {\em tileY})}\label{class_sonetto_1_1_slim_window_70ddf1bf0ed65b88b55866e5327c1cd5}
+
+
+Set the number of times the texture will tile. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setTiling@{setTiling}}
+\index{setTiling@{setTiling}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setTiling (const Ogre::Vector2 {\em tile})}\label{class_sonetto_1_1_slim_window_60788ff09f5c7aa7af85b85f4e633869}
+
+
+Set the number of times the texture will tile. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!getTiling@{getTiling}}
+\index{getTiling@{getTiling}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::Vector2 Sonetto::SlimWindow::getTiling ()}\label{class_sonetto_1_1_slim_window_69a5fde5e6eb3e255419aa6eb17ec9b9}
+
+
+Get the number of times the texture will tile. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setBackgroundColor@{setBackgroundColor}}
+\index{setBackgroundColor@{setBackgroundColor}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setBackgroundColor (const Ogre::ColourValue \& {\em col})}\label{class_sonetto_1_1_slim_window_19008f4a2a474e972ac999d52851b67a}
+
+
+Set the \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} background color. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setBackgroundColor@{setBackgroundColor}}
+\index{setBackgroundColor@{setBackgroundColor}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setBackgroundColor (const Ogre::Real {\em r} = {\tt 1.0f}, const Ogre::Real {\em g} = {\tt 1.0f}, const Ogre::Real {\em b} = {\tt 1.0f}, const Ogre::Real {\em a} = {\tt 1.0f})}\label{class_sonetto_1_1_slim_window_0c952f87dfc5869dfdf6a7fdc0a53526}
+
+
+Set the \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} background color. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!getBackgroundColor@{getBackgroundColor}}
+\index{getBackgroundColor@{getBackgroundColor}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const Ogre::ColourValue\& Sonetto::SlimWindow::getBackgroundColor ()}\label{class_sonetto_1_1_slim_window_f50734250026c5f1314ccfb7a0f6503f}
+
+
+Get the \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} background color. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setBorderColor@{setBorderColor}}
+\index{setBorderColor@{setBorderColor}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setBorderColor (const Ogre::ColourValue \& {\em col})}\label{class_sonetto_1_1_slim_window_0b21bb5ee1ee08355b0f45cb6c8d38e6}
+
+
+Set the \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} border color. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setBorderColor@{setBorderColor}}
+\index{setBorderColor@{setBorderColor}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setBorderColor (const Ogre::Real {\em r} = {\tt 1.0f}, const Ogre::Real {\em g} = {\tt 1.0f}, const Ogre::Real {\em b} = {\tt 1.0f}, const Ogre::Real {\em a} = {\tt 1.0f})}\label{class_sonetto_1_1_slim_window_96b92befb1efc46e6f17367645c09f30}
+
+
+Set the \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} border color. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!getBorderColor@{getBorderColor}}
+\index{getBorderColor@{getBorderColor}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const Ogre::ColourValue\& Sonetto::SlimWindow::getBorderColor ()}\label{class_sonetto_1_1_slim_window_1a493b11570e84c00d21c101b69e1e0e}
+
+
+Get the \doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} border color. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setBorderMaterialName@{setBorderMaterialName}}
+\index{setBorderMaterialName@{setBorderMaterialName}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setBorderMaterialName (const Ogre::String \& {\em name})}\label{class_sonetto_1_1_slim_window_8a5a64da14c9098ab4e1f532771bf371}
+
+
+Sets the name of the material to use for the borders. \index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!getBorderMaterialName@{getBorderMaterialName}}
+\index{getBorderMaterialName@{getBorderMaterialName}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const Ogre::String\& Sonetto::SlimWindow::getBorderMaterialName (void) const}\label{class_sonetto_1_1_slim_window_391dc838de91207b031ecd0e21e98e54}
+
+
+Gets the name of the material to use for the borders. \index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!getTypeName@{getTypeName}}
+\index{getTypeName@{getTypeName}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual const Ogre::String\& Sonetto::SlimWindow::getTypeName (void) const\hspace{0.3cm}{\tt  [virtual]}}\label{class_sonetto_1_1_slim_window_e1da650b7927007739342ebdc80a7fb8}
+
+
+See OverlayElement. \index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!getRenderOperation@{getRenderOperation}}
+\index{getRenderOperation@{getRenderOperation}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::getRenderOperation (Ogre::RenderOperation \& {\em op})}\label{class_sonetto_1_1_slim_window_fa85b9bff8c007bafa1ea63afaa2b11b}
+
+
+See Renderable. \index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!setMaterialName@{setMaterialName}}
+\index{setMaterialName@{setMaterialName}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::setMaterialName (const Ogre::String \& {\em matName})}\label{class_sonetto_1_1_slim_window_ac01c2228f429a1f1740218a3d69984e}
+
+
+Overridden from OverlayElement \index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!\_\-updateRenderQueue@{\_\-updateRenderQueue}}
+\index{\_\-updateRenderQueue@{\_\-updateRenderQueue}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::\_\-updateRenderQueue (Ogre::RenderQueue $\ast$ {\em queue})}\label{class_sonetto_1_1_slim_window_ebf52c064bfb97c0fda9d3e919f222e2}
+
+
+Overridden from OverlayContainer \index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!visitRenderables@{visitRenderables}}
+\index{visitRenderables@{visitRenderables}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::visitRenderables (Ogre::Renderable::Visitor $\ast$ {\em visitor}, bool {\em debugRenderables} = {\tt false})}\label{class_sonetto_1_1_slim_window_6d66762c899198475743cb984dedb87f}
+
+
+Visit Renderables. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!\_\-update@{\_\-update}}
+\index{\_\-update@{\_\-update}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::\_\-update (void)}\label{class_sonetto_1_1_slim_window_a5823b933f83ff0569f02274e38ca86a}
+
+
+Overridden from OverlayContaienr \index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!updatePositionGeometry@{updatePositionGeometry}}
+\index{updatePositionGeometry@{updatePositionGeometry}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual void Sonetto::SlimWindow::updatePositionGeometry (void)\hspace{0.3cm}{\tt  [protected, virtual]}}\label{class_sonetto_1_1_slim_window_38f1940edf546f20f49a59d580d5be23}
+
+
+internal method for setting up geometry, called by OverlayElement::update 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!updateTextureGeometry@{updateTextureGeometry}}
+\index{updateTextureGeometry@{updateTextureGeometry}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual void Sonetto::SlimWindow::updateTextureGeometry (void)\hspace{0.3cm}{\tt  [protected, virtual]}}\label{class_sonetto_1_1_slim_window_691521e111a629749e89288337db051e}
+
+
+Called to update the texture coords. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!updateBorderColors@{updateBorderColors}}
+\index{updateBorderColors@{updateBorderColors}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::updateBorderColors (void)\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_ae177b63e9355d57c40e2d8f6e819a3e}
+
+
+Called to update the border colors. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!updateBackgroundColors@{updateBackgroundColors}}
+\index{updateBackgroundColors@{updateBackgroundColors}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::updateBackgroundColors (void)\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_2e7558aed1af3dbc16e8fde3690e5064}
+
+
+Called to update the background colors. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!calculatePosition@{calculatePosition}}
+\index{calculatePosition@{calculatePosition}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::calculatePosition (void)\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_36b3687e2fb9704a0d976a921e1092ae}
+
+
+Called to calculate the SlimWindow's vertexes. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!calculateTexCoord@{calculateTexCoord}}
+\index{calculateTexCoord@{calculateTexCoord}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::SlimWindow::calculateTexCoord (void)\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_2e35f9c02a6e0c83f7852ca8a67129cb}
+
+
+Called to calculate the SlimWindow's background texture coordinates. 
+
+
+
+\subsection{Friends And Related Function Documentation}
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!SlimBorderRenderable@{SlimBorderRenderable}}
+\index{SlimBorderRenderable@{SlimBorderRenderable}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf SlimBorderRenderable}\hspace{0.3cm}{\tt  [friend]}}\label{class_sonetto_1_1_slim_window_9f14cea36a5cfb08deac39944f443763}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mUpdateBorderColors@{mUpdateBorderColors}}
+\index{mUpdateBorderColors@{mUpdateBorderColors}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Sonetto::SlimWindow::mUpdateBorderColors}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_e092fdfff49e4767504ee7bfe27faf06}
+
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mUpdateBackgroundColors@{mUpdateBackgroundColors}}
+\index{mUpdateBackgroundColors@{mUpdateBackgroundColors}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Sonetto::SlimWindow::mUpdateBackgroundColors}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_bf1183240fa24e7105c4b927ed985ac7}
+
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mBorderRenderable@{mBorderRenderable}}
+\index{mBorderRenderable@{mBorderRenderable}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf SlimBorderRenderable}$\ast$ {\bf Sonetto::SlimWindow::mBorderRenderable}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_08313ec35d9165ec2ab0d07dcde84f61}
+
+
+Border Renderable Pointer. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mBorderMaterialName@{mBorderMaterialName}}
+\index{mBorderMaterialName@{mBorderMaterialName}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::String {\bf Sonetto::SlimWindow::mBorderMaterialName}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_88837a2ec289d53e9ce3d51229d0f7d4}
+
+
+Border Material Name. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mpBorderMaterial@{mpBorderMaterial}}
+\index{mpBorderMaterial@{mpBorderMaterial}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::MaterialPtr {\bf Sonetto::SlimWindow::mpBorderMaterial}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_ecd35630ee14cb56991e4178b8c9bb4d}
+
+
+Border Material Pointer. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mBorderSize@{mBorderSize}}
+\index{mBorderSize@{mBorderSize}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::Vector2 {\bf Sonetto::SlimWindow::mBorderSize}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_156a0a4f6bbe9b1561a7b73ad4dcccaa}
+
+
+Border Size. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mBackgroundColor@{mBackgroundColor}}
+\index{mBackgroundColor@{mBackgroundColor}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::ColourValue {\bf Sonetto::SlimWindow::mBackgroundColor}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_dc1777308511f6813a094b122cffba06}
+
+
+Background Color. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mBorderColor@{mBorderColor}}
+\index{mBorderColor@{mBorderColor}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::ColourValue {\bf Sonetto::SlimWindow::mBorderColor}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_ecfa671031c4a14757cfb2aea73a2ab8}
+
+
+Border Color. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mTileMode@{mTileMode}}
+\index{mTileMode@{mTileMode}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool {\bf Sonetto::SlimWindow::mTileMode}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_e11f5f57446cad8a3d052709c3c7c7e1}
+
+
+Background Tile Mode. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mTiling@{mTiling}}
+\index{mTiling@{mTiling}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::Vector2 {\bf Sonetto::SlimWindow::mTiling}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_8990f60f5c0f06f784eaa0788bc91aae}
+
+
+Background Tiling. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mPosCoord@{mPosCoord}}
+\index{mPosCoord@{mPosCoord}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::Vector2 {\bf Sonetto::SlimWindow::mPosCoord}[SLIM\_\-NUM\_\-VERTEX]\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_d7958f1d417e1f84292696ed0a887e61}
+
+
+\doxyref{SlimWindow}{p.}{class_sonetto_1_1_slim_window} vertex coordinates. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mTexCoord0@{mTexCoord0}}
+\index{mTexCoord0@{mTexCoord0}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf WindowTexCoord}$\ast$ {\bf Sonetto::SlimWindow::mTexCoord0}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_0dd297dbacb85327ccb476d1ee2a7de2}
+
+
+Border and Mask coordinates. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mTexCoord1@{mTexCoord1}}
+\index{mTexCoord1@{mTexCoord1}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::Vector2 {\bf Sonetto::SlimWindow::mTexCoord1}[SLIM\_\-NUM\_\-VERTEX]\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_90aeed4503942f9c9b5dff29fc8fc946}
+
+
+Background coordinates. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mScrMetricsMode@{mScrMetricsMode}}
+\index{mScrMetricsMode@{mScrMetricsMode}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf ScreenMetricsMode} {\bf Sonetto::SlimWindow::mScrMetricsMode}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_f82fcd25fcf2700296309b638c43b59e}
+
+
+Screen Metrics Mode. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mAspectRatio@{mAspectRatio}}
+\index{mAspectRatio@{mAspectRatio}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::Real {\bf Sonetto::SlimWindow::mAspectRatio}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_3969f3e9d1b9abe5514a308a8aac9538}
+
+
+Viewport Aspect Ratio. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mRenderOp@{mRenderOp}}
+\index{mRenderOp@{mRenderOp}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::RenderOperation {\bf Sonetto::SlimWindow::mRenderOp}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_3159ffeb8d80ab33d705535584da6283}
+
+
+Background Render Operation. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!mRenderOp2@{mRenderOp2}}
+\index{mRenderOp2@{mRenderOp2}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::RenderOperation {\bf Sonetto::SlimWindow::mRenderOp2}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_slim_window_e85bd41c3f8625f36ba9dae6ceb69916}
+
+
+Border Render Operation. 
+
+\index{Sonetto::SlimWindow@{Sonetto::SlimWindow}!msTypeName@{msTypeName}}
+\index{msTypeName@{msTypeName}!Sonetto::SlimWindow@{Sonetto::SlimWindow}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::String {\bf Sonetto::SlimWindow::msTypeName}\hspace{0.3cm}{\tt  [static, protected]}}\label{class_sonetto_1_1_slim_window_5d5c0e0f102b5dfea35f34c4d5bb485e}
+
+
+Type Name. 
+
+
+
+The documentation for this class was generated from the following file:\begin{CompactItemize}
+\item 
+C:/Yoasakura/Projects/SonettoDevLab/include/{\bf SonettoSlimWindow.h}\end{CompactItemize}

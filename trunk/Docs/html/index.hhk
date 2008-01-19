@@ -1,0 +1,972 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD></HEAD><BODY>
+<OBJECT type="text/site properties">
+<param name="FrameName" value="right">
+</OBJECT>
+<UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#a5823b933f83ff0569f02274e38ca86a"><param name="Name" value="_update"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#a5823b933f83ff0569f02274e38ca86a"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#38af1c60cb02238c5dd6f2807b579f40"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#353a96c76f263bcb5b5e2ee30e71b7b4"><param name="Name" value="Sonetto::TextElement"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#bb6dbbeeb85036053ee5e8a0188db52c"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ebf52c064bfb97c0fda9d3e919f222e2"><param name="Name" value="_updateRenderQueue"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ebf52c064bfb97c0fda9d3e919f222e2"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#05acfb1c6b32e428140621784a187373"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#ef7bab6ebfe2176062709ce7dfcbfa41"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#6b9043e4f93b420fbda67f13c040d85f"><param name="Name" value="allocateFadeList"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#f399da9caee28b80927ed1dcc9adc810"><param name="Name" value="alpha_rejection"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#3b5e5d04fcd58fd3dee12d6b8cd5f815"><param name="Name" value="animate"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#866393af4cdb9528d219647a6f09ee64"><param name="Name" value="BorderRenderable"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#866393af4cdb9528d219647a6f09ee64"><param name="Name" value="Sonetto::BorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#34cbfdb610c9f91d01c1b4adff0844ab"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#891d65775cb149f3d7b2ebeadad7db82"><param name="Name" value="bottom"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#891d65775cb149f3d7b2ebeadad7db82"><param name="Name" value="Sonetto::TexCoord"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#5b2517e83700b8c051ce4f1356a58b92"><param name="Name" value="Sonetto::WindowTexCoord"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#10413fc00ce485a4ea22a1b323d133e6"><param name="Name" value="bottom_left"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#1a1d88c1957edd4cf63424f41cd9e27f"><param name="Name" value="bottom_right"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#c8b81b2d54200a152677a778b7b6071a"><param name="Name" value="calcColorSize"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#6cdc32131c0c2063f65efae6d85d3d69"><param name="Name" value="calcGlyphSize"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#e56c9731ea910f4c5af382b39938a011"><param name="Name" value="calcMainSize"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#f7501024d2170debbae5f4457174a84a"><param name="Name" value="calculateGlyphCoords"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#36b3687e2fb9704a0d976a921e1092ae"><param name="Name" value="calculatePosition"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#36b3687e2fb9704a0d976a921e1092ae"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#a33d17712dfbeed89e146ee4dd68e8f9"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#75a9b86a892aef3145d84fbe50688a46"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#2ae3c715df0d5db30b0e37f6d8a6d938"><param name="Name" value="calculateSize"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#2ae3c715df0d5db30b0e37f6d8a6d938"><param name="Name" value="Sonetto::Font"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#cf3c2c87b3ba0af6746e7d595d9ed3ef"><param name="Name" value="Sonetto::STRData"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#2e35f9c02a6e0c83f7852ca8a67129cb"><param name="Name" value="calculateTexCoord"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#2e35f9c02a6e0c83f7852ca8a67129cb"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#eef593a7ca46601c655fa8b4218f6cdd"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#d6a8eda6981828b705dc268e21aa372e"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#3c79ae0552185e04dd77239e176cc972"><param name="Name" value="center"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#55d493e4aa722625ce8619c2f2d7cafe"><param name="Name" value="checkMemoryAllocation"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_color_text_event.html#8af5ce4e6f1c817a159eaf750d2f3b1a"><param name="Name" value="color_id"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259"><param name="Name" value="CompareFunction"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html#55075b102a291659f5c874fec9d4326e"><param name="Name" value="createImpl"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#ba8e694ed64d9fd993a6a2437c8dc214"><param name="Name" value="createMaterial"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#9d50682a443d9caf25f0c892030de7af"><param name="Name" value="default_y_space"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#9d50682a443d9caf25f0c892030de7af"><param name="Name" value="Sonetto::Font"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_header.html#81efdb41c6e15ddb351f52864fdfc30a"><param name="Name" value="Sonetto::GlyphHeader"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#457b7b2add376c54dec5444bbe259dd4"><param name="Name" value="deleteMaterial"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#a7e0637cf903c349918e377d8c4539ad"><param name="Name" value="deleteme"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#6dc7b1b58f0368323f078fe71b13a6a6"><param name="Name" value="exportFont"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#efbaf929156e179dedc21d1bcdf991085ad820d5f91d080c9368da3182d8a1a7"><param name="Name" value="FBM_ADD"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#efbaf929156e179dedc21d1bcdf99108bf8f992fbec7c51f0fbc778b80923eae"><param name="Name" value="FBM_MODULATE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#efbaf929156e179dedc21d1bcdf991084d741a8e6856d89b4cb5d2f06cf5d897"><param name="Name" value="FBM_REPLACE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#efbaf929156e179dedc21d1bcdf991087f459b7e572e8b8afeb097f677b85d17"><param name="Name" value="FBM_TRANSPARENT_ALPHA"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#efbaf929156e179dedc21d1bcdf99108ad7e57d5b596fac90675c2a17e1d1f3c"><param name="Name" value="FBM_TRANSPARENT_COLOR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#5f5c1c8b5a475650319eda607b4ef319"><param name="Name" value="FilterType"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_color_text_event.html#533ce39810989f9e4824f0d359e39d1a"><param name="Name" value="flag_position"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#ece439f155a98019f173250adaf8cd02"><param name="Name" value="Font"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#cb8c3b6b2760466f7eb486b3b355a423"><param name="Name" value="font_alpha_reject_settings"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#2a0453c44214bfa0303893a5dae3df77"><param name="Name" value="font_blend_mode"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#006070d17a0089658bc1e0164502694402baef3b0e305453ad7c4ea8ebd90918"><param name="Name" value="FONT_COLOR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#c8ffe7e66f448c455cdabda0d34cde5a"><param name="Name" value="font_filtering_mode"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#006070d17a0089658bc1e01645026944d2a00fefec6ed7553bb660dbbc1f0d2c"><param name="Name" value="FONT_GLYPH"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#006070d17a0089658bc1e016450269445a1f0c4c5cbf70b58c1f90d16f0d47e7"><param name="Name" value="FONT_MAIN"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#3b5f23692cd514173c7025ce6beb7a4b"><param name="Name" value="font_material"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#fb2b401447cf60ead1ec5007a8306d66"><param name="Name" value="font_texture"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#06b4cb925967a08afcf5045fa98480c5"><param name="Name" value="font_texture_name"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#efbaf929156e179dedc21d1bcdf99108"><param name="Name" value="FontBlendMode"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#006070d17a0089658bc1e01645026944"><param name="Name" value="FontChunkHeader"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html#2c1dec94f4f03cc3733bfd101ab7f3a6"><param name="Name" value="FontManager"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_ptr.html#87c28f78b11b3fa56bae03862d0d33ce"><param name="Name" value="FontPtr"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#c676f4902985a557d8313224bcd56106"><param name="Name" value="FontSerializer"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#13642524825978af12983e076278f836"><param name="Name" value="forceAnimEnd"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#95f5a981406af602582d33c75b99497b"><param name="Name" value="forceAnimReset"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#5f5c1c8b5a475650319eda607b4ef3197f92225670a2352727e454dcaf0c0097"><param name="Name" value="FT_ANISOTROPIC"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#5f5c1c8b5a475650319eda607b4ef3191d0f6077ca0f465f5878621d87c88a52"><param name="Name" value="FT_LINEAR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#5f5c1c8b5a475650319eda607b4ef31963499c169931e5b09a4d544abb08dc41"><param name="Name" value="FT_NONE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#5f5c1c8b5a475650319eda607b4ef319d835a51f4ef8cbeeb4cb348afd952ab2"><param name="Name" value="FT_POINT"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#f50734250026c5f1314ccfb7a0f6503f"><param name="Name" value="getBackgroundColor"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#f50734250026c5f1314ccfb7a0f6503f"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#f9f9682da51acadb91cdf19dbf71ab97"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#b8a5394b597430c07c4e38c275b9d076"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#1a493b11570e84c00d21c101b69e1e0e"><param name="Name" value="getBorderColor"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#1a493b11570e84c00d21c101b69e1e0e"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#012e95ac9a2714940e21a46204bf624d"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#dcd83f4e96ea51005cd676438b2e55e3"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#391dc838de91207b031ecd0e21e98e54"><param name="Name" value="getBorderMaterialName"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#391dc838de91207b031ecd0e21e98e54"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#6bf20d6b7dba33eaaa57741b67d25af5"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#e2354f61a2cb558134a5977f7b750f0e"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e2f9a3361912a1e830fa76eecc0b7874"><param name="Name" value="getBorderSize"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e2f9a3361912a1e830fa76eecc0b7874"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#b2967498dacb8128749b5a624f43b2c7"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#1b3f523ed3b50b72de325ea4ee8dd698"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#60e8e12d5ac0678df6f6209c3b975f4c"><param name="Name" value="getFont"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#666e25c3a21972de9e6954318986189e"><param name="Name" value="getLights"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#666e25c3a21972de9e6954318986189e"><param name="Name" value="Sonetto::BorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#b500e5e0dc9ef2ab6f8e114f96b1a688"><param name="Name" value="Sonetto::SlimBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#ece120ff0d80c2347a2e2054330a57de"><param name="Name" value="Sonetto::TailedBorderRenderable"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#c5409ec817781f7b2315bc769a752495"><param name="Name" value="getMaterial"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#c5409ec817781f7b2315bc769a752495"><param name="Name" value="Sonetto::BorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#e795de951db0a8a01b992cf2dd9e9306"><param name="Name" value="Sonetto::SlimBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#c84da3c6dae0d6ba48df98a3c1c4ba99"><param name="Name" value="Sonetto::TailedBorderRenderable"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#8fab08faa4ba54c1d686d2de411f34ca"><param name="Name" value="getMessage"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#f464df54e0f4b3991c05efad1fdd0fa7"><param name="Name" value="getNumWorldTransforms"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#f464df54e0f4b3991c05efad1fdd0fa7"><param name="Name" value="Sonetto::BorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#a167031364e304b716e24765905fcbbd"><param name="Name" value="Sonetto::SlimBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#3a7395722d4623699e6c61a1c8111190"><param name="Name" value="Sonetto::TailedBorderRenderable"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#3f2f1258863701bde1a9672e1c630f6e"><param name="Name" value="getPolygonModeOverrideable"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#3f2f1258863701bde1a9672e1c630f6e"><param name="Name" value="Sonetto::BorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#1f9e6cb44768f7f1975b3b2bb6265817"><param name="Name" value="Sonetto::SlimBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#3a7f9d170a8402f8b60f23038401aca0"><param name="Name" value="Sonetto::TailedBorderRenderable"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#ff3961cfa0d1023d326bac7f051752f4"><param name="Name" value="getRenderOperation"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#ff3961cfa0d1023d326bac7f051752f4"><param name="Name" value="Sonetto::BorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#9b39a21e746ad90d60256c38e63518c3"><param name="Name" value="Sonetto::SlimBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#fa85b9bff8c007bafa1ea63afaa2b11b"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#5e771a2042c6577925ec8e15e5da9d7d"><param name="Name" value="Sonetto::TailedBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#d603382853bf75e1b7a21384e9d9cd08"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#f24a9f258b8053663d84f50e1cb4c3f5"><param name="Name" value="Sonetto::TextElement"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#f408d8ef73dcdb3ff29b7c3d007fd471"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html#147b581d49182de5ff0bf119db0745ae"><param name="Name" value="getSingleton"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html#e3fd689f6e1a408de75a3444f2eec3da"><param name="Name" value="getSingletonPtr"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#c5f2f76019310763cdc574f7ce1e1a21"><param name="Name" value="getSquaredViewDepth"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#c5f2f76019310763cdc574f7ce1e1a21"><param name="Name" value="Sonetto::BorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#0f6dcb166818975c21469b64f401e400"><param name="Name" value="Sonetto::SlimBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#6a280afee0591c9e9578ea093817e2ba"><param name="Name" value="Sonetto::TailedBorderRenderable"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#77e22648adb8976936a96ab42298c7f3"><param name="Name" value="getStrSize"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#fe0a4319cca87f3d041de02b05809007"><param name="Name" value="getTailDirection"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#b103e9ea18b4d9fb82ba656083e031f8"><param name="Name" value="getTailPosition"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#2b1ee03722185fd2abb8d1cd775facd8"><param name="Name" value="getTextSize"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#ffe121c63e43bafc9612ac782ffeccdc"><param name="Name" value="getTextureName"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#369bea9398e29f214f1f04e7adedf969"><param name="Name" value="getTileMode"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#369bea9398e29f214f1f04e7adedf969"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#a5cc2f3db91c172180fc1e43b46f0aab"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#b99fc89392e8ef24cdc91493a1a8841d"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#69a5fde5e6eb3e255419aa6eb17ec9b9"><param name="Name" value="getTiling"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#69a5fde5e6eb3e255419aa6eb17ec9b9"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#6098aceb43202536a76053af558f6975"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#6f2ef708ccce0b911023a432cddac190"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e1da650b7927007739342ebdc80a7fb8"><param name="Name" value="getTypeName"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e1da650b7927007739342ebdc80a7fb8"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#45b006b60afa495e34dc9c205d04f7b5"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#b42913666ac72e52e04e678e14ba694a"><param name="Name" value="Sonetto::TextElement"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#78b4c5e895a758690dfe3ccf37c5e24e"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#d5b5f33a4fb1b1e446aa908a15e75182"><param name="Name" value="getWorldTransforms"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#d5b5f33a4fb1b1e446aa908a15e75182"><param name="Name" value="Sonetto::BorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#d30d5010cf2b933d30a7a9c9f1863a55"><param name="Name" value="Sonetto::SlimBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#b8cd1af76622f708e0bbd26f49528372"><param name="Name" value="Sonetto::TailedBorderRenderable"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#f186df7a2818e34be4f9cc98ff5f479c"><param name="Name" value="glyph_coord_offset"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#f186df7a2818e34be4f9cc98ff5f479c"><param name="Name" value="Sonetto::Font"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_header.html#6a810572ebf311bb7c7ca3e82bf349ee"><param name="Name" value="Sonetto::GlyphHeader"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#f4d01f4c6f476e3c4ae55935d5e765d5"><param name="Name" value="glyph_itr"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#1a589b5c821a85c28fdaf79168c2b944"><param name="Name" value="glyph_tbl"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#1a589b5c821a85c28fdaf79168c2b944"><param name="Name" value="Sonetto::Font"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_header.html#fd6b29ea4e35c25bfd60899325dcba3d"><param name="Name" value="Sonetto::GlyphHeader"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_header.html#ad9c30ed4dd00aaa0364c9aa79c2e0b7"><param name="Name" value="GlyphHeader"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#61c960c7c339980116408806cc2bda60"><param name="Name" value="glyphs"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_table.html#e34c3b78f0bd1eb03f76ce24a34d733b"><param name="Name" value="GlyphTable"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#6bab6053a3eccce093de265c8aab9af4"><param name="Name" value="importFont"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#d06237ceda6bb1d0d2dc4ffeae867b6e"><param name="Name" value="initialise"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#d06237ceda6bb1d0d2dc4ffeae867b6e"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#05a372033b422320e96402af1a1b2828"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#2037a3e1c6e85d62fccd7537561e76f2"><param name="Name" value="Sonetto::TextElement"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#2dd85a646fd69c668b37ae236c61553e"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#1aa3c4ed87091a6f55f7d3cb45830289"><param name="Name" value="insertMessage"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#beb85ab8afd9513924ae124556ac08a2"><param name="Name" value="insertMessageAtBack"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#cc86c98761f25456e86bc6764a9a4620"><param name="Name" value="isVisible"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#03c37675aa056ac570054ea9453227a3"><param name="Name" value="left"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#03c37675aa056ac570054ea9453227a3"><param name="Name" value="Sonetto::TexCoord"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#e38d513b73ca6b1316acfa9a3cba10be"><param name="Name" value="Sonetto::WindowTexCoord"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#11e258854940556c4a18db61a9d9eabb"><param name="Name" value="lerp"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html#cab58393109e705a065746c126e49b08"><param name="Name" value="load"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#ccad1ea4d54722b9d2cdb7a60b28c463"><param name="Name" value="loadImpl"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#ccad1ea4d54722b9d2cdb7a60b28c463"><param name="Name" value="Sonetto::Font"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#75827b8b7c95e9e735679d89fd8467a1"><param name="Name" value="Sonetto::STRData"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#ac5439a1cecc160b3ffcb333c5bae542"><param name="Name" value="mAllocSize"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#8555ec2a65624aeebc66c1ecf0c66de2"><param name="Name" value="mAnimationActive"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#8193f82051c1b3b45e7d96b07f1e00b0"><param name="Name" value="mAnimSpeed"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#3969f3e9d1b9abe5514a308a8aac9538"><param name="Name" value="mAspectRatio"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#3969f3e9d1b9abe5514a308a8aac9538"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#f57f1f2f8a824c662d0abd090a1f9c4b"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#030d5887ef8327780ba823fd24d07d6f"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#7dfa01ccd9468b2404379f3afceb2224"><param name="Name" value="materialExist"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#dc1777308511f6813a094b122cffba06"><param name="Name" value="mBackgroundColor"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#dc1777308511f6813a094b122cffba06"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#3a91ddc4619de6239d9ed7b962d16716"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#3ed09354892226a63fccdb7bdb3d74f2"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ecfa671031c4a14757cfb2aea73a2ab8"><param name="Name" value="mBorderColor"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ecfa671031c4a14757cfb2aea73a2ab8"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#e984795cba7aaadab42a695bb98200d3"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#69dfbcca41c2e8f4025bd6055d4f9be3"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#88837a2ec289d53e9ce3d51229d0f7d4"><param name="Name" value="mBorderMaterialName"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#88837a2ec289d53e9ce3d51229d0f7d4"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#9dc48e7ebd46888d6adba3bdb10e573e"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#d6222dd4d0f0f53b91abedd6735ede0f"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#08313ec35d9165ec2ab0d07dcde84f61"><param name="Name" value="mBorderRenderable"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#08313ec35d9165ec2ab0d07dcde84f61"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#35bc899731cd08935b4cb1541a47c859"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#51aba15385525aa0e9719553acd268be"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#156a0a4f6bbe9b1561a7b73ad4dcccaa"><param name="Name" value="mBorderSize"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#156a0a4f6bbe9b1561a7b73ad4dcccaa"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#681c4e1d175534901899cb81f24ffa0b"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#e94d657add21dc04d467e399264b8c5d"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#b1f93fbd98fb321c1bd737f729229b74"><param name="Name" value="mCaption"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#ade60b0e1edcef7d0e4b7fa0b0331363"><param name="Name" value="mColorList"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#a1e627e6c9afe25624cf10ce35feb0a6"><param name="Name" value="mColorList_itr"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#612610dbb617769f12b2628aa9f7030f"><param name="Name" value="mCurTextColor"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#30c6e7be7efe63c2194d2cfcb00f23a1"><param name="Name" value="mDefAnimSpeed"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#6af4688472b26422cb20d6006b769b92"><param name="Name" value="mFadeList"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#e337eb0715e7648eafa08bfb550a9e86"><param name="Name" value="mFadeSpeed"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#7e9594fb622cca35ed3b3c96f5c60342"><param name="Name" value="mFontPtr"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#b01db5d7be060a6ee48f7c418c6a5e40"><param name="Name" value="mIsAnimated"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#4703a0cf5d3283b38550e681dd075a52"><param name="Name" value="mParent"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#4703a0cf5d3283b38550e681dd075a52"><param name="Name" value="Sonetto::BorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#98a60f63c821e156da40c30f40aea296"><param name="Name" value="Sonetto::SlimBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#37b9b008d5830b10a0995d752205b5ad"><param name="Name" value="Sonetto::TailedBorderRenderable"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ecd35630ee14cb56991e4178b8c9bb4d"><param name="Name" value="mpBorderMaterial"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ecd35630ee14cb56991e4178b8c9bb4d"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#df6bace8b712da4d5300056d3e4b02f6"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#d93d48ee8d1df33ea824061d8c9f2e81"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#d7958f1d417e1f84292696ed0a887e61"><param name="Name" value="mPosCoord"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#d7958f1d417e1f84292696ed0a887e61"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#022c4ac5e5c5a1661567c0a7f8a40518"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#27c9d1fd0f95ec2209b6f6da03b1e7c6"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e85bd41c3f8625f36ba9dae6ceb69916"><param name="Name" value="mRenderOp2"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e85bd41c3f8625f36ba9dae6ceb69916"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#3745c9b04fee2de2b6a053070635c3c6"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#b1efbc206a979dc9f1d79c1c3496f794"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#3159ffeb8d80ab33d705535584da6283"><param name="Name" value="mRenderOp"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#3159ffeb8d80ab33d705535584da6283"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#b8a970438f79a40a8e9ecf51b7cc99b7"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#a6fe955fc7f508e0a4ab88cce9a3233d"><param name="Name" value="Sonetto::TextElement"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#011bb999c1a5db1adffe02594ba94e7b"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#f82fcd25fcf2700296309b638c43b59e"><param name="Name" value="mScrMetricsMode"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#f82fcd25fcf2700296309b638c43b59e"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#4fa3f54b18710b8e4ad02fca1d4831b8"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#91eb92384035677c5770285a3d77221b"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#6ca5074630407acaf0e1b5639b452c20"><param name="Name" value="mSkipWhiteSpaces"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#4ef86f5d58a7559381f7633375d6a89f"><param name="Name" value="mStrCursorPosition"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#ccb9aa4b3db05bc82fb23026d6ed8110"><param name="Name" value="mStringList"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#9bf9526472374fcc59849354e5995557"><param name="Name" value="mStringSize"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#5d5c0e0f102b5dfea35f34c4d5bb485e"><param name="Name" value="msTypeName"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#5d5c0e0f102b5dfea35f34c4d5bb485e"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#eebadc201c24d951585f98e7cdf84225"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#2fb4e801d26f953c848c572c84b8768f"><param name="Name" value="Sonetto::TextElement"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#a24874bf296660ce90474cf766783a08"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#a33639aaa9fd3b567b55ade66640c9f2"><param name="Name" value="mTailDirection"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#55cec9803e1679afd7de8d5f14fd0736"><param name="Name" value="mTailPosition"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#45e32c7ca5165fa77d44422fddcf2458"><param name="Name" value="mTailVisible"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#0dd297dbacb85327ccb476d1ee2a7de2"><param name="Name" value="mTexCoord0"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#0dd297dbacb85327ccb476d1ee2a7de2"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#4676fb9c65ed7724fee2f7b1616860b2"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#d21ae820daca77b979a6e82b0ba40d82"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#90aeed4503942f9c9b5dff29fc8fc946"><param name="Name" value="mTexCoord1"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#90aeed4503942f9c9b5dff29fc8fc946"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#6903846ecdf851340455b51a17ee1068"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#a223d7a3508219efd4ddfe87b7360ef7"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#82b334c7dff311f0418e48346c3a4df1"><param name="Name" value="mTextSize"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e11f5f57446cad8a3d052709c3c7c7e1"><param name="Name" value="mTileMode"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e11f5f57446cad8a3d052709c3c7c7e1"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#758be6381c4551639a53762799568be7"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#71f68cc734ee059da946e7fbdfa3bd17"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#8990f60f5c0f06f784eaa0788bc91aae"><param name="Name" value="mTiling"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#8990f60f5c0f06f784eaa0788bc91aae"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#6bf30f15af54b3c7d0bf1902004977fd"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#d346df15012715b8a794a74c6ae47673"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#bf1183240fa24e7105c4b927ed985ac7"><param name="Name" value="mUpdateBackgroundColors"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#bf1183240fa24e7105c4b927ed985ac7"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#80a880101e307b51821851ab7a00b631"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#678bbfc57bdbdb8d6a39cb4c6aa57672"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e092fdfff49e4767504ee7bfe27faf06"><param name="Name" value="mUpdateBorderColors"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e092fdfff49e4767504ee7bfe27faf06"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#1f25e0f4b085c4f5c8191f580c41bb94"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#0fe2af4c617d5b2aaa822f2eca577e6c"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#24fc3118ec3a83425daa9f73b9f261f6"><param name="Name" value="mUseFadeIn"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#a3afa05c6ae93e8921641615cfc7d3d5"><param name="Name" value="mUseFadeOut"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#a025b12c667ddd09afd996e272ae8703"><param name="Name" value="mViewportAspectCoef"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#e597614091ebd8df998f878d6ed0773e"><param name="Name" value="num_glyphs"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#e597614091ebd8df998f878d6ed0773e"><param name="Name" value="Sonetto::Font"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_header.html#e2561d3738cbe7e68e96a25f241eeeff"><param name="Name" value="Sonetto::GlyphHeader"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_sonetto_window_8h.html#b722cbfcd174beb57f5473d53f9767f7"><param name="Name" value="NUM_VERTEX"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_ptr.html#e4dbabcb5c35005f8591217461a310df"><param name="Name" value="operator="></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_ptr.html#e4dbabcb5c35005f8591217461a310df"><param name="Name" value="Sonetto::FontPtr"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data_ptr.html#b5bfa418987a9fb0636fd19d7c13c609"><param name="Name" value="Sonetto::STRDataPtr"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#30af16394dc9c5b041c932b50f4abd3f"><param name="Name" value="phraseText"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#f72d41bc4e9e7cef6fc2908d2ae51fce"><param name="Name" value="readColor"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#d682f84543774cef3fd8d85ac15ec99a"><param name="Name" value="readGlyph"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#1bc0db28fcb511312d80f557b179675e"><param name="Name" value="readMain"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#1a51848724e72fd94f8e0817b9c37a4c"><param name="Name" value="removeMessage"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#99b3c5f4b515840f755d8b194fe4f30f"><param name="Name" value="removeMessageAtBack"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#f2d9bb8aed9a6b3eb81afc561805a243"><param name="Name" value="right"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#f2d9bb8aed9a6b3eb81afc561805a243"><param name="Name" value="Sonetto::TexCoord"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#b4fac31178cb7a4daa3cb39b9941d0dc"><param name="Name" value="Sonetto::WindowTexCoord"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259d23381459cb08b87b32a55d25fff5310"><param name="Name" value="SCF_ALWAYS_FAIL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259538d6fc7fc8b328674d6ae42c4dc6413"><param name="Name" value="SCF_ALWAYS_PASS"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259329ed4dfac6a20b68908a33c54190f60"><param name="Name" value="SCF_EQUAL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e449022592b74a2c06ad947feaed11588f3d6d0f0"><param name="Name" value="SCF_GREATER"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259b88986a8e7f6ba7398b3759ff24e467f"><param name="Name" value="SCF_GREATER_EQUAL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e449022593eb1f3179712e8233be8c89f9a27b041"><param name="Name" value="SCF_LESS"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259d0aa6bc4591601db0bad15142c824a7d"><param name="Name" value="SCF_LESS_EQUAL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259573214e610d63ad24a46fb7ba9f3c30c"><param name="Name" value="SCF_NOT_EQUAL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#cb535310426f6766ce9f9f38c1a0fbe8"><param name="Name" value="ScreenMetricsMode"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#eb768905abcf08680b2e5d1814eeb39a"><param name="Name" value="setAnimSettings"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#19008f4a2a474e972ac999d52851b67a"><param name="Name" value="setBackgroundColor"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#19008f4a2a474e972ac999d52851b67a"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#314334f740ba3c80bc3798888120f5eb"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#a801644e9e72119cda38774d5a66e814"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#0b21bb5ee1ee08355b0f45cb6c8d38e6"><param name="Name" value="setBorderColor"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#0b21bb5ee1ee08355b0f45cb6c8d38e6"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#98d2814e737e759f8d2ba0ed0e9f405e"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#ed61af77bc62db4254717d82d93d621e"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#8a5a64da14c9098ab4e1f532771bf371"><param name="Name" value="setBorderMaterialName"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#8a5a64da14c9098ab4e1f532771bf371"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#5aeb1ce01cfca3b9c2e608d0b7158ab1"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#7a223c0ee026061e020ed86941341c13"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#7d46dd201dac146c7f7fc3d8a512791d"><param name="Name" value="setBorderSize"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#7d46dd201dac146c7f7fc3d8a512791d"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#585464d5e80fb28370ee5ab7ddf16403"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#29148ab189cd5a7d13af79a848223bbb"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#961d6a1992e7691d5433397c9f6b7dca"><param name="Name" value="setCaption"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#154b5b1d6432a5653fcb1a684bb14b9f"><param name="Name" value="setFont"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ac01c2228f429a1f1740218a3d69984e"><param name="Name" value="setMaterialName"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ac01c2228f429a1f1740218a3d69984e"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#9ca1e9ac6e952b34580c4a1456d8491b"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#9eed1377e621d2f94414fbf0af8ca590"><param name="Name" value="Sonetto::TextElement"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#0b39a1f70d9a612c5815a4bf8f9deee2"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#aa5f0973cf45c9f188efe13e925c4a72"><param name="Name" value="setMessage"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#b3e35bebf4446e83caad5c4f4e7add4c"><param name="Name" value="setScrMetricsMode"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#b3e35bebf4446e83caad5c4f4e7add4c"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#81313e11be8bffccadbeffd8515b0e6d"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#95ff70a6b097008d4eb19e61a7d79bf1"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#de73264d55495e3b1e093024e81dbc87"><param name="Name" value="setSpaceWidth"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#affac3320e007a0fb0aed68e277ef1bf"><param name="Name" value="setTailDirection"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#a39d94af3cd152d37e6bbcf56f7040d4"><param name="Name" value="setTailPosition"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#89001e2631ea509557a93c4c68f64430"><param name="Name" value="setTailVisibility"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#cebe707ab7c9558afdef18c16909d27a"><param name="Name" value="setTexCoords"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#cebe707ab7c9558afdef18c16909d27a"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#aacadd559abf97984d551110754d4584"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#f2a31793f5598694ee7577d6b97e0615"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#cc81fc28bb344b7004572035e5d142b3"><param name="Name" value="setTextSize"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#1c99e55eeb8769a15af16e91077a3b69"><param name="Name" value="setTextureName"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#dc3ae6d50296e05837b0895a66939c22"><param name="Name" value="setTileMode"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#dc3ae6d50296e05837b0895a66939c22"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#256bd8c7cb1999711cfeb9a5a834ac55"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#cb43bfaead9b2bf74bf63a789cd2d24c"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#70ddf1bf0ed65b88b55866e5327c1cd5"><param name="Name" value="setTiling"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#70ddf1bf0ed65b88b55866e5327c1cd5"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#836540eb863a57e0f2797b695288c68c"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#92bc48af19c1ba379c7d1a70610341c6"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#fbecfe8a5a6dc6896027b121e5ea9665"><param name="Name" value="setUpFont"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#a9e37c576441836a7dd8954bca4b82e5"><param name="Name" value="setWindowTail"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#90fb01b5d11bfa303b2897318e0d6dfa"><param name="Name" value="slim_center"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#297a028f98b7307d3552cfac533b835e"><param name="Name" value="slim_left"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_sonetto_slim_window_8h.html#94ab7e5da3c2cbbdbae4bdecd24e0c1a"><param name="Name" value="SLIM_NUM_VERTEX"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#fea9f47d0d3b0b042f7d1c5c84bd5a3c"><param name="Name" value="slim_right"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#542f9e9d6b02fb9581c1dc22576e287e"><param name="Name" value="SlimBorderRenderable"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#542f9e9d6b02fb9581c1dc22576e287e"><param name="Name" value="Sonetto::SlimBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#9f14cea36a5cfb08deac39944f443763"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#619f1ed6a8df17ac35513e7fc57e2e18"><param name="Name" value="SlimWindow"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#cb535310426f6766ce9f9f38c1a0fbe84be9a68e49637f91ecdae06924833d0f"><param name="Name" value="SMM_RELATIVE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#cb535310426f6766ce9f9f38c1a0fbe86329fe32dfc20bd18f8820452c95fd61"><param name="Name" value="SMM_RELATIVE_ASPECT_ADJUSTED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html"><param name="Name" value="Sonetto::BorderRenderable"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#866393af4cdb9528d219647a6f09ee64"><param name="Name" value="BorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#666e25c3a21972de9e6954318986189e"><param name="Name" value="getLights"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#c5409ec817781f7b2315bc769a752495"><param name="Name" value="getMaterial"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#f464df54e0f4b3991c05efad1fdd0fa7"><param name="Name" value="getNumWorldTransforms"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#3f2f1258863701bde1a9672e1c630f6e"><param name="Name" value="getPolygonModeOverrideable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#ff3961cfa0d1023d326bac7f051752f4"><param name="Name" value="getRenderOperation"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#c5f2f76019310763cdc574f7ce1e1a21"><param name="Name" value="getSquaredViewDepth"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#d5b5f33a4fb1b1e446aa908a15e75182"><param name="Name" value="getWorldTransforms"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_border_renderable.html#4703a0cf5d3283b38550e681dd075a52"><param name="Name" value="mParent"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_color_text_event.html"><param name="Name" value="Sonetto::ColorTextEvent"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_color_text_event.html#8af5ce4e6f1c817a159eaf750d2f3b1a"><param name="Name" value="color_id"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_color_text_event.html#533ce39810989f9e4824f0d359e39d1a"><param name="Name" value="flag_position"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html"><param name="Name" value="Sonetto::Font"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#f399da9caee28b80927ed1dcc9adc810"><param name="Name" value="alpha_rejection"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#f7501024d2170debbae5f4457174a84a"><param name="Name" value="calculateGlyphCoords"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#2ae3c715df0d5db30b0e37f6d8a6d938"><param name="Name" value="calculateSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#ba8e694ed64d9fd993a6a2437c8dc214"><param name="Name" value="createMaterial"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#9d50682a443d9caf25f0c892030de7af"><param name="Name" value="default_y_space"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#457b7b2add376c54dec5444bbe259dd4"><param name="Name" value="deleteMaterial"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#ece439f155a98019f173250adaf8cd02"><param name="Name" value="Font"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#cb8c3b6b2760466f7eb486b3b355a423"><param name="Name" value="font_alpha_reject_settings"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#2a0453c44214bfa0303893a5dae3df77"><param name="Name" value="font_blend_mode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#c8ffe7e66f448c455cdabda0d34cde5a"><param name="Name" value="font_filtering_mode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#3b5f23692cd514173c7025ce6beb7a4b"><param name="Name" value="font_material"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#fb2b401447cf60ead1ec5007a8306d66"><param name="Name" value="font_texture"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#06b4cb925967a08afcf5045fa98480c5"><param name="Name" value="font_texture_name"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#ffe121c63e43bafc9612ac782ffeccdc"><param name="Name" value="getTextureName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#f186df7a2818e34be4f9cc98ff5f479c"><param name="Name" value="glyph_coord_offset"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#f4d01f4c6f476e3c4ae55935d5e765d5"><param name="Name" value="glyph_itr"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#1a589b5c821a85c28fdaf79168c2b944"><param name="Name" value="glyph_tbl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#61c960c7c339980116408806cc2bda60"><param name="Name" value="glyphs"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#ccad1ea4d54722b9d2cdb7a60b28c463"><param name="Name" value="loadImpl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#7dfa01ccd9468b2404379f3afceb2224"><param name="Name" value="materialExist"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#ade60b0e1edcef7d0e4b7fa0b0331363"><param name="Name" value="mColorList"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#a1e627e6c9afe25624cf10ce35feb0a6"><param name="Name" value="mColorList_itr"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#e597614091ebd8df998f878d6ed0773e"><param name="Name" value="num_glyphs"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#de73264d55495e3b1e093024e81dbc87"><param name="Name" value="setSpaceWidth"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#1c99e55eeb8769a15af16e91077a3b69"><param name="Name" value="setTextureName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#fbecfe8a5a6dc6896027b121e5ea9665"><param name="Name" value="setUpFont"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#fc29c7bc4bf1fcc3bc6b96f2b3821b95"><param name="Name" value="unloadImpl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#d0ca9ce5c75e739ed2970812ad7597cc"><param name="Name" value="~Font"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html"><param name="Name" value="Sonetto::FontManager"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html#55075b102a291659f5c874fec9d4326e"><param name="Name" value="createImpl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html#2c1dec94f4f03cc3733bfd101ab7f3a6"><param name="Name" value="FontManager"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html#147b581d49182de5ff0bf119db0745ae"><param name="Name" value="getSingleton"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html#e3fd689f6e1a408de75a3444f2eec3da"><param name="Name" value="getSingletonPtr"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html#cab58393109e705a065746c126e49b08"><param name="Name" value="load"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html#8eda61cef5a0d049708683c11fd8f27e"><param name="Name" value="~FontManager"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_ptr.html"><param name="Name" value="Sonetto::FontPtr"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_ptr.html#87c28f78b11b3fa56bae03862d0d33ce"><param name="Name" value="FontPtr"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_ptr.html#e4dbabcb5c35005f8591217461a310df"><param name="Name" value="operator="></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html"><param name="Name" value="Sonetto::FontSerializer"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#c8b81b2d54200a152677a778b7b6071a"><param name="Name" value="calcColorSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#6cdc32131c0c2063f65efae6d85d3d69"><param name="Name" value="calcGlyphSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#e56c9731ea910f4c5af382b39938a011"><param name="Name" value="calcMainSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#6dc7b1b58f0368323f078fe71b13a6a6"><param name="Name" value="exportFont"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#c676f4902985a557d8313224bcd56106"><param name="Name" value="FontSerializer"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#6bab6053a3eccce093de265c8aab9af4"><param name="Name" value="importFont"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#f72d41bc4e9e7cef6fc2908d2ae51fce"><param name="Name" value="readColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#d682f84543774cef3fd8d85ac15ec99a"><param name="Name" value="readGlyph"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#1bc0db28fcb511312d80f557b179675e"><param name="Name" value="readMain"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#4d110f1dc99b5c70042dad01fcefc6c7"><param name="Name" value="writeColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#038fc163bf38dd92d2a4f7a1de052e94"><param name="Name" value="writeGlyph"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#909129052a50cc7c69cc16240b62684a"><param name="Name" value="writeMain"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#c592d01f55eed385a462dc18dfedd79c"><param name="Name" value="~FontSerializer"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_header.html"><param name="Name" value="Sonetto::GlyphHeader"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_header.html#81efdb41c6e15ddb351f52864fdfc30a"><param name="Name" value="default_y_space"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_header.html#6a810572ebf311bb7c7ca3e82bf349ee"><param name="Name" value="glyph_coord_offset"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_header.html#fd6b29ea4e35c25bfd60899325dcba3d"><param name="Name" value="glyph_tbl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_header.html#ad9c30ed4dd00aaa0364c9aa79c2e0b7"><param name="Name" value="GlyphHeader"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_header.html#e2561d3738cbe7e68e96a25f241eeeff"><param name="Name" value="num_glyphs"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_struct.html"><param name="Name" value="Sonetto::GlyphStruct"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_struct.html#066234d3439b47c9e4ddd6a4899ccc36"><param name="Name" value="texcoord0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_struct.html#40b03c6fb8424a7c82ece23996621890"><param name="Name" value="texcoord1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_struct.html#17cfcc4496af866a23e81c536963f5c4"><param name="Name" value="texcoord2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_struct.html#c2adcdb7f05f5538d56d24980471dff9"><param name="Name" value="texcoord3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_struct.html#801838b064ea90827d3f36c0907b6500"><param name="Name" value="x_offset"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_table.html"><param name="Name" value="Sonetto::GlyphTable"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_table.html#e34c3b78f0bd1eb03f76ce24a34d733b"><param name="Name" value="GlyphTable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_table.html#a119a681e5f7eb2c5ce77c6078aff956"><param name="Name" value="x"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_table.html#ee71b68078a7f13f4211e8436281eba2"><param name="Name" value="y"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html"><param name="Name" value="Sonetto::SlimBorderRenderable"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#b500e5e0dc9ef2ab6f8e114f96b1a688"><param name="Name" value="getLights"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#e795de951db0a8a01b992cf2dd9e9306"><param name="Name" value="getMaterial"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#a167031364e304b716e24765905fcbbd"><param name="Name" value="getNumWorldTransforms"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#1f9e6cb44768f7f1975b3b2bb6265817"><param name="Name" value="getPolygonModeOverrideable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#9b39a21e746ad90d60256c38e63518c3"><param name="Name" value="getRenderOperation"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#0f6dcb166818975c21469b64f401e400"><param name="Name" value="getSquaredViewDepth"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#d30d5010cf2b933d30a7a9c9f1863a55"><param name="Name" value="getWorldTransforms"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#98a60f63c821e156da40c30f40aea296"><param name="Name" value="mParent"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_border_renderable.html#542f9e9d6b02fb9581c1dc22576e287e"><param name="Name" value="SlimBorderRenderable"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#a5823b933f83ff0569f02274e38ca86a"><param name="Name" value="_update"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ebf52c064bfb97c0fda9d3e919f222e2"><param name="Name" value="_updateRenderQueue"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#36b3687e2fb9704a0d976a921e1092ae"><param name="Name" value="calculatePosition"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#2e35f9c02a6e0c83f7852ca8a67129cb"><param name="Name" value="calculateTexCoord"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#f50734250026c5f1314ccfb7a0f6503f"><param name="Name" value="getBackgroundColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#1a493b11570e84c00d21c101b69e1e0e"><param name="Name" value="getBorderColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#391dc838de91207b031ecd0e21e98e54"><param name="Name" value="getBorderMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e2f9a3361912a1e830fa76eecc0b7874"><param name="Name" value="getBorderSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#fa85b9bff8c007bafa1ea63afaa2b11b"><param name="Name" value="getRenderOperation"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#369bea9398e29f214f1f04e7adedf969"><param name="Name" value="getTileMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#69a5fde5e6eb3e255419aa6eb17ec9b9"><param name="Name" value="getTiling"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e1da650b7927007739342ebdc80a7fb8"><param name="Name" value="getTypeName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#d06237ceda6bb1d0d2dc4ffeae867b6e"><param name="Name" value="initialise"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#3969f3e9d1b9abe5514a308a8aac9538"><param name="Name" value="mAspectRatio"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#dc1777308511f6813a094b122cffba06"><param name="Name" value="mBackgroundColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ecfa671031c4a14757cfb2aea73a2ab8"><param name="Name" value="mBorderColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#88837a2ec289d53e9ce3d51229d0f7d4"><param name="Name" value="mBorderMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#08313ec35d9165ec2ab0d07dcde84f61"><param name="Name" value="mBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#156a0a4f6bbe9b1561a7b73ad4dcccaa"><param name="Name" value="mBorderSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ecd35630ee14cb56991e4178b8c9bb4d"><param name="Name" value="mpBorderMaterial"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#d7958f1d417e1f84292696ed0a887e61"><param name="Name" value="mPosCoord"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#3159ffeb8d80ab33d705535584da6283"><param name="Name" value="mRenderOp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e85bd41c3f8625f36ba9dae6ceb69916"><param name="Name" value="mRenderOp2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#f82fcd25fcf2700296309b638c43b59e"><param name="Name" value="mScrMetricsMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#5d5c0e0f102b5dfea35f34c4d5bb485e"><param name="Name" value="msTypeName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#0dd297dbacb85327ccb476d1ee2a7de2"><param name="Name" value="mTexCoord0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#90aeed4503942f9c9b5dff29fc8fc946"><param name="Name" value="mTexCoord1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e11f5f57446cad8a3d052709c3c7c7e1"><param name="Name" value="mTileMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#8990f60f5c0f06f784eaa0788bc91aae"><param name="Name" value="mTiling"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#bf1183240fa24e7105c4b927ed985ac7"><param name="Name" value="mUpdateBackgroundColors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#e092fdfff49e4767504ee7bfe27faf06"><param name="Name" value="mUpdateBorderColors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#19008f4a2a474e972ac999d52851b67a"><param name="Name" value="setBackgroundColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#0b21bb5ee1ee08355b0f45cb6c8d38e6"><param name="Name" value="setBorderColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#8a5a64da14c9098ab4e1f532771bf371"><param name="Name" value="setBorderMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#7d46dd201dac146c7f7fc3d8a512791d"><param name="Name" value="setBorderSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ac01c2228f429a1f1740218a3d69984e"><param name="Name" value="setMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#b3e35bebf4446e83caad5c4f4e7add4c"><param name="Name" value="setScrMetricsMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#cebe707ab7c9558afdef18c16909d27a"><param name="Name" value="setTexCoords"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#dc3ae6d50296e05837b0895a66939c22"><param name="Name" value="setTileMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#70ddf1bf0ed65b88b55866e5327c1cd5"><param name="Name" value="setTiling"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#9f14cea36a5cfb08deac39944f443763"><param name="Name" value="SlimBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#619f1ed6a8df17ac35513e7fc57e2e18"><param name="Name" value="SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#2e7558aed1af3dbc16e8fde3690e5064"><param name="Name" value="updateBackgroundColors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ae177b63e9355d57c40e2d8f6e819a3e"><param name="Name" value="updateBorderColors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#38f1940edf546f20f49a59d580d5be23"><param name="Name" value="updatePositionGeometry"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#691521e111a629749e89288337db051e"><param name="Name" value="updateTextureGeometry"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#6d66762c899198475743cb984dedb87f"><param name="Name" value="visitRenderables"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#7f781e165b10bdba8588f66f6c077fd5"><param name="Name" value="~SlimWindow"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html"><param name="Name" value="Sonetto::STRData"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#cf3c2c87b3ba0af6746e7d595d9ed3ef"><param name="Name" value="calculateSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#8fab08faa4ba54c1d686d2de411f34ca"><param name="Name" value="getMessage"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#1aa3c4ed87091a6f55f7d3cb45830289"><param name="Name" value="insertMessage"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#beb85ab8afd9513924ae124556ac08a2"><param name="Name" value="insertMessageAtBack"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#75827b8b7c95e9e735679d89fd8467a1"><param name="Name" value="loadImpl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#ccb9aa4b3db05bc82fb23026d6ed8110"><param name="Name" value="mStringList"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#1a51848724e72fd94f8e0817b9c37a4c"><param name="Name" value="removeMessage"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#99b3c5f4b515840f755d8b194fe4f30f"><param name="Name" value="removeMessageAtBack"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#aa5f0973cf45c9f188efe13e925c4a72"><param name="Name" value="setMessage"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#0282365c8e4439a79c3def01f81f2e80"><param name="Name" value="STRData"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#6109ca680426d6380c1f571b9946525b"><param name="Name" value="unloadImpl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#e85c5d00b20565485fe8964c02345270"><param name="Name" value="~STRData"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data_ptr.html"><param name="Name" value="Sonetto::STRDataPtr"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data_ptr.html#b5bfa418987a9fb0636fd19d7c13c609"><param name="Name" value="operator="></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data_ptr.html#7817715a05cb77c121ae1ccaba964711"><param name="Name" value="STRDataPtr"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html"><param name="Name" value="Sonetto::TailedBorderRenderable"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#ece120ff0d80c2347a2e2054330a57de"><param name="Name" value="getLights"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#c84da3c6dae0d6ba48df98a3c1c4ba99"><param name="Name" value="getMaterial"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#3a7395722d4623699e6c61a1c8111190"><param name="Name" value="getNumWorldTransforms"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#3a7f9d170a8402f8b60f23038401aca0"><param name="Name" value="getPolygonModeOverrideable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#5e771a2042c6577925ec8e15e5da9d7d"><param name="Name" value="getRenderOperation"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#6a280afee0591c9e9578ea093817e2ba"><param name="Name" value="getSquaredViewDepth"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#b8cd1af76622f708e0bbd26f49528372"><param name="Name" value="getWorldTransforms"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#37b9b008d5830b10a0995d752205b5ad"><param name="Name" value="mParent"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#81f64a1d4b0b2ce12f4eee91d02fb8ea"><param name="Name" value="TailedBorderRenderable"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#38af1c60cb02238c5dd6f2807b579f40"><param name="Name" value="_update"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#05acfb1c6b32e428140621784a187373"><param name="Name" value="_updateRenderQueue"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#a33d17712dfbeed89e146ee4dd68e8f9"><param name="Name" value="calculatePosition"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#eef593a7ca46601c655fa8b4218f6cdd"><param name="Name" value="calculateTexCoord"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#f9f9682da51acadb91cdf19dbf71ab97"><param name="Name" value="getBackgroundColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#012e95ac9a2714940e21a46204bf624d"><param name="Name" value="getBorderColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#6bf20d6b7dba33eaaa57741b67d25af5"><param name="Name" value="getBorderMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#b2967498dacb8128749b5a624f43b2c7"><param name="Name" value="getBorderSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#d603382853bf75e1b7a21384e9d9cd08"><param name="Name" value="getRenderOperation"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#fe0a4319cca87f3d041de02b05809007"><param name="Name" value="getTailDirection"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#b103e9ea18b4d9fb82ba656083e031f8"><param name="Name" value="getTailPosition"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#a5cc2f3db91c172180fc1e43b46f0aab"><param name="Name" value="getTileMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#6098aceb43202536a76053af558f6975"><param name="Name" value="getTiling"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#45b006b60afa495e34dc9c205d04f7b5"><param name="Name" value="getTypeName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#05a372033b422320e96402af1a1b2828"><param name="Name" value="initialise"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#cc86c98761f25456e86bc6764a9a4620"><param name="Name" value="isVisible"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#11e258854940556c4a18db61a9d9eabb"><param name="Name" value="lerp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#f57f1f2f8a824c662d0abd090a1f9c4b"><param name="Name" value="mAspectRatio"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#3a91ddc4619de6239d9ed7b962d16716"><param name="Name" value="mBackgroundColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#e984795cba7aaadab42a695bb98200d3"><param name="Name" value="mBorderColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#9dc48e7ebd46888d6adba3bdb10e573e"><param name="Name" value="mBorderMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#35bc899731cd08935b4cb1541a47c859"><param name="Name" value="mBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#681c4e1d175534901899cb81f24ffa0b"><param name="Name" value="mBorderSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#df6bace8b712da4d5300056d3e4b02f6"><param name="Name" value="mpBorderMaterial"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#022c4ac5e5c5a1661567c0a7f8a40518"><param name="Name" value="mPosCoord"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#b8a970438f79a40a8e9ecf51b7cc99b7"><param name="Name" value="mRenderOp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#3745c9b04fee2de2b6a053070635c3c6"><param name="Name" value="mRenderOp2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#4fa3f54b18710b8e4ad02fca1d4831b8"><param name="Name" value="mScrMetricsMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#eebadc201c24d951585f98e7cdf84225"><param name="Name" value="msTypeName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#a33639aaa9fd3b567b55ade66640c9f2"><param name="Name" value="mTailDirection"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#55cec9803e1679afd7de8d5f14fd0736"><param name="Name" value="mTailPosition"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#45e32c7ca5165fa77d44422fddcf2458"><param name="Name" value="mTailVisible"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#4676fb9c65ed7724fee2f7b1616860b2"><param name="Name" value="mTexCoord0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#6903846ecdf851340455b51a17ee1068"><param name="Name" value="mTexCoord1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#758be6381c4551639a53762799568be7"><param name="Name" value="mTileMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#6bf30f15af54b3c7d0bf1902004977fd"><param name="Name" value="mTiling"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#80a880101e307b51821851ab7a00b631"><param name="Name" value="mUpdateBackgroundColors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#1f25e0f4b085c4f5c8191f580c41bb94"><param name="Name" value="mUpdateBorderColors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#314334f740ba3c80bc3798888120f5eb"><param name="Name" value="setBackgroundColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#98d2814e737e759f8d2ba0ed0e9f405e"><param name="Name" value="setBorderColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#5aeb1ce01cfca3b9c2e608d0b7158ab1"><param name="Name" value="setBorderMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#585464d5e80fb28370ee5ab7ddf16403"><param name="Name" value="setBorderSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#9ca1e9ac6e952b34580c4a1456d8491b"><param name="Name" value="setMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#81313e11be8bffccadbeffd8515b0e6d"><param name="Name" value="setScrMetricsMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#affac3320e007a0fb0aed68e277ef1bf"><param name="Name" value="setTailDirection"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#a39d94af3cd152d37e6bbcf56f7040d4"><param name="Name" value="setTailPosition"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#89001e2631ea509557a93c4c68f64430"><param name="Name" value="setTailVisibility"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#aacadd559abf97984d551110754d4584"><param name="Name" value="setTexCoords"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#256bd8c7cb1999711cfeb9a5a834ac55"><param name="Name" value="setTileMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#836540eb863a57e0f2797b695288c68c"><param name="Name" value="setTiling"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#a9e37c576441836a7dd8954bca4b82e5"><param name="Name" value="setWindowTail"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#dd1122662ac8c3a6d254df45af7d1515"><param name="Name" value="TailedBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#9bb416763ef6e79a19b6ffdcb9c08854"><param name="Name" value="TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#26cba851d92f9897a5c9e6af2e9b8a44"><param name="Name" value="updateBackgroundColors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#a10cc929f071447e85451eb7680a7b49"><param name="Name" value="updateBorderColors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#7fab831661e133f4a686d6211bd68a14"><param name="Name" value="updatePositionGeometry"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#3e6c0f446ff6e8f3af1c8b1eef3cae91"><param name="Name" value="updateTextureGeometry"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#4bf4a8ed7cae31f1b81484fb3124baa5"><param name="Name" value="visitRenderables"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#e5db6433ac8fc0162fb58fa5d472c70e"><param name="Name" value="~TailedWindow"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html"><param name="Name" value="Sonetto::TexCoord"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#891d65775cb149f3d7b2ebeadad7db82"><param name="Name" value="bottom"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#03c37675aa056ac570054ea9453227a3"><param name="Name" value="left"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#f2d9bb8aed9a6b3eb81afc561805a243"><param name="Name" value="right"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#529f94f609e760460bf01ebdeb1cf2ba"><param name="Name" value="TexCoord"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#cf64d0e9d7a5b20a2ec9fdcc081ee190"><param name="Name" value="top"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html"><param name="Name" value="Sonetto::TextElement"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#353a96c76f263bcb5b5e2ee30e71b7b4"><param name="Name" value="_update"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#6b9043e4f93b420fbda67f13c040d85f"><param name="Name" value="allocateFadeList"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#3b5e5d04fcd58fd3dee12d6b8cd5f815"><param name="Name" value="animate"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#55d493e4aa722625ce8619c2f2d7cafe"><param name="Name" value="checkMemoryAllocation"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#a7e0637cf903c349918e377d8c4539ad"><param name="Name" value="deleteme"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#13642524825978af12983e076278f836"><param name="Name" value="forceAnimEnd"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#95f5a981406af602582d33c75b99497b"><param name="Name" value="forceAnimReset"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#60e8e12d5ac0678df6f6209c3b975f4c"><param name="Name" value="getFont"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#f24a9f258b8053663d84f50e1cb4c3f5"><param name="Name" value="getRenderOperation"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#77e22648adb8976936a96ab42298c7f3"><param name="Name" value="getStrSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#2b1ee03722185fd2abb8d1cd775facd8"><param name="Name" value="getTextSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#b42913666ac72e52e04e678e14ba694a"><param name="Name" value="getTypeName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#2037a3e1c6e85d62fccd7537561e76f2"><param name="Name" value="initialise"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#ac5439a1cecc160b3ffcb333c5bae542"><param name="Name" value="mAllocSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#8555ec2a65624aeebc66c1ecf0c66de2"><param name="Name" value="mAnimationActive"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#8193f82051c1b3b45e7d96b07f1e00b0"><param name="Name" value="mAnimSpeed"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#b1f93fbd98fb321c1bd737f729229b74"><param name="Name" value="mCaption"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#612610dbb617769f12b2628aa9f7030f"><param name="Name" value="mCurTextColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#30c6e7be7efe63c2194d2cfcb00f23a1"><param name="Name" value="mDefAnimSpeed"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#6af4688472b26422cb20d6006b769b92"><param name="Name" value="mFadeList"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#e337eb0715e7648eafa08bfb550a9e86"><param name="Name" value="mFadeSpeed"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#7e9594fb622cca35ed3b3c96f5c60342"><param name="Name" value="mFontPtr"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#b01db5d7be060a6ee48f7c418c6a5e40"><param name="Name" value="mIsAnimated"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#a6fe955fc7f508e0a4ab88cce9a3233d"><param name="Name" value="mRenderOp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#6ca5074630407acaf0e1b5639b452c20"><param name="Name" value="mSkipWhiteSpaces"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#4ef86f5d58a7559381f7633375d6a89f"><param name="Name" value="mStrCursorPosition"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#9bf9526472374fcc59849354e5995557"><param name="Name" value="mStringSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#2fb4e801d26f953c848c572c84b8768f"><param name="Name" value="msTypeName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#82b334c7dff311f0418e48346c3a4df1"><param name="Name" value="mTextSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#24fc3118ec3a83425daa9f73b9f261f6"><param name="Name" value="mUseFadeIn"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#a3afa05c6ae93e8921641615cfc7d3d5"><param name="Name" value="mUseFadeOut"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#a025b12c667ddd09afd996e272ae8703"><param name="Name" value="mViewportAspectCoef"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#30af16394dc9c5b041c932b50f4abd3f"><param name="Name" value="phraseText"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#eb768905abcf08680b2e5d1814eeb39a"><param name="Name" value="setAnimSettings"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#961d6a1992e7691d5433397c9f6b7dca"><param name="Name" value="setCaption"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#154b5b1d6432a5653fcb1a684bb14b9f"><param name="Name" value="setFont"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#9eed1377e621d2f94414fbf0af8ca590"><param name="Name" value="setMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#cc81fc28bb344b7004572035e5d142b3"><param name="Name" value="setTextSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#53c4a2c30fe321720dcc0e635a6a0168"><param name="Name" value="TextElement"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#92bfd2ceede524cfdd7ad22180da696a"><param name="Name" value="updatePositionGeometry"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#c21ee17c302cd3ec6a6a089851f79f8c"><param name="Name" value="updateTextureGeometry"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#cff2754a2b719ad6aaa9c9560458c671"><param name="Name" value="~TextElement"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html"><param name="Name" value="Sonetto::Window"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#bb6dbbeeb85036053ee5e8a0188db52c"><param name="Name" value="_update"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#ef7bab6ebfe2176062709ce7dfcbfa41"><param name="Name" value="_updateRenderQueue"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#34cbfdb610c9f91d01c1b4adff0844ab"><param name="Name" value="BorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#75a9b86a892aef3145d84fbe50688a46"><param name="Name" value="calculatePosition"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#d6a8eda6981828b705dc268e21aa372e"><param name="Name" value="calculateTexCoord"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#b8a5394b597430c07c4e38c275b9d076"><param name="Name" value="getBackgroundColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#dcd83f4e96ea51005cd676438b2e55e3"><param name="Name" value="getBorderColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#e2354f61a2cb558134a5977f7b750f0e"><param name="Name" value="getBorderMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#1b3f523ed3b50b72de325ea4ee8dd698"><param name="Name" value="getBorderSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#f408d8ef73dcdb3ff29b7c3d007fd471"><param name="Name" value="getRenderOperation"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#b99fc89392e8ef24cdc91493a1a8841d"><param name="Name" value="getTileMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#6f2ef708ccce0b911023a432cddac190"><param name="Name" value="getTiling"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#78b4c5e895a758690dfe3ccf37c5e24e"><param name="Name" value="getTypeName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#2dd85a646fd69c668b37ae236c61553e"><param name="Name" value="initialise"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#030d5887ef8327780ba823fd24d07d6f"><param name="Name" value="mAspectRatio"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#3ed09354892226a63fccdb7bdb3d74f2"><param name="Name" value="mBackgroundColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#69dfbcca41c2e8f4025bd6055d4f9be3"><param name="Name" value="mBorderColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#d6222dd4d0f0f53b91abedd6735ede0f"><param name="Name" value="mBorderMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#51aba15385525aa0e9719553acd268be"><param name="Name" value="mBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#e94d657add21dc04d467e399264b8c5d"><param name="Name" value="mBorderSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#d93d48ee8d1df33ea824061d8c9f2e81"><param name="Name" value="mpBorderMaterial"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#27c9d1fd0f95ec2209b6f6da03b1e7c6"><param name="Name" value="mPosCoord"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#011bb999c1a5db1adffe02594ba94e7b"><param name="Name" value="mRenderOp"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#b1efbc206a979dc9f1d79c1c3496f794"><param name="Name" value="mRenderOp2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#91eb92384035677c5770285a3d77221b"><param name="Name" value="mScrMetricsMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#a24874bf296660ce90474cf766783a08"><param name="Name" value="msTypeName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#d21ae820daca77b979a6e82b0ba40d82"><param name="Name" value="mTexCoord0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#a223d7a3508219efd4ddfe87b7360ef7"><param name="Name" value="mTexCoord1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#71f68cc734ee059da946e7fbdfa3bd17"><param name="Name" value="mTileMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#d346df15012715b8a794a74c6ae47673"><param name="Name" value="mTiling"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#678bbfc57bdbdb8d6a39cb4c6aa57672"><param name="Name" value="mUpdateBackgroundColors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#0fe2af4c617d5b2aaa822f2eca577e6c"><param name="Name" value="mUpdateBorderColors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#a801644e9e72119cda38774d5a66e814"><param name="Name" value="setBackgroundColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#ed61af77bc62db4254717d82d93d621e"><param name="Name" value="setBorderColor"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#7a223c0ee026061e020ed86941341c13"><param name="Name" value="setBorderMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#29148ab189cd5a7d13af79a848223bbb"><param name="Name" value="setBorderSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#0b39a1f70d9a612c5815a4bf8f9deee2"><param name="Name" value="setMaterialName"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#95ff70a6b097008d4eb19e61a7d79bf1"><param name="Name" value="setScrMetricsMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#f2a31793f5598694ee7577d6b97e0615"><param name="Name" value="setTexCoords"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#cb43bfaead9b2bf74bf63a789cd2d24c"><param name="Name" value="setTileMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#92bc48af19c1ba379c7d1a70610341c6"><param name="Name" value="setTiling"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#71a7624620fb7c3825dff83bb8f9cf9e"><param name="Name" value="updateBackgroundColors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#e9c6dc9845dead0ef9c5323d0c07c196"><param name="Name" value="updateBorderColors"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#7c8e91cc9a7e9e8a7f310114ac78a683"><param name="Name" value="updatePositionGeometry"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#e884d7e1b7a6df65819427bce0654774"><param name="Name" value="updateTextureGeometry"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#a7aa8cc7712943499a09ed2fcb09c992"><param name="Name" value="visitRenderables"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#41dfdfa31e77bd1eff435c3579df41e9"><param name="Name" value="Window"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#e292cba8a3e6e2c38a07e530892eba0b"><param name="Name" value="~Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html"><param name="Name" value="Sonetto::WindowTexCoord"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#5b2517e83700b8c051ce4f1356a58b92"><param name="Name" value="bottom"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#10413fc00ce485a4ea22a1b323d133e6"><param name="Name" value="bottom_left"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#1a1d88c1957edd4cf63424f41cd9e27f"><param name="Name" value="bottom_right"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#3c79ae0552185e04dd77239e176cc972"><param name="Name" value="center"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#e38d513b73ca6b1316acfa9a3cba10be"><param name="Name" value="left"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#b4fac31178cb7a4daa3cb39b9941d0dc"><param name="Name" value="right"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#90fb01b5d11bfa303b2897318e0d6dfa"><param name="Name" value="slim_center"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#297a028f98b7307d3552cfac533b835e"><param name="Name" value="slim_left"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#fea9f47d0d3b0b042f7d1c5c84bd5a3c"><param name="Name" value="slim_right"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#74c9e9ba0b20d6294462bf7282572fff"><param name="Name" value="tail_down"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#91b00cbfb2c0b4f25f8cca76f82c7bdc"><param name="Name" value="tail_up"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#8a77ae9bf31f8cdc31046f10092be8a8"><param name="Name" value="top"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#6cad60d6776e48a51799584e6341df18"><param name="Name" value="top_left"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#4d189a50ab35be7f9ec8b577943109b2"><param name="Name" value="top_right"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html"><param name="Name" value="Sonetto"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259"><param name="Name" value="CompareFunction"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#efbaf929156e179dedc21d1bcdf991085ad820d5f91d080c9368da3182d8a1a7"><param name="Name" value="FBM_ADD"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#efbaf929156e179dedc21d1bcdf99108bf8f992fbec7c51f0fbc778b80923eae"><param name="Name" value="FBM_MODULATE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#efbaf929156e179dedc21d1bcdf991084d741a8e6856d89b4cb5d2f06cf5d897"><param name="Name" value="FBM_REPLACE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#efbaf929156e179dedc21d1bcdf991087f459b7e572e8b8afeb097f677b85d17"><param name="Name" value="FBM_TRANSPARENT_ALPHA"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#efbaf929156e179dedc21d1bcdf99108ad7e57d5b596fac90675c2a17e1d1f3c"><param name="Name" value="FBM_TRANSPARENT_COLOR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#5f5c1c8b5a475650319eda607b4ef319"><param name="Name" value="FilterType"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#006070d17a0089658bc1e0164502694402baef3b0e305453ad7c4ea8ebd90918"><param name="Name" value="FONT_COLOR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#006070d17a0089658bc1e01645026944d2a00fefec6ed7553bb660dbbc1f0d2c"><param name="Name" value="FONT_GLYPH"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#006070d17a0089658bc1e016450269445a1f0c4c5cbf70b58c1f90d16f0d47e7"><param name="Name" value="FONT_MAIN"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#efbaf929156e179dedc21d1bcdf99108"><param name="Name" value="FontBlendMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#006070d17a0089658bc1e01645026944"><param name="Name" value="FontChunkHeader"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#5f5c1c8b5a475650319eda607b4ef3197f92225670a2352727e454dcaf0c0097"><param name="Name" value="FT_ANISOTROPIC"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#5f5c1c8b5a475650319eda607b4ef3191d0f6077ca0f465f5878621d87c88a52"><param name="Name" value="FT_LINEAR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#5f5c1c8b5a475650319eda607b4ef31963499c169931e5b09a4d544abb08dc41"><param name="Name" value="FT_NONE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#5f5c1c8b5a475650319eda607b4ef319d835a51f4ef8cbeeb4cb348afd952ab2"><param name="Name" value="FT_POINT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259d23381459cb08b87b32a55d25fff5310"><param name="Name" value="SCF_ALWAYS_FAIL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259538d6fc7fc8b328674d6ae42c4dc6413"><param name="Name" value="SCF_ALWAYS_PASS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259329ed4dfac6a20b68908a33c54190f60"><param name="Name" value="SCF_EQUAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e449022592b74a2c06ad947feaed11588f3d6d0f0"><param name="Name" value="SCF_GREATER"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259b88986a8e7f6ba7398b3759ff24e467f"><param name="Name" value="SCF_GREATER_EQUAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e449022593eb1f3179712e8233be8c89f9a27b041"><param name="Name" value="SCF_LESS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259d0aa6bc4591601db0bad15142c824a7d"><param name="Name" value="SCF_LESS_EQUAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#a806b8892799548a55f5e59e44902259573214e610d63ad24a46fb7ba9f3c30c"><param name="Name" value="SCF_NOT_EQUAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#cb535310426f6766ce9f9f38c1a0fbe8"><param name="Name" value="ScreenMetricsMode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#cb535310426f6766ce9f9f38c1a0fbe84be9a68e49637f91ecdae06924833d0f"><param name="Name" value="SMM_RELATIVE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespace_sonetto.html#cb535310426f6766ce9f9f38c1a0fbe86329fe32dfc20bd18f8820452c95fd61"><param name="Name" value="SMM_RELATIVE_ASPECT_ADJUSTED"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_sonetto_slim_window_8h.html"><param name="Name" value="SonettoSlimWindow.h"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_sonetto_tailed_window_8h.html"><param name="Name" value="SonettoTailedWindow.h"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_sonetto_window_8h.html"><param name="Name" value="SonettoWindow.h"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#0282365c8e4439a79c3def01f81f2e80"><param name="Name" value="STRData"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data_ptr.html#7817715a05cb77c121ae1ccaba964711"><param name="Name" value="STRDataPtr"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#74c9e9ba0b20d6294462bf7282572fff"><param name="Name" value="tail_down"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#91b00cbfb2c0b4f25f8cca76f82c7bdc"><param name="Name" value="tail_up"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="_sonetto_tailed_window_8h.html#bc4ca42fca74955e2d74da1c0d347a6f"><param name="Name" value="TAILED_NUM_VERTEX"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#81f64a1d4b0b2ce12f4eee91d02fb8ea"><param name="Name" value="TailedBorderRenderable"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_border_renderable.html#81f64a1d4b0b2ce12f4eee91d02fb8ea"><param name="Name" value="Sonetto::TailedBorderRenderable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#dd1122662ac8c3a6d254df45af7d1515"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#9bb416763ef6e79a19b6ffdcb9c08854"><param name="Name" value="TailedWindow"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_struct.html#066234d3439b47c9e4ddd6a4899ccc36"><param name="Name" value="texcoord0"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_struct.html#40b03c6fb8424a7c82ece23996621890"><param name="Name" value="texcoord1"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_struct.html#17cfcc4496af866a23e81c536963f5c4"><param name="Name" value="texcoord2"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_struct.html#c2adcdb7f05f5538d56d24980471dff9"><param name="Name" value="texcoord3"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#529f94f609e760460bf01ebdeb1cf2ba"><param name="Name" value="TexCoord"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#53c4a2c30fe321720dcc0e635a6a0168"><param name="Name" value="TextElement"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#cf64d0e9d7a5b20a2ec9fdcc081ee190"><param name="Name" value="top"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_tex_coord.html#cf64d0e9d7a5b20a2ec9fdcc081ee190"><param name="Name" value="Sonetto::TexCoord"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#8a77ae9bf31f8cdc31046f10092be8a8"><param name="Name" value="Sonetto::WindowTexCoord"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#6cad60d6776e48a51799584e6341df18"><param name="Name" value="top_left"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_window_tex_coord.html#4d189a50ab35be7f9ec8b577943109b2"><param name="Name" value="top_right"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#fc29c7bc4bf1fcc3bc6b96f2b3821b95"><param name="Name" value="unloadImpl"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#fc29c7bc4bf1fcc3bc6b96f2b3821b95"><param name="Name" value="Sonetto::Font"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#6109ca680426d6380c1f571b9946525b"><param name="Name" value="Sonetto::STRData"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#2e7558aed1af3dbc16e8fde3690e5064"><param name="Name" value="updateBackgroundColors"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#2e7558aed1af3dbc16e8fde3690e5064"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#26cba851d92f9897a5c9e6af2e9b8a44"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#71a7624620fb7c3825dff83bb8f9cf9e"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ae177b63e9355d57c40e2d8f6e819a3e"><param name="Name" value="updateBorderColors"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#ae177b63e9355d57c40e2d8f6e819a3e"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#a10cc929f071447e85451eb7680a7b49"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#e9c6dc9845dead0ef9c5323d0c07c196"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#38f1940edf546f20f49a59d580d5be23"><param name="Name" value="updatePositionGeometry"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#38f1940edf546f20f49a59d580d5be23"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#7fab831661e133f4a686d6211bd68a14"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#92bfd2ceede524cfdd7ad22180da696a"><param name="Name" value="Sonetto::TextElement"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#7c8e91cc9a7e9e8a7f310114ac78a683"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#691521e111a629749e89288337db051e"><param name="Name" value="updateTextureGeometry"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#691521e111a629749e89288337db051e"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#3e6c0f446ff6e8f3af1c8b1eef3cae91"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#c21ee17c302cd3ec6a6a089851f79f8c"><param name="Name" value="Sonetto::TextElement"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#e884d7e1b7a6df65819427bce0654774"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#6d66762c899198475743cb984dedb87f"><param name="Name" value="visitRenderables"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#6d66762c899198475743cb984dedb87f"><param name="Name" value="Sonetto::SlimWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#4bf4a8ed7cae31f1b81484fb3124baa5"><param name="Name" value="Sonetto::TailedWindow"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#a7aa8cc7712943499a09ed2fcb09c992"><param name="Name" value="Sonetto::Window"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#41dfdfa31e77bd1eff435c3579df41e9"><param name="Name" value="Window"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#4d110f1dc99b5c70042dad01fcefc6c7"><param name="Name" value="writeColor"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#038fc163bf38dd92d2a4f7a1de052e94"><param name="Name" value="writeGlyph"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#909129052a50cc7c69cc16240b62684a"><param name="Name" value="writeMain"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_table.html#a119a681e5f7eb2c5ce77c6078aff956"><param name="Name" value="x"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_struct.html#801838b064ea90827d3f36c0907b6500"><param name="Name" value="x_offset"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="struct_sonetto_1_1_glyph_table.html#ee71b68078a7f13f4211e8436281eba2"><param name="Name" value="y"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font.html#d0ca9ce5c75e739ed2970812ad7597cc"><param name="Name" value="~Font"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_manager.html#8eda61cef5a0d049708683c11fd8f27e"><param name="Name" value="~FontManager"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_font_serializer.html#c592d01f55eed385a462dc18dfedd79c"><param name="Name" value="~FontSerializer"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_slim_window.html#7f781e165b10bdba8588f66f6c077fd5"><param name="Name" value="~SlimWindow"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_s_t_r_data.html#e85c5d00b20565485fe8964c02345270"><param name="Name" value="~STRData"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_tailed_window.html#e5db6433ac8fc0162fb58fa5d472c70e"><param name="Name" value="~TailedWindow"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_text_element.html#cff2754a2b719ad6aaa9c9560458c671"><param name="Name" value="~TextElement"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="class_sonetto_1_1_window.html#e292cba8a3e6e2c38a07e530892eba0b"><param name="Name" value="~Window"></OBJECT>
+</UL>
+</BODY>
+</HTML>

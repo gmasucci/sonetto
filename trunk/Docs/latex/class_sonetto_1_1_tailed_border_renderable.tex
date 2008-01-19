@@ -1,0 +1,92 @@
+\section{Sonetto::TailedBorderRenderable Class Reference}
+\label{class_sonetto_1_1_tailed_border_renderable}\index{Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}}
+{\tt \#include $<$SonettoTailedWindow.h$>$}
+
+Collaboration diagram for Sonetto::TailedBorderRenderable:\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\bf TailedBorderRenderable} ({\bf TailedWindow} $\ast$parent)
+\item 
+const Ogre::MaterialPtr \& {\bf getMaterial} (void) const 
+\item 
+void {\bf getRenderOperation} (Ogre::RenderOperation \&op)
+\item 
+void {\bf getWorldTransforms} (Ogre::Matrix4 $\ast$xform) const 
+\item 
+unsigned short {\bf getNumWorldTransforms} (void) const 
+\item 
+Ogre::Real {\bf getSquaredViewDepth} (const Ogre::Camera $\ast$cam) const 
+\item 
+const Ogre::LightList \& {\bf getLights} (void) const 
+\item 
+bool {\bf getPolygonModeOverrideable} (void) const 
+\end{CompactItemize}
+\subsection*{Protected Attributes}
+\begin{CompactItemize}
+\item 
+{\bf TailedWindow} $\ast$ {\bf mParent}
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+Class for rendering the border of a \doxyref{TailedWindow}{p.}{class_sonetto_1_1_tailed_window}. \begin{Desc}
+\item[Remarks:]We need this because we have to render twice, once with the inner panel's repeating material (handled by superclass) and once for the border's separate meterial. \end{Desc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}!TailedBorderRenderable@{TailedBorderRenderable}}
+\index{TailedBorderRenderable@{TailedBorderRenderable}!Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Sonetto::TailedBorderRenderable::TailedBorderRenderable ({\bf TailedWindow} $\ast$ {\em parent})\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_tailed_border_renderable_81f64a1d4b0b2ce12f4eee91d02fb8ea}
+
+
+Constructed with pointers to parent. 
+
+\subsection{Member Function Documentation}
+\index{Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}!getMaterial@{getMaterial}}
+\index{getMaterial@{getMaterial}!Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const Ogre::MaterialPtr\& Sonetto::TailedBorderRenderable::getMaterial (void) const\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_tailed_border_renderable_c84da3c6dae0d6ba48df98a3c1c4ba99}
+
+
+\index{Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}!getRenderOperation@{getRenderOperation}}
+\index{getRenderOperation@{getRenderOperation}!Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::TailedBorderRenderable::getRenderOperation (Ogre::RenderOperation \& {\em op})\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_tailed_border_renderable_5e771a2042c6577925ec8e15e5da9d7d}
+
+
+\index{Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}!getWorldTransforms@{getWorldTransforms}}
+\index{getWorldTransforms@{getWorldTransforms}!Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::TailedBorderRenderable::getWorldTransforms (Ogre::Matrix4 $\ast$ {\em xform}) const\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_tailed_border_renderable_b8cd1af76622f708e0bbd26f49528372}
+
+
+\index{Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}!getNumWorldTransforms@{getNumWorldTransforms}}
+\index{getNumWorldTransforms@{getNumWorldTransforms}!Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}unsigned short Sonetto::TailedBorderRenderable::getNumWorldTransforms (void) const\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_tailed_border_renderable_3a7395722d4623699e6c61a1c8111190}
+
+
+\index{Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}!getSquaredViewDepth@{getSquaredViewDepth}}
+\index{getSquaredViewDepth@{getSquaredViewDepth}!Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Ogre::Real Sonetto::TailedBorderRenderable::getSquaredViewDepth (const Ogre::Camera $\ast$ {\em cam}) const\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_tailed_border_renderable_6a280afee0591c9e9578ea093817e2ba}
+
+
+\index{Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}!getLights@{getLights}}
+\index{getLights@{getLights}!Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}const Ogre::LightList\& Sonetto::TailedBorderRenderable::getLights (void) const\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_tailed_border_renderable_ece120ff0d80c2347a2e2054330a57de}
+
+
+\index{Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}!getPolygonModeOverrideable@{getPolygonModeOverrideable}}
+\index{getPolygonModeOverrideable@{getPolygonModeOverrideable}!Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}bool Sonetto::TailedBorderRenderable::getPolygonModeOverrideable (void) const\hspace{0.3cm}{\tt  [inline]}}\label{class_sonetto_1_1_tailed_border_renderable_3a7f9d170a8402f8b60f23038401aca0}
+
+
+
+
+\subsection{Member Data Documentation}
+\index{Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}!mParent@{mParent}}
+\index{mParent@{mParent}!Sonetto::TailedBorderRenderable@{Sonetto::TailedBorderRenderable}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf TailedWindow}$\ast$ {\bf Sonetto::TailedBorderRenderable::mParent}\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_tailed_border_renderable_37b9b008d5830b10a0995d752205b5ad}
+
+
+
+
+The documentation for this class was generated from the following file:\begin{CompactItemize}
+\item 
+C:/Yoasakura/Projects/SonettoDevLab/include/{\bf SonettoTailedWindow.h}\end{CompactItemize}

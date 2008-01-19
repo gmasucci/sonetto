@@ -1,0 +1,112 @@
+\section{Sonetto::FontSerializer Class Reference}
+\label{class_sonetto_1_1_font_serializer}\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+{\tt \#include $<$SonettoFontSerializer.h$>$}
+
+\subsection*{Public Member Functions}
+\begin{CompactItemize}
+\item 
+{\bf FontSerializer} ()
+\item 
+virtual {\bf $\sim$FontSerializer} ()
+\item 
+void {\bf exportFont} (const {\bf Font} $\ast$pFont, const Ogre::String \&fileName, Ogre::Serializer::Endian endianMode=ENDIAN\_\-NATIVE)
+\item 
+void {\bf importFont} (Ogre::DataStreamPtr \&stream, {\bf Font} $\ast$pDest)
+\end{CompactItemize}
+\subsection*{Protected Member Functions}
+\begin{CompactItemize}
+\item 
+void {\bf readMain} (DataStreamPtr \&stream, {\bf Font} $\ast$pFont)
+\item 
+void {\bf readGlyph} (DataStreamPtr \&stream, {\bf Font} $\ast$pFont)
+\item 
+void {\bf readColor} (DataStreamPtr \&stream, {\bf Font} $\ast$pFont)
+\item 
+void {\bf writeMain} (const {\bf Font} $\ast$pFont)
+\item 
+void {\bf writeGlyph} (const {\bf Font} $\ast$pFont, size\_\-t glyph\_\-id)
+\item 
+void {\bf writeColor} (const {\bf Font} $\ast$pFont, size\_\-t color\_\-id)
+\item 
+virtual size\_\-t {\bf calcMainSize} (const {\bf Font} $\ast$pFont)
+\item 
+virtual size\_\-t {\bf calcGlyphSize} (const {\bf Font} $\ast$pFont)
+\item 
+virtual size\_\-t {\bf calcColorSize} (const {\bf Font} $\ast$pFont)
+\end{CompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!FontSerializer@{FontSerializer}}
+\index{FontSerializer@{FontSerializer}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}Sonetto::FontSerializer::FontSerializer ()}\label{class_sonetto_1_1_font_serializer_c676f4902985a557d8313224bcd56106}
+
+
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!$\sim$FontSerializer@{$\sim$FontSerializer}}
+\index{$\sim$FontSerializer@{$\sim$FontSerializer}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual Sonetto::FontSerializer::$\sim$FontSerializer ()\hspace{0.3cm}{\tt  [virtual]}}\label{class_sonetto_1_1_font_serializer_c592d01f55eed385a462dc18dfedd79c}
+
+
+
+
+\subsection{Member Function Documentation}
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!exportFont@{exportFont}}
+\index{exportFont@{exportFont}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::FontSerializer::exportFont (const {\bf Font} $\ast$ {\em pFont}, const Ogre::String \& {\em fileName}, Ogre::Serializer::Endian {\em endianMode} = {\tt ENDIAN\_\-NATIVE})}\label{class_sonetto_1_1_font_serializer_6dc7b1b58f0368323f078fe71b13a6a6}
+
+
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!importFont@{importFont}}
+\index{importFont@{importFont}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::FontSerializer::importFont (Ogre::DataStreamPtr \& {\em stream}, {\bf Font} $\ast$ {\em pDest})}\label{class_sonetto_1_1_font_serializer_6bab6053a3eccce093de265c8aab9af4}
+
+
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!readMain@{readMain}}
+\index{readMain@{readMain}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::FontSerializer::readMain (DataStreamPtr \& {\em stream}, {\bf Font} $\ast$ {\em pFont})\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_font_serializer_1bc0db28fcb511312d80f557b179675e}
+
+
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!readGlyph@{readGlyph}}
+\index{readGlyph@{readGlyph}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::FontSerializer::readGlyph (DataStreamPtr \& {\em stream}, {\bf Font} $\ast$ {\em pFont})\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_font_serializer_d682f84543774cef3fd8d85ac15ec99a}
+
+
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!readColor@{readColor}}
+\index{readColor@{readColor}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::FontSerializer::readColor (DataStreamPtr \& {\em stream}, {\bf Font} $\ast$ {\em pFont})\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_font_serializer_f72d41bc4e9e7cef6fc2908d2ae51fce}
+
+
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!writeMain@{writeMain}}
+\index{writeMain@{writeMain}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::FontSerializer::writeMain (const {\bf Font} $\ast$ {\em pFont})\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_font_serializer_909129052a50cc7c69cc16240b62684a}
+
+
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!writeGlyph@{writeGlyph}}
+\index{writeGlyph@{writeGlyph}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::FontSerializer::writeGlyph (const {\bf Font} $\ast$ {\em pFont}, size\_\-t {\em glyph\_\-id})\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_font_serializer_038fc163bf38dd92d2a4f7a1de052e94}
+
+
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!writeColor@{writeColor}}
+\index{writeColor@{writeColor}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void Sonetto::FontSerializer::writeColor (const {\bf Font} $\ast$ {\em pFont}, size\_\-t {\em color\_\-id})\hspace{0.3cm}{\tt  [protected]}}\label{class_sonetto_1_1_font_serializer_4d110f1dc99b5c70042dad01fcefc6c7}
+
+
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!calcMainSize@{calcMainSize}}
+\index{calcMainSize@{calcMainSize}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual size\_\-t Sonetto::FontSerializer::calcMainSize (const {\bf Font} $\ast$ {\em pFont})\hspace{0.3cm}{\tt  [protected, virtual]}}\label{class_sonetto_1_1_font_serializer_e56c9731ea910f4c5af382b39938a011}
+
+
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!calcGlyphSize@{calcGlyphSize}}
+\index{calcGlyphSize@{calcGlyphSize}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual size\_\-t Sonetto::FontSerializer::calcGlyphSize (const {\bf Font} $\ast$ {\em pFont})\hspace{0.3cm}{\tt  [protected, virtual]}}\label{class_sonetto_1_1_font_serializer_6cdc32131c0c2063f65efae6d85d3d69}
+
+
+\index{Sonetto::FontSerializer@{Sonetto::FontSerializer}!calcColorSize@{calcColorSize}}
+\index{calcColorSize@{calcColorSize}!Sonetto::FontSerializer@{Sonetto::FontSerializer}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}virtual size\_\-t Sonetto::FontSerializer::calcColorSize (const {\bf Font} $\ast$ {\em pFont})\hspace{0.3cm}{\tt  [protected, virtual]}}\label{class_sonetto_1_1_font_serializer_c8b81b2d54200a152677a778b7b6071a}
+
+
+
+
+The documentation for this class was generated from the following file:\begin{CompactItemize}
+\item 
+C:/Yoasakura/Projects/SonettoDevLab/include/{\bf SonettoFontSerializer.h}\end{CompactItemize}
