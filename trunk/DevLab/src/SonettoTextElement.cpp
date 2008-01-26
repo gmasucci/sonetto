@@ -251,7 +251,7 @@ namespace Sonetto
         size_t temp = 0;
         for (; itr != iend;)
         {
-            if (max_len != 0 && temp > max_len) // If max_len is not equal to zero and temp is higher or equal to max len...
+            if (max_len != 0 && temp >= max_len) // If max_len is not equal to zero and temp is higher or equal to max len...
             {
                 break; // If max_lend is not equal zero, it means that it reached the limit imposed by the user
             }
