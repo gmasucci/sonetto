@@ -31,7 +31,7 @@ http://www.gnu.org/copyleft/lesser.txt
 namespace Sonetto
 {
     using namespace Ogre;
-    /** @brief This is a class that stores the font data.
+    /** @brief This is a class that stores the texture font data.
     *
     * This class is used to set up a Font Texture for use with Sonetto::SonettoTextElement.
     */
