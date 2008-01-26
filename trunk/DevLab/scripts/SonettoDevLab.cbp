@@ -7,9 +7,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="..\bin\Debug\SonettoDevLab" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="..\bin\Debug\" />
-				<Option object_output="..\obj\Debug\" />
+				<Option output="..\..\BIN\DEBUG\SonettoDevLab" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\BIN\DEBUG\" />
+				<Option object_output="..\..\BIN\OBJ\DEBUG\SonettoDevLab.exe" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -22,8 +22,9 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="..\bin\Release\SonettoDevLab" prefix_auto="1" extension_auto="1" />
-				<Option object_output="..\obj\Release\" />
+				<Option output="..\..\BIN\RELEASE\SonettoDevLab" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\..\BIN\RELEASE\" />
+				<Option object_output="..\..\BIN\OBJ\RELEASE\" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -58,16 +59,22 @@
 		<Unit filename="..\include\SonettoFontManager.h" />
 		<Unit filename="..\include\SonettoFontSerializer.h" />
 		<Unit filename="..\include\SonettoMain.h" />
+		<Unit filename="..\include\SonettoSTR.h" />
+		<Unit filename="..\include\SonettoSTRManager.h" />
+		<Unit filename="..\include\SonettoSTRSerializer.h" />
 		<Unit filename="..\include\SonettoSlimWindow.h" />
 		<Unit filename="..\include\SonettoTailedWindow.h" />
 		<Unit filename="..\include\SonettoTextElement.h" />
 		<Unit filename="..\include\SonettoTextFactory.h" />
 		<Unit filename="..\include\SonettoWindow.h" />
-		<Unit filename="..\include\old\CustomPanelElement.h" />
+		<Unit filename="..\include\SonettoWindowFactory.h" />
 		<Unit filename="..\main.cpp" />
 		<Unit filename="..\src\SonettoFont.cpp" />
 		<Unit filename="..\src\SonettoFontManager.cpp" />
 		<Unit filename="..\src\SonettoFontSerializer.cpp" />
+		<Unit filename="..\src\SonettoSTR.cpp" />
+		<Unit filename="..\src\SonettoSTRManager.cpp" />
+		<Unit filename="..\src\SonettoSTRSerializer.cpp" />
 		<Unit filename="..\src\SonettoSlimWindow.cpp" />
 		<Unit filename="..\src\SonettoTailedWindow.cpp" />
 		<Unit filename="..\src\SonettoTextElement.cpp" />

@@ -38,7 +38,7 @@ namespace Sonetto
     void STRSerializer::exportSTR(const STRData *pSTR, const Ogre::String &fileName, Ogre::Serializer::Endian endianMode)
     {
         // Decide on endian mode
-		determineEndianness(endianMode);
+		Serializer::determineEndianness(endianMode);
 
 		mpfFile = fopen(fileName.c_str(), "wb");
 		if (!mpfFile)
@@ -57,10 +57,13 @@ namespace Sonetto
             writeString(pSTR->mMessageList[i]);
         }
 
+        fclose(mpfFile);
+
     }
     void STRSerializer::importSTR(Ogre::DataStreamPtr &stream, STRData *pDest)
     {
         // Determine endianness (must be the first thing we do!)
+        std::cout<<"STREAM TELL(): "<<stream->tell()<<"\nEntering on determineEndianness(stream);\n";
 		determineEndianness(stream);
 
 		// Check header
@@ -74,6 +77,7 @@ namespace Sonetto
             {
                 case 0xFFFF:
                     pDest->mMessageList.push_back(readString(stream));
+                    std::cout<<"Message:\n"<<pDest->mMessageList.back()<<"\n";
                 break;
             }
         }

@@ -35,6 +35,8 @@ namespace Sonetto
 {
     using namespace Ogre;
 #define DEFAULT_INITIAL_CHARS 12
+#define NEW_LINE_CHARACTER 0x0D
+#define TEXT_COMMAND 0x5E
     String TextElement::msTypeName = "Text";
     TextElement::TextElement(const String& name)
             : OverlayElement(name)
@@ -50,9 +52,9 @@ namespace Sonetto
         mUseFadeOut = true;
         mSkipWhiteSpaces = false;
         mAnimationActive = false;
-        mAnimSpeed = 1.0f;
+        mAnimSpeed = 10.0f;
         mDefAnimSpeed = mAnimSpeed;
-        mFadeSpeed = 3.0f;
+        mFadeSpeed = 0.5f;
         if (createParamDictionary("Text"))
         {
             addBaseParameters();
@@ -99,6 +101,16 @@ namespace Sonetto
         mGeomPositionsOutOfDate = true;
         mGeomUVsOutOfDate = true;
     }
+    void TextElement::setCaption(const Ogre::String * text)
+    {
+        mCaption = *text;
+        mStringSize = getStrSize(mCaption, 0);
+        checkMemoryAllocation(mStringSize);
+        allocateFadeList(mStringSize);
+        forceAnimReset();
+        mGeomPositionsOutOfDate = true;
+        mGeomUVsOutOfDate = true;
+    }
     void TextElement::setFont(FontPtr font)
     {
         mFontPtr = font;
@@ -128,9 +140,19 @@ namespace Sonetto
     }
     void TextElement::forceAnimEnd()
     {
+        if(mAnimationActive)
+        {
+            mStrCursorPosition = mStringSize;
+            updatePositionGeometry();
+            mGeomPositionsOutOfDate = false;
+        }
     }
     void TextElement::forceAnimReset()
     {
+        mStrCursorPosition = 0;
+        mDifference = 0.0f;
+        allocateFadeList(mStringSize);
+        updatePositionGeometry();
     }
     const String& TextElement::getTypeName(void) const
     {
@@ -146,14 +168,16 @@ namespace Sonetto
     }
     void TextElement::_update(void)
     {
+        Ogre::ControllerValueRealPtr tmpFTV = Ogre::ControllerManager::getSingleton().getFrameTimeSource();
+        mTimeSinceLastFrame = tmpFTV->getValue();
         Real vpWidth, vpHeight;
         vpWidth = (Real) (OverlayManager::getSingleton().getViewportWidth());
         vpHeight = (Real) (OverlayManager::getSingleton().getViewportHeight());
         mViewportAspectCoef = vpWidth/vpHeight;
+
         if (mIsAnimated)
-        {
             animate();
-        }
+
         OverlayElement::_update();
     }
     void TextElement::allocateFadeList(size_t size)
@@ -168,24 +192,22 @@ namespace Sonetto
     {
         if (mInitialised)
         {
-            if (mStrCursorPosition < mStringSize)
-            {
-                if (deleteme > 1)
-                {
-                    ++mStrCursorPosition;
-                    deleteme = 0;
-                }
-                ++deleteme;
-                mAnimationActive = true;
-            }
-            else
-            {
-                mStrCursorPosition = 0;
-                mAnimationActive = false;
-                allocateFadeList(mStringSize);
-            }
+            mDifference += mAnimSpeed * mTimeSinceLastFrame;
+            mStrCursorPosition = mDifference;
+
+            std::cout<<"Anim. Speed: "<<mAnimSpeed<<"\nCalc: "<<mDifference<<"\nSTR CURSOR POS.: "<<mStrCursorPosition<<"\nAlpha: "<< mFadeList[mStrCursorPosition] <<"\n";
+            std::cout<<"mStringSize: "<<mStringSize<<"\n";
+
+            if(mStrCursorPosition > mStringSize);
+                //forceAnimReset();
+
+
+
+            mAnimationActive = true;
+
             if (mAnimationActive)
                 mGeomPositionsOutOfDate = true;
+
         }
     }
     void TextElement::checkMemoryAllocation(size_t num_chars)
@@ -233,9 +255,9 @@ namespace Sonetto
             {
                 break; // If max_lend is not equal zero, it means that it reached the limit imposed by the user
             }
-            while (*itr == 0x00 || *itr == 0x0A || *itr == '^')
+            while (*itr == 0x00 || *itr == NEW_LINE_CHARACTER || *itr == TEXT_COMMAND)
             {
-                if (*itr == 0x0A)
+                if (*itr == NEW_LINE_CHARACTER)
                 {
                     ++itr; // It's a New Line character, just skip it
                 }
@@ -247,7 +269,7 @@ namespace Sonetto
                 {
                     ++itr; // It's a Null character, if Skip White Spaces is enabled, skip it then.
                 }
-                while (*itr == '^')
+                while (*itr == TEXT_COMMAND)
                 {
                     ++itr;
                     if (*itr == 'c')
@@ -315,21 +337,21 @@ namespace Sonetto
         itr = mCaption.begin();
         for ( size_t cur = 0; cur < t_curPos; ++cur)
         {
-            while (*itr == 0x00 || *itr == 0x0A || *itr == '^')
+            while (*itr == 0x00 || *itr == NEW_LINE_CHARACTER || *itr == TEXT_COMMAND)
             {
                 if (*itr == 0x00)
                 {
                     ++itr;
                     continue;
                 }
-                if (*itr == 0x0A)
+                if (*itr == NEW_LINE_CHARACTER)
                 {
                     txtPosY -= 2.0 * mTextSize;
                     txtPosX = _getDerivedLeft() * 2.0 - 1.0;
                     ++itr;
                     continue;
                 }
-                if (*itr == '^')
+                if (*itr == TEXT_COMMAND)
                 {
                     ++itr;
                     if (*itr == 'c')
@@ -451,12 +473,15 @@ namespace Sonetto
             *pDest++ = color_cursor;
             *pDest++ = color_cursor;
             *pDest++ = color_cursor;
-            fade_alpha += mFadeSpeed * 0.012f;
+            fade_alpha += mFadeSpeed * mTimeSinceLastFrame;
             if (fade_alpha > 1.0f)
             {
                 fade_alpha = 1.0f;
             }
             mFadeList[cur] = fade_alpha;
+
+            std::cout<<*itr;
+
             ++itr;
         }
         c_vbuf->unlock();

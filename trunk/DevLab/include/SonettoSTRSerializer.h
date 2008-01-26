@@ -34,7 +34,7 @@ namespace Sonetto
         STRSerializer();
         ~STRSerializer();
 
-        void exportSTR(const STRData *pSTR, const Ogre::String &fileName, Ogre::Serializer::Endian endianMode = ENDIAN_NATIVE);
+        void exportSTR(const STRData *pSTR, const Ogre::String &fileName, Ogre::Serializer::Endian endianMode = Ogre::Serializer::ENDIAN_NATIVE);
         void importSTR(Ogre::DataStreamPtr &stream, STRData *pDest);
     };
 

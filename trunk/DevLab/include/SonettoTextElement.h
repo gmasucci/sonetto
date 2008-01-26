@@ -24,6 +24,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #define SONETTOTEXTELEMENT_H_INCLUDED
 
 #include <OgreOverlayElement.h>
+#include <OgreControllerManager.h>
 #include "SonettoMain.h"
 #include "SonettoFontManager.h"
 namespace Sonetto
@@ -39,6 +40,8 @@ namespace Sonetto
 
         virtual void initialise(void);
         virtual void setCaption(const std::string& text); // From OverlayElement
+
+        virtual void setCaption(const Ogre::String * text);
 
         void setFont(FontPtr font);
         FontPtr getFont();
@@ -73,6 +76,9 @@ namespace Sonetto
         size_t mStrCursorPosition; // Current cursor position on text animation
         Real mTextSize; // Text size on the screen
         ColourValue mCurTextColor; // The current text color, used for printing
+
+        Ogre::Real mTimeSinceLastFrame;
+        Ogre::Real mDifference;
 
         // Viewport settings
         Real mViewportAspectCoef; // Viewport aspect coefficient
