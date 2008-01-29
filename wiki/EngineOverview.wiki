@@ -1,9 +1,7 @@
 #summary Top-level abstraction of the concepts behind Sonetto.
 
-= Introduction =
-
-Add your content here.
-
+= A word of thanks before beginning =
+Sonetto, as being an attempt to proof that even us, amateurs, can and should act as professionals, will have it's bases quite similar to [http://q-gears.sourceforge.net/ Q-Gears], another RPG Engine, which is based on Square's Final Fantasy 7. That said, thanks to them. It is already being really helpful to us.
 
 = Details =
 
