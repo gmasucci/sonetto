@@ -3,9 +3,5 @@
 = A word of thanks before beginning =
 Sonetto, as being an attempt to proof that even us, amateurs, can and should act as professionals, will have it's bases quite similar to [http://q-gears.sourceforge.net/ Q-Gears], another RPG Engine, which is based on Square's Final Fantasy 7. That said, thanks to them. It is already being really helpful to us.
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+= The Engine's heart =
+Sonetto will have many distinctly coded modules, which act together when glued by the Kernel. The Kernel is a singleton, which is a container for everything in the Engine. It is the entrypoint of the game, and will be composed by the list of modules and managers. These managers will be something like an "API" for the modules. Calls to it's methods will have sequences of posterior calls to Ogre3D methods, which will change the game world. They will straighten Ogre3D to be more friendly with RPGs. As Managers defines the game world appearance(visual, sound, and so on), the Modules will change the game behaviour. That is, they will be the ones who, based on the given scripts, call the manager's methods, giving life to the world.
