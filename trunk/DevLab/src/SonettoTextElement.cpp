@@ -52,7 +52,7 @@ namespace Sonetto
         mUseFadeOut = true;
         mSkipWhiteSpaces = false;
         mAnimationActive = false;
-        mAnimSpeed = 10.0f;
+        mAnimSpeed = 20.0f;
         mDefAnimSpeed = mAnimSpeed;
         mFadeSpeed = 0.5f;
         if (createParamDictionary("Text"))
@@ -193,13 +193,10 @@ namespace Sonetto
         if (mInitialised)
         {
             mDifference += mAnimSpeed * mTimeSinceLastFrame;
-            mStrCursorPosition = mDifference;
+            mStrCursorPosition = (size_t) mDifference;
 
-            std::cout<<"Anim. Speed: "<<mAnimSpeed<<"\nCalc: "<<mDifference<<"\nSTR CURSOR POS.: "<<mStrCursorPosition<<"\nAlpha: "<< mFadeList[mStrCursorPosition] <<"\n";
-            std::cout<<"mStringSize: "<<mStringSize<<"\n";
-
-            if(mStrCursorPosition > mStringSize);
-                //forceAnimReset();
+            if(mStrCursorPosition > mStringSize && mFadeList[mStrCursorPosition-1] >= 1.0f)
+                forceAnimReset();
 
 
 
@@ -297,9 +294,15 @@ namespace Sonetto
         float *pVert;
         size_t t_curPos = 0;
         if (mIsAnimated)
-            t_curPos = getStrSize(mCaption, mStrCursorPosition);
+        {
+            if(mStrCursorPosition)
+                t_curPos = getStrSize(mCaption, mStrCursorPosition);
+            else
+                t_curPos = 0;
+        }
         else
             t_curPos = mStringSize;
+
         checkMemoryAllocation(t_curPos); // Allocate the memory to the text
         // Write the text to the screen
         mRenderOp.vertexData->vertexCount = t_curPos * 6;
@@ -365,25 +368,25 @@ namespace Sonetto
 
                             size_t pos = pos1 - 1;
                             if (c == '0')
-                                id += 0 * pow( 10, pos );
+                                id += 0 * (size_t) pow( 10, pos );
                             if (c == '1')
-                                id += 1 * pow( 10, pos );
+                                id += 1 * (size_t) pow( 10, pos );
                             if (c == '2')
-                                id += 2 * pow( 10, pos );
+                                id += 2 * (size_t) pow( 10, pos );
                             if (c == '3')
-                                id += 3 * pow( 10, pos );
+                                id += 3 * (size_t) pow( 10, pos );
                             if (c == '4')
-                                id += 4 * pow( 10, pos );
+                                id += 4 * (size_t) pow( 10, pos );
                             if (c == '5')
-                                id += 5 * pow( 10, pos );
+                                id += 5 * (size_t) pow( 10, pos );
                             if (c == '6')
-                                id += 6 * pow( 10, pos );
+                                id += 6 * (size_t) pow( 10, pos );
                             if (c == '7')
-                                id += 7 * pow( 10, pos );
+                                id += 7 * (size_t) pow( 10, pos );
                             if (c == '8')
-                                id += 8 * pow( 10, pos );
+                                id += 8 * (size_t) pow( 10, pos );
                             if (c == '9')
-                                id += 9 * pow( 10, pos );
+                                id += 9 * (size_t) pow( 10, pos );
                             ++itr;
                         }
                         mCurTextColor = mFontPtr->mColorList[id];
@@ -479,8 +482,6 @@ namespace Sonetto
                 fade_alpha = 1.0f;
             }
             mFadeList[cur] = fade_alpha;
-
-            std::cout<<*itr;
 
             ++itr;
         }
