@@ -3,7 +3,19 @@
 = A word of thanks before beginning =
 Sonetto, as being an attempt to proof that even us, amateurs, can and should act as professionals, will have it's bases quite similar to [http://q-gears.sourceforge.net/ Q-Gears], another RPG Engine, which is based on Square's Final Fantasy 7. That said, thanks to them. It is already being really helpful to us.
 
-= The Engine's heart =
+= The Engine's heart: Kernel =
 Sonetto will have many distinctly coded modules, which act together when glued by the Kernel. The Kernel is a singleton, which is a container for everything in the Engine. It is the entrypoint of the game, and will be composed by the list of modules and managers. These managers will be something like an "API" for the modules. Calls to it's methods will have sequences of posterior calls to Ogre3D methods, which will change the game world. They will straighten Ogre3D to be more friendly with RPGs. As Managers defines the game world appearance(visual, sound, and so on), the Modules will change the game behaviour. That is, they will be the ones who, based on the given scripts, call the manager's methods, giving life to the world.
 
-The Kernel will have a stack containing Modules, but only the last one pushed will actually be updated. This is somehow a method of pausing the unused Modules. There is no need to save it somewhere else, you just stop updating, and it'll freeze. When you want it back up running, you just need to restart updating it. Yet only doing that would be a little messy. A Module must get it's SceneManager out of the way for the new one and other things like this. So the Kernel will call the top Module's halt() method, before taking it off the stack top and putting the new one. Also, it will call the new Module's enter() method when this one is already on the stack top. When a Module feels it's job is over, it just need to ask Kernel to be popped out. Doing that will call the top Module's exit(), so that it can cleanly exit. Remember that this is a bit different from halting, because the Module will be deallocated just after it. Halting would just pause and some time after wakeup() the Module. exit() may be correctly seen as a safe-destructor. The constructors and destructors aren't safe because they will be called before any Kernel preparation. When one wanted to push a new method in the Kernel's stack, one would need to allocate it before, and maybe the constructor would require that it is already correctly placed on the stack top. By using the enter() method, one would be able to allocate the Module, without actually initializing it. The destructor would only be called by the Kernel, but anyway... The exit() method is just to keep code symmetry.
+The Kernel will have a stack object, containing it's loaded Modules, but only the last one receives updates. That's a way of pausing the others, by the time being unused, Modules. But the Kernel won't simply start/stop updating Modules. There are ways prepare them to this starting/stopping. These ways are shown in the next section.
+
+= Modules =
+A Module is an abstract thing to talk about. It has five methods, plus the constructor and destructor. Each of these methods will get called by the Kernel, and they inform the Module what is currently happening. It's quite simple to push a Module to the stack top(that way activating this new and halting the old one):
+{{{
+Module *newModule = new Module();
+
+KERNEL->pushModule(newModule,true);
+}}}
+
+This piece of code would call the stack's top halt() method, place the new module on the top, and call this new module's enter(). The second argument, here set to true, defaults to false. Setting it to false would cause the Kernel to call the old module's exit() method, pop it out of the stack and deallocate it. When halting is used, the old Module remains in memory, and will only be updated again when it assumes back the top of the stack. When a Module thinks it's time to say bye-bye, it just needs to call Kernel::popModule();, which would call the Module's exit() method, deallocate it and pull it out of the stack. After doing that, the old Module would be on top, so the Kernel calls for it's wakeup(), restarting the update cycle.
+
+That's all 'till now.
