@@ -1597,3 +1597,163 @@
 	"SonettoSTR.h"
 	<OgreException.h>
 
+1201393079 source:c:\yoasakura\projects\newsonettosvn\devlab\src\sonettofont.cpp
+	"SonettoFont.h"
+	"SonettoFontSerializer.h"
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettofont.h
+	<OgreResourceManager.h>
+	<OgreMaterialManager.h>
+	<OgreTextureManager.h>
+	<OgreTechnique.h>
+	"SonettoMain.h"
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettomain.h
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettofontserializer.h
+	<OgreSerializer.h>
+
+1201393080 source:c:\yoasakura\projects\newsonettosvn\devlab\src\sonettofontmanager.cpp
+	"SonettoFontManager.h"
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettofontmanager.h
+	<OgreResourceManager.h>
+	"SonettoFont.h"
+
+1201393080 source:c:\yoasakura\projects\newsonettosvn\devlab\src\sonettofontserializer.cpp
+	"SonettoFontSerializer.h"
+	"SonettoFont.h"
+
+1201393080 source:c:\yoasakura\projects\newsonettosvn\devlab\src\sonettostr.cpp
+	"SonettoSTR.h"
+	"SonettoSTRSerializer.h"
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettostr.h
+	<vector>
+	<OgrePrerequisites.h>
+	<OgreResourceManager.h>
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettostrserializer.h
+	<OgreSerializer.h>
+
+1201393079 source:c:\yoasakura\projects\newsonettosvn\devlab\src\sonettostrmanager.cpp
+	"SonettoSTRManager.h"
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettostrmanager.h
+	<OgreResourceManager.h>
+	"SonettoSTR.h"
+
+1201393079 source:c:\yoasakura\projects\newsonettosvn\devlab\src\sonettostrserializer.cpp
+	"SonettoSTRSerializer.h"
+	"SonettoSTR.h"
+	<OgreException.h>
+
+1201393080 source:c:\yoasakura\projects\newsonettosvn\devlab\src\sonettoslimwindow.cpp
+	"SonettoSlimWindow.h"
+	<OgreStableHeaders.h>
+	<OgreOverlayManager.h>
+	<OgreMaterial.h>
+	<OgreMaterialManager.h>
+	<OgreTechnique.h>
+	<OgrePass.h>
+	<OgreStringConverter.h>
+	<OgreHardwareBufferManager.h>
+	<OgreRoot.h>
+	<OgreRenderSystem.h>
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettoslimwindow.h
+	<OgreOverlayContainer.h>
+	<OgreVector2.h>
+	"SonettoMain.h"
+
+1201393080 source:c:\yoasakura\projects\newsonettosvn\devlab\src\sonettotailedwindow.cpp
+	"SonettoTailedWindow.h"
+	<OgreStableHeaders.h>
+	<OgreOverlayManager.h>
+	<OgreMaterial.h>
+	<OgreMaterialManager.h>
+	<OgreTechnique.h>
+	<OgrePass.h>
+	<OgreStringConverter.h>
+	<OgreHardwareBufferManager.h>
+	<OgreRoot.h>
+	<OgreRenderSystem.h>
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettotailedwindow.h
+	<OgreOverlayContainer.h>
+	<OgreVector2.h>
+	"SonettoMain.h"
+
+1201574429 source:c:\yoasakura\projects\newsonettosvn\devlab\src\sonettotextelement.cpp
+	<OgreStableHeaders.h>
+	"SonettoTextElement.h"
+	<OgreRoot.h>
+	<OgreLogManager.h>
+	<OgreOverlayManager.h>
+	<OgreHardwareBufferManager.h>
+	<OgreHardwareVertexBuffer.h>
+	<OgreException.h>
+	<OgreStringConverter.h>
+	"SonettoFont.h"
+	"SonettoFontManager.h"
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettotextelement.h
+	<OgreOverlayElement.h>
+	<OgreControllerManager.h>
+	"SonettoMain.h"
+	"SonettoFontManager.h"
+
+1201393080 source:c:\yoasakura\projects\newsonettosvn\devlab\src\sonettowindow.cpp
+	"SonettoWindow.h"
+	<OgreStableHeaders.h>
+	<OgreOverlayManager.h>
+	<OgreMaterial.h>
+	<OgreMaterialManager.h>
+	<OgreTechnique.h>
+	<OgrePass.h>
+	<OgreStringConverter.h>
+	<OgreHardwareBufferManager.h>
+	<OgreRoot.h>
+	<OgreRenderSystem.h>
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettowindow.h
+	<OgreOverlayContainer.h>
+	<OgreVector2.h>
+	"SonettoMain.h"
+
+1201846242 source:c:\yoasakura\projects\newsonettosvn\devlab\main.cpp
+	<Ogre.h>
+	<OgreConfigFile.h>
+	<OIS/OIS.h>
+	"Kernel.h"
+	"Module.h"
+	"windows.h"
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettowindowfactory.h
+	<OgreOverlayElementFactory.h>
+	"SonettoWindow.h"
+	"SonettoTailedWindow.h"
+	"SonettoSlimWindow.h"
+
+1201392981 c:\yoasakura\projects\newsonettosvn\devlab\include\sonettotextfactory.h
+	<Ogre.h>
+	<OgrePrerequisites.h>
+	<OgreOverlayElement.h>
+	"SonettoTextElement.h"
+
+1201847265 c:\yoasakura\projects\newsonettosvn\devlab\include\kernel.h
+	<Ogre.h>
+	<stack>
+	"Module.h"
+
+1201846527 c:\yoasakura\projects\newsonettosvn\devlab\include\module.h
+	"Kernel.h"
+
+1201846530 source:c:\yoasakura\projects\newsonettosvn\devlab\src\kernel.cpp
+	<Ogre.h>
+	"Kernel.h"
+
+1201847261 source:c:\yoasakura\projects\newsonettosvn\devlab\src\module.cpp
+	<Ogre.h>
+	"Module.h"
+
