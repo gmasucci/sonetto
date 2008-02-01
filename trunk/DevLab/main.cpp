@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
 This source file is part of Sonetto RPG Engine.
 
-Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme PrÃ¡ Vieira
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Prá Vieira
 
 
 Sonetto RPG Engine is free software: you can redistribute it and/or modify
@@ -34,9 +34,9 @@ class TestModule2 : public Sonetto::Module {
 public:
     TestModule2(){}
     ~TestModule2(){}
-    
+
     int counter;
-    
+
     void enter() {
         Sonetto::Module::enter();
         mKernel->mViewport->setBackgroundColour(Ogre::ColourValue(0,0,1));
@@ -44,14 +44,14 @@ public:
     }
     void update(Ogre::Real timedelta) {
         ++counter;
-        
-        if(counter >= 300)
+
+        if(counter >= 100)
             mKernel->popModule();
     }
     void exit() {
         Sonetto::Module::exit();
     }
-    
+
     void halt() {
         Sonetto::Module::halt();
     }
@@ -64,30 +64,30 @@ class TestModule : public Sonetto::Module {
 public:
     TestModule(){}
     ~TestModule(){}
-    
+
     int counter;
-    
+
     void enter() {
         Sonetto::Module::enter();
         mKernel->mViewport->setBackgroundColour(Ogre::ColourValue(1,0,0));
-        
+
         counter =0;
     }
     void update(Ogre::Real timedelta) {
-    
+
     ++counter;
-    
-    if(counter >= 300)
+
+    if(counter >= 100)
         mKernel->pushModule(new TestModule2(), true);
-    
+
     }
     void exit() {
         Sonetto::Module::exit();
     }
-    
+
     void halt() {
         Sonetto::Module::halt();
-        
+
         counter = 0;
     }
     void wakeup() {

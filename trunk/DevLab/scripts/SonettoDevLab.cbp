@@ -69,6 +69,8 @@
 		<Unit filename="..\include\SonettoWindow.h" />
 		<Unit filename="..\include\SonettoWindowFactory.h" />
 		<Unit filename="..\main.cpp" />
+		<Unit filename="..\src\Kernel.cpp" />
+		<Unit filename="..\src\Module.cpp" />
 		<Unit filename="..\src\SonettoFont.cpp" />
 		<Unit filename="..\src\SonettoFontManager.cpp" />
 		<Unit filename="..\src\SonettoFontSerializer.cpp" />

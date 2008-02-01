@@ -1721,7 +1721,7 @@
 	<OgreVector2.h>
 	"SonettoMain.h"
 
-1201846242 source:c:\yoasakura\projects\newsonettosvn\devlab\main.cpp
+1201852904 source:c:\yoasakura\projects\newsonettosvn\devlab\main.cpp
 	<Ogre.h>
 	<OgreConfigFile.h>
 	<OIS/OIS.h>
@@ -1741,12 +1741,12 @@
 	<OgreOverlayElement.h>
 	"SonettoTextElement.h"
 
-1201847265 c:\yoasakura\projects\newsonettosvn\devlab\include\kernel.h
+1201851370 c:\yoasakura\projects\newsonettosvn\devlab\include\kernel.h
 	<Ogre.h>
 	<stack>
 	"Module.h"
 
-1201846527 c:\yoasakura\projects\newsonettosvn\devlab\include\module.h
+1201851371 c:\yoasakura\projects\newsonettosvn\devlab\include\module.h
 	"Kernel.h"
 
 1201846530 source:c:\yoasakura\projects\newsonettosvn\devlab\src\kernel.cpp
