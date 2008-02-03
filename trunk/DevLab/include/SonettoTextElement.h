@@ -39,9 +39,10 @@ namespace Sonetto
         virtual ~TextElement();
 
         virtual void initialise(void);
-        virtual void setCaption(const std::string& text); // From OverlayElement
+        virtual void setCaption(const Ogre::String & text); // From OverlayElement
+        void setMessage(const Ogre::String & text); // From OverlayElement
 
-        virtual void setCaption(const Ogre::String * text);
+        //virtual void setCaption(const Ogre::String * text);
 
         void setFont(FontPtr font);
         FontPtr getFont();
@@ -66,6 +67,7 @@ namespace Sonetto
         // Text data
         std::string mCaption; // Actual text
         std::vector<Real> mFadeList; // Fade list
+        Ogre::Real mFadeLevel;
 
         RenderOperation mRenderOp;// Render operation
         FontPtr mFontPtr; // Font pointer
@@ -96,7 +98,7 @@ namespace Sonetto
         Real mFadeSpeed; // Speed wich the text will fade on the screen
 
         /// Member Functions
-        void allocateFadeList(size_t size); // Allocate the fade list
+        void allocateFadeList(size_t size, float value = 0.0f); // Allocate the fade list
         void animate(); // Function used to manage the text animation
         void checkMemoryAllocation(size_t num_chars); // Internal method to allocate memory, only reallocates when necessary
         void phraseText(); // Phrase the text and generate the display text and event flags

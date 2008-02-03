@@ -44,7 +44,6 @@ public:
     }
     void update(Ogre::Real timedelta) {
         ++counter;
-
         if(counter >= 100)
             mKernel->popModule();
     }

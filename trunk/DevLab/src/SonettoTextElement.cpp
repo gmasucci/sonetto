@@ -55,10 +55,8 @@ namespace Sonetto
         mAnimSpeed = 20.0f;
         mDefAnimSpeed = mAnimSpeed;
         mFadeSpeed = 0.5f;
-        if (createParamDictionary("Text"))
-        {
-            addBaseParameters();
-        }
+        mFadeLevel = 1.0f;
+        initialise();
     }
     TextElement::~TextElement()
     {
@@ -91,7 +89,7 @@ namespace Sonetto
             mInitialised = true;
         }
     }
-    void TextElement::setCaption(const std::string& text)
+    void TextElement::setCaption(const Ogre::String& text)
     {
         mCaption = text;
         mStringSize = getStrSize(mCaption, 0);
@@ -101,9 +99,9 @@ namespace Sonetto
         mGeomPositionsOutOfDate = true;
         mGeomUVsOutOfDate = true;
     }
-    void TextElement::setCaption(const Ogre::String * text)
+    void TextElement::setMessage(const Ogre::String& text)
     {
-        mCaption = *text;
+        mCaption = text;
         mStringSize = getStrSize(mCaption, 0);
         checkMemoryAllocation(mStringSize);
         allocateFadeList(mStringSize);
@@ -111,6 +109,17 @@ namespace Sonetto
         mGeomPositionsOutOfDate = true;
         mGeomUVsOutOfDate = true;
     }
+    /*void TextElement::setCaption(const Ogre::String * text)
+    {
+        mCaption = *text;
+        mStringSize = getStrSize(mCaption, 0);
+        checkMemoryAllocation(mStringSize);
+        allocateFadeList(mStringSize);
+        if(mIsAnimated)
+            forceAnimReset();
+        mGeomPositionsOutOfDate = true;
+        mGeomUVsOutOfDate = true;
+    }*/
     void TextElement::setFont(FontPtr font)
     {
         mFontPtr = font;
@@ -140,7 +149,7 @@ namespace Sonetto
     }
     void TextElement::forceAnimEnd()
     {
-        if(mAnimationActive)
+        if(mAnimationActive && mIsAnimated)
         {
             mStrCursorPosition = mStringSize;
             updatePositionGeometry();
@@ -149,10 +158,13 @@ namespace Sonetto
     }
     void TextElement::forceAnimReset()
     {
-        mStrCursorPosition = 0;
-        mDifference = 0.0f;
-        allocateFadeList(mStringSize);
-        updatePositionGeometry();
+        if(mIsAnimated)
+        {
+            mStrCursorPosition = 0;
+            mDifference = 0.0f;
+            allocateFadeList(mStringSize);
+            updatePositionGeometry();
+        }
     }
     const String& TextElement::getTypeName(void) const
     {
@@ -180,7 +192,7 @@ namespace Sonetto
 
         OverlayElement::_update();
     }
-    void TextElement::allocateFadeList(size_t size)
+    void TextElement::allocateFadeList(size_t size, float value)
     {
         mFadeList.clear();
         for (size_t i = 0; i <= size; ++i)
@@ -235,6 +247,7 @@ namespace Sonetto
                        HardwareBuffer::HBU_DYNAMIC_WRITE_ONLY);
             bind->setBinding(1, vbuf);
             mAllocSize = num_chars;
+
         }
     }
     void TextElement::phraseText()
@@ -301,7 +314,9 @@ namespace Sonetto
                 t_curPos = 0;
         }
         else
+        {
             t_curPos = mStringSize;
+        }
 
         checkMemoryAllocation(t_curPos); // Allocate the memory to the text
         // Write the text to the screen
@@ -416,7 +431,12 @@ namespace Sonetto
                 }
                 continue;
             }
-            fade_alpha = mFadeList[cur];
+            if(mUseFadeIn)
+            {
+                fade_alpha = mFadeList[cur];
+            } else {
+                fade_alpha = mFadeLevel;
+            }
             // Start by updating the geometry and textures
             GlyphStruct glyphData = mFontPtr->glyphs[static_cast<unsigned char>(*itr)];
             // each vert is (x, y, z, u, v, r, g, b, a)
@@ -476,12 +496,16 @@ namespace Sonetto
             *pDest++ = color_cursor;
             *pDest++ = color_cursor;
             *pDest++ = color_cursor;
-            fade_alpha += mFadeSpeed * mTimeSinceLastFrame;
-            if (fade_alpha > 1.0f)
+            
+            if(mUseFadeIn)
             {
-                fade_alpha = 1.0f;
+                fade_alpha += mFadeSpeed * mTimeSinceLastFrame;
+                if (fade_alpha > 1.0f)
+                {
+                    fade_alpha = 1.0f;
+                }
+                mFadeList[cur] = fade_alpha;
             }
-            mFadeList[cur] = fade_alpha;
 
             ++itr;
         }

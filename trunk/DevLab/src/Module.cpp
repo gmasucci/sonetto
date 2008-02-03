@@ -25,7 +25,8 @@ http://www.gnu.org/copyleft/lesser.txt
 
 namespace Sonetto {
     void Module::enter() {
-        mKernel->mWindow->removeAllViewports();
+        if(mKernel->mWindow->getNumViewports() != 0)
+            mKernel->mWindow->removeAllViewports();
         // Create the scene manager for this module.
         mSceneMan = mKernel->mRoot->createSceneManager(Ogre::ST_GENERIC);
         mCamera = mSceneMan->createCamera(Ogre::StringUtil::BLANK);
@@ -35,7 +36,8 @@ namespace Sonetto {
     }
 
     void Module::exit() {
-        mKernel->mWindow->removeAllViewports();
+        if(mKernel->mWindow->getNumViewports() != 0)
+            mKernel->mWindow->removeAllViewports();
         mSceneMan->clearScene();
         mSceneMan->destroyCamera(mCamera);
         mKernel->mRoot->destroySceneManager(mSceneMan);
@@ -43,11 +45,13 @@ namespace Sonetto {
     }
 
     void Module::halt() {
-        mKernel->mWindow->removeAllViewports();
+        if(mKernel->mWindow->getNumViewports() != 0)
+            mKernel->mWindow->removeAllViewports();
     }
 
     void Module::wakeup() {
-        mKernel->mWindow->removeAllViewports();
+        if(mKernel->mWindow->getNumViewports() != 0)
+            mKernel->mWindow->removeAllViewports();
         mKernel->mViewport = mKernel->mWindow->addViewport(mCamera);
         mKernel->mViewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
         mCamera->setAspectRatio(Ogre::Real(mKernel->mViewport->getActualWidth()) / Ogre::Real(mKernel->mViewport->getActualHeight()));
