@@ -22,6 +22,6 @@ This piece of code would call the stack's top halt() method, place the new modul
 = Managers =
 The Managers, contrary to the Modules, are real members of the Kernel. They aren't inside any vector, but are variables which reside within the Kernel. Also, they're all updated on each loop. They're vital to the Modules' survival and to the used libraries maintenance. Here follows a list of Managers and a brief description:
 
-|| InputManager || Talks with OIS to provide keyboard's and joysticks' input ||
+|| InputManager || Talks with OIS to provide keyboard and joystick input (Sonetto won't support a Mouse) ||
 
 That's all 'till now.
