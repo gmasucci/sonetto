@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
 This source file is part of Sonetto RPG Engine.
 
-Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr· Vieira
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr√° Vieira
 
 
 Sonetto RPG Engine is free software: you can redistribute it and/or modify
@@ -314,26 +314,27 @@ namespace Sonetto
         if(mScrMetricsMode == SMM_RELATIVE)
             mAspect = 1.0f;
 
-        if (mScrMetricsMode == SMM_RELATIVE_ASPECT_ADJUSTED)
-            mAspect = mAspectRatio;
 
+        
         for (size_t i = 0; i < mRenderOp.vertexData->vertexCount; ++i)
         {
             *pPos++ = ((mPosCoord[i].x * (mAspect * 2)) - mAspect);
             *pPos++ = -(mPosCoord[i].y * 2) + 1;
             *pPos++ = zValue;
         }
+        
         vbuf->unlock();
         vbuf = mRenderOp2.vertexData->vertexBufferBinding->getBuffer(POSITION_BINDING);
         float * pBorderPos = static_cast<float*>(
                                  vbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD) );
-
+        
         for (size_t i = 0; i < mRenderOp2.vertexData->vertexCount; ++i)
         {
             *pBorderPos++ = ((mPosCoord[i].x * (mAspect * 2)) - mAspect);
             *pBorderPos++ = -(mPosCoord[i].y * 2) + 1;
             *pBorderPos++ = zValue;
         }
+        
         vbuf->unlock();
     }
     void Window::updateTextureGeometry(void)

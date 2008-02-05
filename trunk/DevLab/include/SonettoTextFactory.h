@@ -24,25 +24,31 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include <Ogre.h>
 #include <OgrePrerequisites.h>
+#include <OgreOverlayElement.h>
 #include <OgreOverlayElementFactory.h>
 #include "SonettoTextElement.h"
+
 namespace Sonetto
 {
-    class TextElementFactory: public Ogre::OverlayElementFactory
+    using namespace Ogre;
+
+    /** Factory for creating CustomTextElement instances. */
+    class TextElementFactory: public OverlayElementFactory
     {
     public:
         /** See OverlayElementFactory */
-        Ogre::OverlayElement* createOverlayElement(const Ogre::String& instanceName)
+        OverlayElement* createOverlayElement(const String& instanceName)
         {
-            return new TextElement(instanceName);
+            return new Sonetto::TextElement(instanceName);
         }
         /** See OverlayElementFactory */
-        const Ogre::String& getTypeName(void) const
+        const String& getTypeName(void) const
         {
-            static Ogre::String name = "Text";
+            static String name = "Text";
             return name;
         }
     };
 
 } // namespace
+
 #endif // SONETTOTEXTFACTORY_H_INCLUDED

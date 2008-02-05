@@ -27,13 +27,13 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <OIS/OIS.h>
 //#include "CustomPanelElementFactory.h"
 
-#include "Kernel.h"
-#include "Module.h"
+#include "SonettoKernel.h"
+#include "SonettoModule.h"
 
 class TestModule2 : public Sonetto::Module {
 public:
-    TestModule2(){}
-    ~TestModule2(){}
+    TestModule2() {}
+    ~TestModule2() {}
 
     int counter;
 
@@ -43,8 +43,7 @@ public:
         counter = 0;
     }
     void update(Ogre::Real timedelta) {
-        ++counter;
-        if(counter >= 100)
+        if (mKernel->mInputMan->getButtonState(1,Sonetto::BTN_R3) == Sonetto::KS_RELEASE)
             mKernel->popModule();
     }
     void exit() {
@@ -61,24 +60,25 @@ public:
 
 class TestModule : public Sonetto::Module {
 public:
-    TestModule(){}
-    ~TestModule(){}
+    TestModule() {}
+    ~TestModule() {}
 
     int counter;
 
     void enter() {
         Sonetto::Module::enter();
+        assert(mKernel);
+        assert(mKernel->mViewport);
         mKernel->mViewport->setBackgroundColour(Ogre::ColourValue(1,0,0));
 
         counter =0;
     }
     void update(Ogre::Real timedelta) {
 
-    ++counter;
+        ++counter;
 
-    if(counter >= 100)
-        mKernel->pushModule(new TestModule2(), true);
-
+        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_CROSS) == Sonetto::KS_PRESS)
+            mKernel->pushModule(new TestModule2(), true);
     }
     void exit() {
         Sonetto::Module::exit();
@@ -103,16 +103,14 @@ INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
 int main(int argc, char **argv)
 #endif
 {
-    TestModule * mTestModule = new TestModule();
+    Sonetto::KERNEL = new Sonetto::Kernel();
+    TestModule *mTestModule = new TestModule();
     // Create application object
-    try
-    {
+    try {
         Sonetto::KERNEL->initialise();
-        Sonetto::KERNEL->pushModule(mTestModule, false);
+        Sonetto::KERNEL->pushModule(mTestModule,false);
         Sonetto::KERNEL->run();
-    }
-    catch ( Exception& e )
-    {
+    } catch ( Exception& e ) {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
         MessageBox( NULL, e.getFullDescription().c_str(), "An exception has occured!", MB_OK | MB_ICONERROR | MB_TASKMODAL);
 #else

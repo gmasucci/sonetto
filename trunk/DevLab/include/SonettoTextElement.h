@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
 This source file is part of Sonetto RPG Engine.
 
-Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr· Vieira
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr√° Vieira
 
 
 Sonetto RPG Engine is free software: you can redistribute it and/or modify
@@ -77,6 +77,7 @@ namespace Sonetto
         size_t mStringSize; // String size (both string and event flags must be the same size)
         size_t mStrCursorPosition; // Current cursor position on text animation
         Real mTextSize; // Text size on the screen
+        Real mNewLineSize; // Text new line size relative to the mTextSize
         ColourValue mCurTextColor; // The current text color, used for printing
 
         Ogre::Real mTimeSinceLastFrame;
@@ -84,6 +85,9 @@ namespace Sonetto
 
         // Viewport settings
         Real mViewportAspectCoef; // Viewport aspect coefficient
+        
+        // Screen Metrics Mode
+        ScreenMetricsMode mScrMetricsMode;
 
         // Animation settings
         bool mIsAnimated; // 0 - Show all at once, 1 - Show letter by letter

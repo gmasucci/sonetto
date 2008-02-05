@@ -45,6 +45,7 @@ namespace Sonetto
         mStringSize = 0;
         mStrCursorPosition = 0;
         mTextSize = 0.1f;
+        mNewLineSize = 1.0f;
         mCurTextColor = ColourValue::White;
         mViewportAspectCoef = 1.0f;
         mIsAnimated = true;
@@ -56,6 +57,7 @@ namespace Sonetto
         mDefAnimSpeed = mAnimSpeed;
         mFadeSpeed = 0.5f;
         mFadeLevel = 1.0f;
+        mScrMetricsMode = SMM_RELATIVE_ASPECT_ADJUSTED;
         initialise();
     }
     TextElement::~TextElement()
@@ -182,10 +184,12 @@ namespace Sonetto
     {
         Ogre::ControllerValueRealPtr tmpFTV = Ogre::ControllerManager::getSingleton().getFrameTimeSource();
         mTimeSinceLastFrame = tmpFTV->getValue();
-        Real vpWidth, vpHeight;
-        vpWidth = (Real) (OverlayManager::getSingleton().getViewportWidth());
-        vpHeight = (Real) (OverlayManager::getSingleton().getViewportHeight());
-        mViewportAspectCoef = vpWidth/vpHeight;
+        Ogre::Real vpWidth, vpHeight;
+        vpWidth = (Ogre::Real) (Ogre::OverlayManager::getSingleton().getViewportWidth());
+        vpHeight = (Ogre::Real) (Ogre::OverlayManager::getSingleton().getViewportHeight());
+        Ogre::Real tmpVPAspectCoef = vpHeight/vpWidth;
+
+        mViewportAspectCoef = tmpVPAspectCoef;
 
         if (mIsAnimated)
             animate();
@@ -334,22 +338,60 @@ namespace Sonetto
         RGBA color_cursor;
         Real fade_alpha;
         mCurTextColor = mFontPtr->mColorList[0];
-        Real txtPosX = _getDerivedLeft() * 2.0 - 1.0;
-        Real txtPosY = -( (_getDerivedTop() * 2.0 ) - 1.0 );
+
+        Real view_ratio = 1.0f;
+
+        if(SMM_RELATIVE_ASPECT_ADJUSTED)
+            view_ratio = mViewportAspectCoef;
+
+
+        Real txtPosX,o_txtPosX;
+        Real txtPosY,o_txtPosY;
+
+        switch(mScrMetricsMode)
+        {
+        case SMM_RELATIVE:
+        o_txtPosX = _getDerivedLeft() * 2.0f - 1.0f;
+        o_txtPosY = -( (_getDerivedTop() * 2.0f ) - 1.0f );
+        break;
+        case SMM_RELATIVE_ASPECT_ADJUSTED:
+        o_txtPosX = _getDerivedLeft() * (2.0 * view_ratio) - view_ratio;
+        o_txtPosY = -( (_getDerivedTop() * 2.0 ) - 1.0f );
+        break;
+        }
+
+        txtPosX = o_txtPosX;
+        txtPosY = o_txtPosY;
+
         // Text Square Value
         Real square[8];
         // Top Left
+        if(mScrMetricsMode == SMM_RELATIVE_ASPECT_ADJUSTED)
+        {
         square[0] = 0.0f;
         square[1] = 0.0f;
         // Top Right
-        square[2] = ((2.0f /  mViewportAspectCoef) * mTextSize);
+        square[2] = ((2.0f *  view_ratio) * mTextSize);
         square[3] = 0.0f;
         // Bottom Left
         square[4] = 0.0f;
         square[5] = (2.0f * mTextSize);
         // Bottom Right
-        square[6] = ((2.0f /  mViewportAspectCoef) * mTextSize);
+        square[6] = ((2.0f *  view_ratio) * mTextSize);
         square[7] = (2.0f * mTextSize);
+        } else {
+        square[0] = 0.0f;
+        square[1] = 0.0f;
+        // Top Right
+        square[2] = (2.0f * mTextSize);
+        square[3] = 0.0f;
+        // Bottom Left
+        square[4] = 0.0f;
+        square[5] = (2.0f * mTextSize);
+        // Bottom Right
+        square[6] = (2.0f * mTextSize);
+        square[7] = (2.0f * mTextSize);
+        }
         // Loop drawing each letter for this frame
         std::string::iterator itr;
         itr = mCaption.begin();
@@ -364,8 +406,9 @@ namespace Sonetto
                 }
                 if (*itr == NEW_LINE_CHARACTER)
                 {
-                    txtPosY -= 2.0 * mTextSize;
-                    txtPosX = _getDerivedLeft() * 2.0 - 1.0;
+                    txtPosY -= 2.0 * (mTextSize * mNewLineSize);
+
+                    txtPosX = o_txtPosX;
                     ++itr;
                     continue;
                 }
@@ -484,7 +527,16 @@ namespace Sonetto
             *pVert++ = glyphData.texcoord3.x;
             *pVert++ = glyphData.texcoord3.y;
             //-------------------------------------------------------------------------------------
-            txtPosX += ((glyphData.x_offset / mViewportAspectCoef) *2.0) * mTextSize;
+            switch(mScrMetricsMode)
+            {
+                case SMM_RELATIVE:
+                    txtPosX += (glyphData.x_offset * 2.0f) * mTextSize;
+                break;
+                case SMM_RELATIVE_ASPECT_ADJUSTED:
+                    txtPosX += ((glyphData.x_offset * view_ratio) * 2.0f) * mTextSize;
+                break;
+            }
+
             mCurTextColor.a = fade_alpha;
             Root::getSingleton().convertColourValue(mCurTextColor, &color_cursor);
             // Now update the colors
@@ -496,7 +548,7 @@ namespace Sonetto
             *pDest++ = color_cursor;
             *pDest++ = color_cursor;
             *pDest++ = color_cursor;
-            
+
             if(mUseFadeIn)
             {
                 fade_alpha += mFadeSpeed * mTimeSinceLastFrame;
