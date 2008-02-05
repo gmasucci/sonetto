@@ -26,25 +26,26 @@ http://www.gnu.org/copyleft/lesser.txt
 using namespace std;
 
 namespace Sonetto {
-    bool InputManager::initialise(Ogre::RenderWindow *win,KeyConfig kc[MAX_JOY]) {
+    bool InputManager::initialise(Ogre::RenderWindow *win,KeyConfig kc[MAX_PLAYERS]) {
         if (!mInitialised) {
             // Setup OIS (alternative way)
             size_t hWnd = 0;
             win->getCustomAttribute("WINDOW",&hWnd);
             mInputManager = OIS::InputManager::createInputSystem(hWnd);
 
-            // Create a keyboard handler and a MAX_JOY number of joystick handlers
+            // Create a keyboard handler and a joystick handler for each joystick plugged in
             mKeyboard = static_cast<OIS::Keyboard *>(mInputManager->createInputObject(OIS::OISKeyboard,false));
-            for (Ogre::uint8 i = 0; i < MAX_JOY; ++i) {
+            for (int i = 0 ;i < mInputManager->getNumberOfDevices(OIS::OISJoyStick);++i) {
                 try {
-                    mJoy[i] = static_cast<OIS::JoyStick *>(mInputManager->createInputObject(OIS::OISJoyStick,false));
+                    mJoy.push_back(static_cast<OIS::JoyStick *>(mInputManager->createInputObject(OIS::OISJoyStick,false)));
                 } catch (...) {
-                    mJoy[i] = 0;
+                    mJoy[i] = NULL;
                 }
             }
-
+            mJoyItrEnd = mJoy.end();
+            
             // Copy the supplied configuration
-            memcpy(mKeyConfig,kc,sizeof(KeyConfig)*MAX_JOY);
+            memcpy(mKeyConfig,kc,sizeof(KeyConfig)*MAX_PLAYERS);
 
             // We're set
             mInitialised = true;
@@ -60,8 +61,8 @@ namespace Sonetto {
             if (mInputManager) {
                 // Destroy the Keyboard handler and every Joystick handler
                 mInputManager->destroyInputObject(mKeyboard);
-                for (Ogre::uint8 i = 0;i < MAX_JOY;++i)
-                    mInputManager->destroyInputObject(mJoy[i]);
+                for (mJoyItr = mJoy.begin();mJoyItr != mJoyItrEnd;++mJoyItr)
+                    mInputManager->destroyInputObject(*mJoyItr);
 
                 // Destroy OIS
                 OIS::InputManager::destroyInputSystem(mInputManager);
@@ -88,12 +89,15 @@ namespace Sonetto {
 
     void InputManager::updateInput() {
         // Capture Input
-        for (Ogre::uint8 playerID = 0;playerID < MAX_JOY;++playerID) {
-            if(!mJoy[playerID])
+        for (Ogre::uint8 playerID = 0;playerID < MAX_PLAYERS;++playerID) {
+            if(mKeyConfig[playerID].inputDevice > 0 && !playerPlugged(playerID))
                 continue;
 
-            if (mKeyboard)      mKeyboard->capture();
-            if (mJoy[playerID]) mJoy[playerID]->capture();
+            if (mKeyboard)
+                mKeyboard->capture();
+            
+            if (mKeyConfig[playerID].inputDevice > 0)
+                mJoy[mKeyConfig[playerID].inputDevice-1]->capture();
 
             // Update button states
             for (int i = 0;i < 16;++i) {
@@ -225,8 +229,8 @@ namespace Sonetto {
     } // e !!      :-)
 
     void InputManager::setKeyConfig(Ogre::uint8 playerID,KeyConfig *kc) {
-        assert(kc);                 // No NULLs here !
-        assert(playerID < MAX_JOY); // Don't exceed the maximum player number
+        assert(kc);                     // No NULLs here !
+        assert(playerID < MAX_PLAYERS); // Don't exceed the maximum player number
 
         memcpy(&mKeyConfig[playerID],kc,sizeof(mKeyConfig[playerID]));
     }
@@ -235,9 +239,17 @@ namespace Sonetto {
         return &mKeyConfig[playerID];
     }
 
-    bool InputManager::playerExists(Ogre::uint8 playerID) {
-        assert(playerID < MAX_JOY); // Don't exceed the maximum player number
-
+    bool InputManager::playerPlugged(Ogre::uint8 playerID) {
+        assert(playerID < MAX_PLAYERS); // Don't exceed the maximum player number
+        
+        // Device 0 is a Keyboard
+        if(mKeyConfig[playerID].inputDevice == 0)
+            return (mKeyboard != NULL);
+        
+        // If out of controller vector bounds, the controller is not plugged
+        if(mKeyConfig[playerID].inputDevice-1 >= mJoy.size())
+            return false;
+        
         return (mJoy[mKeyConfig[playerID].inputDevice-1] != NULL);
     }
 };

@@ -107,8 +107,12 @@ int main(int argc, char **argv)
     TestModule *mTestModule = new TestModule();
     // Create application object
     try {
-        Sonetto::KERNEL->initialise();
+        if(!Sonetto::KERNEL->initialise())
+            printf("Failed initialising Kernel.\n");
+        
         Sonetto::KERNEL->pushModule(mTestModule,false);
+        
+        printf("Kernel->run()!\n");
         Sonetto::KERNEL->run();
     } catch ( Exception& e ) {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32

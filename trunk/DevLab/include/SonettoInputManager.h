@@ -30,7 +30,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <OIS/OIS.h>
 
 namespace Sonetto {
-    const Ogre::uint8 MAX_JOY = 4;
+    const Ogre::uint8 MAX_PLAYERS = 4;
 
     enum BUTTON {
         BTN_TRIANGLE    = 0x00,
@@ -92,20 +92,22 @@ namespace Sonetto {
         void           setKeyConfig(Ogre::uint8 playerID, KeyConfig *kc);
         KeyConfig     *getKeyConfig(Ogre::uint8 playerID);
 
-        bool           playerExists(Ogre::uint8 playerID);
+        bool           playerPlugged(Ogre::uint8 playerID);
         KEYSTATE       getButtonState(Ogre::uint8 playerID, BUTTON btn);
         Ogre::Vector2  getAxis(Ogre::uint8 playerID, AXIS axis);
 
     protected:
-        // OIS devices (mouse is evil from hell)
-        OIS::InputManager               *mInputManager;
-        OIS::Keyboard                   *mKeyboard;
-        OIS::JoyStick                   *mJoy[MAX_JOY];
+        // OIS devices (RPG Games don't need mouse support, bwahahaha)
+        OIS::InputManager                       *mInputManager;
+        OIS::Keyboard                           *mKeyboard;
+        std::vector<OIS::JoyStick *>            mJoy;
+        std::vector<OIS::JoyStick *>::iterator  mJoyItr;
+        std::vector<OIS::JoyStick *>::iterator  mJoyItrEnd;
 
         bool mInitialised;
 
-        KeyStates mKeyStates[MAX_JOY];
-        KeyConfig mKeyConfig[MAX_JOY];
+        KeyStates mKeyStates[MAX_PLAYERS];
+        KeyConfig mKeyConfig[MAX_PLAYERS];
     };
 }
 ; // namespace

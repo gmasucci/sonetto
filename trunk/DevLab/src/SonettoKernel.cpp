@@ -161,7 +161,7 @@ namespace Sonetto {
             mDebugText->show();
 
             // No controller plugged in
-            if (!mInputMan->playerExists(0)) {
+            if (!mInputMan->playerPlugged(0)) {
                 // Create
                 mDebugErrorText = static_cast<TextElement*>(mOverlayMan->createOverlayElement("Text","DEBUG_NOCONTROLLER_TEXT"));
                 mDebugOverlayContainer->addChild(mDebugErrorText);
