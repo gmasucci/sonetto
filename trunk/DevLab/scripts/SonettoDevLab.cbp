@@ -46,19 +46,22 @@
 			<Add option="-fident" />
 			<Add option="-DWIN32" />
 			<Add option="-D_WINDOWS" />
-			<Add directory="C:\Work\CVS-OgreHEAD\ogrenew\OgreMain\include\" />
+			<Add directory="$(OGRE_HOME)\OgreMain\include\" />
 			<Add directory="..\include" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
 			<Add option="-Wl,--enable-auto-image-base" />
 			<Add option="-Wl,--add-stdcall-alias" />
-			<Add directory="C:\Work\CVS-OgreHEAD\ogrenew\lib\" />
+			<Add directory="$(OGRE_HOME)\lib\" />
 		</Linker>
 		<Unit filename="..\include\SonettoFont.h" />
 		<Unit filename="..\include\SonettoFontManager.h" />
 		<Unit filename="..\include\SonettoFontSerializer.h" />
+		<Unit filename="..\include\SonettoInputManager.h" />
+		<Unit filename="..\include\SonettoKernel.h" />
 		<Unit filename="..\include\SonettoMain.h" />
+		<Unit filename="..\include\SonettoModule.h" />
 		<Unit filename="..\include\SonettoSTR.h" />
 		<Unit filename="..\include\SonettoSTRManager.h" />
 		<Unit filename="..\include\SonettoSTRSerializer.h" />
@@ -69,11 +72,12 @@
 		<Unit filename="..\include\SonettoWindow.h" />
 		<Unit filename="..\include\SonettoWindowFactory.h" />
 		<Unit filename="..\main.cpp" />
-		<Unit filename="..\src\Kernel.cpp" />
-		<Unit filename="..\src\Module.cpp" />
 		<Unit filename="..\src\SonettoFont.cpp" />
 		<Unit filename="..\src\SonettoFontManager.cpp" />
 		<Unit filename="..\src\SonettoFontSerializer.cpp" />
+		<Unit filename="..\src\SonettoInputManager.cpp" />
+		<Unit filename="..\src\SonettoKernel.cpp" />
+		<Unit filename="..\src\SonettoModule.cpp" />
 		<Unit filename="..\src\SonettoSTR.cpp" />
 		<Unit filename="..\src\SonettoSTRManager.cpp" />
 		<Unit filename="..\src\SonettoSTRSerializer.cpp" />
@@ -85,10 +89,10 @@
 			<code_completion />
 			<envvars />
 			<debugger>
-				<remote_debugging target="Release">
+				<remote_debugging target="Debug">
 					<options conn_type="0" serial_port="" serial_baud="115200" ip_address="" ip_port="" additional_cmds="" />
 				</remote_debugging>
-				<remote_debugging target="Debug">
+				<remote_debugging target="Release">
 					<options conn_type="0" serial_port="" serial_baud="115200" ip_address="" ip_port="" additional_cmds="" />
 				</remote_debugging>
 			</debugger>

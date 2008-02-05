@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="..\include\SonettoFont.h" open="0" top="0" tabpos="3">
 		<Cursor position="1063" topLine="42" />
 	</File>
@@ -28,26 +28,20 @@
 	<File name="..\include\SonettoTailedWindow.h" open="0" top="0" tabpos="2">
 		<Cursor position="6831" topLine="0" />
 	</File>
-	<File name="..\include\SonettoTextElement.h" open="1" top="0" tabpos="3">
+	<File name="..\include\SonettoTextElement.h" open="1" top="0" tabpos="2">
 		<Cursor position="1846" topLine="32" />
 	</File>
-	<File name="..\include\SonettoTextFactory.h" open="1" top="1" tabpos="5">
-		<Cursor position="1227" topLine="16" />
+	<File name="..\include\SonettoTextFactory.h" open="1" top="1" tabpos="3">
+		<Cursor position="1227" topLine="13" />
 	</File>
 	<File name="..\include\SonettoWindow.h" open="0" top="0" tabpos="2">
 		<Cursor position="7137" topLine="0" />
 	</File>
-	<File name="..\include\SonettoWindowFactory.h" open="1" top="0" tabpos="7">
+	<File name="..\include\SonettoWindowFactory.h" open="1" top="0" tabpos="4">
 		<Cursor position="1311" topLine="35" />
 	</File>
 	<File name="..\main.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="3020" topLine="9" />
-	</File>
-	<File name="..\src\Kernel.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="5723" topLine="109" />
-	</File>
-	<File name="..\src\Module.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="0" topLine="32" />
 	</File>
 	<File name="..\src\SonettoFont.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="2286" topLine="48" />
@@ -73,7 +67,7 @@
 	<File name="..\src\SonettoTailedWindow.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="54510" topLine="0" />
 	</File>
-	<File name="..\src\SonettoTextElement.cpp" open="1" top="0" tabpos="2">
+	<File name="..\src\SonettoTextElement.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="5025" topLine="125" />
 	</File>
 	<File name="..\src\SonettoWindow.cpp" open="0" top="0" tabpos="4">

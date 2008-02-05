@@ -327,7 +327,7 @@
 	"OgreStringVector.h"
 	"OgreScriptLoader.h"
 
-1196962448 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogreresource.h
+1202179259 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogreresource.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreSharedPtr.h"
@@ -344,7 +344,7 @@
 	<vector>
 	<map>
 
-1200446160 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogreresourcegroupmanager.h
+1202179260 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogreresourcegroupmanager.h
 	"OgrePrerequisites.h"
 	"OgreSingleton.h"
 	"OgreCommon.h"
@@ -432,7 +432,7 @@
 	"OgrePrerequisites.h"
 	"OgreColourValue.h"
 
-1198775376 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogregpuprogram.h
+1202179259 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogregpuprogram.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreSharedPtr.h"
@@ -540,13 +540,13 @@
 	"OgreString.h"
 	"OgreTexture.h"
 
-1197139047 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogretexture.h
+1202179260 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogretexture.h
 	"OgrePrerequisites.h"
 	"OgreHardwareBuffer.h"
 	"OgreResource.h"
 	"OgreImage.h"
 
-1189003024 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogreimage.h
+1202179259 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogreimage.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgrePixelFormat.h"
@@ -596,7 +596,7 @@
 	"OgreHardwareIndexBuffer.h"
 	"OgreRenderOperation.h"
 
-1163778327 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogreskeleton.h
+1202179260 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogreskeleton.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreQuaternion.h"
@@ -948,7 +948,7 @@
 	"OgrePrerequisites.h"
 	"OgreRenderTarget.h"
 
-1198433202 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogreresourcebackgroundqueue.h
+1202179260 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogreresourcebackgroundqueue.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreSingleton.h"
@@ -1008,7 +1008,7 @@
 	"OgreRenderOperation.h"
 	"OgrePlaneBoundedVolume.h"
 
-1194469709 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogreautoparamdatasource.h
+1202179259 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogreautoparamdatasource.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreMatrix4.h"
@@ -1110,7 +1110,7 @@
 	"OgreTexture.h"
 	"OgreRenderQueue.h"
 
-1182121008 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogrecompositiontechnique.h
+1202179259 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ogrecompositiontechnique.h
 	"OgrePrerequisites.h"
 	"OgrePixelFormat.h"
 	"OgreIteratorWrappers.h"
@@ -1760,4 +1760,161 @@
 1202034196 source:c:\yoasakura\projects\newsonettosvn\devlab\src\module.cpp
 	<Ogre.h>
 	"Module.h"
+
+1202175896 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettofont.cpp
+	"SonettoFont.h"
+	"SonettoFontSerializer.h"
+
+1202175888 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettofont.h
+	<OgreResourceManager.h>
+	<OgreMaterialManager.h>
+	<OgreTextureManager.h>
+	<OgreTechnique.h>
+	"SonettoMain.h"
+
+1202175882 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettomain.h
+
+1202175886 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettofontserializer.h
+	<OgreSerializer.h>
+
+1202175905 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettofontmanager.cpp
+	"SonettoFontManager.h"
+
+1202175886 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettofontmanager.h
+	<OgreResourceManager.h>
+	"SonettoFont.h"
+
+1202175904 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettofontserializer.cpp
+	"SonettoFontSerializer.h"
+	"SonettoFont.h"
+
+1202175898 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettostr.cpp
+	"SonettoSTR.h"
+	"SonettoSTRSerializer.h"
+
+1202175889 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettostr.h
+	<vector>
+	<OgrePrerequisites.h>
+	<OgreResourceManager.h>
+
+1202175886 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettostrserializer.h
+	<OgreSerializer.h>
+
+1202175895 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettostrmanager.cpp
+	"SonettoSTRManager.h"
+
+1202175887 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettostrmanager.h
+	<OgreResourceManager.h>
+	"SonettoSTR.h"
+
+1202175895 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettostrserializer.cpp
+	"SonettoSTRSerializer.h"
+	"SonettoSTR.h"
+	<OgreException.h>
+
+1202175902 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettoslimwindow.cpp
+	"SonettoSlimWindow.h"
+	<OgreStableHeaders.h>
+	<OgreOverlayManager.h>
+	<OgreMaterial.h>
+	<OgreMaterialManager.h>
+	<OgreTechnique.h>
+	<OgrePass.h>
+	<OgreStringConverter.h>
+	<OgreHardwareBufferManager.h>
+	<OgreRoot.h>
+	<OgreRenderSystem.h>
+
+1202175884 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettoslimwindow.h
+	<OgreOverlayContainer.h>
+	<OgreVector2.h>
+	"SonettoMain.h"
+
+1202175900 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettotailedwindow.cpp
+	"SonettoTailedWindow.h"
+	<OgreStableHeaders.h>
+	<OgreOverlayManager.h>
+	<OgreMaterial.h>
+	<OgreMaterialManager.h>
+	<OgreTechnique.h>
+	<OgrePass.h>
+	<OgreStringConverter.h>
+	<OgreHardwareBufferManager.h>
+	<OgreRoot.h>
+	<OgreRenderSystem.h>
+
+1202210150 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettotailedwindow.h
+	<OgreOverlayContainer.h>
+	<OgreVector2.h>
+	<OgreResourceManager.h>
+	"SonettoMain.h"
+
+1202175904 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettotextelement.cpp
+	<OgreStableHeaders.h>
+	"SonettoTextElement.h"
+	<OgreRoot.h>
+	<OgreLogManager.h>
+	<OgreOverlayManager.h>
+	<OgreHardwareBufferManager.h>
+	<OgreHardwareVertexBuffer.h>
+	<OgreException.h>
+	<OgreStringConverter.h>
+	"SonettoFont.h"
+	"SonettoFontManager.h"
+
+1202175885 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettotextelement.h
+	<OgreOverlayElement.h>
+	<OgreControllerManager.h>
+	"SonettoMain.h"
+	"SonettoFontManager.h"
+
+1202175898 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettowindow.cpp
+	"SonettoWindow.h"
+	<OgreStableHeaders.h>
+	<OgreOverlayManager.h>
+	<OgreMaterial.h>
+	<OgreMaterialManager.h>
+	<OgreTechnique.h>
+	<OgrePass.h>
+	<OgreStringConverter.h>
+	<OgreHardwareBufferManager.h>
+	<OgreRoot.h>
+	<OgreRenderSystem.h>
+
+1202175888 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettowindow.h
+	<OgreOverlayContainer.h>
+	<OgreVector2.h>
+	"SonettoMain.h"
+
+1202210151 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\main.cpp
+	<Ogre.h>
+	<OgreConfigFile.h>
+	<OIS/OIS.h>
+	"SonettoKernel.h"
+	"SonettoModule.h"
+	"windows.h"
+
+1202180844 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettokernel.h
+	<Ogre.h>
+	<OgreVector2.h>
+	<stack>
+	"SonettoInputManager.h"
+	"SonettoModule.h"
+	"SonettoFontSerializer.h"
+	"SonettoFontManager.h"
+	"SonettoTextFactory.h"
+
+1202210150 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettoinputmanager.h
+	<Ogre.h>
+	<OIS/OIS.h>
+
+1202210289 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettomodule.h
+	"SonettoKernel.h"
+
+1202175889 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettotextfactory.h
+	<Ogre.h>
+	<OgrePrerequisites.h>
+	<OgreOverlayElement.h>
+	<OgreOverlayElementFactory.h>
+	"SonettoTextElement.h"
 
