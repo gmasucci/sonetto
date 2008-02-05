@@ -23,6 +23,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #define SONETTO_TAILEDWINDOW_H_
 #include <OgreOverlayContainer.h>
 #include <OgreVector2.h>
+#include <OgreResourceManager.h>
 #include "SonettoMain.h"
 namespace Sonetto
 {
