@@ -2,13 +2,12 @@
 
 = A word of thanks before beginning =
 Sonetto, as being an attempt to proof that even us, amateurs, can and should act as professionals, will have it's bases quite similar to [http://q-gears.sourceforge.net/ Q-Gears], another RPG Engine, which is based on Square's Final Fantasy 7. That said, thanks to them. It is already being really helpful to us.
+Also a great thanks to the Ogre3D, OIS and OpenAL teams, and all the Open Source community. Without them we wouldn't even think about the possibility of doing real code.
 
 = The Engine's heart: Kernel =
-Sonetto will have many distinctly coded modules, which act together when glued by the Kernel. The Kernel is a singleton, which is a container for everything in the Engine. It is the entrypoint of the game, and will be composed by the list of modules and managers. These managers will be something like an "API" for the modules. Calls to it's methods will have sequences of posterior calls to Ogre3D methods, which will change the game world. They will straighten Ogre3D to be more friendly with RPGs. As Managers defines the game world appearance(visual, sound, and so on), the Modules will change the game behaviour. That is, they will be the ones who, based on the given scripts, call the manager's methods, giving life to the world.
+Sonetto will have many distinctly coded modules, which act together when glued by the Kernel. The Kernel is a globally accessible pointer(Sonetto::KERNEL), which is a container for everything in the Engine. It is the entrypoint of the game, and will be composed by the list of modules and managers. These managers will be something like an "API" for the modules. Calls to it's methods will have sequences of posterior calls to Ogre3D methods, which will change the game world. They will straighten Ogre3D to be more friendly with RPGs. As Managers defines the game world appearance(visual, sound, and so on), the Modules will change the game behaviour. That is, they will be the ones who, based on the given scripts, call the manager's methods, giving life to the world.
 
 The Kernel will have a stack object, containing it's loaded Modules, but only the last one receives updates. That's a way of pausing the others, by the time being unused, Modules. But the Kernel won't simply start/stop updating Modules. There are ways to prepare them to this starting/stopping. These ways are shown in the next section.
-
-Also is Kernel's job to handle the game input, keeping track of the keyboard keys and joystick buttons and axes, mapping it's states to a friendlier struct within the Kernel. This struct is configureable by means of the main configuration file, and has enough room for 16 general action buttons, plus 2 analog sticks. If there aren't sufficient analog sticks(or none at all), one may opt by using keys or buttons which may do their job instead.
 
 = Modules =
 A Module is an abstract thing to talk about. It has five methods, plus the constructor and destructor. Each of these methods will get called by the Kernel, and they inform the Module what is currently happening. It's quite simple to push a Module to the stack top(that way activating this new and halting the old one):
@@ -19,5 +18,10 @@ KERNEL->pushModule(newModule,true);
 }}}
 
 This piece of code would call the stack's top halt() method, place the new module on the top, and call this new module's enter(). The second argument, here set to true, defaults to false. Setting it to false would cause the Kernel to call the old module's exit() method, pop it out of the stack and deallocate it. When halting is used, the old Module remains in memory, and will only be updated again when it assumes back the top of the stack. When a Module thinks it's time to say bye-bye, it just needs to call Kernel::popModule();, which would call the Module's exit() method, deallocate it and pull it out of the stack. After doing that, the old Module would be on top, so the Kernel calls for it's wakeup(), restarting the update cycle.
+
+= Managers =
+The Managers, contrary to the Modules, are real members of the Kernel. They aren't inside any vector, but are variables which reside within the Kernel. Also, they're all updated on each loop. They're vital to the Modules' survival and to the used libraries maintenance. Here follows a list of Managers and a brief description:
+
+|| InputManager || Talks with OIS to provide keyboard's and joysticks' input ||
 
 That's all 'till now.
