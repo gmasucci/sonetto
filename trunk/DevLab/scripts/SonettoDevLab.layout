@@ -10,6 +10,9 @@
 	<File name="..\include\SonettoFontSerializer.h" open="0" top="0" tabpos="4">
 		<Cursor position="212" topLine="32" />
 	</File>
+	<File name="..\include\SonettoInputManager.h" open="0" top="0" tabpos="3">
+		<Cursor position="1274" topLine="18" />
+	</File>
 	<File name="..\include\SonettoMain.h" open="0" top="0" tabpos="7">
 		<Cursor position="3686" topLine="0" />
 	</File>
@@ -28,20 +31,20 @@
 	<File name="..\include\SonettoTailedWindow.h" open="0" top="0" tabpos="2">
 		<Cursor position="6831" topLine="0" />
 	</File>
-	<File name="..\include\SonettoTextElement.h" open="1" top="0" tabpos="2">
+	<File name="..\include\SonettoTextElement.h" open="0" top="0" tabpos="2">
 		<Cursor position="1846" topLine="32" />
 	</File>
-	<File name="..\include\SonettoTextFactory.h" open="1" top="1" tabpos="3">
-		<Cursor position="1227" topLine="13" />
+	<File name="..\include\SonettoTextFactory.h" open="0" top="0" tabpos="3">
+		<Cursor position="1227" topLine="31" />
 	</File>
 	<File name="..\include\SonettoWindow.h" open="0" top="0" tabpos="2">
 		<Cursor position="7137" topLine="0" />
 	</File>
-	<File name="..\include\SonettoWindowFactory.h" open="1" top="0" tabpos="4">
-		<Cursor position="1311" topLine="35" />
+	<File name="..\include\SonettoWindowFactory.h" open="0" top="0" tabpos="4">
+		<Cursor position="1311" topLine="0" />
 	</File>
-	<File name="..\main.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="3020" topLine="9" />
+	<File name="..\main.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="1222" topLine="30" />
 	</File>
 	<File name="..\src\SonettoFont.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="2286" topLine="48" />
@@ -51,6 +54,12 @@
 	</File>
 	<File name="..\src\SonettoFontSerializer.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="5558" topLine="33" />
+	</File>
+	<File name="..\src\SonettoInputManager.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="3053" topLine="22" />
+	</File>
+	<File name="..\src\SonettoKernel.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="1781" topLine="21" />
 	</File>
 	<File name="..\src\SonettoSTR.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="0" topLine="54" />
@@ -67,7 +76,7 @@
 	<File name="..\src\SonettoTailedWindow.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="54510" topLine="0" />
 	</File>
-	<File name="..\src\SonettoTextElement.cpp" open="1" top="0" tabpos="1">
+	<File name="..\src\SonettoTextElement.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="5025" topLine="125" />
 	</File>
 	<File name="..\src\SonettoWindow.cpp" open="0" top="0" tabpos="4">

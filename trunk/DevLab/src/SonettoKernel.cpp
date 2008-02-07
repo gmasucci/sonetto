@@ -32,7 +32,7 @@ namespace Sonetto {
         if (!mInitialised) {
             printf("%d\n",mInitialised);
             mShutDown = false;
-            mRoot = new Ogre::Root("plugins.dlc","devlab.dlc","DevLab.log");
+            mRoot = new Ogre::Root("plugins.dlc","devlab.dlc","");
             if (mRoot->showConfigDialog()) {
                 // If returned true, user clicked OK so initialise
                 // Here we choose to let the system create a default rendering window by passing 'true'
@@ -170,7 +170,7 @@ namespace Sonetto {
                 mDebugErrorText->setFont(mMainFont);
                 mDebugErrorText->setMessage("No controller detected.");
                 mDebugErrorText->setDimensions(1.0f,1.0f);
-                mDebugErrorText->setPosition(0.1f,0.5f);
+                mDebugErrorText->setPosition(0.1f,0.45f);
                 mDebugErrorText->setTextSize(0.10f);
                 mDebugErrorText->setAnimSettings(true,true,false,10.0f,8.0f);
                 mDebugErrorText->forceAnimReset();

@@ -1152,7 +1152,7 @@
 	"OgrePrerequisites.h"
 	"OgreShadowCameraSetup.h"
 
-1171199124 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\ois.h
+1167719070 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\ois.h
 	"OISPrereqs.h"
 	"OISObject.h"
 	"OISMouse.h"
@@ -1166,48 +1166,50 @@
 	"OISInterface.h"
 	"OISForceFeedback.h"
 
-1171958396 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisprereqs.h
+1195334331 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisprereqs.h
 	<vector>
 	<string>
 	<map>
 	"OISConfig.h"
 
-1171199124 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisconfig.h
+1169682558 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisconfig.h
 
-1171199124 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisobject.h
+1167953055 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisobject.h
 	"OISPrereqs.h"
 	"OISInterface.h"
 
-1171199124 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisinterface.h
+1167607875 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisinterface.h
 	"OISPrereqs.h"
 
-1171199124 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oismouse.h
+1169321965 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oismouse.h
 	"OISObject.h"
 	"OISEvents.h"
 
-1171199124 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisevents.h
+1167607875 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisevents.h
 	"OISPrereqs.h"
 
-1171199124 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oiskeyboard.h
+1169321965 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oiskeyboard.h
 	"OISObject.h"
 	"OISEvents.h"
 
-1171199124 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisjoystick.h
+1169321965 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisjoystick.h
 	"OISObject.h"
 	"OISEvents.h"
 
-1171199124 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisinputmanager.h
+1190523181 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisinputmanager.h
 	"OISPrereqs.h"
 
-1167935056 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisfactorycreator.h
+1167953055 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisfactorycreator.h
 	"OISPrereqs.h"
 
-1171656094 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisexception.h
+1195335868 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisexception.h
+	"OISPrereqs.h"
+	<exception>
 
-1171199124 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oiseffect.h
+1167939464 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oiseffect.h
 	"OISPrereqs.h"
 
-1171199124 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisforcefeedback.h
+1167607875 c:\work\cvs-ogrehead\ogrenew\ogremain\include\\ois\oisforcefeedback.h
 	"OISPrereqs.h"
 	"OISInterface.h"
 	"OISEffect.h"
@@ -1886,10 +1888,10 @@
 	<OgreVector2.h>
 	"SonettoMain.h"
 
-1202210151 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\main.cpp
+1202306337 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\main.cpp
 	<Ogre.h>
 	<OgreConfigFile.h>
-	<OIS/OIS.h>
+	<OIS.h>
 	"SonettoKernel.h"
 	"SonettoModule.h"
 	"windows.h"
@@ -1904,9 +1906,9 @@
 	"SonettoFontManager.h"
 	"SonettoTextFactory.h"
 
-1202210150 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettoinputmanager.h
+1202306377 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettoinputmanager.h
 	<Ogre.h>
-	<OIS/OIS.h>
+	<OIS.h>
 
 1202210289 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettomodule.h
 	"SonettoKernel.h"
@@ -1917,4 +1919,78 @@
 	<OgreOverlayElement.h>
 	<OgreOverlayElementFactory.h>
 	"SonettoTextElement.h"
+
+1202298901 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettoinputmanager.cpp
+	<vector>
+	"SonettoInputManager.h"
+
+1202258231 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettokernel.cpp
+	<Ogre.h>
+	"SonettoKernel.h"
+
+1202210366 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettomodule.cpp
+	<Ogre.h>
+	"SonettoModule.h"
+
+1167719070 c:\work\cvs-ois\ois\includes\\ois.h
+	"OISPrereqs.h"
+	"OISObject.h"
+	"OISMouse.h"
+	"OISKeyboard.h"
+	"OISJoyStick.h"
+	"OISInputManager.h"
+	"OISFactoryCreator.h"
+	"OISException.h"
+	"OISEvents.h"
+	"OISEffect.h"
+	"OISInterface.h"
+	"OISForceFeedback.h"
+
+1195334331 c:\work\cvs-ois\ois\includes\\oisprereqs.h
+	<vector>
+	<string>
+	<map>
+	"OISConfig.h"
+
+1169682558 c:\work\cvs-ois\ois\includes\\oisconfig.h
+
+1167953055 c:\work\cvs-ois\ois\includes\\oisobject.h
+	"OISPrereqs.h"
+	"OISInterface.h"
+
+1167607875 c:\work\cvs-ois\ois\includes\\oisinterface.h
+	"OISPrereqs.h"
+
+1169321965 c:\work\cvs-ois\ois\includes\\oismouse.h
+	"OISObject.h"
+	"OISEvents.h"
+
+1167607875 c:\work\cvs-ois\ois\includes\\oisevents.h
+	"OISPrereqs.h"
+
+1169321965 c:\work\cvs-ois\ois\includes\\oiskeyboard.h
+	"OISObject.h"
+	"OISEvents.h"
+
+1169321965 c:\work\cvs-ois\ois\includes\\oisjoystick.h
+	"OISObject.h"
+	"OISEvents.h"
+
+1190523181 c:\work\cvs-ois\ois\includes\\oisinputmanager.h
+	"OISPrereqs.h"
+
+1167953055 c:\work\cvs-ois\ois\includes\\oisfactorycreator.h
+	"OISPrereqs.h"
+
+1195335868 c:\work\cvs-ois\ois\includes\\oisexception.h
+	"OISPrereqs.h"
+	<exception>
+
+1167939464 c:\work\cvs-ois\ois\includes\\oiseffect.h
+	"OISPrereqs.h"
+
+1167607875 c:\work\cvs-ois\ois\includes\\oisforcefeedback.h
+	"OISPrereqs.h"
+	"OISInterface.h"
+	"OISEffect.h"
 

@@ -24,7 +24,7 @@ http://www.gnu.org/copyleft/lesser.txt
 //Use this define to signify OIS will be used as a DLL
 //(so that dll import/export macros are in effect)
 #define OIS_DYNAMIC_LIB
-#include <OIS/OIS.h>
+#include <OIS.h>
 //#include "CustomPanelElementFactory.h"
 
 #include "SonettoKernel.h"
@@ -43,7 +43,7 @@ public:
         counter = 0;
     }
     void update(Ogre::Real timedelta) {
-        if (mKernel->mInputMan->getButtonState(1,Sonetto::BTN_R3) == Sonetto::KS_RELEASE)
+        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_CIRCLE) == Sonetto::KS_PRESS)
             mKernel->popModule();
     }
     void exit() {

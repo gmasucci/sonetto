@@ -10,7 +10,7 @@ the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 Sonetto RPG Engine is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
+but WITHOUT ANY WARRANTY; without even http://a.scarywater.net/afk/the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Lesser General Public License for more details.
 
@@ -29,9 +29,17 @@ namespace Sonetto {
     bool InputManager::initialise(Ogre::RenderWindow *win,KeyConfig kc[MAX_PLAYERS]) {
         if (!mInitialised) {
             // Setup OIS (alternative way)
-            size_t hWnd = 0;
+            /*size_t hWnd = 0;
             win->getCustomAttribute("WINDOW",&hWnd);
-            mInputManager = OIS::InputManager::createInputSystem(hWnd);
+            mInputManager = OIS::InputManager::createInputSystem(hWnd);*/
+
+            OIS::ParamList pl;
+            size_t windowHnd = 0;
+            std::ostringstream windowHndStr;
+            win->getCustomAttribute("WINDOW", &windowHnd);
+            windowHndStr << windowHnd;
+            pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
+            mInputManager = OIS::InputManager::createInputSystem( pl );
 
             // Create a keyboard handler and a joystick handler for each joystick plugged in
             mKeyboard = static_cast<OIS::Keyboard *>(mInputManager->createInputObject(OIS::OISKeyboard,false));
@@ -43,7 +51,7 @@ namespace Sonetto {
                 }
             }
             mJoyItrEnd = mJoy.end();
-            
+
             // Copy the supplied configuration
             memcpy(mKeyConfig,kc,sizeof(KeyConfig)*MAX_PLAYERS);
 
@@ -95,13 +103,14 @@ namespace Sonetto {
 
             if (mKeyboard)
                 mKeyboard->capture();
-            
+
             if (mKeyConfig[playerID].inputDevice > 0)
                 mJoy[mKeyConfig[playerID].inputDevice-1]->capture();
 
             // Update button states
             for (int i = 0;i < 16;++i) {
                 bool     newState = false;
+                std::cout<<"Old State: "<<(int)mKeyStates[playerID].buttons[i]<<"\n";
                 KEYSTATE oldState = mKeyStates[playerID].buttons[i];
 
                 // 0x0F00: Joystick button mask (Only works if inputDevice is greater than 0)
@@ -111,6 +120,11 @@ namespace Sonetto {
                 // 0x00FF: Keyboard key mask
                 if (mKeyConfig[playerID].buttons[i] > 0x0000 && mKeyConfig[playerID].buttons[i] < 0x00FF)
                     newState = mKeyboard->isKeyDown((OIS::KeyCode)(mKeyConfig[playerID].buttons[i]));
+
+                std::cout<<"Player ID: "<<(int)playerID<<" Input Device: " <<(int)mKeyConfig[playerID].inputDevice<<"\n";
+                std::cout<<"Old State: "<<(int)oldState<<" New State: "<<(int)newState<<"\n";
+                if(mKeyConfig[playerID].inputDevice > 0 && mKeyConfig[playerID].buttons[i] >= 0x00FF && mKeyConfig[playerID].buttons[i] <= 0x0F00)
+                    std::cout<<"Value from OIS: "<<(int)mJoy[mKeyConfig[playerID].inputDevice-1]->getJoyStickState().mButtons[(mKeyConfig[playerID].buttons[i]) >> 8]<<"\n";
 
                 // Compare old and new states, and replace to the current one
                 switch (oldState) {
@@ -140,7 +154,9 @@ namespace Sonetto {
                         mKeyStates[playerID].buttons[i] = KS_RELEASE;
                     break;
                 }
+                //std::cout<<mKeyStates[playerID].buttons[i];
             }
+            std::cout<<"\n";
 
             // Update axes
             // Clean axes before checking
@@ -241,15 +257,15 @@ namespace Sonetto {
 
     bool InputManager::playerPlugged(Ogre::uint8 playerID) {
         assert(playerID < MAX_PLAYERS); // Don't exceed the maximum player number
-        
+
         // Device 0 is a Keyboard
         if(mKeyConfig[playerID].inputDevice == 0)
             return (mKeyboard != NULL);
-        
+
         // If out of controller vector bounds, the controller is not plugged
         if(mKeyConfig[playerID].inputDevice-1 >= mJoy.size())
             return false;
-        
+
         return (mJoy[mKeyConfig[playerID].inputDevice-1] != NULL);
     }
 };

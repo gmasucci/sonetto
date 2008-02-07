@@ -27,7 +27,7 @@ http://www.gnu.org/copyleft/lesser.txt
 //(so that dll import/export macros are in effect)
 #define OIS_DYNAMIC_LIB
 #include <Ogre.h>
-#include <OIS/OIS.h>
+#include <OIS.h>
 
 namespace Sonetto {
     const Ogre::uint8 MAX_PLAYERS = 4;
@@ -80,7 +80,16 @@ namespace Sonetto {
 
     class InputManager {
     public:
-        InputManager() : mInputManager(0), mInitialised(0) {}
+        InputManager() : mInputManager(0), mInitialised(0)
+        {
+            for(size_t i = 0; i != MAX_PLAYERS; ++i)
+            {
+                for(size_t b = 0; b != 16; ++b)
+                    mKeyStates[i].buttons[b] = KS_NONE;
+                for(size_t b = 0; b != 8; ++b)
+                    mKeyStates[i].axes[b] = 0.0f;
+            }
+        }
 
         ~InputManager() {}
 
