@@ -37,6 +37,7 @@ namespace ConfigApplication {
         if (!mD3D)
             throw wxT("Failed initialising Direct3D in D3DHandler::D3DHandler()");
 
+        // Detect display modes using the newly created Direct3D object
         enumDisplayModes();
     }
 
@@ -101,7 +102,7 @@ namespace ConfigApplication {
                 ostringstream  str;
                 D3DDISPLAYMODE displayMode;
 
-                // Pick adapter number 'j' from the adapters' list and describe it in displayMode
+                // Pick adapter number `j' from the adapters' list and describe it in displayMode
                 mD3D->EnumAdapterModes(D3DADAPTER_DEFAULT,format,j,&displayMode);
 
                 // Skip low resolutions (640x480 or less)

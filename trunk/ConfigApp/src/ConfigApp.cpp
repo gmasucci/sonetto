@@ -44,7 +44,6 @@ namespace ConfigApplication {
     IMPLEMENT_APP(ConfigApp);
 
     bool ConfigApp::OnInit() {
-        // Our main window
         ConfigWindowImpl *wnd = NULL;
         ALHandler        *al  = NULL;
 
@@ -53,7 +52,7 @@ namespace ConfigApplication {
         GLHandler        *gl  = NULL;
 #endif
         try {
-            // Create ConfigWindow
+            // Create ConfigWindow (our main and only window)
             wnd = new ConfigWindowImpl(NULL,this);
 
             // Fills ConfigWindow with OpenGL data, or delete the OpenGL page if this compilation
@@ -77,6 +76,7 @@ namespace ConfigApplication {
             static_cast<wxChoicebook *>(wnd->FindWindow(ConfigWindow::ID_RSYS_CBOOK))->DeletePage(0); // 0 = Direct3D 9
 #endif
 
+            // Grab Audio information, fill window, and discard handler
             al = new ALHandler();
             al->fillWindow(wnd);
             delete al;
@@ -85,22 +85,31 @@ namespace ConfigApplication {
             ois = new OISHandler(wnd);
             ois->fillWindow(wnd);
 
-            // Show and set as top-level window our ConfigWindow
+            // Show and set ConfigWindow as top-level window
             wnd->Show(true);
             SetTopWindow(wnd);
-        } catch (const wxChar *e) {
+        } catch (const wxChar *e) {  // ConfigApp exception
+            // Report problem
             wxMessageBox(e,wxT("An exception has been thrown"),wxOK|wxICON_ERROR,NULL);
+
+            // Abort application
             return false;
-        } catch(OIS::Exception &e) {
+        } catch(OIS::Exception &e) { // OIS exception
+            // Report problem
             wxMessageBox(wxT(e.eText),wxT("An exception has been thrown"),wxOK|wxICON_ERROR,NULL);
+
+            // Abort application
             return false;
-        } catch (...) {
+        } catch (...) {              // Unexpected exception
+            // Report problem
             wxMessageBox(wxT("An unexpected exception has occurred"),
                          wxT("An exception has been thrown"),wxOK|wxICON_ERROR,NULL);
 
+            // Abort application
             return false;
         }
 
+        // Everything went fine, the application should continue running
         return true;
     }
 
@@ -111,6 +120,11 @@ namespace ConfigApplication {
         delete d3d;
         delete ois;
 
+        // No errors occurred
         return 0;
+    }
+
+    bool ConfigApp::Save() {
+        return true;
     }
 }

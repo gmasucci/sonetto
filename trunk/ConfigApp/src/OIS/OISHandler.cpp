@@ -34,66 +34,88 @@ using namespace std;
 namespace ConfigApplication {
     bool KeyListener::keyPressed(const OIS::KeyEvent &evt) {
         wxWindow *focus = wxWindow::FindFocus();
-        
+
+        // Check whether the focus is about a button configuration window
         if(focus->GetId() == ConfigWindow::ID_BTNCONFIG) {
             wxTextCtrl    *textbox = static_cast<wxTextCtrl *>(focus);
             ostringstream  str;
-            
+
+            // Set text to "KEY_[keycode]"
             str << "KEY_" << evt.key;
             textbox->SetValue(wxT(str.str()));
         }
+
+        return true;
     }
-    
+
     bool JoyStickListener::buttonPressed(const OIS::JoyStickEvent &evt,int btn) {
         wxWindow *focus = wxWindow::FindFocus();
-        
+
+        // Check whether the focus is about a button configuration window
         if(focus->GetId() == ConfigWindow::ID_BTNCONFIG) {
             size_t      devID = 0;
-            wxNotebook *notebook = static_cast<wxNotebook *>(wxWindow::FindWindowById(ConfigWindow::ID_PLAYERS_TAB));
+            wxNotebook *notebook = static_cast<wxNotebook *>(wxWindow::FindWindowById(ConfigWindow::ID_PLAYERS_TABS));
             wxPanel    *ptab     = static_cast<wxPanel *>(notebook->GetCurrentPage());
             wxChoice   *device   = static_cast<wxChoice *>(ptab->FindWindow(ConfigWindow::ID_INPUT_DEVICE));
-            
+
+            // Discovers device index in mJoys vector
+            // [Warning] If a non-indexed joystick generates an event,
+            // it >> will default to the one in index 0! <<
             for(size_t i = 0;i < mJoys.size();++i) {
                 if(mJoys[i] == evt.device) {
                     devID = i;
                     break;
                 }
             }
-            
+
+            // Compares to see whether the joystick which generated the event
+            // is the one selected on the devices' choicebox
             if((int)devID == device->GetSelection()-1) {
                 wxTextCtrl    *textbox = static_cast<wxTextCtrl *>(focus);
                 ostringstream  str;
-            
+
+                // Set text to "BTN_[keycode]"
                 str << "BTN_" << btn;
                 textbox->SetValue(wxT(str.str()));
             }
         }
+
+        return true;
     }
-    
+
     bool JoyStickListener::axisMoved(const OIS::JoyStickEvent &evt,int axis) {
         wxWindow      *focus = wxWindow::FindFocus();
-        
+
+        // Check whether the focus is about a button configuration window
         if(focus->GetId() == ConfigWindow::ID_BTNCONFIG && abs(evt.state.mAxes[axis].abs) > OIS::JoyStick::MAX_AXIS/2) {
             size_t      devID = 0;
-            wxNotebook *notebook = static_cast<wxNotebook *>(wxWindow::FindWindowById(ConfigWindow::ID_PLAYERS_TAB));
+            wxNotebook *notebook = static_cast<wxNotebook *>(wxWindow::FindWindowById(ConfigWindow::ID_PLAYERS_TABS));
             wxPanel    *ptab     = static_cast<wxPanel *>(notebook->GetCurrentPage());
             wxChoice   *device   = static_cast<wxChoice *>(ptab->FindWindow(ConfigWindow::ID_INPUT_DEVICE));
-            
+
+            // Discovers device index in mJoys vector
+            // [Warning] If a non-indexed joystick generates an event,
+            // it >> will default to the one in index 0! <<
             for(size_t i = 0;i < mJoys.size();++i) {
                 if(mJoys[i] == evt.device) {
                     devID = i;
                     break;
                 }
             }
-            
+
+            // Compares to see whether the joystick which generated the event
+            // is the one selected on the devices' choicebox
             if((int)devID == device->GetSelection()-1) {
                 wxTextCtrl    *textbox = static_cast<wxTextCtrl *>(focus);
                 ostringstream  str;
-            
+
+                // Set text to "AXS_[keycode]"
                 str << "AXS_" << axis;
                 textbox->SetValue(wxT(str.str()));
             }
         }
+
+        return true;
     }
 
     OISHandler::OISHandler(wxWindow *wnd) {
@@ -101,14 +123,14 @@ namespace ConfigApplication {
 
 #ifdef _WIN32
         // We need to extract from the window its handle
-        // under Windows
+        // under Windows unoperational system
         ostringstream  windowHndStr;
         size_t         windowHnd = 0;
 
-        // This will cause an assertion error if wnd is NULL
+        // This will cause an assertion error if `wnd' is NULL
         assert(wnd && "Under windows, `wnd' cannot be NULL");
 
-        // Grab window handle from wnd and format it as a string
+        // Grab window handle from `wnd' and format it as a string
         windowHnd = (size_t)(wnd->GetHandle());
         windowHndStr << windowHnd;
 
@@ -118,20 +140,25 @@ namespace ConfigApplication {
 #endif
 
         // Create an input manager
+        // If this fails it will throw an exception
         mInputMan = OIS::InputManager::createInputSystem(pl);
 
-        // Get handles for the keyboard and all present joysticks
+        // Gets handles for the keyboard and all present joysticks
         // Also attaches event listeners to them
         mKeyboard = static_cast<OIS::Keyboard *>(mInputMan->createInputObject(OIS::OISKeyboard,false));
         mKeyboard->setEventCallback(&mKeyListener);
         mKeyboard->setBuffered(true);
-        
+
         for(size_t i = 0;i < (size_t)(mInputMan->getNumberOfDevices(OIS::OISJoyStick));++i) {
+            // Push all detected joysticks inside mJoys vector
             mJoys.push_back(static_cast<OIS::JoyStick *>(mInputMan->
                                createInputObject(OIS::OISJoyStick,false)));
-            
+
             mJoys.back()->setEventCallback(&mJoyListener);
             mJoys.back()->setBuffered(true);
+
+            // The event listener must also keep track of available joysticks,
+            // so we push it there too
             mJoyListener.getJoysVector()->push_back(mJoys.back());
         }
     }
@@ -142,16 +169,20 @@ namespace ConfigApplication {
         for(size_t i = 0;i < mJoys.size();++i)
             mInputMan->destroyInputObject(mJoys[i]);
 
-        // Release our input manager
+        // Release input manager
         OIS::InputManager::destroyInputSystem(mInputMan);
     }
 
     void OISHandler::fillWindow(wxWindow *wnd) {
-        //wxNotebook *notebook = static_cast<wxNotebook *>(wnd->FindWindow(ConfigWindow::ID_PLAYERS_TAB));
-        wxChoice   *devices = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_INPUT_DEVICE));
+        // Get notebook containing players' tabs
+        wxNotebook *notebook = static_cast<wxNotebook *>(wnd->FindWindow(ConfigWindow::ID_PLAYERS_TABS));
 
-        //for(size_t i = 0;i < 4;++i) {
-            //wxPanel *ptab = notebook->
+        // Iterate through each page, filling them with device
+        // options
+        for(size_t i = 0;i < notebook->GetPageCount();++i) {
+            wxPanel  *ptab    = static_cast<wxPanel *>(notebook->GetPage(i));
+            wxChoice *devices = static_cast<wxChoice *>(ptab->FindWindow(ConfigWindow::ID_INPUT_DEVICE));
+
             // Get each devices' vendors and append in choicebox
             devices->Append(wxT("Standard Keyboard (Default)"));
             for(size_t i = 0;i < mJoys.size();++i)
@@ -159,12 +190,13 @@ namespace ConfigApplication {
 
             // Defaults to keyboard
             devices->SetSelection(0);
-        //}
+        }
     }
 
     void OISHandler::update(wxWindow *wnd) {
-            mKeyboard->capture();
-            for(size_t i = 0;i < mJoys.size();++i)
-                mJoys[i]->capture();
+        // Capture inputs and generate events
+        mKeyboard->capture();
+        for(size_t i = 0;i < mJoys.size();++i)
+            mJoys[i]->capture();
     }
 } // namespace

@@ -84,7 +84,13 @@ namespace ConfigApplication {
         // Get window device context
         hDC = GetDC(glWindow);
 
-        // Clean struct
+        // Clean and fill pixelformat struct
+        // This pixelformat should be supported
+        // by any device. The purpose of the
+        // dummy window is just enumerate FSAA
+        // levels, but we must have a window to
+        // do so. So we create this widely
+        // supported one
         memset(&pfd,0x00,sizeof(PIXELFORMATDESCRIPTOR));
         pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
         pfd.nVersion   = 1;
@@ -94,8 +100,10 @@ namespace ConfigApplication {
         pfd.iPixelType = PFD_TYPE_RGBA;
 
         format = ChoosePixelFormat(hDC,&pfd);
-        if (format != 0)
-            SetPixelFormat(hDC,format,&pfd);
+        if (format == 0)
+            throw wxT("Your graphics card does not support the minimal requirements, sorry.");
+
+        SetPixelFormat(hDC,format,&pfd);
 
         hGLRC = wglCreateContext(hDC);
         if (hGLRC) {
@@ -115,8 +123,8 @@ namespace ConfigApplication {
                     istringstream wglexts(_wglGetExtensionsStringARB(hDC));
                     string        ext;
 
-                    // Each of these extensions are pulled in 'ext' here, and
-                    // checked if it is something of our interest
+                    // Each of these extensions are pulled out to `ext' here, which
+                    // is checked if it is something of our interest
                     while (wglexts >> ext) {
                         if (ext == "WGL_ARB_pixel_format") {
                             // Will we use this?
@@ -149,15 +157,20 @@ namespace ConfigApplication {
                             // Determine what multisampling levels are offered
                             int query = WGL_SAMPLES_ARB,samples;
 
+                            // Get multisample levels of each pixelformat available
                             for (size_t i = 0;i < count;++i) {
                                 PFNWGLGETPIXELFORMATATTRIBIVARBPROC _wglGetPixelFormatAttribivARB =
                                     (PFNWGLGETPIXELFORMATATTRIBIVARBPROC)
                                     wglGetProcAddress("wglGetPixelFormatAttribivARB");
 
+                                // Put them in mFSAALevels vector
                                 if (_wglGetPixelFormatAttribivARB(hDC,formats[i],0,1,&query,&samples))
                                     mFSAALevels.push_back(samples);
                             }
 
+                            // As different pixelformats may share the same FSAA Levels,
+                            // there may be duplicate entries in mFSAALevels, which
+                            // are stripped off here
                             removeDuplicates(mFSAALevels);
                         }
                     } // mHasMultisample
@@ -186,9 +199,11 @@ namespace ConfigApplication {
                 wglMakeCurrent(oldDC,oldGLRC);
             }
 
+            // Delete dummy context
             wglDeleteContext(hGLRC);
         }
 
+        // Destroy dummy window and unregister dummy window class
         DestroyWindow(glWindow);
         UnregisterClass(wndName,hInst);
     }
