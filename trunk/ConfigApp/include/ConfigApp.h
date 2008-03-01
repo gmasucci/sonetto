@@ -23,7 +23,13 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef __CONFIGAPP_H_
 #define __CONFIGAPP_H_
 
+namespace ConfigApplication {
+    // Forward declaration
+    class ConfigApp;
+};
+
 #include <wx/app.h>
+#include "ConfigWindowImpl.h"
 #include "D3D/D3DHandler.h"
 #include "OIS/OISHandler.h"
 
@@ -48,6 +54,9 @@ namespace ConfigApplication {
         OISHandler *getOISHandler() { return ois; }
 
     private:
+        /// Main window
+        ConfigWindowImpl *wnd;
+
 #ifdef CA_USE_DIRECT3D
         /// Handler responsible for Direct3D
         D3DHandler *d3d;

@@ -296,7 +296,7 @@
                                                         <property name="bitmap"></property>
                                                         <property name="label">Display Settings</property>
                                                         <property name="select">1</property>
-                                                        <object class="wxPanel" expanded="0">
+                                                        <object class="wxPanel" expanded="1">
                                                             <property name="bg"></property>
                                                             <property name="context_help"></property>
                                                             <property name="enabled">1</property>
@@ -338,7 +338,7 @@
                                                             <event name="OnSetFocus"></event>
                                                             <event name="OnSize"></event>
                                                             <event name="OnUpdateUI"></event>
-                                                            <object class="wxStaticBoxSizer" expanded="0">
+                                                            <object class="wxStaticBoxSizer" expanded="1">
                                                                 <property name="id">wxID_ANY</property>
                                                                 <property name="label">Render System</property>
                                                                 <property name="minimum_size"></property>
@@ -397,7 +397,7 @@
                                                                         <event name="OnUpdateUI"></event>
                                                                         <object class="choicebookpage" expanded="1">
                                                                             <property name="label">Direct3D 9</property>
-                                                                            <property name="select">0</property>
+                                                                            <property name="select">1</property>
                                                                             <object class="wxPanel" expanded="1">
                                                                                 <property name="bg"></property>
                                                                                 <property name="context_help"></property>
@@ -842,7 +842,7 @@
                                                                         </object>
                                                                         <object class="choicebookpage" expanded="1">
                                                                             <property name="label">OpenGL</property>
-                                                                            <property name="select">1</property>
+                                                                            <property name="select">0</property>
                                                                             <object class="wxPanel" expanded="1">
                                                                                 <property name="bg"></property>
                                                                                 <property name="context_help"></property>
@@ -2006,7 +2006,7 @@
                                 <object class="notebookpage" expanded="1">
                                     <property name="bitmap"></property>
                                     <property name="label">Input</property>
-                                    <property name="select">0</property>
+                                    <property name="select">1</property>
                                     <object class="wxPanel" expanded="1">
                                         <property name="bg"></property>
                                         <property name="context_help"></property>

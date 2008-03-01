@@ -64,24 +64,22 @@
 			<Add directory="$(OIS_HOME)\dll" />
 			<Add directory="..\dependencies" />
 		</Linker>
-		<Unit filename="include\AL\ALHandler.h" />
-		<Unit filename="include\AppForms.h" />
-		<Unit filename="include\ConfigApp.h" />
-		<Unit filename="include\ConfigWindowImpl.h" />
-		<Unit filename="include\D3D\D3DHandler.h" />
-		<Unit filename="include\GL\Win32Handler.h" />
-		<Unit filename="include\OIS\OISHandler.h" />
-		<Unit filename="include\Utils.h" />
-		<Unit filename="src\AL\ALHandler.cpp" />
-		<Unit filename="src\AppForms.cpp">
-			<Option weight="43" />
-		</Unit>
-		<Unit filename="src\ConfigApp.cpp" />
-		<Unit filename="src\ConfigWindowImpl.cpp" />
-		<Unit filename="src\D3D\D3DHandler.cpp" />
-		<Unit filename="src\GL\Win32Handler.cpp" />
-		<Unit filename="src\OIS\OISHandler.cpp" />
-		<Unit filename="src\Utils.cpp" />
+		<Unit filename="..\include\AL\ALHandler.h" />
+		<Unit filename="..\include\AppForms.h" />
+		<Unit filename="..\include\ConfigApp.h" />
+		<Unit filename="..\include\ConfigWindowImpl.h" />
+		<Unit filename="..\include\D3D\D3DHandler.h" />
+		<Unit filename="..\include\GL\Win32Handler.h" />
+		<Unit filename="..\include\OIS\OISHandler.h" />
+		<Unit filename="..\include\Utils.h" />
+		<Unit filename="..\src\AL\ALHandler.cpp" />
+		<Unit filename="..\src\AppForms.cpp" />
+		<Unit filename="..\src\ConfigApp.cpp" />
+		<Unit filename="..\src\ConfigWindowImpl.cpp" />
+		<Unit filename="..\src\D3D\D3DHandler.cpp" />
+		<Unit filename="..\src\GL\Win32Handler.cpp" />
+		<Unit filename="..\src\OIS\OISHandler.cpp" />
+		<Unit filename="..\src\Utils.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

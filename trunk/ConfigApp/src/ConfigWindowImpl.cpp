@@ -23,6 +23,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <sstream>
 #include <wx/app.h>
 #include <wx/timer.h>
+#include <wx/msgdlg.h>
 #include "ConfigApp.h"
 #include "ConfigWindowImpl.h"
 
@@ -148,7 +149,11 @@ namespace ConfigApplication {
     }
 
     void ConfigWindowImpl::OnClickApply( wxCommandEvent& event ) {
-        mApp->Save();
+        // Alert failures
+        if(!mApp->Save()) {
+            wxMessageBox(wxT("Configuration file could not be saved. The file may be in use or is write-protected."),
+                         wxT("Config save"),wxOK|wxICON_EXCLAMATION);
+        }
     }
 
     void ConfigWindowImpl::OnClickCancel( wxCommandEvent& event ) {
@@ -162,7 +167,18 @@ namespace ConfigApplication {
     }
 
     void ConfigWindowImpl::OnClickOk( wxCommandEvent& event ) {
-        mApp->Save();
+        // Alert failures
+        if(!mApp->Save()) {
+            int a = wxMessageBox(wxT("Configuration file could not be saved. The file may be in use or is write-"
+                                     "protected.\n\nAre you sure you want to exit without saving?"),
+                                     wxT("Config save"),wxYES_NO|wxICON_EXCLAMATION);
+
+            // If the user choose not to close the window, return without closing
+            if(a == wxNO)
+                return;
+        }
+
+        // Close the window
         Close(true);
     }
 } // namespace

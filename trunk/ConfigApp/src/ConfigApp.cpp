@@ -31,6 +31,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #endif
 
 #include <iostream>
+#include <fstream>
 #include <wx/wx.h>
 #include "GL/Win32Handler.h"    // By now, only Win32 is supported
 #include "D3D/D3DHandler.h"
@@ -44,7 +45,6 @@ namespace ConfigApplication {
     IMPLEMENT_APP(ConfigApp);
 
     bool ConfigApp::OnInit() {
-        ConfigWindowImpl *wnd = NULL;
         ALHandler        *al  = NULL;
 
         // Declare our used Render Systems' handlers (Direct3D is declared within ConfigApp's prototype)
@@ -125,6 +125,99 @@ namespace ConfigApplication {
     }
 
     bool ConfigApp::Save() {
+        ofstream fs;
+
+        // Get handles to widgets
+        wxChoicebook *rsys  = static_cast<wxChoicebook *>(wnd->FindWindow(ConfigWindow::ID_RSYS_CBOOK));
+        wxChoice     *adev  = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_OAL_DEVICE));
+        wxSlider     *mvol  = static_cast<wxSlider *>(wnd->FindWindow(ConfigWindow::ID_OAL_MVOL));
+        wxSlider     *evol  = static_cast<wxSlider *>(wnd->FindWindow(ConfigWindow::ID_OAL_EVOL));
+        wxSlider     *vvol  = static_cast<wxSlider *>(wnd->FindWindow(ConfigWindow::ID_OAL_VVOL));
+        wxNotebook   *ptabs = static_cast<wxNotebook *>(wnd->FindWindow(ConfigWindow::ID_PLAYERS_TABS));
+
+        // Opens configuration file for output, and truncates it to the beginning
+        fs.open("game.cfg",ios_base::out | ios_base::trunc);
+        if(!fs.is_open())
+            return false;
+
+        // Write options
+        fs << "# Video options\n";
+        fs << "RenderSystem=" << rsys->GetPageText(rsys->GetSelection()).c_str() << "\n";
+
+        // Only selected renderer's options must be written
+        if(strcmp(rsys->GetPageText(rsys->GetSelection()).c_str(),"OpenGL") == 0) {
+            // OpenGL
+            wxChoice   *res    = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_OGL_RES));
+            wxChoice   *cdepth = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_OGL_CDEPTH));
+            wxChoice   *freq   = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_OGL_FREQ));
+            wxChoice   *fsaa   = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_OGL_FSAA));
+            wxCheckBox *fscr   = static_cast<wxCheckBox *>(wnd->FindWindow(ConfigWindow::ID_OGL_FSCR));
+            wxCheckBox *vsync  = static_cast<wxCheckBox *>(wnd->FindWindow(ConfigWindow::ID_OGL_VSYNC));
+
+            fs << "Resolution=" << res->GetStringSelection().c_str() << "\n";
+            fs << "ColourDepth=" << cdepth->GetStringSelection().c_str() << "\n";
+            fs << "Frequency=" << freq->GetStringSelection().c_str() << "\n";
+            fs << "AntiAliasing=" << fsaa->GetStringSelection().c_str() << "\n";
+            fs << "Fullscreen=" << fscr->GetValue() << "\n";
+            fs << "VSync=" << vsync->GetValue() << "\n";
+        } else {
+            // Direct3D
+            wxChoice   *dspm   = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_D3D9_RES));
+            wxChoice   *fsaa   = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_D3D9_AA));
+            wxCheckBox *fscr   = static_cast<wxCheckBox *>(wnd->FindWindow(ConfigWindow::ID_D3D9_FSCR));
+            wxCheckBox *vsync  = static_cast<wxCheckBox *>(wnd->FindWindow(ConfigWindow::ID_D3D9_VSYNC));
+
+            fs << "DisplayMode=" << dspm->GetStringSelection().c_str() << "\n";
+            fs << "AntiAliasing=" << fsaa->GetStringSelection().c_str() << "\n";
+            fs << "Fullscreen=" << fscr->GetValue() << "\n";
+            fs << "VSync=" << vsync->GetValue() << "\n";
+        }
+
+        fs << "\n# Audio options\n";
+        fs << "AudioDevice=" << adev->GetStringSelection().c_str() << "\n";
+        fs << "MusicVolume=" << mvol->GetValue() << "\n";
+        fs << "EffectsVolume=" << evol->GetValue() << "\n";
+        fs << "VoiceVolume=" << vvol->GetValue() << "\n";
+
+        fs << "\n# Input options\n";
+
+        // We must write information about every player tab
+        // This iterates through them
+        for(size_t i = 0;i < ptabs->GetPageCount();++i) {
+            wxWindowList  tabChildren;
+            wxPanel      *ptab   = static_cast<wxPanel *>(ptabs->GetPage(i));
+            wxChoice     *idev   = static_cast<wxChoice *>(ptab->FindWindow(ConfigWindow::ID_INPUT_DEVICE));
+            wxCheckBox   *plugd  = static_cast<wxCheckBox *>(ptab->FindWindow(ConfigWindow::ID_CTRL_PLUGGED));
+            wxCheckBox   *ffback = static_cast<wxCheckBox *>(ptab->FindWindow(ConfigWindow::ID_CTRL_FFBACK));
+
+            fs << "P" << i+1 << "_InputDevice=" << idev->GetSelection() << "\n";
+            fs << "P" << i+1 << "_PluggedIn=" << plugd->GetValue() << "\n";
+            fs << "P" << i+1 << "_ForceFeedback=" << ffback->GetValue() << "\n";
+
+            // It is a little harder to write the button configurations
+            // We have to iterate through every child window of the current
+            // player tab and, if such window is a button configuration one,
+            // we must write its value to the stream
+            tabChildren = ptab->GetChildren();
+            for(size_t j = 0;j < tabChildren.size();++j) {
+                if(tabChildren[j]->GetId() == ConfigWindow::ID_BTNCONFIG) {
+                    size_t      num = 0;
+                    wxTextCtrl *btn = static_cast<wxTextCtrl *>(tabChildren[j]);
+
+                    // TODO: Represent buttons by name
+                    //       I think this indexing here(`num') is buggy, and won't give
+                    //       correct values. This is just a proof of concept
+                    num = (j-tabChildren.IndexOf(ptab->FindWindow(ConfigWindow::ID_BTNCONFIG)))/2;
+                    fs << "P" << i+1 << "_Button" << num << "=" << btn->GetValue() << "\n";
+                }
+            }
+
+            fs << "\n";
+        }
+
+        fs.flush();
+        fs.close();
+
         return true;
     }
 }

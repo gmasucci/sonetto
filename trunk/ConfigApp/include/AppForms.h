@@ -51,7 +51,6 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <wx/textctrl.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
-#warning Finished compiling headers
 
 ///////////////////////////////////////////////////////////////////////////
 
