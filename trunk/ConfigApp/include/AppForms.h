@@ -1,3 +1,25 @@
+/*-----------------------------------------------------------------------------
+This source file is part of Sonetto RPG Engine.
+
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Prá Vieira
+
+
+Sonetto RPG Engine is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Sonetto RPG Engine is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, write to the Free Software Foundation,
+Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
+http://www.gnu.org/copyleft/lesser.txt
+-----------------------------------------------------------------------------*/
+
 ///////////////////////////////////////////////////////////////////////////
 // C++ code generated with wxFormBuilder (version Feb  1 2008)
 // http://www.wxformbuilder.org/
@@ -16,12 +38,12 @@
 #include <wx/colour.h>
 #include <wx/settings.h>
 #include <wx/string.h>
-#include <wx/sizer.h>
-#include <wx/panel.h>
 #include <wx/stattext.h>
 #include <wx/choice.h>
+#include <wx/sizer.h>
 #include <wx/statline.h>
 #include <wx/checkbox.h>
+#include <wx/panel.h>
 #include <wx/choicebk.h>
 #include <wx/statbox.h>
 #include <wx/notebook.h>
@@ -29,6 +51,7 @@
 #include <wx/textctrl.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
+#warning Finished compiling headers
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -37,11 +60,11 @@ namespace ConfigApplication
 	///////////////////////////////////////////////////////////////////////////////
 	/// Class ConfigWindow
 	///////////////////////////////////////////////////////////////////////////////
-	class ConfigWindow : public wxDialog 
+	class ConfigWindow : public wxDialog
 	{
 		DECLARE_EVENT_TABLE()
 		private:
-			
+
 			// Private event handlers
 			void _wxFB_onRsysChange( wxChoicebookEvent& event ){ onRsysChange( event ); }
 			void _wxFB_onRsysChanging( wxChoicebookEvent& event ){ onRsysChanging( event ); }
@@ -54,11 +77,12 @@ namespace ConfigApplication
 			void _wxFB_onChoiceOGLFSAA( wxCommandEvent& event ){ onChoiceOGLFSAA( event ); }
 			void _wxFB_onCheckOGLFullScreen( wxCommandEvent& event ){ onCheckOGLFullScreen( event ); }
 			void _wxFB_onCheckOGLVSync( wxCommandEvent& event ){ onCheckOGLVSync( event ); }
+			void _wxFB_onDeviceChoice( wxCommandEvent& event ){ onDeviceChoice( event ); }
 			void _wxFB_OnClickApply( wxCommandEvent& event ){ OnClickApply( event ); }
 			void _wxFB_OnClickCancel( wxCommandEvent& event ){ OnClickCancel( event ); }
 			void _wxFB_OnClickOk( wxCommandEvent& event ){ OnClickOk( event ); }
-			
-		
+
+
 		public:
 			enum
 			{
@@ -80,17 +104,17 @@ namespace ConfigApplication
 				ID_OAL_MVOL,
 				ID_OAL_EVOL,
 				ID_OAL_VVOL,
-				ID_PLAYERS_TAB,
+				ID_PLAYERS_TABS,
+				ID_PLAYER_TAB,
 				ID_INPUT_DEVICE,
 				ID_CTRL_PLUGGED,
 				ID_CTRL_FFBACK,
 				ID_BTNCONFIG,
 			};
-			
-		protected:
-			wxStaticBitmap* Logo;
+
+        protected:
+            wxStaticBitmap* Logo;
 			wxNotebook* SectionTabs;
-			wxPanel* GeneralTab;
 			wxPanel* VideoTab;
 			wxNotebook* m_notebook3;
 			wxPanel* m_panel9;
@@ -121,7 +145,7 @@ namespace ConfigApplication
 			wxSlider* m_slider4;
 			wxSlider* m_slider41;
 			wxSlider* m_slider42;
-			
+
 			wxPanel* InputTab;
 			wxNotebook* m_notebook4;
 			wxPanel* m_panel131;
@@ -344,7 +368,7 @@ namespace ConfigApplication
 			wxButton* DialogButtonsOK;
 			wxButton* DialogButtonsApply;
 			wxButton* DialogButtonsCancel;
-			
+
 			// Virtual event handlers, overide them in your derived class
 			virtual void onRsysChange( wxChoicebookEvent& event ){ event.Skip(); }
 			virtual void onRsysChanging( wxChoicebookEvent& event ){ event.Skip(); }
@@ -357,17 +381,18 @@ namespace ConfigApplication
 			virtual void onChoiceOGLFSAA( wxCommandEvent& event ){ event.Skip(); }
 			virtual void onCheckOGLFullScreen( wxCommandEvent& event ){ event.Skip(); }
 			virtual void onCheckOGLVSync( wxCommandEvent& event ){ event.Skip(); }
+			virtual void onDeviceChoice( wxCommandEvent& event ){ event.Skip(); }
 			virtual void OnClickApply( wxCommandEvent& event ){ event.Skip(); }
 			virtual void OnClickCancel( wxCommandEvent& event ){ event.Skip(); }
 			virtual void OnClickOk( wxCommandEvent& event ){ event.Skip(); }
-			
-		
+
+
 		public:
 			ConfigWindow( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Game Settings"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,420 ), long style = wxDEFAULT_DIALOG_STYLE|wxMINIMIZE_BOX );
 			~ConfigWindow();
-		
+
 	};
-	
+
 } // namespace ConfigApplication
 
 #endif //__AppForms__

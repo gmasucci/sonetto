@@ -28,21 +28,39 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <OIS.h>
 
 namespace ConfigApplication {
+    /// KeyListener is attached to OIS::Keyboard object,
+    /// so that when a key gets pressed it can be assigned
+    /// to the selected button configuration window(text field)
     class KeyListener : public OIS::KeyListener {
         public:
+            /// Called when a key gets pressed
             bool keyPressed(const OIS::KeyEvent &evt);
-            bool keyReleased(const OIS::KeyEvent &evt) {}
+
+            /// Called when a key gets released
+            bool keyReleased(const OIS::KeyEvent &evt) { return true; }
     };
 
+    /// JoyStickListener is attached to OIS::JoyStick object,
+    /// so that when a button gets pressed it can be assigned
+    /// to the selected button configuration window(text field)
     class JoyStickListener : public OIS::JoyStickListener {
         public:
+            /// Called when a button gets pressed
             bool buttonPressed(const OIS::JoyStickEvent &evt,int btn);
-            bool buttonReleased(const OIS::JoyStickEvent &evt,int btn) {}
+
+            /// Called when a button gets released
+            bool buttonReleased(const OIS::JoyStickEvent &evt,int btn) { return true; }
+
+            /// Called when an axis gets moved
             bool axisMoved(const OIS::JoyStickEvent &evt,int axis);
-            
+
+            /// mJoys accessor
+            /// It is used by OISHandler::OISHandler() for inserting
+            /// available joysticks
             std::vector<OIS::JoyStick *> *getJoysVector() { return &mJoys; }
-        
+
         private:
+            /// Available joysticks
             std::vector<OIS::JoyStick *> mJoys;
     };
 
@@ -62,19 +80,35 @@ namespace ConfigApplication {
              *           OIS will throw OIS::Exception's on errors.
              */
             OISHandler(wxWindow *wnd = NULL);
+
+            /// @brief Releases handles and input system
             ~OISHandler();
 
+            /** @brief Fills window's fields
+             *
+             *  This will fill the Input tab fields with information
+             *  obtained from OIS.
+             *  @param wnd Configuration window handle.
+             */
             void fillWindow(wxWindow *wnd);
-            
+
+            /// @brief Updates input devices' states and throw events
             void update(wxWindow *wnd);
 
         protected:
+            /// Input manager
             OIS::InputManager            *mInputMan;
 
+            /// Keyboard handler
             OIS::Keyboard                *mKeyboard;
+
+            /// Joystick handlers
             std::vector<OIS::JoyStick *>  mJoys;
-            
+
+            /// Keyboard listener
             KeyListener                   mKeyListener;
+
+            /// Joystick listener
             JoyStickListener              mJoyListener;
     };
 } // namespace

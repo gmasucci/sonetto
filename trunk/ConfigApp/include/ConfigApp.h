@@ -32,16 +32,27 @@ namespace ConfigApplication {
     public:
         ConfigApp() : d3d(NULL), ois(NULL) {}
 
+        /// @brief Creates window, handlers, and populates window
+        ///        with information
         bool OnInit();
+
+        /// @brief Destroys long-lived handlers
         int  OnExit();
 
+        bool Save();
+
+        /// Direct3D handler accessor
         D3DHandler *getD3DHandler() { return d3d; }
+
+        /// OIS handler accessor
         OISHandler *getOISHandler() { return ois; }
 
     private:
 #ifdef CA_USE_DIRECT3D
+        /// Handler responsible for Direct3D
         D3DHandler *d3d;
 #endif
+        /// Handler responsible for OIS
         OISHandler *ois;
     };
 }

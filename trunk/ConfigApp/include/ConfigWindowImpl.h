@@ -38,10 +38,10 @@ namespace ConfigApplication {
     /** Implementing ConfigWindow */
 class ConfigWindowImpl : public ConfigWindow {
         DECLARE_EVENT_TABLE()
-        
+
     protected:
         ConfigApp *mApp;
-        
+
         wxTimer   *mTimer;
 
         // Handlers for ConfigWindow events
@@ -58,6 +58,7 @@ class ConfigWindowImpl : public ConfigWindow {
         void onCheckOGLFullScreen(wxCommandEvent& event);
         void onCheckOGLVSync(wxCommandEvent& event);
         void onTimerEvent(wxTimerEvent& event);
+        void onDeviceChoice(wxCommandEvent& event);
         void OnClickApply(wxCommandEvent& event);
         void OnClickCancel(wxCommandEvent& event);
         void OnClickOk(wxCommandEvent& event);

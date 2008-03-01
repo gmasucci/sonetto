@@ -40,13 +40,13 @@ namespace ConfigApplication {
              *  This constructor creates a Direct3D object and calls enumDisplayModes(),
              *  so that fillWindow() can fill a window with information obtained from here on.
              *  @remarks Direct3D's anti-aliasing levels must be refreshed everytime
-             *           there is a resolution change or fullscreen switch, as it depend
+             *           there is a resolution change or fullscreen switch, as they depend
              *           on this information (i.e. an anti-aliasing level may be available in
-             *           fullscreen mode, and other doesn't).
-             *           Because of this, this object should not be deleted after calling
-             *           fillWindow(), but instead should call fillWindow() anytime when
-             *           the resolution or the fullscreen checkbox gets changed.
-             *           Anyway, just do not forget to delete it when it's not needed anymore.
+             *           fullscreen mode, while others don't).
+             *           Thus, this object should not be deleted after calling
+             *           fillWindow() but, instead, should call fillWindow() anytime there is
+             *           a resolution or fullscreen change.
+             *           Anyway, just do not forget to delete it when it is not needed anymore.
              */
             D3DHandler();
 
