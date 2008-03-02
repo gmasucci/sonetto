@@ -38,6 +38,10 @@
 			<Add directory="$(OPENAL_HOME)\include" />
 			<Add directory="$(OIS_HOME)\includes" />
 			<Add directory="..\include" />
+			<Add directory="..\dependencies\include\DirectX" />
+			<Add directory="..\dependencies\include\OIS" />
+			<Add directory="..\dependencies\include\OpenAL" />
+			<Add directory="..\dependencies\include\wxWidgets" />
 		</Compiler>
 		<Linker>
 			<Add library="kernel32" />

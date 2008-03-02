@@ -32,6 +32,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <wx/wx.h>
 #include "GL/Win32Handler.h"    // By now, only Win32 is supported
 #include "D3D/D3DHandler.h"
@@ -84,6 +85,9 @@ namespace ConfigApplication {
             // OIS is also used during execution, so no deleting here too
             ois = new OISHandler(wnd);
             ois->fillWindow(wnd);
+
+            // Load old configurations
+            Load();
 
             // Show and set ConfigWindow as top-level window
             wnd->Show(true);
@@ -181,8 +185,8 @@ namespace ConfigApplication {
 
         fs << "\n# Input options\n";
 
-        // We must write information about every player tab
-        // This iterates through them
+        // We must write information about every player tab,
+        // iterating through each
         for(size_t i = 0;i < ptabs->GetPageCount();++i) {
             wxWindowList  tabChildren;
             wxPanel      *ptab   = static_cast<wxPanel *>(ptabs->GetPage(i));
@@ -200,14 +204,12 @@ namespace ConfigApplication {
             // we must write its value to the stream
             tabChildren = ptab->GetChildren();
             for(size_t j = 0;j < tabChildren.size();++j) {
-                if(tabChildren[j]->GetId() == ConfigWindow::ID_BTNCONFIG) {
+                if(tabChildren[j]->GetId() >= ConfigWindow::ID_AXIS_LH1  &&
+                   tabChildren[j]->GetId() <= ConfigWindow::ID_BTN_DLEFT    ) {
                     size_t      num = 0;
                     wxTextCtrl *btn = static_cast<wxTextCtrl *>(tabChildren[j]);
 
-                    // TODO: Represent buttons by name
-                    //       I think this indexing here(`num') is buggy, and won't give
-                    //       correct values. This is just a proof of concept
-                    num = (j-tabChildren.IndexOf(ptab->FindWindow(ConfigWindow::ID_BTNCONFIG)))/2;
+                    num = tabChildren[j]->GetId()-ConfigWindow::ID_AXIS_LH1;
                     fs << "P" << i+1 << "_Button" << num << "=" << btn->GetValue() << "\n";
                 }
             }
@@ -217,6 +219,110 @@ namespace ConfigApplication {
 
         fs.flush();
         fs.close();
+
+        return true;
+    }
+
+    bool ConfigApp::Load() {
+        ifstream fs;
+        map<string,string> options;
+
+        // Get handles to widgets
+        wxChoicebook *rsys  = static_cast<wxChoicebook *>(wnd->FindWindow(ConfigWindow::ID_RSYS_CBOOK));
+        wxChoice     *adev  = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_OAL_DEVICE));
+        wxSlider     *mvol  = static_cast<wxSlider *>(wnd->FindWindow(ConfigWindow::ID_OAL_MVOL));
+        wxSlider     *evol  = static_cast<wxSlider *>(wnd->FindWindow(ConfigWindow::ID_OAL_EVOL));
+        wxSlider     *vvol  = static_cast<wxSlider *>(wnd->FindWindow(ConfigWindow::ID_OAL_VVOL));
+        wxNotebook   *ptabs = static_cast<wxNotebook *>(wnd->FindWindow(ConfigWindow::ID_PLAYERS_TABS));
+
+        // Opens configuration file for reading
+        fs.open("game.cfg");
+        if(!fs.is_open())
+            return false;
+
+        while(!fs.eof()) {
+            string        line,key,val;
+            istringstream parse;
+
+            getline(fs,line,'\n');
+            if(line.empty() || line[0] == '#')
+                continue;
+
+            parse.str(line);
+            getline(parse,key,'=');
+            getline(parse,val,'\n');
+            options[key] = val;
+        }
+
+        fs.close();
+
+        for(size_t i = 0;i < rsys->GetPageCount();++i) {
+            if(strcmp(rsys->GetPageText(i).c_str(),options["RenderSystem"].c_str()) == 0) {
+                rsys->ChangeSelection(i);
+                break;
+            }
+        }
+
+        adev->SetStringSelection(options["AudioDevice"]);
+        mvol->SetValue(atoi(options["MusicVolume"].c_str()));
+        evol->SetValue(atoi(options["EffectsVolume"].c_str()));
+        vvol->SetValue(atoi(options["VoiceVolume"].c_str()));
+
+        if(strcmp(rsys->GetPageText(rsys->GetSelection()),"OpenGL") == 0) {
+            // OpenGL
+            wxChoice   *res    = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_OGL_RES));
+            wxChoice   *cdepth = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_OGL_CDEPTH));
+            wxChoice   *freq   = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_OGL_FREQ));
+            wxChoice   *fsaa   = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_OGL_FSAA));
+            wxCheckBox *fscr   = static_cast<wxCheckBox *>(wnd->FindWindow(ConfigWindow::ID_OGL_FSCR));
+            wxCheckBox *vsync  = static_cast<wxCheckBox *>(wnd->FindWindow(ConfigWindow::ID_OGL_VSYNC));
+
+            res->SetStringSelection(options["Resolution"]);
+            cdepth->SetStringSelection(options["ColourDepth"]);
+            freq->SetStringSelection(options["Frequency"]);
+            fsaa->SetStringSelection(options["AntiAliasing"]);
+            fscr->SetValue(atoi(options["Fullscreen"].c_str()));
+            vsync->SetValue(atoi(options["VSync"].c_str()));
+        } else {
+            // Direct3D
+            wxChoice   *dspm   = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_D3D9_RES));
+            wxChoice   *fsaa   = static_cast<wxChoice *>(wnd->FindWindow(ConfigWindow::ID_D3D9_AA));
+            wxCheckBox *fscr   = static_cast<wxCheckBox *>(wnd->FindWindow(ConfigWindow::ID_D3D9_FSCR));
+            wxCheckBox *vsync  = static_cast<wxCheckBox *>(wnd->FindWindow(ConfigWindow::ID_D3D9_VSYNC));
+
+            dspm->SetStringSelection(options["DisplayMode"]);
+            fsaa->SetStringSelection(options["AntiAliasing"]);
+            fscr->SetValue(atoi(options["Fullscreen"].c_str()));
+            vsync->SetValue(atoi(options["VSync"].c_str()));
+        }
+
+        for(size_t i = 0;i < ptabs->GetPageCount();++i) {
+            ostringstream  prefix,key;
+            wxPanel       *ptab   = static_cast<wxPanel *>(ptabs->GetPage(i));
+            wxChoice      *idev   = static_cast<wxChoice *>(ptab->FindWindow(ConfigWindow::ID_INPUT_DEVICE));
+            wxCheckBox    *plugd  = static_cast<wxCheckBox *>(ptab->FindWindow(ConfigWindow::ID_CTRL_PLUGGED));
+            wxCheckBox    *ffback = static_cast<wxCheckBox *>(ptab->FindWindow(ConfigWindow::ID_CTRL_FFBACK));
+
+            prefix << "P" << i+1 << "_";
+            key << prefix.str() << "InputDevice";
+            idev->SetSelection(atoi(options[key.str()].c_str()));
+
+            key.str("");
+            key << prefix.str() << "PluggedIn";
+            plugd->SetValue(atoi(options[key.str()].c_str()));
+
+            key.str("");
+            key << prefix.str() << "ForceFeedback";
+            ffback->SetValue(atoi(options[key.str()].c_str()));
+
+            for(size_t j = ConfigWindow::ID_AXIS_LH1;j <= ConfigWindow::ID_BTN_DLEFT;++j) {
+                wxTextCtrl *btn = static_cast<wxTextCtrl *>(ptab->FindWindow(j));
+
+                key.str("");
+                key << prefix.str() << "Button" << j-ConfigWindow::ID_AXIS_LH1;
+                btn->SetValue(options[key.str()]);
+            }
+        }
 
         return true;
     }

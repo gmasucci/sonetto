@@ -45,7 +45,11 @@ namespace ConfigApplication {
         /// @brief Destroys long-lived handlers
         int  OnExit();
 
+        /// @brief Saves all useful window options to configuration file
         bool Save();
+
+        /// @brief Loads all configuration options from configuration file
+        bool Load();
 
         /// Direct3D handler accessor
         D3DHandler *getD3DHandler() { return d3d; }

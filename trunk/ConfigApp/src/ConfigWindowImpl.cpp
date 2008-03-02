@@ -134,7 +134,8 @@ namespace ConfigApplication {
         tabChildren = iter->GetChildren();
         for(size_t i = 0;i < tabChildren.size();++i) {
             // If we find a button configuration text control...
-            if(tabChildren[i]->GetId() == ConfigWindow::ID_BTNCONFIG) {
+            if(tabChildren[i]->GetId() >= ConfigWindow::ID_AXIS_LH1  &&
+               tabChildren[i]->GetId() <= ConfigWindow::ID_BTN_DLEFT    ) {
                 istringstream str;
                 wxTextCtrl *btn = static_cast<wxTextCtrl *>(tabChildren[i]);
 
