@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
 This source file is part of Sonetto RPG Engine.
 
-Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Prá¡ Vieira
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Prá Vieira
 
 
 Sonetto RPG Engine is free software: you can redistribute it and/or modify
@@ -34,6 +34,7 @@ namespace Sonetto {
 #include <OgreVector2.h>
 #include <stack>
 
+#include "SonettoAudioManager.h"
 #include "SonettoInputManager.h"
 #include "SonettoModule.h"
 
@@ -45,7 +46,12 @@ namespace Sonetto {
     class Kernel {
     public:
         /// Default constructor.
-        Kernel() : mRoot(0), mWindow(0), mViewport(0), mOverlayMan(0), mInitialised(0) {}
+        Kernel() : mRoot(0),               mWindow(0),      mViewport(0),
+                   mOverlayMan(0),         mResourceMan(0),
+                   mShutDown(0),           mInitialised(0),
+                   mAudioMan(0),           mInputMan(0),    mFontMan(0),
+                   mTextElementFactory(0)
+                   {}
 
         /// Default destructor.
         ~Kernel() {}
@@ -67,11 +73,12 @@ namespace Sonetto {
 
     public: // Change to other after...
         /// Module Stack
-        std::stack<Module *> mModuleList;
+        std::stack<Module *>          mModuleList;
 
         Ogre::Root                   *mRoot;
         Ogre::RenderWindow           *mWindow;
         Ogre::Viewport               *mViewport;
+        Ogre::LogManager             *mLogMan;
         Ogre::OverlayManager         *mOverlayMan;
         Ogre::ResourceGroupManager   *mResourceMan;
 
@@ -79,6 +86,7 @@ namespace Sonetto {
         bool mInitialised;
 
         // Sonetto Stuff
+        AudioManager       *mAudioMan;
         InputManager       *mInputMan;
         FontManager        *mFontMan;
         TextElementFactory *mTextElementFactory;

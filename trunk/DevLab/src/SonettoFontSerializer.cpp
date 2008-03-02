@@ -214,7 +214,8 @@ namespace Sonetto
     {
         size_t size = STREAM_OVERHEAD_SIZE;
 
-
+        // TODO: Finish this
+        return size;
     }
     size_t FontSerializer::calcGlyphSize(const Font * pFont)
     {

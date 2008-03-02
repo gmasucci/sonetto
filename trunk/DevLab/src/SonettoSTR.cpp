@@ -67,6 +67,8 @@ namespace Sonetto
     size_t STRData::insertMessage(Ogre::String& msg)
     {
         mMessageList.push_back(msg);
+
+        return mMessageList.size()-1;
     }
     void STRData::insertMessage(Ogre::String& msg, size_t position)
     {

@@ -39,8 +39,8 @@ namespace Sonetto
     Window::Window(const Ogre::String& name): Ogre::OverlayContainer(name),
             mUpdateBorderColors(true),
             mUpdateBackgroundColors(true),
-            mBorderSize(Ogre::Vector2(24/480.0f,24/480.0f)),
             mBorderRenderable(0),
+            mBorderSize(Ogre::Vector2(24/480.0f,24/480.0f)),
             mBackgroundColor(Ogre::ColourValue(1.0f,1.0f,1.0f,1.0f)),
             mBorderColor(Ogre::ColourValue(1.0f,1.0f,1.0f,1.0f)),
             mTileMode(true),
@@ -315,26 +315,26 @@ namespace Sonetto
             mAspect = 1.0f;
 
 
-        
+
         for (size_t i = 0; i < mRenderOp.vertexData->vertexCount; ++i)
         {
             *pPos++ = ((mPosCoord[i].x * (mAspect * 2)) - mAspect);
             *pPos++ = -(mPosCoord[i].y * 2) + 1;
             *pPos++ = zValue;
         }
-        
+
         vbuf->unlock();
         vbuf = mRenderOp2.vertexData->vertexBufferBinding->getBuffer(POSITION_BINDING);
         float * pBorderPos = static_cast<float*>(
                                  vbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD) );
-        
+
         for (size_t i = 0; i < mRenderOp2.vertexData->vertexCount; ++i)
         {
             *pBorderPos++ = ((mPosCoord[i].x * (mAspect * 2)) - mAspect);
             *pBorderPos++ = -(mPosCoord[i].y * 2) + 1;
             *pBorderPos++ = zValue;
         }
-        
+
         vbuf->unlock();
     }
     void Window::updateTextureGeometry(void)

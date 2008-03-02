@@ -84,7 +84,7 @@ namespace Sonetto
         *   @return The message ID.
         */
         size_t insertMessage(Ogre::String& msg);
-        /** Insert a message at an specified position on the STR.
+        /** Insert a message at the specified position on the STR.
         *   @remarks This will change all ids after this one.
         *   @param msg The message to put in the STR.
         *   @param position The position where you want to put it.

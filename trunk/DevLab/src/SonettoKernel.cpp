@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
 This source file is part of Sonetto RPG Engine.
 
-Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Prá¡ Vieira
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Prá Vieira
 
 
 Sonetto RPG Engine is free software: you can redistribute it and/or modify
@@ -30,7 +30,6 @@ namespace Sonetto {
         KeyConfig kc[4]; // Temporary key configuration for the InputManager
 
         if (!mInitialised) {
-            printf("%d\n",mInitialised);
             mShutDown = false;
             mRoot = new Ogre::Root("plugins.dlc","devlab.dlc","");
             if (mRoot->showConfigDialog()) {
@@ -119,13 +118,16 @@ namespace Sonetto {
             kc[1].buttons[BTN_DPAD_LEFT]  = 0x0F00;
 
             // Get Ogre singletons for easier use
+            mLogMan      = Ogre::LogManager::getSingletonPtr();
             mOverlayMan  = Ogre::OverlayManager::getSingletonPtr();
             mResourceMan = Ogre::ResourceGroupManager::getSingletonPtr();
 
             // Create managers
+            mAudioMan           = new AudioManager();
             mInputMan           = new InputManager();
             mFontMan            = new FontManager();
 
+            mAudioMan->initialise();
             mInputMan->initialise(mWindow,kc);
 
             mTextElementFactory = new TextElementFactory();
@@ -197,6 +199,9 @@ namespace Sonetto {
                 mInputMan = NULL;
             }
 
+            if(mAudioMan)
+                delete mAudioMan;
+
             // At last, delete the Ogre::Root
             if (mRoot)
                 delete mRoot;
@@ -216,14 +221,16 @@ namespace Sonetto {
                 // Get the input first
                 mInputMan->updateInput();
 
+                mAudioMan->update();
+
                 // The Kernel must have something to execute
                 assert(!mModuleList.empty());
 
                 // Update the stack top Module
                 mModuleList.top()->update(1.0f);
 
-                mDebugText->setMessage(Ogre::StringConverter::toString(mInputMan->getAxis(0,AX_LEFT))+" "+
-                                       Ogre::StringConverter::toString(mInputMan->getAxis(1,AX_RIGHT)));
+                //mDebugText->setMessage(Ogre::StringConverter::toString(mInputMan->getAxis(0,AX_LEFT))+" "+
+                //                       Ogre::StringConverter::toString(mInputMan->getAxis(1,AX_RIGHT)));
 
                 mRoot->renderOneFrame();
             }

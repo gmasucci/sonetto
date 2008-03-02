@@ -47,12 +47,12 @@
 			<Add option="-fident" />
 			<Add option="-DWIN32" />
 			<Add option="-D_WINDOWS" />
-			<Add directory="$(NEW_OGRE_HOME)\OgreMain\include\" />
-			<Add directory="..\include" />
+			<Add directory="$(OGRE_HOME)\OgreMain\include\" />
 			<Add directory="$(OIS_HOME)\includes\" />
 			<Add directory="$(OPENAL_HOME)\include" />
 			<Add directory="$(OGG_HOME)\include" />
 			<Add directory="$(VORBIS_HOME)\include" />
+			<Add directory="..\include" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
@@ -63,7 +63,7 @@
 			<Add library="libvorbis-0" />
 			<Add library="libvorbisfile-3" />
 			<Add library="libvorbisenc-2" />
-			<Add directory="$(NEW_OGRE_HOME)\lib\" />
+			<Add directory="$(OGRE_HOME)\lib\" />
 			<Add directory="$(OIS_HOME)\dll\" />
 			<Add directory="$(OPENAL_HOME)\libs\Win32" />
 			<Add directory="$(OGG_HOME)\src\.libs" />

@@ -80,18 +80,16 @@ namespace Sonetto {
 
     class InputManager {
     public:
-        InputManager() : mInputManager(0), mInitialised(0)
-        {
-            for(size_t i = 0; i != MAX_PLAYERS; ++i)
-            {
-                for(size_t b = 0; b != 16; ++b)
+        InputManager() : mInputManager(0), mInitialised(0) {
+            for (size_t i = 0; i != MAX_PLAYERS; ++i) {
+                for (size_t b = 0; b != 16; ++b)
                     mKeyStates[i].buttons[b] = KS_NONE;
-                for(size_t b = 0; b != 8; ++b)
+                for (size_t b = 0; b != 8; ++b)
                     mKeyStates[i].axes[b] = 0.0f;
             }
         }
 
-        ~InputManager() {}
+    ~InputManager() {}
 
         bool           initialise(Ogre::RenderWindow *win,KeyConfig *kc);
         bool           deinitialise();

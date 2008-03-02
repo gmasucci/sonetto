@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
 This source file is part of Sonetto RPG Engine.
 
-Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr· Vieira
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr√° Vieira
 
 
 Sonetto RPG Engine is free software: you can redistribute it and/or modify
@@ -19,18 +19,20 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
+
 #ifndef SONETTO_MAIN_H_
 #define SONETTO_MAIN_H_
-namespace Sonetto{
 
-    enum ScreenMetricsMode
-    {
+#include <al.h>
+#include <vorbis/vorbisfile.h>
+
+namespace Sonetto {
+    enum ScreenMetricsMode {
         SMM_RELATIVE,
         SMM_RELATIVE_ASPECT_ADJUSTED
     };
 
-    struct TexCoord
-    {
+    struct TexCoord {
         TexCoord():left(0.0f),right(0.0f),top(0.0f),bottom(0.0f) { }
         float left;
         float right;
@@ -38,8 +40,7 @@ namespace Sonetto{
         float bottom;
     };
 
-    struct WindowTexCoord
-    {
+    struct WindowTexCoord {
         TexCoord slim_left;
         TexCoord slim_center;
         TexCoord slim_right;
@@ -60,8 +61,7 @@ namespace Sonetto{
      *
      * This structure is used to store the texture coordinates and horizontal offset for each character.
      */
-    struct GlyphStruct
-    {
+    struct GlyphStruct {
         /// This is the top-left texture UV coordinate for this glyph.
         Ogre::Vector2 texcoord0;
         /// This is the top-right texture UV coordinate for this glyph.
@@ -78,13 +78,12 @@ namespace Sonetto{
      *
      * This structure is used to store the texture coordinates and horizontal offset for each character.
      */
-    struct GlyphTable
-    {
+    struct GlyphTable {
         /** @brief Default constructor.
         * @param nx is the number of horizontal glyphs in the texture.
         * @param ny is the number of vertical glyphs in the texture.
         */
-        GlyphTable(unsigned long nx = 0, unsigned long ny = 0) : x(nx),y(ny){}
+        GlyphTable(unsigned long nx = 0, unsigned long ny = 0) : x(nx),y(ny) {}
         /// Number of horizontal glyphs in the texture.
         Ogre::uint32 x;
         /// Number of vertical glyphs in the texture.
@@ -95,10 +94,9 @@ namespace Sonetto{
      *
      * Need to redo this, ignore.
      */
-    struct GlyphHeader
-    {
+    struct GlyphHeader {
         /// Default Constructor.
-        GlyphHeader(){}
+        GlyphHeader() {}
         /// Number of glyphs per line and number of lines.
         GlyphTable glyph_tbl;
         /// Default Vertical Space for each new line.
@@ -113,8 +111,7 @@ namespace Sonetto{
      *
      * Need to remove this, ignore.
      */
-    struct ColorTextEvent
-    {
+    struct ColorTextEvent {
         size_t flag_position;
         size_t color_id;
     };
@@ -155,5 +152,46 @@ namespace Sonetto{
         FT_ANISOTROPIC = 0x3333
     };
 
-}; // namespace
+    struct MusicInfo {
+        std::string  filename;
+
+        bool         loopEnabled;
+        ogg_uint64_t loopBegin;
+        ogg_uint64_t loopEnd;
+    };
+
+    struct MusicStream {
+        size_t         musicID;
+
+        ALuint         sourceID;
+        OggVorbis_File oggStream;
+        int            bitstream;
+        char           activeBuffer;
+        ALuint         bufferIDs[2];
+
+        float          maxVolume;
+        char           fade;      // -1 = Fade out, 0 = No Fading, +1 = Fade in
+        float          fadeSpd;
+    };
+
+    struct SoundInfo {
+        ALuint       bufferID;
+        bool         loopEnabled;
+        ogg_uint64_t loopBegin;
+        ogg_uint64_t loopEnd;
+
+        float        volume;
+        char         fade;         // -1 = Fade out, 0 = No Fading, +1 = Fade in
+        float        fadeSpd;
+    };
+
+    struct SoundSource {
+        ALuint           soundID;
+        ALuint           sourceID;
+
+        Ogre::SceneNode *parentNode;
+    };
+}
+; // namespace
+
 #endif // SONETTO_MAIN_H_

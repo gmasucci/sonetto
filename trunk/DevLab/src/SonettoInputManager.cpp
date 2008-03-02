@@ -21,75 +21,103 @@ http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
 #include <vector>
+#include "SonettoKernel.h"
 #include "SonettoInputManager.h"
 
 using namespace std;
 
 namespace Sonetto {
     bool InputManager::initialise(Ogre::RenderWindow *win,KeyConfig kc[MAX_PLAYERS]) {
-        if (!mInitialised) {
-            // Setup OIS (alternative way)
-            /*size_t hWnd = 0;
-            win->getCustomAttribute("WINDOW",&hWnd);
-            mInputManager = OIS::InputManager::createInputSystem(hWnd);*/
+        // Fails if we already initialised
+        if (mInitialised) {
+            KERNEL->mLogMan->logMessage("[InputManager::initialise()] InputManager was asked to be "
+                                        "initialised twice. This will possibly cause errors.\n",
+                                        Ogre::LML_CRITICAL);
 
-            OIS::ParamList pl;
-            size_t windowHnd = 0;
-            std::ostringstream windowHndStr;
-            win->getCustomAttribute("WINDOW", &windowHnd);
-            windowHndStr << windowHnd;
-            pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-            mInputManager = OIS::InputManager::createInputSystem( pl );
-
-            // Create a keyboard handler and a joystick handler for each joystick plugged in
-            mKeyboard = static_cast<OIS::Keyboard *>(mInputManager->createInputObject(OIS::OISKeyboard,false));
-            for (int i = 0 ;i < mInputManager->getNumberOfDevices(OIS::OISJoyStick);++i) {
-                try {
-                    mJoy.push_back(static_cast<OIS::JoyStick *>(mInputManager->createInputObject(OIS::OISJoyStick,false)));
-                } catch (...) {
-                    mJoy[i] = NULL;
-                }
-            }
-            mJoyItrEnd = mJoy.end();
-
-            // Copy the supplied configuration
-            memcpy(mKeyConfig,kc,sizeof(KeyConfig)*MAX_PLAYERS);
-
-            // We're set
-            mInitialised = true;
-            return true;
+            return false;
         }
 
-        return false;
+        // Following bunch of lines sets an OIS Input System for our
+        // window handle. Don't be scared. ;-)
+        OIS::ParamList pl;
+        size_t windowHnd = 0;
+        std::ostringstream windowHndStr;
+        win->getCustomAttribute("WINDOW",&windowHnd);
+        windowHndStr << windowHnd;
+        pl.insert(std::make_pair(std::string("WINDOW"),windowHndStr.str()));
+        mInputManager = OIS::InputManager::createInputSystem(pl);
+
+        // Creates a keyboard handler and a joystick handler for each joystick plugged in
+        mKeyboard = static_cast<OIS::Keyboard *>(mInputManager->
+                    createInputObject(OIS::OISKeyboard,false));
+
+        for (int i = 0 ;i < mInputManager->getNumberOfDevices(OIS::OISJoyStick);++i) {
+            try {
+                // Try to open an OISJoyStick input device
+                // This static_cast just casts the general purpose createInputObject()'s return object to
+                // our desired JoyStick
+                mJoy.push_back(static_cast<OIS::JoyStick *>(mInputManager->
+                               createInputObject(OIS::OISJoyStick,false)));
+            } catch (...) {
+                // Or NULL'ifies slot
+                mJoy.push_back(NULL);
+            }
+        }
+
+        mJoyItrEnd = mJoy.end();
+
+        // Copies the supplied key configuration
+        memcpy(mKeyConfig,kc,sizeof(KeyConfig)*MAX_PLAYERS);
+
+        // We're set
+        mInitialised = true;
+        return true;
     }
 
     bool InputManager::deinitialise() {
-        if (mInitialised) {
-            // Deinitialise OIS
-            if (mInputManager) {
-                // Destroy the Keyboard handler and every Joystick handler
-                mInputManager->destroyInputObject(mKeyboard);
-                for (mJoyItr = mJoy.begin();mJoyItr != mJoyItrEnd;++mJoyItr)
-                    mInputManager->destroyInputObject(*mJoyItr);
+        if (!mInitialised) {
+            KERNEL->mLogMan->logMessage("[InputManager::deinitialise()] Trying to deinitialise a non-"
+                                        "initialised InputManager.\n",Ogre::LML_CRITICAL);
 
-                // Destroy OIS
-                OIS::InputManager::destroyInputSystem(mInputManager);
-                mInputManager = NULL;
-            }
-
-            // We're uninitialised
-            mInitialised = false;
-            return true;
+            return false;
         }
 
-        return false;
+        // Deinitialise OIS
+        if (mInputManager) {
+            // Destroy the Keyboard handler and every Joystick handler
+            mInputManager->destroyInputObject(mKeyboard);
+            for (mJoyItr = mJoy.begin();mJoyItr != mJoyItrEnd;++mJoyItr)
+                mInputManager->destroyInputObject(*mJoyItr);
+
+            // Destroy OIS
+            OIS::InputManager::destroyInputSystem(mInputManager);
+            mInputManager = NULL;
+        }
+
+        // We're uninitialised
+        mInitialised = false;
+        return true;
     }
 
     KEYSTATE InputManager::getButtonState(Ogre::uint8 playerID,BUTTON btn) {
+        // Makes sure we aren't going to access a non-existent player
+        if(playerID >= MAX_PLAYERS) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "PlayerID outbounds MAX_PLAYERS",
+                        "InputManager::playerPlugged()");
+        }
+
         return mKeyStates[playerID].buttons[btn];
     }
 
     Ogre::Vector2 InputManager::getAxis(Ogre::uint8 playerID,AXIS axis) {
+        // Makes sure we aren't going to access a non-existent player
+        if(playerID >= MAX_PLAYERS) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "PlayerID outbounds MAX_PLAYERS",
+                        "InputManager::playerPlugged()");
+        }
+
         return Ogre::Vector2(mKeyStates[playerID].axes[axis+1], // X
                              mKeyStates[playerID].axes[axis]);  // Y
     }
@@ -98,7 +126,7 @@ namespace Sonetto {
     void InputManager::updateInput() {
         // Capture Input
         for (Ogre::uint8 playerID = 0;playerID < MAX_PLAYERS;++playerID) {
-            if(mKeyConfig[playerID].inputDevice > 0 && !playerPlugged(playerID))
+            if (mKeyConfig[playerID].inputDevice > 0 && !playerPlugged(playerID))
                 continue;
 
             if (mKeyboard)
@@ -110,7 +138,6 @@ namespace Sonetto {
             // Update button states
             for (int i = 0;i < 16;++i) {
                 bool     newState = false;
-                std::cout<<"Old State: "<<(int)mKeyStates[playerID].buttons[i]<<"\n";
                 KEYSTATE oldState = mKeyStates[playerID].buttons[i];
 
                 // 0x0F00: Joystick button mask (Only works if inputDevice is greater than 0)
@@ -121,10 +148,8 @@ namespace Sonetto {
                 if (mKeyConfig[playerID].buttons[i] > 0x0000 && mKeyConfig[playerID].buttons[i] < 0x00FF)
                     newState = mKeyboard->isKeyDown((OIS::KeyCode)(mKeyConfig[playerID].buttons[i]));
 
-                std::cout<<"Player ID: "<<(int)playerID<<" Input Device: " <<(int)mKeyConfig[playerID].inputDevice<<"\n";
-                std::cout<<"Old State: "<<(int)oldState<<" New State: "<<(int)newState<<"\n";
-                if(mKeyConfig[playerID].inputDevice > 0 && mKeyConfig[playerID].buttons[i] >= 0x00FF && mKeyConfig[playerID].buttons[i] <= 0x0F00)
-                    std::cout<<"Value from OIS: "<<(int)mJoy[mKeyConfig[playerID].inputDevice-1]->getJoyStickState().mButtons[(mKeyConfig[playerID].buttons[i]) >> 8]<<"\n";
+                if (mKeyConfig[playerID].inputDevice > 0 && mKeyConfig[playerID].buttons[i] >= 0x00FF && mKeyConfig[playerID].buttons[i] <= 0x0F00)
+                    newState = mJoy[mKeyConfig[playerID].inputDevice-1]->getJoyStickState().mButtons[(mKeyConfig[playerID].buttons[i]) >> 8];
 
                 // Compare old and new states, and replace to the current one
                 switch (oldState) {
@@ -154,9 +179,7 @@ namespace Sonetto {
                         mKeyStates[playerID].buttons[i] = KS_RELEASE;
                     break;
                 }
-                //std::cout<<mKeyStates[playerID].buttons[i];
             }
-            std::cout<<"\n";
 
             // Update axes
             // Clean axes before checking
@@ -245,25 +268,44 @@ namespace Sonetto {
     } // e !!      :-)
 
     void InputManager::setKeyConfig(Ogre::uint8 playerID,KeyConfig *kc) {
-        assert(kc);                     // No NULLs here !
-        assert(playerID < MAX_PLAYERS); // Don't exceed the maximum player number
+        // Makes sure we aren't going to access a non-existent player
+        if(playerID >= MAX_PLAYERS) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "PlayerID outbounds MAX_PLAYERS",
+                        "InputManager::playerPlugged()");
+        }
 
+        assert(kc && "Supplied KeyConfig is NULL");
+
+        // Rawly copies new configuration
         memcpy(&mKeyConfig[playerID],kc,sizeof(mKeyConfig[playerID]));
     }
 
     KeyConfig *InputManager::getKeyConfig(Ogre::uint8 playerID) {
+        // Makes sure we aren't going to access a non-existent player
+        if(playerID >= MAX_PLAYERS) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "PlayerID outbounds MAX_PLAYERS",
+                        "InputManager::playerPlugged()");
+        }
+
         return &mKeyConfig[playerID];
     }
 
     bool InputManager::playerPlugged(Ogre::uint8 playerID) {
-        assert(playerID < MAX_PLAYERS); // Don't exceed the maximum player number
+        // Makes sure we aren't going to access a non-existent player
+        if(playerID >= MAX_PLAYERS) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "PlayerID outbounds MAX_PLAYERS",
+                        "InputManager::playerPlugged()");
+        }
 
         // Device 0 is a Keyboard
-        if(mKeyConfig[playerID].inputDevice == 0)
+        if (mKeyConfig[playerID].inputDevice == 0)
             return (mKeyboard != NULL);
 
         // If out of controller vector bounds, the controller is not plugged
-        if(mKeyConfig[playerID].inputDevice-1 >= mJoy.size())
+        if (mKeyConfig[playerID].inputDevice-1 >= (int)(mJoy.size()))
             return false;
 
         return (mJoy[mKeyConfig[playerID].inputDevice-1] != NULL);

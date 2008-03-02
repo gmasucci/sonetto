@@ -181,6 +181,8 @@ namespace Sonetto
         /*font_material->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
         font_material->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_ALWAYS_PASS, alpha_rejection);
         texture_unit->setTextureFiltering(Ogre::FO_LINEAR, Ogre::FO_LINEAR, Ogre::FO_NONE);*/
+
+        return true;
     }
     bool Font::deleteMaterial()
     {
@@ -195,6 +197,8 @@ namespace Sonetto
             TextureManager::getSingleton().remove( font_texture->getHandle());
             font_texture.setNull();
         }
+
+        return true;
     }
     void Font::setTextureName( const Ogre::String &name)
     {
