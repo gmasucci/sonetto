@@ -10,8 +10,8 @@
 	<File name="..\include\SonettoFontSerializer.h" open="0" top="0" tabpos="0">
 		<Cursor position="1408" topLine="32" />
 	</File>
-	<File name="..\include\SonettoKernel.h" open="0" top="0" tabpos="0">
-		<Cursor position="1803" topLine="19" />
+	<File name="..\include\SonettoKernel.h" open="1" top="0" tabpos="6">
+		<Cursor position="3653" topLine="11" />
 	</File>
 	<File name="..\include\SonettoMain.h" open="0" top="0" tabpos="1">
 		<Cursor position="1196" topLine="76" />
@@ -37,8 +37,11 @@
 	<File name="..\include\SonettoWindowSkinSerializer.h" open="0" top="0" tabpos="0">
 		<Cursor position="1939" topLine="27" />
 	</File>
-	<File name="..\main.cpp" open="0" top="0" tabpos="1">
-		<Cursor position="5309" topLine="15" />
+	<File name="..\main.cpp" open="1" top="0" tabpos="10">
+		<Cursor position="3795" topLine="66" />
+	</File>
+	<File name="..\src\SonettoAudioManager.cpp" open="1" top="1" tabpos="11">
+		<Cursor position="18588" topLine="477" />
 	</File>
 	<File name="..\src\SonettoFont.cpp" open="1" top="0" tabpos="5">
 		<Cursor position="1186" topLine="26" />
@@ -49,8 +52,11 @@
 	<File name="..\src\SonettoFontSerializer.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="2272" topLine="27" />
 	</File>
-	<File name="..\src\SonettoKernel.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="5465" topLine="121" />
+	<File name="..\src\SonettoKernel.cpp" open="1" top="0" tabpos="7">
+		<Cursor position="462" topLine="0" />
+	</File>
+	<File name="..\src\SonettoModule.cpp" open="1" top="0" tabpos="9">
+		<Cursor position="0" topLine="4" />
 	</File>
 	<File name="..\src\SonettoSlimWindow.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="21508" topLine="520" />
@@ -61,8 +67,8 @@
 	<File name="..\src\SonettoWindow.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="38595" topLine="1083" />
 	</File>
-	<File name="..\src\SonettoWindowSkin.cpp" open="1" top="1" tabpos="3">
-		<Cursor position="2000" topLine="45" />
+	<File name="..\src\SonettoWindowSkin.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="2000" topLine="0" />
 	</File>
 	<File name="..\src\SonettoWindowSkinManager.cpp" open="1" top="0" tabpos="1">
 		<Cursor position="2609" topLine="47" />

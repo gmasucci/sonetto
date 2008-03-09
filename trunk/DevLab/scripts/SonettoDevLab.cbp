@@ -69,6 +69,7 @@
 			<Add directory="$(OGG_HOME)\src\.libs" />
 			<Add directory="$(VORBIS_HOME)\lib\.libs" />
 		</Linker>
+		<Unit filename="..\include\SonettoAudioManager.h" />
 		<Unit filename="..\include\SonettoFont.h" />
 		<Unit filename="..\include\SonettoFontManager.h" />
 		<Unit filename="..\include\SonettoFontSerializer.h" />
@@ -89,6 +90,7 @@
 		<Unit filename="..\include\SonettoWindowSkinManager.h" />
 		<Unit filename="..\include\SonettoWindowSkinSerializer.h" />
 		<Unit filename="..\main.cpp" />
+		<Unit filename="..\src\SonettoAudioManager.cpp" />
 		<Unit filename="..\src\SonettoFont.cpp" />
 		<Unit filename="..\src\SonettoFontManager.cpp" />
 		<Unit filename="..\src\SonettoFontSerializer.cpp" />
