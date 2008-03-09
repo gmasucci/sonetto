@@ -123,11 +123,11 @@ namespace Sonetto {
             mResourceMan = Ogre::ResourceGroupManager::getSingletonPtr();
 
             // Create managers
-//            mAudioMan           = new AudioManager();
+            mAudioMan           = new AudioManager();
             mInputMan           = new InputManager();
             mFontMan            = new FontManager();
 
-//            mAudioMan->initialise();
+            mAudioMan->initialise();
             mInputMan->initialise(mWindow,kc);
 
             mTextElementFactory = new TextElementFactory();
@@ -199,8 +199,8 @@ namespace Sonetto {
                 mInputMan = NULL;
             }
 
-//            if(mAudioMan)
-//                delete mAudioMan;
+            if(mAudioMan)
+                delete mAudioMan;
 
             // At last, delete the Ogre::Root
             if (mRoot)
@@ -221,7 +221,7 @@ namespace Sonetto {
                 // Get the input first
                 mInputMan->updateInput();
 
-//                mAudioMan->update();
+                mAudioMan->update();
 
                 // The Kernel must have something to execute
                 assert(!mModuleList.empty());
