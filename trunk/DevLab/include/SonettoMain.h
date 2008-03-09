@@ -26,6 +26,8 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <al.h>
 #include <vorbis/vorbisfile.h>
 
+#include <OgreVector2.h>
+
 namespace Sonetto {
     enum ScreenMetricsMode {
         SMM_RELATIVE,

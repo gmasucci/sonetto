@@ -150,7 +150,7 @@ namespace Sonetto
     void TailedWindow::setWindowSkin(WindowSkinPtr winSkin)
     {
         mWindowSkin = winSkin;
-        Ogre::OverlayContainer::setMaterialName(mWindowSkin->mWindowMaterial.getName());
+        Ogre::OverlayContainer::setMaterialName(mWindowSkin->mWindowMaterial->getName());
         mWindowSkin->mBorderMaterial->load();
     }
     void TailedWindow::setWindowType(WindowType wt)

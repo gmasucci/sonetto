@@ -91,22 +91,22 @@ public:
             mKernel->pushModule(new TestModule2(), true);
 
         if(mKernel->mInputMan->getButtonState(0,Sonetto::BTN_L1) == Sonetto::KS_PRESS)
-            mKernel->mAudioMan->stopMusic(0.8f,false);
+//            mKernel->mAudioMan->stopMusic(0.8f,false);
 
         if(mKernel->mInputMan->getButtonState(0,Sonetto::BTN_L2) == Sonetto::KS_PRESS)
-            mKernel->mAudioMan->memorizeMusic();
+//            mKernel->mAudioMan->memorizeMusic();
 
         if(mKernel->mInputMan->getButtonState(0,Sonetto::BTN_R2) == Sonetto::KS_PRESS)
-            mKernel->mAudioMan->restoreMusic();
+//            mKernel->mAudioMan->restoreMusic();
 
         if(mKernel->mInputMan->getButtonState(0,Sonetto::BTN_TRIANGLE) == Sonetto::KS_PRESS)
-            mKernel->mAudioMan->playMusic(0,0.5f,0.5f);
+//            mKernel->mAudioMan->playMusic(0,0.5f,0.5f);
 
         if(mKernel->mInputMan->getButtonState(0,Sonetto::BTN_SQUARE) == Sonetto::KS_PRESS)
-            mKernel->mAudioMan->playMusic(1,0.5f,0.5f);
+//            mKernel->mAudioMan->playMusic(1,0.5f,0.5f);
 
         if(mKernel->mInputMan->getButtonState(0,Sonetto::BTN_R1) == Sonetto::KS_PRESS)
-            printf("New SourceID: %d\n",mKernel->mAudioMan->playSound(0,NULL));
+//            printf("New SourceID: %d\n",mKernel->mAudioMan->playSound(0,NULL));
 
         alGetListener3f(AL_POSITION,&pos[0],&pos[1],&pos[2]);
         if(mKernel->mInputMan->getButtonState(0,Sonetto::BTN_DPAD_LEFT) == Sonetto::KS_HOLD)
@@ -117,7 +117,7 @@ public:
             pos[2] += 0.000002f;
         if(mKernel->mInputMan->getButtonState(0,Sonetto::BTN_DPAD_DOWN) == Sonetto::KS_HOLD)
             pos[2] -= 0.000002f;
-        alListener3f(AL_POSITION,pos[0],pos[1],pos[2]);
+//        alListener3f(AL_POSITION,pos[0],pos[1],pos[2]);
 
     }
     void exit() {

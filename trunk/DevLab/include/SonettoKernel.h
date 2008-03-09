@@ -34,7 +34,7 @@ namespace Sonetto {
 #include <OgreVector2.h>
 #include <stack>
 
-#include "SonettoAudioManager.h"
+//#include "SonettoAudioManager.h"
 #include "SonettoInputManager.h"
 #include "SonettoModule.h"
 
@@ -49,7 +49,8 @@ namespace Sonetto {
         Kernel() : mRoot(0),               mWindow(0),      mViewport(0),
                    mOverlayMan(0),         mResourceMan(0),
                    mShutDown(0),           mInitialised(0),
-                   mAudioMan(0),           mInputMan(0),    mFontMan(0),
+                   //mAudioMan(0),
+                   mInputMan(0),    mFontMan(0),
                    mTextElementFactory(0)
                    {}
 
@@ -84,7 +85,7 @@ namespace Sonetto {
 
         bool mShutDown;
         bool mInitialised;
-        
+
         /** Game Switch
         *
         * This is the total number of switches for this game
@@ -99,7 +100,7 @@ namespace Sonetto {
         std::vector<Ogre::uint32> mSwitches;
 
         // Sonetto Stuff
-        AudioManager       *mAudioMan;
+//        AudioManager       *mAudioMan;
         InputManager       *mInputMan;
         FontManager        *mFontMan;
         TextElementFactory *mTextElementFactory;

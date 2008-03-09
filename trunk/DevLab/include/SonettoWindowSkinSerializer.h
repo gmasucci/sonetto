@@ -22,13 +22,17 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef _SONETTO_WINDOWSKIN_SERIALIZER_H_
 #define _SONETTO_WINDOWSKIN_SERIALIZER_H_
 
+#include <OgreSerializer.h>
+#include "SonettoMain.h"
+#include "SonettoWindowSkin.h"
+
 namespace Sonetto {
 
     class WindowSkin; // forward declaration
-    class FontSerializer : public Ogre::Serializer {
+    class WindowSkinSerializer : public Ogre::Serializer {
     public:
-        FontSerializer();
-        ~FontSerializer();
+        WindowSkinSerializer();
+        ~WindowSkinSerializer();
 
         void exportWindowSkin(const WindowSkin *pWindowSkin, const Ogre::String &fileName, Ogre::Serializer::Endian endianMode = ENDIAN_NATIVE);
         void importWindowSkin(Ogre::DataStreamPtr &stream, WindowSkin *pDest);
@@ -36,9 +40,9 @@ namespace Sonetto {
         void writeTexCoords(const WindowTexCoord& vec);
         void writeVector2(const Ogre::Vector2& vec);
         void writeColorValue(const Ogre::ColourValue& vec);
-        void readTexCoords(DataStreamPtr &stream, WindowTexCoord& vec);
-        void readVector2(DataStreamPtr &stream, Ogre::Vector2 &pDest);
-        void readColorValue(DataStreamPtr &stream, Ogre::ColourValue &pDest);
+        void readTexCoords(Ogre::DataStreamPtr &stream, WindowTexCoord &vec);
+        void readVector2(Ogre::DataStreamPtr &stream, Ogre::Vector2 &pDest);
+        void readColorValue(Ogre::DataStreamPtr &stream, Ogre::ColourValue &pDest);
     };
 
 }; // namespace

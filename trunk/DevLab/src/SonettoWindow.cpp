@@ -147,7 +147,7 @@ namespace Sonetto
     void Window::setWindowSkin(WindowSkinPtr winSkin)
     {
         mWindowSkin = winSkin;
-        Ogre::OverlayContainer::setMaterialName(mWindowSkin->mWindowMaterial.getName());
+        Ogre::OverlayContainer::setMaterialName(mWindowSkin->mWindowMaterial->getName());
         mWindowSkin->mBorderMaterial->load();
     }
     void Window::setWindowType(WindowType wt)
@@ -939,29 +939,29 @@ namespace Sonetto
         mPosCoord[21].y = top+mWindowSkin->mBorderDimensions.y;
         mPosCoord[22].x = left;
         mPosCoord[22].y = bottom-mWindowSkin->mBorderDimensions.y;
-        mPosCoord[23].x = mWindowSkin->mBorderDimensions+mWindowSkin->mBorderDimensions.x;
+        mPosCoord[23].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[23].y = bottom-mWindowSkin->mBorderDimensions.y;
 
         mPosCoord[24].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[24].y = top+mWindowSkin->mBorderDimensions.y;
-        mPosCoord[25].x = lemWindowSkin->mBorderDimensionsmBorderSize.x;
-        mPosCoord[30].y = top+mBorderSize.y;
-        mPosCoord[31].x = right-mBorderSize.x;
-        mPosCoord[31].y = bottom-mBorderSize.y;
+        mPosCoord[25].x = left+mWindowSkin->mBorderDimensions.x;
+        mPosCoord[30].y = top+mWindowSkin->mBorderDimensions.y;
+        mPosCoord[31].x = right-mWindowSkin->mBorderDimensions.x;
+        mPosCoord[31].y = bottom-mWindowSkin->mBorderDimensions.y;
         mPosCoord[32].x = right;
-        mPosCoord[32].y = top+mBorderSize.y;
+        mPosCoord[32].y = top+mWindowSkin->mBorderDimensions.y;
         mPosCoord[33].x = right;
-        mPosCoord[33].y = top+mBorderSize.y;
-        mPosCoord[34].x = right-mBorderSize.x;
-        mPosCoord[34].y = bottom-mBorderSize.y;
+        mPosCoord[33].y = top+mWindowSkin->mBorderDimensions.y;
+        mPosCoord[34].x = right-mWindowSkin->mBorderDimensions.x;
+        mPosCoord[34].y = bottom-mWindowSkin->mBorderDimensions.y;
         mPosCoord[35].x = right;
-        mPosCoord[35].y = bottom-mBorderSize.y;
+        mPosCoord[35].y = bottom-mWindowSkin->mBorderDimensions.y;
 
         mPosCoord[36].x = left;
-        mPosCoord[36].y = bottom-mBorderSize.y;
+        mPosCoord[36].y = bottom-mWindowSkin->mBorderDimensions.y;
         mPosCoord[37].x = left;
         mPosCoord[37].y = bottom;
-        mPosCoord[38].x = left+mBorderSize.x;
+        mPosCoord[38].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[38].y = bottom-mWindowSkin->mBorderDimensions.y;
         mPosCoord[39].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[39].y = bottom-mWindowSkin->mBorderDimensions.y;

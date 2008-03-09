@@ -24,6 +24,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <OgreOverlayContainer.h>
 #include <OgreVector2.h>
 #include "SonettoMain.h"
+#include "SonettoWindowSkin.h"
 namespace Sonetto
 {
     class SlimBorderRenderable;

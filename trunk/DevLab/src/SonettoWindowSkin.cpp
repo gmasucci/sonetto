@@ -24,6 +24,26 @@ http://www.gnu.org/copyleft/lesser.txt
 
 namespace Sonetto {
 
+    WindowSkin::WindowSkin(Ogre::ResourceManager* creator, const Ogre::String &name,
+                             Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual,
+                             Ogre::ManualResourceLoader *loader) :
+            Ogre::Resource(creator, name, handle, group, isManual, loader)
+    {
+        /* If you were storing a pointer to an object, then you would set that pointer to NULL here.
+        */
+
+        /* For consistency with StringInterface, but we don't add any parameters here
+        That's because the Resource implementation of StringInterface is to
+        list all the options that need to be set before loading, of which
+        we have none as such. Full details can be set through scripts.
+        */
+        createParamDictionary("WindowSkin");
+    }
+    WindowSkin::~WindowSkin()
+    {
+        unload();
+    }
+
     void WindowSkin::loadImpl() {
         WindowSkinSerializer serializer;
         Ogre::DataStreamPtr stream = Ogre::ResourceGroupManager::getSingleton().openResource(mName, mGroup, true, this);
@@ -66,11 +86,11 @@ namespace Sonetto {
         // Create the texture unit for mask and background textures
         Ogre::TextureUnitState * winMaskTexture = winMatPass->createTextureUnitState(mWindowMaskTextureName);
         winMaskTexture->setTextureCoordSet(0);
-        winMaskTextute->setTextureFiltering(Ogre::FO_LINEAR, Ogre::FO_LINEAR, Ogre::FO_NONE);
+        winMaskTexture->setTextureFiltering(Ogre::FO_LINEAR, Ogre::FO_LINEAR, Ogre::FO_NONE);
         Ogre::TextureUnitState * winBgTexture = winMatPass->createTextureUnitState(mWindowBgTextureName);
         winBgTexture->setTextureCoordSet(1);
         winBgTexture->setTextureFiltering(Ogre::FO_LINEAR, Ogre::FO_LINEAR, Ogre::FO_NONE);
-        winBgTexture->setTextureAddressingMode(Ogre::TAM_WRAP);
+        winBgTexture->setTextureAddressingMode(Ogre::TextureUnitState::TAM_WRAP);
 
         // Border Material
         // Setup the material basics (Non-configurable Mandatory Data)
@@ -83,7 +103,7 @@ namespace Sonetto {
         // Create the texture unit for mask and background textures
         Ogre::TextureUnitState * borderMaskTexture = borderMatPass->createTextureUnitState(mBorderTextureName);
         borderMaskTexture->setTextureCoordSet(0);
-        borderMaskTextute->setTextureFiltering(Ogre::FO_LINEAR, Ogre::FO_LINEAR, Ogre::FO_NONE);
+        borderMaskTexture->setTextureFiltering(Ogre::FO_LINEAR, Ogre::FO_LINEAR, Ogre::FO_NONE);
     }
 
     bool WindowSkin::deleteMaterial() {

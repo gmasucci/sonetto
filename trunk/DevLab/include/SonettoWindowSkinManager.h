@@ -26,6 +26,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoWindowSkin.h"
 
 namespace Sonetto {
+    using namespace Ogre;
     class WindowSkinManager : public Ogre::ResourceManager, public Ogre::Singleton<WindowSkinManager>
     {
     protected:

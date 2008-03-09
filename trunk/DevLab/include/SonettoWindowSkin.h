@@ -26,6 +26,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <OgreMaterialManager.h>
 #include <OgreTextureManager.h>
 #include <OgreTechnique.h>
+#include "SonettoMain.h"
 
 namespace Sonetto {
 
@@ -45,7 +46,8 @@ namespace Sonetto {
         void unloadImpl();
         size_t calculateSize() const;
 
-        bool createMaterials();
+        bool createMaterial();
+        bool deleteMaterial();
 
         Ogre::String        mWindowMaskTextureName;
         Ogre::String        mWindowBgTextureName;

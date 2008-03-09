@@ -20,9 +20,11 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 #include "SonettoWindowSkinManager.h"
+#include <OgreSingleton.h>
 
 namespace Sonetto {
-    template<> WindowSkinManager *Ogre::Singleton<WindowSkin>::ms_Singleton = 0;
+
+    template<> WindowSkinManager *Ogre::Singleton<WindowSkinManager>::ms_Singleton = 0;
 
     WindowSkinManager * WindowSkinManager::getSingletonPtr() {
         return ms_Singleton;
@@ -48,7 +50,7 @@ namespace Sonetto {
         Ogre::ResourceGroupManager::getSingleton()._unregisterResourceManager(mResourceType);
     }
 
-    WindiwSkinPtr WindowSkinManager::load(const Ogre::String &name, const Ogre::String &group) {
+    WindowSkinPtr WindowSkinManager::load(const Ogre::String &name, const Ogre::String &group) {
         WindowSkinPtr  windowskinf = getByName(name);
 
         if (windowskinf.isNull())
@@ -58,11 +60,11 @@ namespace Sonetto {
         return windowskinf;
     }
 
-    Ogre::Resource WindowSkinManager::createImpl(const Ogre::String &name, Ogre::ResourceHandle handle,
+    Ogre::Resource * WindowSkinManager::createImpl(const Ogre::String &name, Ogre::ResourceHandle handle,
             const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader,
             const Ogre::NameValuePairList *createParams)
     {
-        return new Font(this, name, handle, group, isManual, loader);
+        return new WindowSkin(this, name, handle, group, isManual, loader);
     }
 
 }; // namespace

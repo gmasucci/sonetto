@@ -144,33 +144,33 @@ namespace Sonetto
             std::cout<<"\n\nInitialisation OK!\n\n";
         }
     }
-    void Window::setWindowSkin(WindowSkinPtr winSkin)
+    void SlimWindow::setWindowSkin(WindowSkinPtr winSkin)
     {
         mWindowSkin = winSkin;
-        Ogre::OverlayContainer::setMaterialName(mWindowSkin->mWindowMaterial.getName());
+        Ogre::OverlayContainer::setMaterialName(mWindowSkin->mWindowMaterial->getName());
         mWindowSkin->mBorderMaterial->load();
     }
-    void Window::setWindowType(WindowType wt)
+    void SlimWindow::setWindowType(WindowType wt)
     {
         mWindowType = wt;
     }
-    WindowType Window::getWindowType()
+    WindowType SlimWindow::getWindowType()
     {
         return mWindowType;
     }
-    void Window::setWindowAlpha(Ogre::Real alpha)
+    void SlimWindow::setWindowAlpha(Ogre::Real alpha)
     {
         mWindowAlpha = alpha;
     }
-    Ogre::Real Window::getWindowAlpha()
+    Ogre::Real SlimWindow::getWindowAlpha()
     {
         return mWindowAlpha;
     }
-    void Window::setBorderAlpha(Ogre::Real alpha)
+    void SlimWindow::setBorderAlpha(Ogre::Real alpha)
     {
         mBorderAlpha = alpha;
     }
-    Ogre::Real Window::getBorderAlpha()
+    Ogre::Real SlimWindow::getBorderAlpha()
     {
         return mBorderAlpha;
     }
@@ -529,43 +529,43 @@ namespace Sonetto
         left = _getDerivedLeft();
         right = left + mWidth;
         top = _getDerivedTop();
-        bottom =  top + mWindowSkin->mBorderSize.y;
+        bottom =  top + mWindowSkin->mBorderDimensions.y;
 
         mPosCoord[0].x = left;
         mPosCoord[0].y = top;
         mPosCoord[1].x = left;
         mPosCoord[1].y = bottom;
-        mPosCoord[2].x = left+mWindowSkin->mBorderSize.x;
+        mPosCoord[2].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[2].y = top;
-        mPosCoord[3].x = left+mWindowSkin->mBorderSize.x;
+        mPosCoord[3].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[3].y = top;
         mPosCoord[4].x = left;
         mPosCoord[4].y = bottom;
-        mPosCoord[5].x = left+mWindowSkin->mBorderSize.x;
+        mPosCoord[5].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[5].y = bottom;
 
-        mPosCoord[6].x = left+mWindowSkin->mBorderSize.x;
+        mPosCoord[6].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[6].y = top;
-        mPosCoord[7].x = left+mWindowSkin->mBorderSize.x;
+        mPosCoord[7].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[7].y = bottom;
-        mPosCoord[8].x = right-mWindowSkin->mBorderSize.x;
+        mPosCoord[8].x = right-mWindowSkin->mBorderDimensions.x;
         mPosCoord[8].y = top;
-        mPosCoord[9].x = right-mWindowSkin->mBorderSize.x;
+        mPosCoord[9].x = right-mWindowSkin->mBorderDimensions.x;
         mPosCoord[9].y = top;
-        mPosCoord[10].x = left+mWindowSkin->mBorderSize.x;
+        mPosCoord[10].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[10].y = bottom;
-        mPosCoord[11].x = right-mWindowSkin->mBorderSize.x;
+        mPosCoord[11].x = right-mWindowSkin->mBorderDimensions.x;
         mPosCoord[11].y = bottom;
 
-        mPosCoord[12].x = right-mWindowSkin->mBorderSize.x;
+        mPosCoord[12].x = right-mWindowSkin->mBorderDimensions.x;
         mPosCoord[12].y = top;
-        mPosCoord[13].x = right-mWindowSkin->mBorderSize.x;
+        mPosCoord[13].x = right-mWindowSkin->mBorderDimensions.x;
         mPosCoord[13].y = bottom;
         mPosCoord[14].x = right;
         mPosCoord[14].y = top;
         mPosCoord[15].x = right;
         mPosCoord[15].y = top;
-        mPosCoord[16].x = right-mWindowSkin->mBorderSize.x;
+        mPosCoord[16].x = right-mWindowSkin->mBorderDimensions.x;
         mPosCoord[16].y = bottom;
         mPosCoord[17].x = right;
         mPosCoord[17].y = bottom;
@@ -592,17 +592,17 @@ namespace Sonetto
             right = mWindowSkin->mTiling.x;
             top = 0.0f;
             bottom =  mWindowSkin->mTiling.y;
-            mBorderFixed.x = (mWindowSkin->mBorderSize.x / mWidth)*mWindowSkin->mTiling.x;
-            mBorderFixed.y = (mWindowSkin->mBorderSize.y / mHeight)*mWindowSkin->mTiling.y;
+            mBorderFixed.x = (mWindowSkin->mBorderDimensions.x / mWidth)*mWindowSkin->mTiling.x;
+            mBorderFixed.y = (mWindowSkin->mBorderDimensions.y / mHeight)*mWindowSkin->mTiling.y;
         }
         else // Else if the texture mode is on tile mode
         {
             left = _getDerivedLeft() * mWindowSkin->mTiling.x;
             right = left + (mWidth * mWindowSkin->mTiling.x);
             top = _getDerivedTop() * mWindowSkin->mTiling.y;
-            bottom =  top + (mWindowSkin->mBorderSize.y * mWindowSkin->mTiling.y);
-            mBorderFixed.x = mWindowSkin->mBorderSize.x*mWindowSkin->mTiling.x;
-            mBorderFixed.y = mWindowSkin->mBorderSize.y*mWindowSkin->mTiling.y;
+            bottom =  top + (mWindowSkin->mBorderDimensions.y * mWindowSkin->mTiling.y);
+            mBorderFixed.x = mWindowSkin->mBorderDimensions.x*mWindowSkin->mTiling.x;
+            mBorderFixed.y = mWindowSkin->mBorderDimensions.y*mWindowSkin->mTiling.y;
         }
 
         mTexCoord1[0].x = left;
