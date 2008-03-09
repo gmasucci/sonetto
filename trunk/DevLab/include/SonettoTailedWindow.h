@@ -40,53 +40,28 @@ namespace Sonetto
         virtual ~TailedWindow();
         /// Initialise
         virtual void initialise (void);
+        /// Set the WindowSkin
+        void setWindowSkin(WindowSkinPtr winSkin);
+        /** Set this WindowType
+        *
+        *   Menu - For Menus
+        *   Main - For Message Boxes and orther.
+        *   Enemy - For Enemy Windows
+        *   System - For System Messages
+        */
+        void setWindowType(WindowType wt);
+        /// Get this Window Type
+        WindowType getWindowType();
+        /// Set Window Alpha
+        void setWindowAlpha(Ogre::Real alpha);
+        /// Get Window Alpha
+        Ogre::Real getWindowAlpha();
+        /// Set Border Alpha
+        void setBorderAlpha(Ogre::Real alpha);
+        /// Get Border Alpha
+        Ogre::Real getBorderAlpha();
         /// Tells this element how to interpret the position and dimension values it is given.
         void setScrMetricsMode(ScreenMetricsMode smm);
-        /** Set the border size.
-        * @param sizeX The border width
-        * @param sizeY The border height
-        */
-        void setBorderSize(const Ogre::Real sizeX, const Ogre::Real sizeY);
-        /** Set the border size.
-        * @param size The border size
-        */
-        void setBorderSize(const Ogre::Real size);
-        /** Get the border size.
-        * @return The border size (X and Y)
-        */
-        const Ogre::Vector2 getBorderSize();
-        /** Set the Border and Mask texture coordinates.
-        *
-        * @remarks This function copies all the content from the address to the class.
-        */
-        void setTexCoords(WindowTexCoord * texcoord);
-        /** Set the background tile mode.
-        * @param mode The way this TailedWindow will texturize the background
-        * False: Stretch the texture to the border of the object
-        * True: This will map the baground based on the screen
-        * (note: the result depends upon the Screen Metrics Mode for this object)
-        */
-        void setTileMode(bool mode);
-        /// Get the tile mode.
-        bool getTileMode();
-        /// Set the number of times the texture will tile.
-        void setTiling(const Ogre::Real tileX, const Ogre::Real tileY);
-        /// Set the number of times the texture will tile.
-        void setTiling(const Ogre::Vector2 tile);
-        /// Get the number of times the texture will tile.
-        Ogre::Vector2 getTiling();
-        /// Set the TailedWindow background color.
-        void setBackgroundColor(const Ogre::ColourValue& col);
-        /// Set the TailedWindow background color.
-        void setBackgroundColor(const Ogre::Real r = 1.0f,const Ogre::Real g = 1.0f,const Ogre::Real b = 1.0f,const Ogre::Real a = 1.0f);
-        /// Get the TailedWindow background color.
-        const Ogre::ColourValue& getBackgroundColor();
-        /// Set the TailedWindow border color.
-        void setBorderColor(const Ogre::ColourValue& col);
-        /// Set the TailedWindow border color.
-        void setBorderColor(const Ogre::Real r = 1.0f,const Ogre::Real g = 1.0f,const Ogre::Real b = 1.0f,const Ogre::Real a = 1.0f);
-        /// Get the TailedWindow border color.
-        const Ogre::ColourValue& getBorderColor();
         /** Show or Hide the TailedWindow Tail, set it's direction and it's position.
         *
         * @param visible The tail visibility, false for invisible and true for visible.
@@ -115,16 +90,10 @@ namespace Sonetto
         void setTailPosition(float pos);
         /// Return the tail position.
         float getTailPosition();
-        /** Sets the name of the material to use for the borders. */
-        void setBorderMaterialName(const Ogre::String& name);
-        /** Gets the name of the material to use for the borders. */
-        const Ogre::String& getBorderMaterialName(void) const;
         /** See OverlayElement. */
         virtual const Ogre::String& getTypeName(void) const;
         /** See Renderable. */
         void getRenderOperation(Ogre::RenderOperation& op);
-        /** Overridden from OverlayElement */
-        void setMaterialName(const Ogre::String& matName);
         /** Overridden from OverlayContainer */
         void _updateRenderQueue(Ogre::RenderQueue* queue);
         /// Visit Renderables
@@ -133,24 +102,19 @@ namespace Sonetto
         /** Overridden from OverlayContaienr */
         void _update(void);
     protected:
+
+        /// The WindowSkin for this Window
+        WindowSkinPtr mWindowSkin;
+        /// Window Type
+        WindowType mWindowType;
+
+        Ogre::Real mWindowAlpha;
+        Ogre::Real mBorderAlpha;
+
         bool mUpdateBorderColors;
         bool mUpdateBackgroundColors;
         /// Border Renderable Pointer
         TailedBorderRenderable * mBorderRenderable;
-        /// Border Material Name
-        Ogre::String mBorderMaterialName;
-        /// Border Material Pointer
-        Ogre::MaterialPtr mpBorderMaterial;
-        /// Border Size
-        Ogre::Vector2 mBorderSize;
-        /// Background Color
-        Ogre::ColourValue mBackgroundColor;
-        /// Border Color
-        Ogre::ColourValue mBorderColor;
-        /// Background Tile Mode
-        bool mTileMode;
-        /// Background Tiling
-        Ogre::Vector2 mTiling;
         /// Tail Visibility
         bool mTailVisible;
         /// Tail Direction
@@ -214,7 +178,7 @@ namespace Sonetto
         }
         const Ogre::MaterialPtr& getMaterial(void) const
         {
-            return mParent->mpBorderMaterial;
+            return mParent->mWindowSkin->mBorderMaterial;
         }
         void getRenderOperation(Ogre::RenderOperation& op)
         {

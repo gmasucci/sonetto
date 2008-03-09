@@ -35,8 +35,6 @@ namespace Sonetto
         /* If you were storing a pointer to an object, then you would set that pointer to NULL here.
         */
 
-
-
         /* For consistency with StringInterface, but we don't add any parameters here
         That's because the Resource implementation of StringInterface is to
         list all the options that need to be set before loading, of which

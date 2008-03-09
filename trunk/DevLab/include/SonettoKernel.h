@@ -20,8 +20,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
-#ifndef __SONETTO_KERNEL_H_
-#define __SONETTO_KERNEL_H_
+#ifndef _SONETTO_KERNEL_H_
+#define _SONETTO_KERNEL_H_
 
 // Forward declarations
 namespace Sonetto {
@@ -84,6 +84,19 @@ namespace Sonetto {
 
         bool mShutDown;
         bool mInitialised;
+        
+        /** Game Switch
+        *
+        * This is the total number of switches for this game
+        * For every 32 'switches' create a new variable to hold them
+        */
+        size_t mNumSwitches;
+        /** Game Switches/Flags
+        *
+        * Stored in groups of 32 switches
+        * @remarks num_variables = (num_switches / sizeof(Ogre::uint32)); ???
+        */
+        std::vector<Ogre::uint32> mSwitches;
 
         // Sonetto Stuff
         AudioManager       *mAudioMan;
@@ -99,7 +112,6 @@ namespace Sonetto {
         TextElement            *mDebugErrorText;
 
     };
-}
-; // namespace
+}; // namespace
 
 #endif

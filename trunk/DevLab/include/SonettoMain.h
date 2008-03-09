@@ -32,6 +32,13 @@ namespace Sonetto {
         SMM_RELATIVE_ASPECT_ADJUSTED
     };
 
+    enum WindowType {
+        WT_MENU,
+        WT_MAIN,
+        WT_ENEMY,
+        WT_SYSTEM
+    };
+
     struct TexCoord {
         TexCoord():left(0.0f),right(0.0f),top(0.0f),bottom(0.0f) { }
         float left;

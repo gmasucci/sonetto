@@ -40,12 +40,6 @@ namespace Sonetto
             mUpdateBorderColors(true),
             mUpdateBackgroundColors(true),
             mBorderRenderable(0),
-            mBorderSize(Ogre::Vector2(24/480.0f,24/480.0f)),
-            mBackgroundColor(Ogre::ColourValue(1.0f,1.0f,1.0f,1.0f)),
-            mBorderColor(Ogre::ColourValue(1.0f,1.0f,1.0f,1.0f)),
-            mTileMode(true),
-            mTiling(Ogre::Vector2(7.5f,7.5f)),
-            mTexCoord0(0),
             mScrMetricsMode(SMM_RELATIVE_ASPECT_ADJUSTED),
             mAspectRatio(1.3333333333333333333333333333333f)
     {
@@ -150,90 +144,39 @@ namespace Sonetto
             std::cout<<"\n\nInitialisation OK!\n\n";
         }
     }
+    void Window::setWindowSkin(WindowSkinPtr winSkin)
+    {
+        mWindowSkin = winSkin;
+        Ogre::OverlayContainer::setMaterialName(mWindowSkin->mWindowMaterial.getName());
+        mWindowSkin->mBorderMaterial->load();
+    }
+    void Window::setWindowType(WindowType wt)
+    {
+        mWindowType = wt;
+    }
+    WindowType Window::getWindowType()
+    {
+        return mWindowType;
+    }
+    void Window::setWindowAlpha(Ogre::Real alpha)
+    {
+        mWindowAlpha = alpha;
+    }
+    Ogre::Real Window::getWindowAlpha()
+    {
+        return mWindowAlpha;
+    }
+    void Window::setBorderAlpha(Ogre::Real alpha)
+    {
+        mBorderAlpha = alpha;
+    }
+    Ogre::Real Window::getBorderAlpha()
+    {
+        return mBorderAlpha;
+    }
     void Window::setScrMetricsMode(ScreenMetricsMode smm)
     {
         mScrMetricsMode = smm;
-    }
-    void Window::setBorderSize(const Ogre::Real sizeX, const Ogre::Real sizeY)
-    {
-        mBorderSize.x = sizeX;
-        mBorderSize.y = sizeY;
-    }
-    void Window::setBorderSize(const Ogre::Real size)
-    {
-        mBorderSize = size;
-    }
-    const Ogre::Vector2 Window::getBorderSize()
-    {
-        return mBorderSize;
-    }
-    void Window::setTexCoords(WindowTexCoord * texcoord)
-    {
-        mTexCoord0 = texcoord;
-    }
-    void Window::setTileMode(bool mode)
-    {
-        mTileMode = mode;
-    }
-    bool Window::getTileMode()
-    {
-        return mTileMode;
-    }
-    void Window::setTiling(const Ogre::Real tileX, const Ogre::Real tileY)
-    {
-        mTiling.x = tileX;
-        mTiling.y = tileY;
-    }
-    void Window::setTiling(const Ogre::Vector2 tile)
-    {
-        mTiling = tile;
-    }
-    Ogre::Vector2 Window::getTiling()
-    {
-        return mTiling;
-    }
-    void Window::setBackgroundColor(const Ogre::ColourValue& col)
-    {
-        mBackgroundColor = col;
-    }
-    void Window::setBackgroundColor(const Ogre::Real r,const Ogre::Real g,const Ogre::Real b,const Ogre::Real a)
-    {
-        mBackgroundColor.r = r;
-        mBackgroundColor.g = g;
-        mBackgroundColor.b = b;
-        mBackgroundColor.a = a;
-    }
-    const Ogre::ColourValue& Window::getBackgroundColor()
-    {
-        return mBackgroundColor;
-    }
-    void Window::setBorderColor(const Ogre::ColourValue& col)
-    {
-        mBorderColor = col;
-    }
-    void Window::setBorderColor(const Ogre::Real r,const Ogre::Real g,const Ogre::Real b,const Ogre::Real a)
-    {
-        mBorderColor.r = r;
-        mBorderColor.g = g;
-        mBorderColor.b = b;
-        mBorderColor.a = a;
-    }
-    const Ogre::ColourValue& Window::getBorderColor()
-    {
-        return mBorderColor;
-    }
-    void Window::setBorderMaterialName(const Ogre::String& name)
-    {
-        mBorderMaterialName = name;
-        mpBorderMaterial = Ogre::MaterialManager::getSingleton().getByName(name);
-        mpBorderMaterial->load();
-        // Set some prerequisites to be sure
-        mpBorderMaterial->setLightingEnabled(false);
-        mpBorderMaterial->setDepthCheckEnabled(false);
-    }
-    const Ogre::String& Window::getBorderMaterialName(void) const
-    {
-        return mBorderMaterialName;
     }
     const Ogre::String& Window::getTypeName(void) const
     {
@@ -242,10 +185,6 @@ namespace Sonetto
     void Window::getRenderOperation(Ogre::RenderOperation &op)
     {
         op = mRenderOp;
-    }
-    void Window::setMaterialName(const Ogre::String& matName)
-    {
-        Ogre::OverlayContainer::setMaterialName(matName);
     }
     void Window::_updateRenderQueue(Ogre::RenderQueue * queue)
     {
@@ -351,334 +290,334 @@ namespace Sonetto
         	1 4---5
         */
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_left.left;
-        *pTex++ = mTexCoord0->top_left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[0].x;
         *pTex++ = mTexCoord1[0].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_left.left;
-        *pTex++ = mTexCoord0->top_left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[1].x;
         *pTex++ = mTexCoord1[1].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_left.right;
-        *pTex++ = mTexCoord0->top_left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[2].x;
         *pTex++ = mTexCoord1[2].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_left.right;
-        *pTex++ = mTexCoord0->top_left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[3].x;
         *pTex++ = mTexCoord1[3].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_left.left;
-        *pTex++ = mTexCoord0->top_left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[4].x;
         *pTex++ = mTexCoord1[4].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_left.right;
-        *pTex++ = mTexCoord0->top_left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[5].x;
         *pTex++ = mTexCoord1[5].y;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->top.left;
-        *pTex++ = mTexCoord0->top.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[6].x;
         *pTex++ = mTexCoord1[6].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top.left;
-        *pTex++ = mTexCoord0->top.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[7].x;
         *pTex++ = mTexCoord1[7].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top.right;
-        *pTex++ = mTexCoord0->top.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[8].x;
         *pTex++ = mTexCoord1[8].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top.right;
-        *pTex++ = mTexCoord0->top.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[9].x;
         *pTex++ = mTexCoord1[9].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top.left;
-        *pTex++ = mTexCoord0->top.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[10].x;
         *pTex++ = mTexCoord1[10].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top.right;
-        *pTex++ = mTexCoord0->top.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[11].x;
         *pTex++ = mTexCoord1[11].y;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_right.left;
-        *pTex++ = mTexCoord0->top_right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[12].x;
         *pTex++ = mTexCoord1[12].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_right.left;
-        *pTex++ = mTexCoord0->top_right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[13].x;
         *pTex++ = mTexCoord1[13].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_right.right;
-        *pTex++ = mTexCoord0->top_right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[14].x;
         *pTex++ = mTexCoord1[14].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_right.right;
-        *pTex++ = mTexCoord0->top_right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[15].x;
         *pTex++ = mTexCoord1[15].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_right.left;
-        *pTex++ = mTexCoord0->top_right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[16].x;
         *pTex++ = mTexCoord1[16].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_right.right;
-        *pTex++ = mTexCoord0->top_right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[17].x;
         *pTex++ = mTexCoord1[17].y;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->left.left;
-        *pTex++ = mTexCoord0->left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[18].x;
         *pTex++ = mTexCoord1[18].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->left.left;
-        *pTex++ = mTexCoord0->left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[19].x;
         *pTex++ = mTexCoord1[19].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->left.right;
-        *pTex++ = mTexCoord0->left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[20].x;
         *pTex++ = mTexCoord1[20].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->left.right;
-        *pTex++ = mTexCoord0->left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[21].x;
         *pTex++ = mTexCoord1[21].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->left.left;
-        *pTex++ = mTexCoord0->left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[22].x;
         *pTex++ = mTexCoord1[22].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->left.right;
-        *pTex++ = mTexCoord0->left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[23].x;
         *pTex++ = mTexCoord1[23].y;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->center.left;
-        *pTex++ = mTexCoord0->center.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[24].x;
         *pTex++ = mTexCoord1[24].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->center.left;
-        *pTex++ = mTexCoord0->center.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[25].x;
         *pTex++ = mTexCoord1[25].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->center.right;
-        *pTex++ = mTexCoord0->center.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[26].x;
         *pTex++ = mTexCoord1[26].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->center.right;
-        *pTex++ = mTexCoord0->center.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[27].x;
         *pTex++ = mTexCoord1[27].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->center.left;
-        *pTex++ = mTexCoord0->center.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[28].x;
         *pTex++ = mTexCoord1[28].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->center.right;
-        *pTex++ = mTexCoord0->center.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[29].x;
         *pTex++ = mTexCoord1[29].y;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->right.left;
-        *pTex++ = mTexCoord0->right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[30].x;
         *pTex++ = mTexCoord1[30].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->right.left;
-        *pTex++ = mTexCoord0->right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[31].x;
         *pTex++ = mTexCoord1[31].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->right.right;
-        *pTex++ = mTexCoord0->right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[32].x;
         *pTex++ = mTexCoord1[32].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->right.right;
-        *pTex++ = mTexCoord0->right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[33].x;
         *pTex++ = mTexCoord1[33].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->right.left;
-        *pTex++ = mTexCoord0->right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[34].x;
         *pTex++ = mTexCoord1[34].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->right.right;
-        *pTex++ = mTexCoord0->right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[35].x;
         *pTex++ = mTexCoord1[35].y;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_left.left;
-        *pTex++ = mTexCoord0->bottom_left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[36].x;
         *pTex++ = mTexCoord1[36].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_left.left;
-        *pTex++ = mTexCoord0->bottom_left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[37].x;
         *pTex++ = mTexCoord1[37].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_left.right;
-        *pTex++ = mTexCoord0->bottom_left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[38].x;
         *pTex++ = mTexCoord1[38].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_left.right;
-        *pTex++ = mTexCoord0->bottom_left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[39].x;
         *pTex++ = mTexCoord1[39].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_left.left;
-        *pTex++ = mTexCoord0->bottom_left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[40].x;
         *pTex++ = mTexCoord1[40].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_left.right;
-        *pTex++ = mTexCoord0->bottom_left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[41].x;
         *pTex++ = mTexCoord1[41].y;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom.left;
-        *pTex++ = mTexCoord0->bottom.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[42].x;
         *pTex++ = mTexCoord1[42].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom.left;
-        *pTex++ = mTexCoord0->bottom.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[43].x;
         *pTex++ = mTexCoord1[43].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom.right;
-        *pTex++ = mTexCoord0->bottom.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[44].x;
         *pTex++ = mTexCoord1[44].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom.right;
-        *pTex++ = mTexCoord0->bottom.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[45].x;
         *pTex++ = mTexCoord1[45].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom.left;
-        *pTex++ = mTexCoord0->bottom.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[46].x;
         *pTex++ = mTexCoord1[46].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom.right;
-        *pTex++ = mTexCoord0->bottom.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[47].x;
         *pTex++ = mTexCoord1[47].y;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_right.left;
-        *pTex++ = mTexCoord0->bottom_right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[48].x;
         *pTex++ = mTexCoord1[48].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_right.left;
-        *pTex++ = mTexCoord0->bottom_right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[49].x;
         *pTex++ = mTexCoord1[49].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_right.right;
-        *pTex++ = mTexCoord0->bottom_right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[50].x;
         *pTex++ = mTexCoord1[50].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_right.right;
-        *pTex++ = mTexCoord0->bottom_right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.top;
         // Texcoord 1
         *pTex++ = mTexCoord1[51].x;
         *pTex++ = mTexCoord1[51].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_right.left;
-        *pTex++ = mTexCoord0->bottom_right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[52].x;
         *pTex++ = mTexCoord1[52].y;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_right.right;
-        *pTex++ = mTexCoord0->bottom_right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.bottom;
         // Texcoord 1
         *pTex++ = mTexCoord1[53].x;
         *pTex++ = mTexCoord1[53].y;
@@ -697,175 +636,175 @@ namespace Sonetto
         	1 4---5
         */
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_left.left;
-        *pTex++ = mTexCoord0->top_left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_left.left;
-        *pTex++ = mTexCoord0->top_left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_left.right;
-        *pTex++ = mTexCoord0->top_left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_left.right;
-        *pTex++ = mTexCoord0->top_left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_left.left;
-        *pTex++ = mTexCoord0->top_left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_left.right;
-        *pTex++ = mTexCoord0->top_left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_left.bottom;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->top.left;
-        *pTex++ = mTexCoord0->top.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top.left;
-        *pTex++ = mTexCoord0->top.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top.right;
-        *pTex++ = mTexCoord0->top.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top.right;
-        *pTex++ = mTexCoord0->top.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top.left;
-        *pTex++ = mTexCoord0->top.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top.right;
-        *pTex++ = mTexCoord0->top.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top.bottom;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_right.left;
-        *pTex++ = mTexCoord0->top_right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_right.left;
-        *pTex++ = mTexCoord0->top_right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_right.right;
-        *pTex++ = mTexCoord0->top_right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_right.right;
-        *pTex++ = mTexCoord0->top_right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_right.left;
-        *pTex++ = mTexCoord0->top_right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->top_right.right;
-        *pTex++ = mTexCoord0->top_right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.top_right.bottom;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->left.left;
-        *pTex++ = mTexCoord0->left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->left.left;
-        *pTex++ = mTexCoord0->left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->left.right;
-        *pTex++ = mTexCoord0->left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->left.right;
-        *pTex++ = mTexCoord0->left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->left.left;
-        *pTex++ = mTexCoord0->left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->left.right;
-        *pTex++ = mTexCoord0->left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.left.bottom;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->center.left;
-        *pTex++ = mTexCoord0->center.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->center.left;
-        *pTex++ = mTexCoord0->center.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->center.right;
-        *pTex++ = mTexCoord0->center.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->center.right;
-        *pTex++ = mTexCoord0->center.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->center.left;
-        *pTex++ = mTexCoord0->center.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->center.right;
-        *pTex++ = mTexCoord0->center.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.center.bottom;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->right.left;
-        *pTex++ = mTexCoord0->right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->right.left;
-        *pTex++ = mTexCoord0->right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->right.right;
-        *pTex++ = mTexCoord0->right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->right.right;
-        *pTex++ = mTexCoord0->right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->right.left;
-        *pTex++ = mTexCoord0->right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->right.right;
-        *pTex++ = mTexCoord0->right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.right.bottom;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_left.left;
-        *pTex++ = mTexCoord0->bottom_left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_left.left;
-        *pTex++ = mTexCoord0->bottom_left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_left.right;
-        *pTex++ = mTexCoord0->bottom_left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_left.right;
-        *pTex++ = mTexCoord0->bottom_left.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_left.left;
-        *pTex++ = mTexCoord0->bottom_left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_left.right;
-        *pTex++ = mTexCoord0->bottom_left.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_left.bottom;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom.left;
-        *pTex++ = mTexCoord0->bottom.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom.left;
-        *pTex++ = mTexCoord0->bottom.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom.right;
-        *pTex++ = mTexCoord0->bottom.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom.right;
-        *pTex++ = mTexCoord0->bottom.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom.left;
-        *pTex++ = mTexCoord0->bottom.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom.right;
-        *pTex++ = mTexCoord0->bottom.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom.bottom;
 
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_right.left;
-        *pTex++ = mTexCoord0->bottom_right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_right.left;
-        *pTex++ = mTexCoord0->bottom_right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_right.right;
-        *pTex++ = mTexCoord0->bottom_right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_right.right;
-        *pTex++ = mTexCoord0->bottom_right.top;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.top;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_right.left;
-        *pTex++ = mTexCoord0->bottom_right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.left;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.bottom;
         // Texcoord 0
-        *pTex++ = mTexCoord0->bottom_right.right;
-        *pTex++ = mTexCoord0->bottom_right.bottom;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.right;
+        *pTex++ = mWindowSkin->mWinTexCoord.bottom_right.bottom;
 
         vbuf->unlock();
     }
@@ -880,7 +819,21 @@ namespace Sonetto
             Ogre::RGBA* pDest = static_cast<Ogre::RGBA*>(
                                     vbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD) );
             Ogre::RGBA color;
-            Ogre::Root::getSingleton().convertColourValue(mBorderColor, &color);
+            switch(mWindowType)
+            {
+                case WT_MENU:
+                Ogre::Root::getSingleton().convertColourValue(mWindowSkin->mMenuBorderColor, &color);
+                break;
+                case WT_MAIN:
+                Ogre::Root::getSingleton().convertColourValue(mWindowSkin->mMainBorderColor, &color);
+                break;
+                case WT_ENEMY:
+                Ogre::Root::getSingleton().convertColourValue(mWindowSkin->mEnemyBorderColor, &color);
+                break;
+                case WT_SYSTEM:
+                Ogre::Root::getSingleton().convertColourValue(mWindowSkin->mSystemBorderColor, &color);
+                break;
+            }
 
             for (size_t i = 0; i < mRenderOp2.vertexData->vertexCount; ++i)
             {
@@ -902,7 +855,21 @@ namespace Sonetto
             Ogre::RGBA* pDest = static_cast<Ogre::RGBA*>(
                                     vbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD) );
             Ogre::RGBA color;
-            Ogre::Root::getSingleton().convertColourValue(mBackgroundColor, &color);
+            switch(mWindowType)
+            {
+                case WT_MENU:
+                Ogre::Root::getSingleton().convertColourValue(mWindowSkin->mMenuColor, &color);
+                break;
+                case WT_MAIN:
+                Ogre::Root::getSingleton().convertColourValue(mWindowSkin->mMainColor, &color);
+                break;
+                case WT_ENEMY:
+                Ogre::Root::getSingleton().convertColourValue(mWindowSkin->mEnemyColor, &color);
+                break;
+                case WT_SYSTEM:
+                Ogre::Root::getSingleton().convertColourValue(mWindowSkin->mSystemColor, &color);
+                break;
+            }
 
             for (size_t i = 0; i < mRenderOp2.vertexData->vertexCount; ++i)
             {
@@ -926,69 +893,58 @@ namespace Sonetto
         mPosCoord[0].x = left;
         mPosCoord[0].y = top;
         mPosCoord[1].x = left;
-        mPosCoord[1].y = top+mBorderSize.y;
-        mPosCoord[2].x = left+mBorderSize.x;
+        mPosCoord[1].y = top+mWindowSkin->mBorderDimensions.y;
+        mPosCoord[2].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[2].y = top;
-        mPosCoord[3].x = left+mBorderSize.x;
+        mPosCoord[3].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[3].y = top;
         mPosCoord[4].x = left;
-        mPosCoord[4].y = top+mBorderSize.y;
-        mPosCoord[5].x = left+mBorderSize.x;
-        mPosCoord[5].y = top+mBorderSize.y;
+        mPosCoord[4].y = top+mWindowSkin->mBorderDimensions.y;
+        mPosCoord[5].x = left+mWindowSkin->mBorderDimensions.x;
+        mPosCoord[5].y = top+mWindowSkin->mBorderDimensions.y;
 
-                mPosCoord[6].x = left+mBorderSize.x;
+                mPosCoord[6].x = left+mWindowSkin->mBorderDimensions.x;
                 mPosCoord[6].y = top;
-                mPosCoord[7].x = left+mBorderSize.x;
-                mPosCoord[7].y = top+mBorderSize.y;
-                mPosCoord[8].x = right-mBorderSize.x;
+                mPosCoord[7].x = left+mWindowSkin->mBorderDimensions.x;
+                mPosCoord[7].y = top+mWindowSkin->mBorderDimensions.y;
+                mPosCoord[8].x = right-mWindowSkin->mBorderDimensions.x;
                 mPosCoord[8].y = top;
-                mPosCoord[9].x = right-mBorderSize.x;
+                mPosCoord[9].x = right-mWindowSkin->mBorderDimensions.x;
                 mPosCoord[9].y = top;
-                mPosCoord[10].x = left+mBorderSize.x;
-                mPosCoord[10].y = top+mBorderSize.y;
-                mPosCoord[11].x = right-mBorderSize.x;
-                mPosCoord[11].y = top+mBorderSize.y;
+                mPosCoord[10].x = left+mWindowSkin->mBorderDimensions.x;
+                mPosCoord[10].y = top+mWindowSkin->mBorderDimensions.y;
+                mPosCoord[11].x = right-mWindowSkin->mBorderDimensions.x;
+                mPosCoord[11].y = top+mWindowSkin->mBorderDimensions.y;
 
-        mPosCoord[12].x = right-mBorderSize.x;
+        mPosCoord[12].x = right-mWindowSkin->mBorderDimensions.x;
         mPosCoord[12].y = top;
-        mPosCoord[13].x = right-mBorderSize.x;
-        mPosCoord[13].y = top+mBorderSize.y;
+        mPosCoord[13].x = right-mWindowSkin->mBorderDimensions.x;
+        mPosCoord[13].y = top+mWindowSkin->mBorderDimensions.y;
         mPosCoord[14].x = right;
         mPosCoord[14].y = top;
         mPosCoord[15].x = right;
         mPosCoord[15].y = top;
-        mPosCoord[16].x = right-mBorderSize.x;
-        mPosCoord[16].y = top+mBorderSize.y;
+        mPosCoord[16].x = right-mWindowSkin->mBorderDimensions.x;
+        mPosCoord[16].y = top+mWindowSkin->mBorderDimensions.y;
         mPosCoord[17].x = right;
-        mPosCoord[17].y = top+mBorderSize.y;
+        mPosCoord[17].y = top+mWindowSkin->mBorderDimensions.y;
 
         mPosCoord[18].x = left;
-        mPosCoord[18].y = top+mBorderSize.y;
+        mPosCoord[18].y = top+mWindowSkin->mBorderDimensions.y;
         mPosCoord[19].x = left;
-        mPosCoord[19].y = bottom-mBorderSize.y;
-        mPosCoord[20].x = left+mBorderSize.x;
-        mPosCoord[20].y = top+mBorderSize.y;
-        mPosCoord[21].x = left+mBorderSize.x;
-        mPosCoord[21].y = top+mBorderSize.y;
+        mPosCoord[19].y = bottom-mWindowSkin->mBorderDimensions.y;
+        mPosCoord[20].x = left+mWindowSkin->mBorderDimensions.x;
+        mPosCoord[20].y = top+mWindowSkin->mBorderDimensions.y;
+        mPosCoord[21].x = left+mWindowSkin->mBorderDimensions.x;
+        mPosCoord[21].y = top+mWindowSkin->mBorderDimensions.y;
         mPosCoord[22].x = left;
-        mPosCoord[22].y = bottom-mBorderSize.y;
-        mPosCoord[23].x = left+mBorderSize.x;
-        mPosCoord[23].y = bottom-mBorderSize.y;
+        mPosCoord[22].y = bottom-mWindowSkin->mBorderDimensions.y;
+        mPosCoord[23].x = mWindowSkin->mBorderDimensions+mWindowSkin->mBorderDimensions.x;
+        mPosCoord[23].y = bottom-mWindowSkin->mBorderDimensions.y;
 
-        mPosCoord[24].x = left+mBorderSize.x;
-        mPosCoord[24].y = top+mBorderSize.y;
-        mPosCoord[25].x = left+mBorderSize.x;
-        mPosCoord[25].y = bottom-mBorderSize.y;
-        mPosCoord[26].x = right-mBorderSize.x;
-        mPosCoord[26].y = top+mBorderSize.y;
-        mPosCoord[27].x = right-mBorderSize.x;
-        mPosCoord[27].y = top+mBorderSize.y;
-        mPosCoord[28].x = left+mBorderSize.x;
-        mPosCoord[28].y = bottom-mBorderSize.y;
-        mPosCoord[29].x = right-mBorderSize.x;
-        mPosCoord[29].y = bottom-mBorderSize.y;
-
-        mPosCoord[30].x = right-mBorderSize.x;
+        mPosCoord[24].x = left+mWindowSkin->mBorderDimensions.x;
+        mPosCoord[24].y = top+mWindowSkin->mBorderDimensions.y;
+        mPosCoord[25].x = lemWindowSkin->mBorderDimensionsmBorderSize.x;
         mPosCoord[30].y = top+mBorderSize.y;
         mPosCoord[31].x = right-mBorderSize.x;
         mPosCoord[31].y = bottom-mBorderSize.y;
@@ -1006,36 +962,36 @@ namespace Sonetto
         mPosCoord[37].x = left;
         mPosCoord[37].y = bottom;
         mPosCoord[38].x = left+mBorderSize.x;
-        mPosCoord[38].y = bottom-mBorderSize.y;
-        mPosCoord[39].x = left+mBorderSize.x;
-        mPosCoord[39].y = bottom-mBorderSize.y;
+        mPosCoord[38].y = bottom-mWindowSkin->mBorderDimensions.y;
+        mPosCoord[39].x = left+mWindowSkin->mBorderDimensions.x;
+        mPosCoord[39].y = bottom-mWindowSkin->mBorderDimensions.y;
         mPosCoord[40].x = left;
         mPosCoord[40].y = bottom;
-        mPosCoord[41].x = left+mBorderSize.x;
+        mPosCoord[41].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[41].y = bottom;
 
-            mPosCoord[42].x = left+mBorderSize.x;
-            mPosCoord[42].y = bottom-mBorderSize.y;
-            mPosCoord[43].x = left+mBorderSize.x;
+            mPosCoord[42].x = left+mWindowSkin->mBorderDimensions.x;
+            mPosCoord[42].y = bottom-mWindowSkin->mBorderDimensions.y;
+            mPosCoord[43].x = left+mWindowSkin->mBorderDimensions.x;
             mPosCoord[43].y = bottom;
-            mPosCoord[44].x = right-mBorderSize.x;
-            mPosCoord[44].y = bottom-mBorderSize.y;
-            mPosCoord[45].x = right-mBorderSize.x;
-            mPosCoord[45].y = bottom-mBorderSize.y;
-            mPosCoord[46].x = left+mBorderSize.x;
+            mPosCoord[44].x = right-mWindowSkin->mBorderDimensions.x;
+            mPosCoord[44].y = bottom-mWindowSkin->mBorderDimensions.y;
+            mPosCoord[45].x = right-mWindowSkin->mBorderDimensions.x;
+            mPosCoord[45].y = bottom-mWindowSkin->mBorderDimensions.y;
+            mPosCoord[46].x = left+mWindowSkin->mBorderDimensions.x;
             mPosCoord[46].y = bottom;
-            mPosCoord[47].x = right-mBorderSize.x;
+            mPosCoord[47].x = right-mWindowSkin->mBorderDimensions.x;
             mPosCoord[47].y = bottom;
 
-        mPosCoord[48].x = right-mBorderSize.x;
-        mPosCoord[48].y = bottom-mBorderSize.y;
-        mPosCoord[49].x = right-mBorderSize.x;
+        mPosCoord[48].x = right-mWindowSkin->mBorderDimensions.x;
+        mPosCoord[48].y = bottom-mWindowSkin->mBorderDimensions.y;
+        mPosCoord[49].x = right-mWindowSkin->mBorderDimensions.x;
         mPosCoord[49].y = bottom;
         mPosCoord[50].x = right;
-        mPosCoord[50].y = bottom-mBorderSize.y;
+        mPosCoord[50].y = bottom-mWindowSkin->mBorderDimensions.y;
         mPosCoord[51].x = right;
-        mPosCoord[51].y = bottom-mBorderSize.y;
-        mPosCoord[52].x = right-mBorderSize.x;
+        mPosCoord[51].y = bottom-mWindowSkin->mBorderDimensions.y;
+        mPosCoord[52].x = right-mWindowSkin->mBorderDimensions.x;
         mPosCoord[52].y = bottom;
         mPosCoord[53].x = right;
         mPosCoord[53].y = bottom;
@@ -1060,23 +1016,23 @@ namespace Sonetto
 
 
 
-        if (!mTileMode) // If the texture mode is on stretch mode
+        if (!mWindowSkin->mTileMode) // If the texture mode is on stretch mode
         {
             left = 0.0f;
-            right = mTiling.x;
+            right = mWindowSkin->mTiling.x;
             top = 0.0f;
-            bottom =  mTiling.y;
-            mBorderFixed.x = (mBorderSize.x / mWidth)*mTiling.x;
-            mBorderFixed.y = (mBorderSize.y / mHeight)*mTiling.y;
+            bottom =  mWindowSkin->mTiling.y;
+            mBorderFixed.x = (mWindowSkin->mBorderDimensions.x / mWidth)*mWindowSkin->mTiling.x;
+            mBorderFixed.y = (mWindowSkin->mBorderDimensions.y / mHeight)*mWindowSkin->mTiling.y;
         }
         else // Else if the texture mode is on tile mode
         {
-            left = _getDerivedLeft() * mTiling.x;
-            right = left + (mWidth * mTiling.x);
-            top = _getDerivedTop() * mTiling.y;
-            bottom =  top + (mHeight * mTiling.y);
-            mBorderFixed.x = mBorderSize.x*mTiling.x;
-            mBorderFixed.y = mBorderSize.y*mTiling.y;
+            left = _getDerivedLeft() * mWindowSkin->mTiling.x;
+            right = left + (mWidth * mWindowSkin->mTiling.x);
+            top = _getDerivedTop() * mWindowSkin->mTiling.y;
+            bottom =  top + (mHeight * mWindowSkin->mTiling.y);
+            mBorderFixed.x = mWindowSkin->mBorderDimensions.x*mWindowSkin->mTiling.x;
+            mBorderFixed.y = mWindowSkin->mBorderDimensions.y*mWindowSkin->mTiling.y;
         }
 
         mTexCoord1[0].x = left;
