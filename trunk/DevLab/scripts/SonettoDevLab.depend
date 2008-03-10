@@ -1216,7 +1216,7 @@
 
 1165599058 c:\work\openal\include\al.h
 
-1205040963 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettokernel.h
+1205148172 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettokernel.h
 	<Ogre.h>
 	<OgreVector2.h>
 	<stack>
@@ -1226,12 +1226,15 @@
 	"SonettoFontSerializer.h"
 	"SonettoFontManager.h"
 	"SonettoTextFactory.h"
+	"SonettoWindowSkinSerializer.h"
+	"SonettoWindowSkinManager.h"
+	"SonettoWindowFactory.h"
 
 1204497607 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettoinputmanager.h
 	<Ogre.h>
 	<OIS.h>
 
-1204497604 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettomodule.h
+1205140564 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettomodule.h
 	"SonettoKernel.h"
 
 1204497606 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettofontserializer.h
@@ -1326,7 +1329,7 @@
 	"SonettoKernel.h"
 	"SonettoInputManager.h"
 
-1205040830 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettokernel.cpp
+1205148281 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettokernel.cpp
 	<Ogre.h>
 	"SonettoKernel.h"
 
@@ -1477,7 +1480,7 @@
 	"SonettoFont.h"
 	"SonettoFontManager.h"
 
-1205026916 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettowindow.cpp
+1205147581 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettowindow.cpp
 	"SonettoWindow.h"
 	<OgreStableHeaders.h>
 	<OgreOverlayManager.h>
@@ -1496,7 +1499,7 @@
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1205032871 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettowindowskin.cpp
+1205146824 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettowindowskin.cpp
 	"SonettoWindowSkin.h"
 	"SonettoWindowSkinSerializer.h"
 
@@ -1517,7 +1520,7 @@
 	<OgreException.h>
 	"SonettoWindowSkinSerializer.h"
 
-1205040506 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettoaudiomanager.h
+1205122167 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettoaudiomanager.h
 	<vector>
 	<queue>
 	<al.h>
@@ -1525,16 +1528,82 @@
 	<vorbis/vorbisfile.h>
 	"SonettoMain.h"
 
-1205040420 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettoaudiomanager.cpp
+1205122169 source:c:\yoasakura\sonettoengine\svn\trunk\devlab\src\sonettoaudiomanager.cpp
 	<windows.h>
 	<cstdio>
 	<vector>
 	<queue>
 	<al.h>
 	<alc.h>
+	<efx.h>
 	<vorbis/vorbisfile.h>
 	<Ogre.h>
 	<OgreException.h>
 	"SonettoKernel.h"
 	"SonettoAudioManager.h"
+
+1143410582 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\ois.h
+	"OISPrereqs.h"
+	"OISObject.h"
+	"OISMouse.h"
+	"OISKeyboard.h"
+	"OISJoyStick.h"
+	"OISInterface.h"
+	"OISInputManager.h"
+	"OISForceFeedback.h"
+	"OISException.h"
+	"OISEvents.h"
+	"OISEffect.h"
+
+1151842112 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\oisprereqs.h
+	<vector>
+	<string>
+	<map>
+	"OISConfig.h"
+
+1142369258 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\oisconfig.h
+	"config.h"
+
+1142369258 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\oisobject.h
+	"OISPrereqs.h"
+	"OISInterface.h"
+
+1142369258 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\oisinterface.h
+	"OISPrereqs.h"
+
+1146800124 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\oismouse.h
+	"OISObject.h"
+	"OISEvents.h"
+
+1144423958 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\oisevents.h
+	"OISPrereqs.h"
+
+1145984192 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\oiskeyboard.h
+	"OISObject.h"
+	"OISEvents.h"
+
+1147656404 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\oisjoystick.h
+	"OISObject.h"
+	"OISEvents.h"
+
+1143596190 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\oisinputmanager.h
+	"OISPrereqs.h"
+
+1142369258 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\oisforcefeedback.h
+	"OISPrereqs.h"
+	"OISInterface.h"
+	"OISEffect.h"
+
+1147656404 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\oiseffect.h
+	"OISPrereqs.h"
+
+1146800124 c:\arquivos de programas\wreckedgames\ois_sdk\\includes\\oisexception.h
+
+1165599072 c:\work\openal\include\efx.h
+
+1204497605 c:\yoasakura\sonettoengine\svn\trunk\devlab\include\sonettowindowfactory.h
+	<OgreOverlayElementFactory.h>
+	"SonettoWindow.h"
+	"SonettoTailedWindow.h"
+	"SonettoSlimWindow.h"
 

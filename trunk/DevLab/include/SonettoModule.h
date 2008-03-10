@@ -37,7 +37,7 @@ namespace Sonetto {
         mSceneMan     (NULL),
         mOverlay      (NULL),
         mCamera       (NULL) {
-            mKernel = Sonetto::KERNEL;
+        mKernel = Sonetto::KERNEL;
         }
 
         virtual ~Module() {}

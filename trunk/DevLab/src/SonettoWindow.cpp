@@ -40,6 +40,8 @@ namespace Sonetto
             mUpdateBorderColors(true),
             mUpdateBackgroundColors(true),
             mBorderRenderable(0),
+            mWindowAlpha(1.0f),
+            mBorderAlpha(1.0f),
             mScrMetricsMode(SMM_RELATIVE_ASPECT_ADJUSTED),
             mAspectRatio(1.3333333333333333333333333333333f)
     {
@@ -945,6 +947,18 @@ namespace Sonetto
         mPosCoord[24].x = left+mWindowSkin->mBorderDimensions.x;
         mPosCoord[24].y = top+mWindowSkin->mBorderDimensions.y;
         mPosCoord[25].x = left+mWindowSkin->mBorderDimensions.x;
+        mPosCoord[25].y = bottom-mWindowSkin->mBorderDimensions.y;
+        mPosCoord[26].x = right-mWindowSkin->mBorderDimensions.x;
+        mPosCoord[26].y = top+mWindowSkin->mBorderDimensions.y;
+        mPosCoord[27].x = right-mWindowSkin->mBorderDimensions.x;
+        mPosCoord[27].y = top+mWindowSkin->mBorderDimensions.y;
+        mPosCoord[28].x = left+mWindowSkin->mBorderDimensions.x;
+        mPosCoord[28].y = bottom-mWindowSkin->mBorderDimensions.y;
+        mPosCoord[29].x = right-mWindowSkin->mBorderDimensions.x;
+        mPosCoord[29].y = bottom-mWindowSkin->mBorderDimensions.y;
+
+        mPosCoord[30].x = right-mWindowSkin->mBorderDimensions.x;
+        mPosCoord[30].y = top+mWindowSkin->mBorderDimensions.y;
         mPosCoord[30].y = top+mWindowSkin->mBorderDimensions.y;
         mPosCoord[31].x = right-mWindowSkin->mBorderDimensions.x;
         mPosCoord[31].y = bottom-mWindowSkin->mBorderDimensions.y;

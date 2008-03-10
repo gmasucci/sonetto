@@ -126,6 +126,7 @@ namespace Sonetto {
             mAudioMan           = new AudioManager();
             mInputMan           = new InputManager();
             mFontMan            = new FontManager();
+            mWSkinMan           = new WindowSkinManager();
 
             mAudioMan->initialise();
             mInputMan->initialise(mWindow,kc);
@@ -133,17 +134,43 @@ namespace Sonetto {
             mTextElementFactory = new TextElementFactory();
             mOverlayMan->addOverlayElementFactory(mTextElementFactory);
 
+            mWindowFactory = new Sonetto::WindowFactory();
+            mOverlayMan->addOverlayElementFactory(mWindowFactory);
+
+            mSWindowFactory = new Sonetto::SlimWindowFactory();
+            mOverlayMan->addOverlayElementFactory(mSWindowFactory);
+
+            mTWindowFactory = new Sonetto::TailedWindowFactory();
+            mOverlayMan->addOverlayElementFactory(mTWindowFactory);
+
             // Temporary resource loading (debugging purposes)
             mResourceMan->addResourceLocation("basic_font.ctf","Zip","KERNEL",false);
             mResourceMan->loadResourceGroup("KERNEL",true,false);
             mMainFont = mFontMan->load("BaseFont.fnt","KERNEL");
 
+            // Load the windowskin manually
+
+            mTmpWinSkinLoader = new TempWindowSkinLoader();
+            mResourceMan->createResourceGroup("KERNEL2");
+            mResourceMan->addResourceLocation("windowskin/", "FileSystem","KERNEL2");
+            //mResourceMan->declareResource("WndSkin", "WindowSkin", "KERNEL2", mTmpWinSkinLoader);
+            mResourceMan->declareResource("windowskin.bin", "WindowSkin", "KERNEL2");
+            mResourceMan->initialiseResourceGroup("KERNEL2");
+            //mWSkinPtr = static_cast<WindowSkinPtr>(mResMan->create("WndSkn", "KERNEL", true, mTmpWinSkinLoader));
+            mWSkinPtr = mWSkinMan->load("windowskin.bin", "KERNEL2");
+
+            WindowSkinSerializer tmpWSkinSerializer;
+            tmpWSkinSerializer.exportWindowSkin(static_cast<WindowSkin *>(mWSkinPtr.getPointer()), "windowskin.bin");
+
             // Create the text overlay
             mDebugOverlay = mOverlayMan->create("DEBUG_OVERLAY");
-            mDebugOverlayContainer = static_cast<Ogre::OverlayContainer *>(mOverlayMan->createOverlayElement("Panel","DEBUG_PANEL"));
+            mDebugOverlayContainer = static_cast<Ogre::OverlayContainer *>(mOverlayMan->createOverlayElement("Window","DEBUG_PANEL"));
 
             mDebugOverlayContainer->setDimensions(1.0f,1.0f);
             mDebugOverlayContainer->setPosition(0.0f,0.0f);
+
+            static_cast<Window*>(mDebugOverlayContainer)->setWindowType(WT_ENEMY);
+            static_cast<Window*>(mDebugOverlayContainer)->setWindowSkin(mWSkinPtr);
 
             mDebugOverlay->add2D(mDebugOverlayContainer);
 

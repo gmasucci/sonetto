@@ -71,8 +71,15 @@ namespace Sonetto {
         // Now, create the Window Border Material
         mBorderMaterial = Ogre::MaterialManager::getSingleton().create(mName+"_border", mGroup);
 
+
+
         if(mWindowMaterial.isNull() || mBorderMaterial.isNull())
+        {
+            std::cout<<"SHIT HAS HAPPENED AT createMaterial() line 78!";
             return false;
+        }
+
+
 
         // Window Material
         // Setup the material basics (Non-configurable Mandatory Data)
