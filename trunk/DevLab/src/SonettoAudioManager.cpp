@@ -28,6 +28,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <queue>
 #include <al.h>
 #include <alc.h>
+#include <efx.h>
 #include <vorbis/vorbisfile.h>
 #include <Ogre.h>
 #include <OgreException.h>
@@ -40,6 +41,9 @@ namespace Sonetto {
     const size_t BUFFER_SIZE = 32768*5; // 160KB Sound Buffer
 
     bool AudioManager::initialise() {
+        ALCint maxSends;
+        ALint  attribs[4] = { 0,0,0,0 };
+
         // Fails if we already initialised
         if (mInitialised) {
             KERNEL->mLogMan->logMessage("[AudioManager::initialise()] AudioManager was asked to be "
@@ -61,14 +65,40 @@ namespace Sonetto {
         // Cleans up errors (no errors may have happened, but this ensures so)
         alGetError();
 
-        // Creates a contexts in the device - NULL means no special option taken
-        mContext = alcCreateContext(mDevice,NULL);
+        // Checks whether the current device supports sound effects
+        // Should we abort if not or should we allow this to happen,
+        // presenting dry audio (without any effects)?
+        if (alcIsExtensionPresent(mDevice,"ALC_EXT_EFX") == AL_FALSE) {
+            KERNEL->mLogMan->logMessage("[AudioManager::initialise()] OpenAL Effects Extension "
+                                        "not present.\n");
+
+            return false;
+        }
+
+        // Request 4 auxiliary effect slot sends (how many auxiliary effect slots
+        // can a source feed)
+        attribs[0] = ALC_MAX_AUXILIARY_SENDS;
+        attribs[1] = 1;
+
+        // Creates a rendering context in the audio device
+        mContext = alcCreateContext(mDevice,attribs);
+        if(!mContext) {
+            KERNEL->mLogMan->logMessage("[AudioManager::initialise()] OpenAL Failed creating rendering "
+                                        "context.\n");
+
+            return false;
+        }
+
+        // We are only going to use one render context
         alcMakeContextCurrent(mContext);
 
-        // If there are errors, reports them and returns false
-        if (alGetError() != AL_NO_ERROR) {
-            KERNEL->mLogMan->logMessage("[AudioManager::initialise()] OpenAL failed creating "
-                                        "render context.\n");
+        // <fixme> Checks if we have at least 1 auxiliary effect slot sends
+        // Should we do this? Can an audio device have effect extension
+        // available but zero auxiliary effect slot sends?
+        alcGetIntegerv(mDevice,ALC_MAX_AUXILIARY_SENDS,1,&maxSends);
+        if(maxSends < 1) {
+            KERNEL->mLogMan->logMessage("[AudioManager::initialise()] Audio device doesn't support "
+                                        "auxiliary effect slot sends.\n");
 
             return false;
         }
@@ -333,8 +363,7 @@ namespace Sonetto {
 
         // Updates musics
         if (!mStreamQueue.empty()) {
-            int processed;
-            float x,y,z;
+            int              processed;
             MusicInfo       *musicInfo;
             MusicStream     *stream;
 
@@ -384,15 +413,6 @@ namespace Sonetto {
                 // Flip current active buffer (just for informational purposes)
                 stream->activeBuffer = !stream->activeBuffer;
             }
-
-            alGetListener3f(AL_POSITION,&x,&y,&z);
-            // <fixme> Remove these comments when AudioManager is finished
-            /*KERNEL->mDebugText->setMessage("MusicID: "+Ogre::StringConverter::toString(stream->musicID)+"\x0D"+
-                                           Ogre::String("Buffer: ")+((stream->activeBuffer) ? "Back\x0D" : "Front\x0D")+
-                                           Ogre::String("PCM Position: ")+
-                                           Ogre::StringConverter::toString((Ogre::uint32)(ov_pcm_tell(&stream->oggStream)))+"\x0D"+
-                                           Ogre::StringConverter::toString(x)+"/"+Ogre::StringConverter::toString(y)+"/"+
-                                           Ogre::StringConverter::toString(z));*/
 
             // Handles fade in/out
             switch (stream->fade) {
@@ -463,7 +483,7 @@ namespace Sonetto {
             if(node) {
                 nodePos = node->_getDerivedPosition();
             } else {
-                //nodePos = KERNEL->mModuleList.top()->mCamera->getWorldPosition();
+                nodePos = KERNEL->mModuleList.top()->mCamera->getPosition();
             }
 
             alSource3f(source->sourceID,AL_POSITION,nodePos[0],nodePos[1],nodePos[2]);
@@ -533,10 +553,8 @@ namespace Sonetto {
         }
 
         // If no data was read, the stream has ended
-        if (size == 0) {
-            printf("wtf?\n");
+        if (size == 0)
             return false;
-        }
 
         // If loop is enabled, get current stream position. And
         // if we got past stream's loopEnd, we must truncate
@@ -566,17 +584,6 @@ namespace Sonetto {
         // just decompressed buffer
         printf("Alloc: %d bytes.\n",size-endingOverflow);
         alBufferData(buffer,format,data,size-endingOverflow,sInfo->rate);
-        switch(alGetError()) {
-            case AL_OUT_OF_MEMORY:
-                printf("AL_OUT_OF_MEMORY... WTF???\n");
-            break;
-            case AL_INVALID_VALUE:
-                printf("AL_INVALID_VALUE... Hum.. makes sense\n");
-            break;
-            case AL_INVALID_ENUM:
-                printf("AL_INVALID_ENUM: WTRFFFFFFFFFFFFFFFFf?????\n");
-            break;
-        }
         throwALError("Out of memory, could not allocate sound buffer",
                      "AudioManager::pullStream()");
 
