@@ -23,5 +23,6 @@ This piece of code would call the stack's top halt() method, place the new modul
 Managers, contrary to the Modules, are real members of the Kernel. They aren't inside any stack, but they are variables which reside within the Kernel. Also, they're all updated on each loop. They're vital to the Modules' survival and to the maintenance of the used libraries. Here follows a list of Managers and a brief description:
 
 || InputManager || Talks with OIS to provide keyboard and joystick input (Sonetto won't support a Mouse) ||
+|| AudioManager || Talks with OpenAL to provide audio output. It has EAX Reverb enabled on machines that support EAX 3.0, but can run without it ||
 
 That's all for now.
