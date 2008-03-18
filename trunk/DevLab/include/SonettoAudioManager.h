@@ -147,7 +147,7 @@ namespace Sonetto {
         /// @brief OGG Vorbis bitstream
         int            bitstream;
 
-        /// @brief The maximum volume the music will reach when it finished
+        /// @brief The maximum volume the music will reach when it finishes
         ///        fading in
         float          maxVolume;
 
@@ -166,13 +166,51 @@ namespace Sonetto {
          *           than 0.0f is unexpected behaviour.
          */
         float          fadeSpd;
+
+        /** @brief Whether to memorize music on fade out
+         *
+         *  This is used by AudioManager::update() to determine whether
+         *  to memorize this music when it finally fades out or not.
+         */
+        bool           fadeOutMem;
+
+        /** @brief Whether to memorize music position on fade out
+         *
+         *  @see fadeOutMem
+         *  @remarks Ignored if fadeOutMem is false.
+         */
+        bool           fadeOutMemPos;
+    };
+
+    /** @brief Data struct of a memorized music
+     *
+     *  This struct is mostly internal to the AudioManager, and hardly will
+     *  need to be known by someone else than an AudioManager coder. It contains
+     *  information about the state of a music when it was memorized, like
+     *  volume and position. This could perfecly be hardcoded in the AudioManager,
+     *  but we though using a struct would be cleaner.
+     *  @see AudioManager::memorizeMusic()
+     *  @see AudioManager::restoreMusic()
+     */
+    struct MusicMemory {
+        /// @brief An index to a MusicInfo within AudioManager::mMusics
+        size_t      musicID;
+
+        /// @brief An OpenAL audio source state (AL_PLAYING or AL_PAUSED)
+        ALenum      state;
+
+        /// @brief The maximum volume the audio source can go (after fading in)
+        float       maxVolume;
+
+        /// @brief PCM position of the music stream (measured in PCM samples)
+        ogg_int64_t pcmPos;
     };
 
     class AudioManager {
     public:
         /// @brief Initialises members
         AudioManager() : mInitialised(false), mpDevice(NULL),
-                mpContext(NULL), mUseEffectsExt(true) {};
+                mpContext(NULL), mUseEffectsExt(true), mMemorizedMusic(false) {};
 
         ~AudioManager() {}
 
@@ -189,6 +227,41 @@ namespace Sonetto {
         /// @brief Clean environment
         bool deinitialise();
 
+        /** @brief Add sound information
+         *
+         *  This method creates a SoundInfo based on the arguments passed, and inserts
+         *  it into the mSounds vector. As a SoundInfo contains a buffer, and thus needs
+         *  to fill it somehow, this method will load the specified file to memory. With
+         *  such loading comes the possibility of errors popping: addSound() can throw
+         *  exceptions if the file was not found, is corrupted, is not a valid OGG Vorbis
+         *  file or has no audio data.
+         *  @param  filename    OGG Vorbis file to load audio data from.
+         *  @param  volume      The maximum volume derived sources can reach when near to
+         *                     the listener.
+         *  @param  loopEnabled Whether the sound sources derived from this SoundInfo should
+         *                     loop or not.
+         *  @param  loopBegin   PCM sample where the loop begins at.
+         *  @param  loopEnd     PCM sample where the loop ends at.
+         *  @return Sound ID (index inside mSounds).
+         */
+        size_t addSound(std::string filename,float volume = 1.0f,bool loopEnabled = false,
+                        ogg_int64_t loopBegin = 0,ogg_int64_t loopEnd = 0);
+
+        /** @brief Add msuci information
+         *
+         *  This method creates a MusicInfo based on the arguments passed, and inserts
+         *  it into the mMusics vector.
+         *  @param  filename    OGG Vorbis file from where to load audio data.
+         *  @param  loopEnabled Whether the music sources derived from this should loop or not.
+         *  @param  loopBegin   PCM sample where the loop begins at. Defaults to zero (beginning
+         *                     of the stream).
+         *  @param  loopEnd     PCM sample where the loop ends at. Defaults to zero (end of the
+         *                     stream).
+         *  @return Music ID (index inside mMusics).
+         */
+        size_t addMusic(std::string filename,bool loopEnabled = false,ogg_int64_t loopBegin = 0,
+                        ogg_int64_t loopEnd = 0);
+
         /** @brief Play a music
          *
          *  This function will open an OGG file specified in AudioManager::mMusics[musicID].
@@ -198,13 +271,18 @@ namespace Sonetto {
          *  A fadeInSpd greater than 0.0f will cause the new music's volume to grow from 0.0f up to
          *  supplied musicVolume. If fadeInSpd is 0.0f, the music will get played with a volume of
          *  musicVolume from its play time's bare beginning.
-         *  @param fadeOutSpd  Defaults to 0.0f (No fading).
-         *  @param fadeInSpd   Defaults to 0.0f (No fading).
-         *  @param musicVolume Defaults to 1.0f (Maximum volume).
-         *  @param pcmPos      A position for the music to start from, measured in PCM samples.
-         *                     Defaults to zero (first PCM sample).
+         *  @param fadeOutSpd    Defaults to 0.0f (No fading).
+         *  @param fadeInSpd     Defaults to 0.0f (No fading).
+         *  @param musicVolume   Defaults to 1.0f (Maximum volume).
+         *  @param pcmPos        A position for the music to start from, measured in PCM samples.
+         *                       Defaults to zero (first PCM sample).
+         *  @param fadeOutMem    Whether to memorize the current music when it fades out. Defaults to false.
+         *  @param fadeOutMemPos Whether to memorize the current music position when it fades out.
+         *                       This argument is ignored if fadeOutMem is false. Defaults to false.
          */
-        void playMusic(size_t musicID, float fadeOutSpd = 0.0f, float fadeInSpd = 0.0f, float musicVolume = 1.0f, ogg_uint64_t pcmPos = 0);
+        void playMusic(size_t musicID, float fadeOutSpd = 0.0f, float fadeInSpd = 0.0f,
+                       float musicVolume = 1.0f, ogg_uint64_t pcmPos = 0, bool fadeOutMem = false,
+                       bool fadeOutMemPos = false);
 
         /** @brief Stop the actual music or all musics
          *
@@ -218,11 +296,31 @@ namespace Sonetto {
          */
         void stopMusic(float fadeSpd = 0.0f,bool allMusics = true);
 
-        /// @brief Memorize current music
-        void memorizeMusic() {} // <todo> Do
+        /** @brief Memorize current music
+         *
+         *  Memorizes a music to be restored with AudioManager::restoreMusic().
+         *  This method will only actually memorize something if the current music
+         *  is fading in or not fading at all, and if its audio source is currently
+         *  AL_PLAYING or AL_STOPPED. If such conditions are not true, the function
+         *  will fail.
+         *  @remarks Beware that a playMusic() call with a fadeOutMem argument set
+         *           to true will overwrite any memorized musics.
+         *  @return  Whether the music was successfuly memorized or not.
+         */
+        bool memorizeMusic(bool memorizePos);
 
-        /// @brief Restore memorized music
-        void restoreMusic(float fadeOutSpd = 0.0f,float fadeInSpd = 0.0f) {} // <todo> Do
+        /** @brief Restore memorized music
+         *
+         *  Restores a music memorized with AudioManager::memorizeMusic().
+         *  @param  fadeOutSpd Speed at which the current music will fade out. 0.0f
+         *          will cause it not to fade. 1.0f is the maximum speed. Defaults to
+         *          0.0f.
+         *  @param  fadeInSpd  Speed at which the restored music will fade in. 0.0f
+         *          will cause it not to fade. 1.0f is the maximum speed. Defaults to
+         *          0.0f.
+         *  @return Whether a music was restored or not.
+         */
+        bool restoreMusic(float fadeOutSpd = 0.0f,float fadeInSpd = 0.0f);
 
         /// @brief Pause current music
         void pauseMusic();
@@ -237,13 +335,11 @@ namespace Sonetto {
          *  @param  soundID      Sound index in AudioManager::mSounds.
          *  @param  parentNode   Ogre::SceneNode to which this sound source will belong to. Defaults
          *                       to NULL (Camera).
-         *  @param  filterType   Source's filter type (AL_FILTER_LOWPASS, etc). Defaults to
-         *                       AL_FILTER_NULL.
          *  @param  useEnvEffect Whether to use environmental sound effects or not (Defaults to true).
          *  @return Sound source handle, or -1 on failure. Used to reference the new sound
          *          source on other function calls.
          */
-        int playSound(size_t soundID,Ogre::SceneNode *parentNode = NULL,ALenum filterType = AL_FILTER_NULL,bool useEnvEffect = true);
+        int playSound(size_t soundID,Ogre::SceneNode *parentNode = NULL,bool useEnvEffect = true);
 
         /// @brief Update AudioManager
         bool update();
@@ -281,21 +377,26 @@ namespace Sonetto {
         bool        mUseEffectsExt;
 
         /// @brief OpenAL auxiliary effect slot ID for current environment
-        ALuint      mEnvEffectSlot;
+        ALuint      mEnvSlotID;
 
         /// @brief Sound information
-        std::vector<SoundInfo   *> mSounds;
+        std::vector<SoundInfo *>            mSounds;
 
         /// @brief Sound sources
-        std::vector<SoundSource *> mSoundSources;
+        std::map   <size_t,SoundSource   *> mSoundSources;
 
         /// @brief Music information
-        std::vector<MusicInfo   *> mMusics;
+        std::vector<MusicInfo     *>        mMusics;
 
         /// @brief Music stream queue
-        std::queue <MusicStream *> mStreamQueue;
+        std::queue <MusicStream   *>        mStreamQueue;
+
+        /// @brief Whether we have or not a memorized music
+        bool        mMemorizedMusic;
+
+        /// @brief Memorized music data
+        MusicMemory mMusicMem;
     };
-}
-; // namespace
+}; // namespace
 
 #endif

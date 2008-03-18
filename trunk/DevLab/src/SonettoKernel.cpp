@@ -31,7 +31,7 @@ namespace Sonetto {
 
         if (!mInitialised) {
             mShutDown = false;
-            mRoot = new Ogre::Root("plugins.dlc","devlab.dlc","");
+            mRoot = new Ogre::Root("plugins.dlc","devlab.dlc","devlab.log");
             if (mRoot->showConfigDialog()) {
                 // If returned true, user clicked OK so initialise
                 // Here we choose to let the system create a default rendering window by passing 'true'
@@ -147,6 +147,9 @@ namespace Sonetto {
             mResourceMan->addResourceLocation("basic_font.ctf","Zip","KERNEL",false);
             mResourceMan->loadResourceGroup("KERNEL",true,false);
             mMainFont = mFontMan->load("BaseFont.fnt","KERNEL");
+            mAudioMan->addSound("sound000.ogg",1.0f,false);
+            mAudioMan->addMusic("music000.ogg",true);
+            mAudioMan->addMusic("music001.ogg",true);
 
             // Load the windowskin manually
 
@@ -178,7 +181,7 @@ namespace Sonetto {
             mDebugOverlayContainer->addChild(mDebugText);
 
             mDebugText->setFont(mMainFont);
-            mDebugText->setMessage("Testing Sonetto::InputManager !");
+            mDebugText->setMessage("Testing Sonetto::AudioManager !");
             mDebugText->setDimensions(1.0, 1.0);
             mDebugText->setPosition(0.0f,0.0f);
             mDebugText->setTextSize(0.05f);
@@ -197,7 +200,7 @@ namespace Sonetto {
 
                 // Cofigure
                 mDebugErrorText->setFont(mMainFont);
-                mDebugErrorText->setMessage("No controller detected.");
+                mDebugErrorText->setMessage("No controller detected");
                 mDebugErrorText->setDimensions(1.0f,1.0f);
                 mDebugErrorText->setPosition(0.1f,0.45f);
                 mDebugErrorText->setTextSize(0.10f);
@@ -226,8 +229,12 @@ namespace Sonetto {
                 mInputMan = NULL;
             }
 
-            if(mAudioMan)
+            if (mAudioMan) {
+                mAudioMan->deinitialise();
+
                 delete mAudioMan;
+                mAudioMan = NULL;
+            }
 
             // At last, delete the Ogre::Root
             if (mRoot)
@@ -248,8 +255,6 @@ namespace Sonetto {
                 // Get the input first
                 mInputMan->updateInput();
 
-                mAudioMan->update();
-
                 // The Kernel must have something to execute
                 assert(!mModuleList.empty());
 
@@ -258,6 +263,9 @@ namespace Sonetto {
 
                 //mDebugText->setMessage(Ogre::StringConverter::toString(mInputMan->getAxis(0,AX_LEFT))+" "+
                 //                       Ogre::StringConverter::toString(mInputMan->getAxis(1,AX_RIGHT)));
+
+                if (mAudioMan)
+                    mAudioMan->update();
 
                 mRoot->renderOneFrame();
             }
@@ -273,8 +281,8 @@ namespace Sonetto {
     void Kernel::pushModule(Module * pModule,bool haltMode) {
         assert(pModule); // We can't insert a NULL module!
 
-        if(!mModuleList.empty()) {
-            if(haltMode) {
+        if (!mModuleList.empty()) {
+            if (haltMode) {
                 mModuleList.top()->halt(); // Put the current module to sleep
             } else {
                 delete mModuleList.top();  // If it's going to change for real,
@@ -298,4 +306,3 @@ namespace Sonetto {
         mModuleList.top()->wakeup(); // Now wake up the previous module
     }
 }; // namespace
-

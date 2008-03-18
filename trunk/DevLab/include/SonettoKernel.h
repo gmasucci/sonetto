@@ -44,17 +44,16 @@ namespace Sonetto {
 #include "SonettoWindowSkinSerializer.h"
 #include "SonettoWindowSkinManager.h"
 #include "SonettoWindowFactory.h"
+#include <debug_new.h>
 
 namespace Sonetto {
 
-    class TempWindowSkinLoader : public Ogre::ManualResourceLoader
-    {
+    class TempWindowSkinLoader : public Ogre::ManualResourceLoader {
     public:
-        TempWindowSkinLoader(){}
-        virtual ~TempWindowSkinLoader(){}
+        TempWindowSkinLoader() {}
+        virtual ~TempWindowSkinLoader() {}
 
-        void loadResource(Ogre::Resource * resource)
-        {
+        void loadResource(Ogre::Resource * resource) {
             WindowSkin *ws = static_cast<WindowSkin *>(resource);
 
             ws->mWindowMaskTextureName = "windowskin_mask3.dds";
@@ -163,24 +162,29 @@ namespace Sonetto {
     public:
         /// Default constructor.
         Kernel() : mRoot(0),               mWindow(0),      mViewport(0),
-                   mOverlayMan(0),         mResourceMan(0),
-                   mShutDown(0),           mInitialised(0),
-                   mAudioMan(0),
-                   mInputMan(0),            mFontMan(0),
-                   mTextElementFactory(0),  mWSkinMan(0)
-                   {}
+                mOverlayMan(0),         mResourceMan(0),
+                mShutDown(0),           mInitialised(0),
+                mAudioMan(0),
+                mInputMan(0),            mFontMan(0),
+                mTextElementFactory(0),  mWSkinMan(0) {}
 
         /// Default destructor.
-        ~Kernel() {}
+        ~Kernel() {
+            printf("2\n");
+        }
 
         /** @brief Initialise Ogre, OIS, and other Sonetto dependencies
          *  @return Wheter it was successful or not.
          */
         bool initialise();
 
-        /** @brief Deinitialise everything initialised before by initialise().
-         */
+        /// @brief Deinitialise everything initialised before by initialise().
         bool deinitialise();
+
+        /// @brief Asks Kernel to shutdown as soon as possible
+        void shutdown() {
+            mShutDown = true;
+        }
 
         bool run();
 
@@ -222,8 +226,8 @@ namespace Sonetto {
         FontManager         *mFontMan;
         TextElementFactory  *mTextElementFactory;
         WindowFactory       *mWindowFactory;
-        SlimWindowFactory       *mSWindowFactory;
-        TailedWindowFactory       *mTWindowFactory;
+        SlimWindowFactory   *mSWindowFactory;
+        TailedWindowFactory *mTWindowFactory;
         WindowSkinManager   *mWSkinMan;
 
         // Temporary stuff
