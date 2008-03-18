@@ -55,24 +55,17 @@ namespace Sonetto {
         /// @brief PCM Sample where the sound ends
         ogg_uint64_t loopEnd;
 
-        /// @brief Volume
-        float        volume;
+        /// @brief Minimal volume gain (when far from the listener)
+        float        minGain;
 
-        /** @brief Fade direction
-         *
-         *  fadeDir <  0 for fade out
-         *  fadeDir == 0 for no fade
-         *  fadeDir  > 0 for fade in
-         */
-        char         fadeDir;
+        /// @brief Maximal volume gain (when near to the listener)
+        float        maxGain;
 
-        /** @brief Fade speed
-         *
-         *  @remarks A fade speed greater than 1.0f will cause
-         *           an instantaneous fade. A fade speed lower
-         *           than 0.0f is unexpected behaviour.
-         */
-        float        fadeSpd;
+        /// @brief Volume gain
+        float        gain;
+
+        /// @brief Rolloff factor (distance at which the sound won't be heard by the listener)
+        float        rolloffFactor;
     };
 
     /** @brief Definitions about *a* sound source
@@ -235,19 +228,15 @@ namespace Sonetto {
          *  such loading comes the possibility of errors popping: addSound() can throw
          *  exceptions if the file was not found, is corrupted, is not a valid OGG Vorbis
          *  file or has no audio data.
-         *  @param  filename    OGG Vorbis file to load audio data from.
-         *  @param  volume      The maximum volume derived sources can reach when near to
-         *                     the listener.
-         *  @param  loopEnabled Whether the sound sources derived from this SoundInfo should
-         *                     loop or not.
-         *  @param  loopBegin   PCM sample where the loop begins at.
-         *  @param  loopEnd     PCM sample where the loop ends at.
+         *  @param  filename OGG Vorbis file to load audio data from.
+         *  @see    For the other arguments explaination, see the SoundInfo fields.
          *  @return Sound ID (index inside mSounds).
          */
-        size_t addSound(std::string filename,float volume = 1.0f,bool loopEnabled = false,
-                        ogg_int64_t loopBegin = 0,ogg_int64_t loopEnd = 0);
+        size_t addSound(std::string filename,float minGain,float maxGain,float gain,
+                        float rolloffFactor,bool loopEnabled = false,ogg_int64_t loopBegin = 0,
+                        ogg_int64_t loopEnd = 0);
 
-        /** @brief Add msuci information
+        /** @brief Add music information
          *
          *  This method creates a MusicInfo based on the arguments passed, and inserts
          *  it into the mMusics vector.
@@ -341,10 +330,36 @@ namespace Sonetto {
          */
         int playSound(size_t soundID,Ogre::SceneNode *parentNode = NULL,bool useEnvEffect = true);
 
+        /// @brief Check for existance of a given sound source
+        bool sourceExists(size_t sourceID);
+
+        /** @brief Set the Ogre::SceneNode a sound source follows
+         *
+         *  @remarks The coordinates of the sound source will only be the same ones of
+         *           the SceneNode after a call to AudioManager::update().
+         */
+        void setSourceNode(size_t sourceID,Ogre::SceneNode *node);
+
+        /** @brief Set the minimal and maximal volume gain of a sound source
+         *
+         *  The maximal and minimal gain is a gain to which the final sound source's gain
+         *  is compared. This final gain is then truncated inside this range.
+         */
+        void setSourceGainRange(size_t sourceID,float minGain,float maxGain);
+
+        /// @brief Set the gain of a sound source
+        void setSourceGain(size_t sourceID,float gain);
+
+        void setSourceRolloff(size_t sourceID,float factor);
+
+        void setSourceFilterGain(size_t sourceID,float gain);
+
+        void setSourceFilterGainHF(size_t sourceID,float gain);
+
         /// @brief Update AudioManager
         bool update();
 
-    protected:
+    private:
         /** @brief Pulls and decompress data from a music stream into a sound buffer
          *
          *  @remarks Throws exception on fatal errors (Out of memory, etc).

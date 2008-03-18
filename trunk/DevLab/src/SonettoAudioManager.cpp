@@ -278,14 +278,14 @@ namespace Sonetto {
 
         // Deletes sound sources
         while (!mSoundSources.empty()) {
-            SoundSource *source = mSoundSources.end()->second;
+            SoundSource *source = mSoundSources.begin()->second;
 
             alDeleteSources(1,&source->sourceID);
             if (mUseEffectsExt && alIsFilter(source->filterID))
                 alDeleteFilters(1,&source->filterID);
 
             delete source;
-            mSoundSources.erase(mSoundSources.end());
+            mSoundSources.erase(mSoundSources.begin());
         }
 
         // Deletes sound infos
@@ -340,13 +340,14 @@ namespace Sonetto {
         return mMusics.size()-1;
     }
 
-    size_t AudioManager::addSound(string filename,float volume,bool loopEnabled,ogg_int64_t loopBegin,
+    size_t AudioManager::addSound(string filename,float minGain,float maxGain,float gain,
+                                  float rolloffFactor,bool loopEnabled,ogg_int64_t loopBegin,
                                   ogg_int64_t loopEnd) {
         int             errCode;              // OGG Vorbis error code
         OggVorbis_File  oggStream;            // Compressed OGG stream
         SoundInfo      *info = new SoundInfo; // New sound information
         char           *data = NULL;          // Pointer to where we will decompress
-        // the OGG stream
+                                              // the OGG stream
         ostringstream   str;                  // String formatter
         ALenum          format;               // Audio format (AL_FORMAT_MONO16, etc)
         int             bitstream = 0;        // OGG bitstream
@@ -357,8 +358,11 @@ namespace Sonetto {
         alGenBuffers(1,&info->bufferID);
 
         // Set fields
-        info->volume      = volume;
-        info->loopEnabled = loopEnabled;
+        info->minGain       = minGain;
+        info->maxGain       = maxGain;
+        info->gain          = gain;
+        info->rolloffFactor = rolloffFactor;
+        info->loopEnabled   = loopEnabled;
 
         // Opens OGG vorbis file
         str << "sound/" << filename;
@@ -556,7 +560,10 @@ namespace Sonetto {
         // Sets OpenAL source configuration, based on mSounds[soundID]
         // <fixme> Set rolloff factor, etc...
         alSourcei(source->sourceID,AL_BUFFER,info->bufferID);
-        alSourcef(source->sourceID,AL_GAIN,info->volume);
+        alSourcef(source->sourceID,AL_MIN_GAIN,info->minGain);
+        alSourcef(source->sourceID,AL_MAX_GAIN,info->maxGain);
+        alSourcef(source->sourceID,AL_GAIN,info->gain);
+        alSourcef(source->sourceID,AL_ROLLOFF_FACTOR,info->rolloffFactor);
         alSourcei(source->sourceID,AL_LOOPING,info->loopEnabled);
 
         // Creates one OpenAL audio filter and checks for errors
@@ -648,6 +655,162 @@ namespace Sonetto {
 
         // Returns a handle to the source
         return index;
+    }
+
+    bool AudioManager::sourceExists(size_t sourceID) {
+        if (!mInitialised) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Call to a function member before its class' initialisation",
+                        "AudioManager::sourceExists()");
+        }
+
+        // The ending iterator represents a non-existent index
+        return mSoundSources.find(sourceID) != mSoundSources.end();
+    }
+
+    void AudioManager::setSourceNode(size_t sourceID,Ogre::SceneNode *node) {
+        if (!mInitialised) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Call to a function member before its class' initialisation",
+                        "AudioManager::setSourceNode()");
+        }
+
+        // Checks for existance
+        if (!sourceExists(sourceID)) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Invalid sound source ID",
+                        "AudioManager::setSourceNode()");
+        }
+
+        // Changes source to follow the new SceneNode
+        mSoundSources[sourceID]->parentNode = node;
+    }
+
+    void AudioManager::setSourceGainRange(size_t sourceID,float minGain,float maxGain) {
+        if (!mInitialised) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Call to a function member before its class' initialisation",
+                        "AudioManager::setSourceGainRange()");
+        }
+
+        // Checks for existance
+        if (!sourceExists(sourceID)) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Invalid sound source ID",
+                        "AudioManager::setSourceGainRange()");
+        }
+
+        // Changes source properties
+        alSourcef(mSoundSources[sourceID]->sourceID,AL_MIN_GAIN,minGain);
+        alSourcef(mSoundSources[sourceID]->sourceID,AL_MAX_GAIN,maxGain);
+
+        // Warn about errors
+        if (alGetError() != AL_NO_ERROR) {
+            KERNEL->mLogMan->logMessage("(AudioManager::setSourceGainRange()) Could not set source gain "
+                                        "range.");
+        }
+    }
+
+    void AudioManager::setSourceGain(size_t sourceID,float gain) {
+        if (!mInitialised) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Call to a function member before its class' initialisation",
+                        "AudioManager::setSourceGain()");
+        }
+
+        // Checks for existance
+        if (!sourceExists(sourceID)) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Invalid sound source ID",
+                        "AudioManager::setSourceGain()");
+        }
+
+        // Changes source properties
+        alSourcef(mSoundSources[sourceID]->sourceID,AL_GAIN,gain);
+
+        // Warn about errors
+        if (alGetError() != AL_NO_ERROR)
+            KERNEL->mLogMan->logMessage("(AudioManager::setSourceGain()) Could not set source gain.");
+    }
+
+    void AudioManager::setSourceRolloff(size_t sourceID,float factor) {
+        if (!mInitialised) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Call to a function member before its class' initialisation",
+                        "AudioManager::setSourceRolloff()");
+        }
+
+        // Checks for existance
+        if (!sourceExists(sourceID)) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Invalid sound source ID",
+                        "AudioManager::setSourceRolloff()");
+        }
+
+        // Changes source properties
+        alSourcef(mSoundSources[sourceID]->sourceID,AL_ROLLOFF_FACTOR,factor);
+
+        // Warn about errors
+        if (alGetError() != AL_NO_ERROR) {
+            KERNEL->mLogMan->logMessage("(AudioManager::setSourceRolloff()) Could not set source rolloff "
+                                        "factor.");
+        }
+    }
+
+    void AudioManager::setSourceFilterGain(size_t sourceID,float gain) {
+        if (!mInitialised) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Call to a function member before its class' initialisation",
+                        "AudioManager::setSourceFilterGain()");
+        }
+
+        // Checks for existance
+        if (!sourceExists(sourceID)) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Invalid sound source ID",
+                        "AudioManager::setSourceFilterGain()");
+        }
+
+        // If we are not using effects extension or if the source filter is not
+        // valid, this function just fails on its purpose silently
+        if (mUseEffectsExt && alIsFilter(mSoundSources[sourceID]->filterID)) {
+            // Changes source properties
+            alFilterf(mSoundSources[sourceID]->filterID,AL_LOWPASS_GAIN,gain);
+
+            // Warn about errors
+            if (alGetError() != AL_NO_ERROR) {
+                KERNEL->mLogMan->logMessage("(AudioManager::setSourceFilterGain()) Could not set source "
+                                            "rolloff factor.");
+            }
+        }
+    }
+
+    void AudioManager::setSourceFilterGainHF(size_t sourceID,float gain) {
+        if (!mInitialised) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Call to a function member before its class' initialisation",
+                        "AudioManager::setSourceFilterGainHF()");
+        }
+
+        // Checks for existance
+        if (!sourceExists(sourceID)) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Invalid sound source ID",
+                        "AudioManager::setSourceFilterGainHF()");
+        }
+
+        // If we are not using effects extension or if the source filter is not
+        // valid, this function just fails on its purpose silently
+        if (mUseEffectsExt && alIsFilter(mSoundSources[sourceID]->filterID)) {
+            // Changes source properties
+            alFilterf(mSoundSources[sourceID]->filterID,AL_LOWPASS_GAINHF,gain);
+
+            // Warn about errors
+            if (alGetError() != AL_NO_ERROR) {
+                KERNEL->mLogMan->logMessage("(AudioManager::setSourceFilterGainHF()) Could not set source "
+                                            "rolloff factor.");
+            }
+        }
     }
 
     void AudioManager::pauseMusic() {
@@ -849,7 +1012,7 @@ namespace Sonetto {
         // listenerOrientation[5] = camDir.z;
 
         // Makes the listener follow the camera
-        alListener3f(AL_POSITION,camPos.x,camPos.y,camPos.z);
+        //alListener3f(AL_POSITION,camPos.x,camPos.y,camPos.z);
         // alListenerfv(AL_ORIENTATION,listenerOrientation);
 
         // Updates musics
