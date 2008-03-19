@@ -8,10 +8,20 @@ AudioManager's initialisation works the same way as other Managers: It happens i
 The AudioManager does not depends on other Managers, so there is no need to initialise anything before it. Actually, a game can run without sound support. If this happens because of some problem in AudioManager::initialise(), this function will return false. Calling any other function after an initialisation failure will throw an exception, so if this happens, the Kernel will delete the Manager and set its AudioManager pointer to NULL, which needlessly to say should be checked before calling anything. After a successful initialisation, the Kernel will fill the AudioManager with sounds and musics listed in the Database, using AudioManager::addSound() and AudioManager::addMusic(). After registering something using one of these functions, it will remain inside the AudioManager until its deinitialisation. Although it is Kernel's job to fill AudioManager with data, this can be done on-the-fly by other components of Sonetto, such as Modules.
 
 = Updating =
-Todo
+_This section merely informs you about how the Kernel does AudioManager's updates and why it does so. You can skip it if that's not of your interest._
+
+AudioManager's updates are done through the update() method. There is where listener's and sound sources' positions and directions are synchronised. It is recommended that property changes and updates are logically near, so that an overly long lag don't affect your game's audio. There is no need for being paranoid and updating everytime something changes a sound source property: in the Kernel loop, the order of updates is as follows:
+  # Update InputManager
+  # Update actual game baheviour (map updates, etc)
+  # Update AudioManager
+  # Render things on screen
+
+This is the most correct approach. You take the input, change the world(reacting to the input), and finally output the changes. The rendering should happen after the AudioManager update because it can take a particularly long time to be done, and the player would feel a delay from the time he presses a button to the time an aural confirmation appears. Most property changes take effect as soon as they are made(when the code asks AudioManager for it). But some of these properties, like the parent node of a sound source, will only effectively aurally happen after AudioManager being updated.
 
 = Playing Sounds and Musics =
-Todo
+After Kernel's initialisation, the AudioManager should be already filled with information taken from the Database. Playing sounds and musics described in the Database is a matter of calling playSound() or playMusic(). The first argument of both functions is the ID to be played. Such ID is a desired sound or music zero-based index in the Database. For example, if you have two sounds in the Database: a bomb exploding and a sword-to-sword hitting sound in that order, and you wanted to make a sword noise, you would only need to write `id = AudioManager::playSound(1,swordSceneNode,true);`. This would play the sound, which would follow the Ogre::SceneNode `swordSceneNode`, and which would be affected by the environmental effect slot(i.e. would be played with reverberation, as asked for in the third argument). Passing a NULL SceneNode would make the sound follow the listener, in such a way that it would be played as-is, seemingly without 3D panning. The returned `id` is a `size_t` variable which represents this newly created sound instance. It can be used for property changing, etc.
+
+With musics, the concepts are mostly the same, with the exception that there is no ID returned by playMusic(), as there can only be one music playing at a time. playMusic() also accepts fade in and out speed values, so that a music can change from one to another more seemlessly. Another thing to note about is that musics are never affected by environmental effects and don't have 3D panning: they always follow the listener.
 
 = Changing audio properties =
 Todo
