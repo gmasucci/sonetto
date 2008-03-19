@@ -1,0 +1,20 @@
+#summary How AudioManager works and how to use it.
+
+= Introduction =
+This Manager is responsible for managing the audio objects of a game. It abstracts OpenAL's "no-object-orientation" approach, supplying a cleaner and more targeted audio control. Targeting, however, has its pros and cons. Actually the impact of such cons is not so heavy: Sonetto is made for, and thus should be used for making RPGs, which doesn't require much realistic aural effects like obstruction, doppler shifts, etc. The AudioManager will allow the use of OpenAL's effects extension on computers with at least EAX 3.0 support. Computers that don't will be presented with "dry" 3D sound, that is, they will still have standard 3D sound support, but with no aural effects. Sonetto has two ways of handling audio: treating it as a Sound or as a Music. Sounds will have a position in 3D space, producing a feeling of world-immersion to the player. From a programming perspective, Sounds differ from Musics because they're fully loaded into memory, whilst Musics are opened for reading, and keeps being read as long as the music plays. At the cost of some processing and disk-reading time, there'll be a lot lesser RAM usage. As Sounds are short pieces of audio, there is no need for streaming. Another change relies on the effects: Sounds can opt to use or not to use the map's environmental effect and uses audio filters. Musics don't. They are always presented dry. The only effect used by Sonetto is EAX Reverb, because of the lack of hardware support for other types of effects and because there really is no need for more than that.
+
+= Initialisation =
+AudioManager's initialisation works the same way as other Managers: It happens in the Kernel initialisation.
+The AudioManager does not depends on other Managers, so there is no need to initialise anything before it. Actually, a game can run without sound support. If this happens because of some problem in AudioManager::initialise(), this function will return false. Calling any other function after an initialisation failure will throw an exception, so if this happens, the Kernel will delete the Manager and set its AudioManager pointer to NULL, which needlessly to say should be checked before calling anything. After a successful initialisation, the Kernel will fill the AudioManager with sounds and musics listed in the Database, using AudioManager::addSound() and AudioManager::addMusic(). After registering something using one of these functions, it will remain inside the AudioManager until its deinitialisation. Although it is Kernel's job to fill AudioManager with data, this can be done on-the-fly by other components of Sonetto, such as Modules.
+
+= Updating =
+Todo
+
+= Playing Sounds and Musics =
+Todo
+
+= Changing audio properties =
+Todo
+
+= Deinitialisation =
+Todo
