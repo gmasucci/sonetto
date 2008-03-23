@@ -5,15 +5,17 @@ An InputManager must have a key configuration in order to work properly. Sonetto
 After the InputManager being initialised, you may still change the key configurations through InputManager::getKeyConfig() and InputManager::setKeyConfig() methods. Wheter the supplied input device is or isn't plugged in can be checked by means of InputManager::playerPlugged().
 
 = Accessing of actual input =
-Well, enough preparations, we are in the middle of the game and want to know the states of our just-configured buttons. That's an easy task. From anywhere in your code, you may access the Kernel using the global KERNEL pointer, and from there on access the InputManager. Here's a small example showing some simple input accesses:
+Well, enough preparations, we are in the middle of the game and want to know the states of our just-configured buttons. That's an easy task. From anywhere in your code, you may access the Kernel using the singleton pointer, and from there on access the InputManager. Here's a small example showing some simple input accesses:
 {{{
 // The namespace MyGame is ficticious, and used only for example purposes
 
-MyGame::Enemy       enemy;  // Big Boss
-MyGame::Protagonist me;     // Game Protagonist
-MyGame::World       world;  // The Game Environment
+MyGame::Enemy          enemy;  // Big Boss
+MyGame::Protagonist    me;     // Game Protagonist
+MyGame::World          world;  // The Game Environment
 
-if(Sonetto::KERNEL->mInputMan->getButtonState(0,Sonetto::BTN_CROSS) == Sonetto::KS_RELEASE) {
+Sonetto::InputManager *inputMan = Sonetto::Kernel::getSingleton()->getInputMan();
+
+if(inputMan->getButtonState(0,Sonetto::BTN_CROSS) == Sonetto::KS_RELEASE) {
   // Cast a magic spell if enough focused
   if(me.mentalFocus > 32) {
     enemy.castSpell(me.activeSpell,me.mentalFocus);
@@ -21,16 +23,16 @@ if(Sonetto::KERNEL->mInputMan->getButtonState(0,Sonetto::BTN_CROSS) == Sonetto::
   }
 }
 
-if(Sonetto::KERNEL->mInputMan->getButtonState(0,Sonetto::BTN_CROSS) == Sonetto::KS_HOLD) {
+if(inputMan->getButtonState(0,Sonetto::BTN_CROSS) == Sonetto::KS_HOLD) {
   // Charge mental focus while Cross is being held
   me.mentalFocus++;
 }
 
 // Walk based on the left analog stick
-me.walk(Sonetto::KERNEL->mInputMan->getAxis(0,AX_LEFT));
+me.walk(inputMan->getAxis(0,AX_LEFT));
 
 // Rotate the camera based on the right one
-world.cameraRotate(Sonetto::KERNEL->mInputMan->getAxis(0,AX_RIGHT));
+world.cameraRotate(inputMan->getAxis(0,AX_RIGHT));
 }}}
 
 Ok, here you see many "ficticious ornaments", but what matters is: You may access the controller input from everywhere, and the InputManager keeps track of the button states for you, so you may not only rely on information about wheter a button is or not currently pressed, but also know it's transitions(pressing and releasing), which will keep you knowning about what really matters. Also, you may have noticed the InputManager::getAxis() calls. These returns an Ogre::Vector2, with values ranging -1.0f to +1.0f, even when you had configured the axis' input to be taken from raw keyboard keys or even digital joystick buttons. The precision of these values, althought, depends on the quality of the input device you've choosen to use.
