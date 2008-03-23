@@ -5,7 +5,7 @@ Sonetto, as being an attempt to prove that even us, amateurs, can and should act
 Also, a great thanks to the Ogre3D, OIS, and OpenAL teams, and all the Open Source community. Without them we wouldn't even think about doing real code.
 
 = The Engine's heart: Kernel =
-Sonetto will have many distinctly coded modules, acting together when glued by Kernel. Kernel is a globally accessible pointer(Sonetto::KERNEL), which is a container for everything in the Engine. It is the entrypoint of the game, and it'll be composed by the list of modules and managers. These managers will be something like an "API" for the modules. Calls to its methods will have sequences of posterior calls to Ogre3D methods, which will change the game world. They will straighten Ogre3D to be more friendly with RPGs. As Managers define the game world appearance(visual, aural, and so on), Modules will change game behaviour. That is, they will be the ones who, based on given scripts, will call the manager's methods, giving life to the world.
+Sonetto will have many distinctly coded modules, acting together when glued by Kernel. Kernel is a singleton(Sonetto::Kernel), which is a container for everything in the Engine. It is the entrypoint of the game, and it'll be composed by the list of modules and managers. These managers will be something like an "API" for the modules. Calls to its methods will have sequences of posterior calls to Ogre3D methods, which will change the game world. They will straighten Ogre3D to be more friendly with RPGs. As Managers define the game world appearance(visual, aural, and so on), Modules will change game behaviour. That is, they will be the ones who, based on given scripts, will call the manager's methods, giving life to the world.
 
 Kernel will have a stack object containing its loaded Modules, but only the last one will receive updates. That's a way of pausing the others, by the time being unused. But Kernel won't simply start/stop updating Modules. There are ways to prepare them to this start/stop procedure. Such ways are shown in the next section.
 
@@ -14,7 +14,7 @@ A Module is an abstract thing to talk about. It has five methods, plus the const
 {{{
 Module *newModule = new Module();
 
-KERNEL->pushModule(newModule,true);
+Kernel::getSingleton()->pushModule(newModule,true);
 }}}
 
 This piece of code would call the stack's top halt() method, place the new module on the top, and call this new module's enter(). The second argument, here set to true, defaults to false. Setting it to false would cause Kernel to call the old module's exit() method, pop it out of the stack and deallocate it. When halting is used, the old Module remains in memory, and it will only be updated again when it assumes back the top of the stack. When a Module wants to end its execution, it just needs to call Kernel::popModule();, which would call the Module's exit() method, deallocate it and pull it out of the stack. After doing that, the old Module would be on the top, so the Kernel calls for its wakeup(), restarting the update cycle.
