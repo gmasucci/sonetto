@@ -31,6 +31,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <efx-creative.h>
 #include <vorbis/vorbisfile.h>
 #include "SonettoKernel.h"
+#include "SonettoVirtualFile.h"
 #include "SonettoAudioManager.h"
 
 using namespace std;
@@ -80,9 +81,10 @@ namespace Sonetto {
 
         // Fails if already initialised
         if (mInitialised) {
-            KERNEL->mLogMan->logMessage("( AudioManager::initialise() ) AudioManager was asked to be "
-                                        "initialised twice. This will possibly cause errors.",
-                                        Ogre::LML_CRITICAL);
+            Kernel::getSingleton()->mLogMan->
+            logMessage("( AudioManager::initialise() ) AudioManager was asked "
+                       "to be initialised twice. This will probably cause errors.",
+                       Ogre::LML_CRITICAL);
 
             return false;
         }
@@ -90,8 +92,9 @@ namespace Sonetto {
         // Opens desired audio device
         mpDevice = alcOpenDevice(device);
         if (!mpDevice) {
-            KERNEL->mLogMan->logMessage("( AudioManager::initialise() ) OpenAL failed openning "
-                                        "audio device.");
+            Kernel::getSingleton()->mLogMan->
+            logMessage("( AudioManager::initialise() ) OpenAL failed openning "
+                       "audio device.");
 
             return false;
         }
@@ -102,8 +105,9 @@ namespace Sonetto {
 
         // Checks whether the current device supports sound effects
         if (alcIsExtensionPresent(mpDevice,"ALC_EXT_EFX") == AL_FALSE) {
-            KERNEL->mLogMan->logMessage("( AudioManager::initialise() ) OpenAL Effects Extension "
-                                        "not present.");
+            Kernel::getSingleton()->mLogMan->
+            logMessage("( AudioManager::initialise() ) OpenAL Effects Extension "
+                       "not present.");
 
             mUseEffectsExt = false;
         }
@@ -118,8 +122,9 @@ namespace Sonetto {
         // Creates a rendering context in the audio device
         mpContext = alcCreateContext(mpDevice,attribs);
         if (!mpContext) {
-            KERNEL->mLogMan->logMessage("( AudioManager::initialise() ) OpenAL Failed creating rendering "
-                                        "context.");
+            Kernel::getSingleton()->mLogMan->
+            logMessage("( AudioManager::initialise() ) OpenAL Failed creating rendering "
+                       "context.");
 
             return false;
         }
@@ -175,8 +180,9 @@ namespace Sonetto {
                     !alIsAuxiliaryEffectSlot          || !alAuxiliaryEffectSloti       ||
                     !alAuxiliaryEffectSlotiv          || !alAuxiliaryEffectSlotf       ||
                     !alAuxiliaryEffectSlotfv                                              ) {
-                KERNEL->mLogMan->logMessage("( AudioManager::initialise() ) OpenAL effects extension "
-                                            "function pointers could not be retrieved.");
+                Kernel::getSingleton()->mLogMan->
+                logMessage("( AudioManager::initialise() ) OpenAL effects extension "
+                           "function pointers could not be retrieved.");
 
                 mUseEffectsExt = false;
             }
@@ -191,8 +197,9 @@ namespace Sonetto {
             // a Reverb effect and attach it to the slot
             alcGetIntegerv(mpDevice,ALC_MAX_AUXILIARY_SENDS,1,&maxSends);
             if (maxSends < 1) {
-                KERNEL->mLogMan->logMessage("( AudioManager::initialise() ) Audio device doesn't support "
-                                            "auxiliary effect slot sends.");
+                Kernel::getSingleton()->mLogMan->
+                logMessage("( AudioManager::initialise() ) Audio device doesn't support "
+                           "auxiliary effect slot sends.");
 
                 mEnvSlotID = 0;
             } else {
@@ -200,24 +207,27 @@ namespace Sonetto {
 
                 alGenAuxiliaryEffectSlots(1,&mEnvSlotID);
                 if (alGetError() != AL_NO_ERROR) {
-                    KERNEL->mLogMan->logMessage("( AudioManager::initialise() ) Could not create "
-                                                "environmental effect slot.");
+                    Kernel::getSingleton()->mLogMan->
+                    logMessage("( AudioManager::initialise() ) Could not create "
+                               "environmental effect slot.");
 
                     mEnvSlotID = 0;
                 } else {
                     // If one of these fails, it will cascade until the error check
                     alGenEffects(1,&effectID);
                     if (alGetError() != AL_NO_ERROR) {
-                        KERNEL->mLogMan->logMessage("( AudioManager::initialise() ) Could not create "
-                                                    "environmental effect.");
+                        Kernel::getSingleton()->mLogMan->
+                        logMessage("( AudioManager::initialise() ) Could not create "
+                                   "environmental effect.");
 
                         alDeleteAuxiliaryEffectSlots(1,&mEnvSlotID);
                         mEnvSlotID = 0;
                     } else {
                         alEffecti(effectID,AL_EFFECT_TYPE,AL_EFFECT_EAXREVERB);
                         if (alGetError() != AL_NO_ERROR) {
-                            KERNEL->mLogMan->logMessage("( AudioManager::initialise() ) EAX Reverb "
-                                                        "is not supported by this audio device.");
+                            Kernel::getSingleton()->mLogMan->
+                            logMessage("( AudioManager::initialise() ) EAX Reverb "
+                                       "is not supported by this audio device.");
 
                             if (alIsEffect(effectID))
                                 alDeleteEffects(1,&effectID);
@@ -228,8 +238,9 @@ namespace Sonetto {
                             alEffectf(effectID,AL_EAXREVERB_DECAY_TIME,20.0f);
                             alAuxiliaryEffectSloti(mEnvSlotID,AL_EFFECTSLOT_EFFECT,effectID);
                             if (alGetError() != AL_NO_ERROR) {
-                                KERNEL->mLogMan->logMessage("( AudioManager::initialise() ) Could not attach effect "
-                                                            "in the effect slot.");
+                                Kernel::getSingleton()->mLogMan->
+                                logMessage("( AudioManager::initialise() ) Could not attach effect "
+                                           "in the effect slot.");
 
                                 if (alIsEffect(effectID))
                                     alDeleteEffects(1,&effectID);
@@ -250,9 +261,10 @@ namespace Sonetto {
 
     bool AudioManager::deinitialise() {
         if (!mInitialised) {
-            KERNEL->mLogMan->logMessage("( AudioManager::deinitialise() ) AudioManager was asked to be "
-                                        "deinitialised before its initialisation. This will possibly "
-                                        "cause errors.",Ogre::LML_CRITICAL);
+            Kernel::getSingleton()->mLogMan->
+            logMessage("( AudioManager::deinitialise() ) AudioManager was asked to be "
+                       "deinitialised before its initialisation. This will probably "
+                       "cause errors.",Ogre::LML_CRITICAL);
 
             return false;
         }
@@ -347,7 +359,7 @@ namespace Sonetto {
         OggVorbis_File  oggStream;            // Compressed OGG stream
         SoundInfo      *info = new SoundInfo; // New sound information
         char           *data = NULL;          // Pointer to where we will decompress
-                                              // the OGG stream
+        // the OGG stream
         ostringstream   str;                  // String formatter
         ALenum          format;               // Audio format (AL_FORMAT_MONO16, etc)
         int             bitstream = 0;        // OGG bitstream
@@ -405,6 +417,96 @@ namespace Sonetto {
         if (size == 0) {
             OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
                         "An audio file seems to be empty ("+Ogre::String(str.str())+")",
+                        "AudioManager::addSound()");
+        }
+
+        // Discovers file format (mono or stereo)
+        if (oggStream.vi->channels == 1) {
+            format = AL_FORMAT_MONO16;
+        } else {
+            format = AL_FORMAT_STEREO16;
+        }
+
+        // Fill an OpenAL uncompressed PCM data buffer with our
+        // just decompressed buffer
+        alBufferData(info->bufferID,format,data,size,oggStream.vi->rate);
+        mSounds.push_back(info);
+
+        // Deletes data buffer and returns the sound info index
+        delete[] data;
+        return mSounds.size()-1;
+    }
+
+    size_t AudioManager::addSound(VirtualFile *file,float minGain,float maxGain,float gain,
+                    float rolloffFactor,bool loopEnabled,ogg_int64_t loopBegin,
+                    ogg_int64_t loopEnd) {
+        int             errCode;              // OGG Vorbis error code
+        OggVorbis_File  oggStream;            // Compressed OGG stream
+        SoundInfo      *info = new SoundInfo; // New sound information
+        char           *data = NULL;          // Pointer to where we will decompress
+                                              // the OGG stream
+        ALenum          format;               // Audio format (AL_FORMAT_MONO16, etc)
+        int             bitstream = 0;        // OGG bitstream
+        ogg_int64_t     size = 0;             // Bytes read from stream
+        ogg_int64_t     totalBytes = 0;       // Total decompressed bytes in stream
+
+        // Generates an OpenAL audio buffer
+        alGenBuffers(1,&info->bufferID);
+
+        // Set fields
+        info->minGain       = minGain;
+        info->maxGain       = maxGain;
+        info->gain          = gain;
+        info->rolloffFactor = rolloffFactor;
+        info->loopEnabled   = loopEnabled;
+
+        // Opens OGG vorbis file
+        ov_callbacks vfcallbacks = { // Vorbis callbacks for VirtualFiles
+                (size_t (*)(void *,size_t,     size_t,void *))VirtualFile::read,
+                (int    (*)(void *,ogg_int64_t,int          ))VirtualFile::seek,
+                (int    (*)(void *                          ))VirtualFile::close,
+                (long   (*)(void *                          ))VirtualFile::tell
+        };
+
+        errCode = ov_open_callbacks((void *)file,&oggStream,NULL,0,vfcallbacks);
+        if (errCode < 0) {
+            // Throws an exception if something bad happens
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "A required audio file is missing or it is not an OGG Vorbis file",
+                        "AudioManager::addSound()");
+        }
+
+        // Allocates enough room for the PCM samples of the stream and its channels
+        totalBytes = ov_pcm_total(&oggStream,-1)*2;
+        data = new char[totalBytes];
+
+        // A loopEnd of zero means one wants the loop to end on the end of the music file
+        if (loopEnd == 0)
+            loopEnd = ov_pcm_total(&oggStream,-1)-loopBegin;
+
+        // Decompress data
+        ov_pcm_seek(&oggStream,loopBegin);
+        while (size < (loopEnd-loopBegin)*2) {
+            int read = ov_read(&oggStream,data+size,totalBytes-size,0,2,1,&bitstream);
+
+            if (read > 0) {
+                // Some data was read
+                size += read;
+            } else {
+                // read <  0 means an error has occurred
+                // read == 0 means there isn't more data to read (ie. end of file)
+                if (read < 0) {
+                    OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                                "OGG Vorbis data is corrupted",
+                                "AudioManager::addSound()");
+                }
+            }
+        }
+
+        // If no data was read something must be wrong
+        if (size == 0) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "An audio file seems to be empty",
                         "AudioManager::addSound()");
         }
 
@@ -550,8 +652,9 @@ namespace Sonetto {
         // Creates one OpenAL sound source and checks for errors
         alGenSources(1,&source->sourceID);
         if (alGetError() != AL_NO_ERROR) {
-            KERNEL->mLogMan->logMessage("( AudioManager::playSound() ) OpenAL was unable to "
-                                        "generate a sound source.");
+            Kernel::getSingleton()->mLogMan->
+            logMessage("( AudioManager::playSound() ) OpenAL was unable to "
+                       "generate a sound source.");
 
             delete source;
             return -1;
@@ -570,15 +673,17 @@ namespace Sonetto {
         if (mUseEffectsExt) {
             alGenFilters(1,&source->filterID);
             if (alGetError() != AL_NO_ERROR) {
-                KERNEL->mLogMan->logMessage("( AudioManager::playSound() ) OpenAL was unable to "
-                                            "generate an audio filter.");
+                Kernel::getSingleton()->mLogMan->
+                logMessage("( AudioManager::playSound() ) OpenAL was unable to "
+                           "generate an audio filter.");
 
                 source->filterID = 0;
             } else {
                 alFilteri(source->filterID,AL_FILTER_TYPE,AL_FILTER_LOWPASS);
                 if (alGetError() != AL_NO_ERROR) {
-                    KERNEL->mLogMan->logMessage("( AudioManager::playSound() ) Current hardware doesn't "
-                                                "support lowpass filter.");
+                    Kernel::getSingleton()->mLogMan->
+                    logMessage("( AudioManager::playSound() ) Current hardware doesn't "
+                               "support lowpass filter.");
 
                     alDeleteFilters(1,&source->filterID);
                     source->filterID = 0;
@@ -591,8 +696,9 @@ namespace Sonetto {
                     // Direct output sound filtered by source->filterID
                     alSourcei(source->sourceID,AL_DIRECT_FILTER,source->filterID);
                     if (alGetError() != AL_NO_ERROR) {
-                        KERNEL->mLogMan->logMessage("( AudioManager::playSound() ) OpenAL was unable to "
-                                                    "attach a direct audio filter to sound source.");
+                        Kernel::getSingleton()->mLogMan->
+                        logMessage("( AudioManager::playSound() ) OpenAL was unable to "
+                                   "attach a direct audio filter to sound source.");
 
                         // If we could not attach, we are not going to use it
                         alDeleteFilters(1,&source->filterID);
@@ -607,9 +713,10 @@ namespace Sonetto {
                     // If the filter is invalid, it will not be used
                     alSource3i(source->sourceID,AL_AUXILIARY_SEND_FILTER,mEnvSlotID,0,source->filterID);
                     if (alGetError() != AL_NO_ERROR) {
-                        KERNEL->mLogMan->logMessage("( AudioManager::playSound() ) OpenAL was unable to "
-                                                    "attach sound source to environmental effect slot or "
-                                                    "audio filter to sound source auxiliary send.");
+                        Kernel::getSingleton()->mLogMan->
+                        logMessage("( AudioManager::playSound() ) OpenAL was unable to "
+                                   "attach sound source to environmental effect slot or "
+                                   "audio filter to sound source auxiliary send.");
 
                         // If we could not attach the filter, we are not going to use it
                         if (alIsFilter(source->filterID)) {
@@ -706,8 +813,9 @@ namespace Sonetto {
 
         // Warn about errors
         if (alGetError() != AL_NO_ERROR) {
-            KERNEL->mLogMan->logMessage("(AudioManager::setSourceGainRange()) Could not set source gain "
-                                        "range.");
+            Kernel::getSingleton()->mLogMan->
+            logMessage("(AudioManager::setSourceGainRange()) Could not set source gain "
+                       "range.");
         }
     }
 
@@ -730,7 +838,8 @@ namespace Sonetto {
 
         // Warn about errors
         if (alGetError() != AL_NO_ERROR)
-            KERNEL->mLogMan->logMessage("(AudioManager::setSourceGain()) Could not set source gain.");
+            Kernel::getSingleton()->mLogMan->
+            logMessage("(AudioManager::setSourceGain()) Could not set source gain.");
     }
 
     void AudioManager::setSourceRolloff(size_t sourceID,float factor) {
@@ -752,8 +861,9 @@ namespace Sonetto {
 
         // Warn about errors
         if (alGetError() != AL_NO_ERROR) {
-            KERNEL->mLogMan->logMessage("(AudioManager::setSourceRolloff()) Could not set source rolloff "
-                                        "factor.");
+            Kernel::getSingleton()->mLogMan->
+            logMessage("(AudioManager::setSourceRolloff()) Could not set source rolloff "
+                       "factor.");
         }
     }
 
@@ -779,8 +889,9 @@ namespace Sonetto {
 
             // Warn about errors
             if (alGetError() != AL_NO_ERROR) {
-                KERNEL->mLogMan->logMessage("(AudioManager::setSourceFilterGain()) Could not set source "
-                                            "rolloff factor.");
+                Kernel::getSingleton()->mLogMan->
+                logMessage("(AudioManager::setSourceFilterGain()) Could not set source "
+                           "rolloff factor.");
             }
         }
     }
@@ -807,10 +918,40 @@ namespace Sonetto {
 
             // Warn about errors
             if (alGetError() != AL_NO_ERROR) {
-                KERNEL->mLogMan->logMessage("(AudioManager::setSourceFilterGainHF()) Could not set source "
-                                            "rolloff factor.");
+                Kernel::getSingleton()->mLogMan->
+                logMessage("(AudioManager::setSourceFilterGainHF()) Could not set source "
+                           "rolloff factor.");
             }
         }
+    }
+
+    float AudioManager::getSourceRolloff(size_t sourceID) {
+        if (!mInitialised) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Call to a function member before its class' initialisation",
+                        "AudioManager::setSourceRolloff()");
+        }
+
+        // Checks for existance
+        if (!sourceExists(sourceID)) {
+            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
+                        "Invalid sound source ID",
+                        "AudioManager::setSourceRolloff()");
+        }
+
+        float factor = 0.0f; // Return value
+
+        // Changes source properties
+        alGetSourcef(mSoundSources[sourceID]->sourceID,AL_ROLLOFF_FACTOR,&factor);
+
+        // Warn about errors
+        if (alGetError() != AL_NO_ERROR) {
+            Kernel::getSingleton()->mLogMan->
+            logMessage("(AudioManager::setSourceRolloff()) Could not set source rolloff "
+                       "factor.");
+        }
+
+        return factor;
     }
 
     void AudioManager::pauseMusic() {
@@ -821,8 +962,8 @@ namespace Sonetto {
         }
 
         if (!mStreamQueue.empty()) {
-            MusicStream *stream;      // Current music stream
-            ALenum       sourceState; // Current OpenAL source state
+            MusicStream *stream = mStreamQueue.front(); // Current music stream
+            ALenum       sourceState;                   // Current OpenAL source state
 
             // Switches to paused if source is playing
             alGetSourcei(stream->sourceID,AL_SOURCE_STATE,&sourceState);
@@ -839,8 +980,8 @@ namespace Sonetto {
         }
 
         if (!mStreamQueue.empty()) {
-            MusicStream *stream;      // Current music stream
-            ALenum       sourceState; // Current OpenAL source state
+            MusicStream *stream = mStreamQueue.front(); // Current music stream
+            ALenum       sourceState;                   // Current OpenAL source state
 
             // Switches to playing if source is paused
             alGetSourcei(stream->sourceID,AL_SOURCE_STATE,&sourceState);
@@ -996,8 +1137,8 @@ namespace Sonetto {
         Ogre::Real deltatime = 0.012f;
 
         // Gets the camera position and direction
-        camPos = KERNEL->mModuleList.top()->mCamera->getPosition();
-        camDir = KERNEL->mModuleList.top()->mCamera->getDirection();
+        camPos = Kernel::getSingleton()->mModuleList.top()->mCamera->getPosition();
+        camDir = Kernel::getSingleton()->mModuleList.top()->mCamera->getDirection();
 
         // Setups listener orientation values
         // The first 3 array fields compose a vector defining the up direction
@@ -1091,8 +1232,9 @@ namespace Sonetto {
                     if (stream->fadeOutMem) {
                         // Small error checking, just to ensure no future surprises
                         if (!memorizeMusic(stream->fadeOutMemPos)) {
-                            KERNEL->mLogMan->logMessage("( AudioManager::update() ) Failed memorizing "
-                                                        "music on fade out.");
+                            Kernel::getSingleton()->mLogMan->
+                            logMessage("( AudioManager::update() ) Failed memorizing "
+                                       "music on fade out.");
                         }
                     }
 
@@ -1275,4 +1417,4 @@ namespace Sonetto {
 
         return true;
     }
-}; // namespace
+} // namespace

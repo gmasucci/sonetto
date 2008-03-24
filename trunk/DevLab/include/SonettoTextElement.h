@@ -27,15 +27,12 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <OgreControllerManager.h>
 #include "SonettoMain.h"
 #include "SonettoFontManager.h"
-namespace Sonetto
-{
-    using namespace Ogre;
 
-    class TextElement : public OverlayElement
-    {
+namespace Sonetto {
+    class TextElement : public Ogre::OverlayElement {
     public:
         size_t deleteme; // Delete this later when the animate() function being implemented
-        TextElement(const String& name);
+        TextElement(const Ogre::String& name);
         virtual ~TextElement();
 
         virtual void initialise(void);
@@ -47,45 +44,45 @@ namespace Sonetto
         void setFont(FontPtr font);
         FontPtr getFont();
 
-        void setAnimSettings(bool isAnim, bool useFade, bool useFOut, Real anmSpd, Real fdSpd);
+        void setAnimSettings(bool isAnim, bool useFade, bool useFOut, Ogre::Real anmSpd, Ogre::Real fdSpd);
 
-        void setTextSize(Real size);
-        Real getTextSize();
+        void setTextSize(Ogre::Real size);
+        Ogre::Real getTextSize();
 
         void forceAnimEnd();
         void forceAnimReset();
 
-        virtual const String& getTypeName(void) const; // See OverlayElement.
-        void getRenderOperation(RenderOperation& op); // See Renderable.
-        void setMaterialName(const String& matName); // Overridden from OverlayElement.
+        virtual const Ogre::String& getTypeName(void) const; // See OverlayElement.
+        void getRenderOperation(Ogre::RenderOperation& op); // See Renderable.
+        void setMaterialName(const Ogre::String& matName); // Overridden from OverlayElement.
         void _update(void); // Overridden from OverlayElement.
 
     protected:
         /// Member Variables
-        static String msTypeName; // Type name
+        static Ogre::String msTypeName; // Type name
 
         // Text data
         std::string mCaption; // Actual text
-        std::vector<Real> mFadeList; // Fade list
+        std::vector<Ogre::Real> mFadeList; // Fade list
         Ogre::Real mFadeLevel;
 
-        RenderOperation mRenderOp;// Render operation
+        Ogre::RenderOperation mRenderOp;// Render operation
         FontPtr mFontPtr; // Font pointer
 
         // Text settings
         size_t mAllocSize; // Memory allocation size
         size_t mStringSize; // String size (both string and event flags must be the same size)
         size_t mStrCursorPosition; // Current cursor position on text animation
-        Real mTextSize; // Text size on the screen
-        Real mNewLineSize; // Text new line size relative to the mTextSize
-        ColourValue mCurTextColor; // The current text color, used for printing
+        Ogre::Real mTextSize; // Text size on the screen
+        Ogre::Real mNewLineSize; // Text new line size relative to the mTextSize
+        Ogre::ColourValue mCurTextColor; // The current text color, used for printing
 
         Ogre::Real mTimeSinceLastFrame;
         Ogre::Real mDifference;
 
         // Viewport settings
-        Real mViewportAspectCoef; // Viewport aspect coefficient
-        
+        Ogre::Real mViewportAspectCoef; // Viewport aspect coefficient
+
         // Screen Metrics Mode
         ScreenMetricsMode mScrMetricsMode;
 
@@ -97,9 +94,9 @@ namespace Sonetto
         bool mSkipWhiteSpaces; // 0 - Don't skip, 1 - Skip
         bool mAnimationActive; // 0 - No animation beign performed, 1 - Animation is active
 
-        Real mAnimSpeed; // Speed wich the text will appear on the screen
-        Real mDefAnimSpeed; // Default Speed wich the text will appear on the screen
-        Real mFadeSpeed; // Speed wich the text will fade on the screen
+        Ogre::Real mAnimSpeed; // Speed wich the text will appear on the screen
+        Ogre::Real mDefAnimSpeed; // Default Speed wich the text will appear on the screen
+        Ogre::Real mFadeSpeed; // Speed wich the text will fade on the screen
 
         /// Member Functions
         void allocateFadeList(size_t size, float value = 0.0f); // Allocate the fade list

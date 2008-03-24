@@ -25,10 +25,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include <OgreSerializer.h>
 
-namespace Sonetto
-{
-    using namespace Ogre;
-
+namespace Sonetto {
     class Font; // forward declaration
 
     class FontSerializer : public Ogre::Serializer
@@ -40,9 +37,9 @@ namespace Sonetto
         void exportFont(const Font *pFont, const Ogre::String &fileName, Ogre::Serializer::Endian endianMode = ENDIAN_NATIVE);
         void importFont(Ogre::DataStreamPtr &stream, Font *pDest);
     protected:
-        void readMain(DataStreamPtr& stream, Font* pFont);
-        void readGlyph(DataStreamPtr& stream, Font* pFont);
-        void readColor(DataStreamPtr& stream, Font* pFont);
+        void readMain(Ogre::DataStreamPtr& stream, Font* pFont);
+        void readGlyph(Ogre::DataStreamPtr& stream, Font* pFont);
+        void readColor(Ogre::DataStreamPtr& stream, Font* pFont);
         void writeMain(const Font* pFont);
         void writeGlyph(const Font* pFont, size_t glyph_id);
         void writeColor(const Font* pFont, size_t color_id);

@@ -7,9 +7,9 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="..\..\..\BIN\DEBUG\SonettoDevLab" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\..\BIN\DEBUG\SonettoDevLab.exe" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\..\..\BIN\DEBUG\" />
-				<Option object_output="..\..\..\BIN\OBJ\DEBUG\SonettoDevLab.exe" />
+				<Option object_output="..\..\..\BIN\OBJ\DEBUG\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -22,7 +22,7 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="..\..\..\BIN\RELEASE\SonettoDevLab" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\..\BIN\RELEASE\SonettoDevLab.exe" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\..\..\BIN\RELEASE\" />
 				<Option object_output="..\..\..\BIN\OBJ\RELEASE\" />
 				<Option type="1" />
@@ -47,7 +47,7 @@
 			<Add option="-fident" />
 			<Add option="-DWIN32" />
 			<Add option="-D_WINDOWS" />
-			<Add directory="$(OGRE_HOME)\OgreMain\include\" />
+			<Add directory="$(OGRE_HOME)\OgreMain\include" />
 			<Add directory="$(OIS_HOME)\includes\" />
 			<Add directory="$(OPENAL_HOME)\include" />
 			<Add directory="$(OGG_HOME)\include" />
@@ -63,13 +63,14 @@
 			<Add library="libvorbis-0" />
 			<Add library="libvorbisfile-3" />
 			<Add library="libvorbisenc-2" />
-			<Add directory="$(OGRE_HOME)\lib\" />
+			<Add directory="$(OGRE_HOME)\lib" />
 			<Add directory="$(OIS_HOME)\dll\" />
 			<Add directory="$(OPENAL_HOME)\libs\Win32" />
 			<Add directory="$(OGG_HOME)\src\.libs" />
 			<Add directory="$(VORBIS_HOME)\lib\.libs" />
 		</Linker>
 		<Unit filename="..\include\SonettoAudioManager.h" />
+		<Unit filename="..\include\SonettoException.h" />
 		<Unit filename="..\include\SonettoFont.h" />
 		<Unit filename="..\include\SonettoFontManager.h" />
 		<Unit filename="..\include\SonettoFontSerializer.h" />
@@ -84,6 +85,7 @@
 		<Unit filename="..\include\SonettoTailedWindow.h" />
 		<Unit filename="..\include\SonettoTextElement.h" />
 		<Unit filename="..\include\SonettoTextFactory.h" />
+		<Unit filename="..\include\SonettoVirtualFile.h" />
 		<Unit filename="..\include\SonettoWindow.h" />
 		<Unit filename="..\include\SonettoWindowFactory.h" />
 		<Unit filename="..\include\SonettoWindowSkin.h" />
@@ -91,6 +93,7 @@
 		<Unit filename="..\include\SonettoWindowSkinSerializer.h" />
 		<Unit filename="..\main.cpp" />
 		<Unit filename="..\src\SonettoAudioManager.cpp" />
+		<Unit filename="..\src\SonettoException.cpp" />
 		<Unit filename="..\src\SonettoFont.cpp" />
 		<Unit filename="..\src\SonettoFontManager.cpp" />
 		<Unit filename="..\src\SonettoFontSerializer.cpp" />
@@ -103,6 +106,7 @@
 		<Unit filename="..\src\SonettoSlimWindow.cpp" />
 		<Unit filename="..\src\SonettoTailedWindow.cpp" />
 		<Unit filename="..\src\SonettoTextElement.cpp" />
+		<Unit filename="..\src\SonettoVirtualFile.cpp" />
 		<Unit filename="..\src\SonettoWindow.cpp" />
 		<Unit filename="..\src\SonettoWindowSkin.cpp" />
 		<Unit filename="..\src\SonettoWindowSkinManager.cpp" />
@@ -110,7 +114,6 @@
 		<Extensions>
 			<code_completion />
 			<envvars />
-			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

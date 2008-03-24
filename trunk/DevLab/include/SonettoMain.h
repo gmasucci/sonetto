@@ -160,46 +160,6 @@ namespace Sonetto {
         FT_LINEAR = 0x2222,
         FT_ANISOTROPIC = 0x3333
     };
-
-    struct MusicInfo {
-        std::string  filename;
-
-        bool         loopEnabled;
-        ogg_uint64_t loopBegin;
-        ogg_uint64_t loopEnd;
-    };
-
-    struct MusicStream {
-        size_t         musicID;
-
-        ALuint         sourceID;
-        OggVorbis_File oggStream;
-        int            bitstream;
-        char           activeBuffer;
-        ALuint         bufferIDs[2];
-
-        float          maxVolume;
-        char           fade;      // -1 = Fade out, 0 = No Fading, +1 = Fade in
-        float          fadeSpd;
-    };
-
-    struct SoundInfo {
-        ALuint       bufferID;
-        bool         loopEnabled;
-        ogg_uint64_t loopBegin;
-        ogg_uint64_t loopEnd;
-
-        float        volume;
-        char         fade;         // -1 = Fade out, 0 = No Fading, +1 = Fade in
-        float        fadeSpd;
-    };
-
-    struct SoundSource {
-        ALuint           soundID;
-        ALuint           sourceID;
-
-        Ogre::SceneNode *parentNode;
-    };
 }
 ; // namespace
 

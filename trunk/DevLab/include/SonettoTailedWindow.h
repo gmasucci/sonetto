@@ -26,6 +26,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <OgreResourceManager.h>
 #include "SonettoMain.h"
 #include "SonettoWindowSkin.h"
+
 namespace Sonetto
 {
     class TailedBorderRenderable;

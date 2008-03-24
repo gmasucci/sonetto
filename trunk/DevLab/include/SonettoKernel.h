@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
 This source file is part of Sonetto RPG Engine.
 
-Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr√° Vieira
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr· Vieira
 
 
 Sonetto RPG Engine is free software: you can redistribute it and/or modify
@@ -20,34 +20,22 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
-#ifndef _SONETTO_KERNEL_H_
-#define _SONETTO_KERNEL_H_
+#ifndef SONETTO_KERNEL_H
+#define SONETTO_KERNEL_H
 
-// Forward declarations
-namespace Sonetto {
-    class Kernel;
-
-    extern Kernel *KERNEL;
-};
-
-#include <Ogre.h>
-#include <OgreVector2.h>
 #include <stack>
-
+#include <Ogre.h>
+#include "SonettoException.h"
+#include "SonettoModule.h"
 #include "SonettoAudioManager.h"
 #include "SonettoInputManager.h"
-#include "SonettoModule.h"
-
-#include "SonettoFontSerializer.h"
-#include "SonettoFontManager.h"
-#include "SonettoTextFactory.h"
-#include "SonettoWindowSkinSerializer.h"
 #include "SonettoWindowSkinManager.h"
+#include "SonettoFontManager.h"
+#include "SonettoTextElement.h"
+#include "SonettoTextFactory.h"
 #include "SonettoWindowFactory.h"
-#include <debug_new.h>
 
 namespace Sonetto {
-
     class TempWindowSkinLoader : public Ogre::ManualResourceLoader {
     public:
         TempWindowSkinLoader() {}
@@ -155,45 +143,44 @@ namespace Sonetto {
             ws->deleteMaterial();
             ws->createMaterial();
         }
-
     };
 
     class Kernel {
     public:
-        /// Default constructor.
-        Kernel() : mRoot(0),               mWindow(0),      mViewport(0),
-                mOverlayMan(0),         mResourceMan(0),
-                mShutDown(0),           mInitialised(0),
-                mAudioMan(0),
-                mInputMan(0),            mFontMan(0),
-                mTextElementFactory(0),  mWSkinMan(0) {}
+        inline static Kernel *getSingleton()  { return mSingleton; }
+        inline static bool    isInitialised() { return mSingleton; }
 
-        /// Default destructor.
-        ~Kernel() {
-            printf("2\n");
-        }
+        static bool           initialise();
+        static bool           deinitialise();
 
-        /** @brief Initialise Ogre, OIS, and other Sonetto dependencies
-         *  @return Wheter it was successful or not.
-         */
-        bool initialise();
-
-        /// @brief Deinitialise everything initialised before by initialise().
-        bool deinitialise();
-
-        /// @brief Asks Kernel to shutdown as soon as possible
-        void shutdown() {
-            mShutDown = true;
-        }
-
-        bool run();
-
-        void pushModule(Module *pModule,bool haltMode = false);
-
+        int  run();
+        void pushModule(Module *module,bool haltMode = false);
         void popModule();
+        void shutdown() { mShutDown = true; }
 
-    public: // Change to other after...
-        /// Module Stack
+        inline Ogre::Root         *getOgreRoot()     { return mRoot;     }
+        inline Ogre::RenderWindow *getRenderWindow() { return mWindow;   }
+        inline Ogre::Viewport     *getViewport()     { return mViewport; }
+        inline Ogre::LogManager   *getLogMan()       { return mLogMan;   }
+        inline InputManager       *getInputMan()     { return mInputMan; }
+        inline AudioManager       *getAudioMan()     { return mAudioMan; }
+
+        inline void setViewport(Ogre::Viewport *viewport) { mViewport = viewport; }
+
+    private:
+        friend class InputManager;
+        friend class AudioManager;
+
+        Kernel();
+        ~Kernel() {}
+
+        bool _initialise();
+        bool _deinitialise();
+
+        static Kernel *mSingleton;
+
+        bool mShutDown;
+
         std::stack<Module *>          mModuleList;
 
         Ogre::Root                   *mRoot;
@@ -204,23 +191,6 @@ namespace Sonetto {
         Ogre::ResourceGroupManager   *mResourceMan;
         Ogre::ResourceManager        *mResMan;
 
-        bool mShutDown;
-        bool mInitialised;
-
-        /** Game Switch
-        *
-        * This is the total number of switches for this game
-        * For every 32 'switches' create a new variable to hold them
-        */
-        size_t mNumSwitches;
-        /** Game Switches/Flags
-        *
-        * Stored in groups of 32 switches
-        * @remarks num_variables = (num_switches / sizeof(Ogre::uint32)); ???
-        */
-        std::vector<Ogre::uint32> mSwitches;
-
-        // Sonetto Stuff
         AudioManager        *mAudioMan;
         InputManager        *mInputMan;
         FontManager         *mFontMan;
@@ -231,15 +201,14 @@ namespace Sonetto {
         WindowSkinManager   *mWSkinMan;
 
         // Temporary stuff
-        FontPtr                 mMainFont;
-        WindowSkinPtr           mWSkinPtr;
+        FontPtr                  mMainFont;
+        WindowSkinPtr            mWSkinPtr;
 
         Ogre::Overlay           *mDebugOverlay;
         Ogre::OverlayContainer  *mDebugOverlayContainer;
         TextElement             *mDebugText;
         TextElement             *mDebugErrorText;
         TempWindowSkinLoader    *mTmpWinSkinLoader;
-
     };
 }; // namespace
 

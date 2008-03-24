@@ -30,9 +30,10 @@ namespace Sonetto {
     bool InputManager::initialise(Ogre::RenderWindow *win,KeyConfig kc[MAX_PLAYERS]) {
         // Fails if we already initialised
         if (mInitialised) {
-            KERNEL->mLogMan->logMessage("[InputManager::initialise()] InputManager was asked to be "
-                                        "initialised twice. This will possibly cause errors.\n",
-                                        Ogre::LML_CRITICAL);
+            Kernel::getSingleton()->mLogMan->
+                                logMessage("( InputManager::initialise() ) InputManager was asked to be "
+                                "initialised twice. This will probably cause errors.\n",
+                                Ogre::LML_CRITICAL);
 
             return false;
         }
@@ -76,8 +77,9 @@ namespace Sonetto {
 
     bool InputManager::deinitialise() {
         if (!mInitialised) {
-            KERNEL->mLogMan->logMessage("[InputManager::deinitialise()] Trying to deinitialise a non-"
-                                        "initialised InputManager.\n",Ogre::LML_CRITICAL);
+            Kernel::getSingleton()->mLogMan->
+                                logMessage("[InputManager::deinitialise()] Trying to deinitialise a non-"
+                                "initialised InputManager.\n",Ogre::LML_CRITICAL);
 
             return false;
         }

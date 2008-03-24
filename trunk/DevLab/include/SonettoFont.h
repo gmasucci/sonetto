@@ -28,9 +28,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <OgreTechnique.h>
 #include "SonettoMain.h"
 
-namespace Sonetto
-{
-    using namespace Ogre;
+namespace Sonetto {
     /** @brief This is a class that stores the texture font data.
     *
     * This class is used to set up a Font Texture for use with Sonetto::SonettoTextElement.
@@ -62,14 +60,14 @@ namespace Sonetto
         /// Glyph Structure List Iterator.
         std::vector<GlyphStruct>::iterator glyph_itr;
         /// Color List.
-        std::vector<ColourValue> mColorList;
+        std::vector<Ogre::ColourValue> mColorList;
         /// Color List Iterator.
-        std::vector<ColourValue>::iterator mColorList_itr;
+        std::vector<Ogre::ColourValue>::iterator mColorList_itr;
 
         /// Pointer to the material for this font.
-        MaterialPtr font_material;
+        Ogre::MaterialPtr font_material;
         /// Pointer to the font material's texture.
-        TexturePtr font_texture;
+        Ogre::TexturePtr font_texture;
 
         /// If the font material exist or not.
         bool materialExist;

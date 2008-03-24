@@ -20,25 +20,15 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
+#include <exception>
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
 #   include <windows.h>
 #endif
 
-#include <Ogre.h>
-#include <OgreConfigFile.h>
-
-// Set OIS_DYNAMIC_LIB to signify OIS will be used as a DLL
-// (so that dll import/export macros are in effect)
-#define OIS_DYNAMIC_LIB
-#include <OIS.h>
-
-#include <alc.h>
-#include <al.h>
 #include "SonettoKernel.h"
-#include "SonettoModule.h"
 
 using namespace std;
-using namespace Ogre;
+using namespace Sonetto;
 
 class TestModule2 : public Sonetto::Module {
 public:
@@ -47,10 +37,10 @@ public:
 
     void enter() {
         Sonetto::Module::enter();
-        mKernel->mViewport->setBackgroundColour(ColourValue(0,0,1));
+        mKernel->getViewport()->setBackgroundColour(Ogre::ColourValue(0,0,1));
     }
-    void update(Real timedelta) {
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_CIRCLE) == Sonetto::KS_PRESS)
+    void update(Ogre::Real timedelta) {
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_CIRCLE) == Sonetto::KS_PRESS)
             mKernel->popModule();
     }
     void exit() {
@@ -72,53 +62,60 @@ public:
 
     void enter() {
         Sonetto::Module::enter();
-        assert(mKernel);
-        assert(mKernel->mViewport);
-        mKernel->mViewport->setBackgroundColour(ColourValue(1,0,0));
+        mKernel->getViewport()->setBackgroundColour(Ogre::ColourValue(1,0,0));
     }
 
-    void update(Real timedelta) {
-        float pos[3];
+    void update(Ogre::Real timedelta) {
+        Ogre::Vector3 pos;
 
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_CROSS) == Sonetto::KS_PRESS)
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_CROSS) == Sonetto::KS_PRESS)
             mKernel->pushModule(new TestModule2(), true);
 
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_L2) == Sonetto::KS_PRESS)
-            mKernel->mAudioMan->memorizeMusic(true);
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_L2) == Sonetto::KS_PRESS)
+            mKernel->getAudioMan()->memorizeMusic(true);
 
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_R2) == Sonetto::KS_PRESS)
-            mKernel->mAudioMan->restoreMusic();
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_R2) == Sonetto::KS_PRESS)
+            mKernel->getAudioMan()->restoreMusic();
 
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_TRIANGLE) == Sonetto::KS_PRESS)
-            mKernel->mAudioMan->playMusic(0,0.5f,0.5f,1.0f,0,true,true);
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_TRIANGLE) == Sonetto::KS_PRESS)
+            mKernel->getAudioMan()->playMusic(0,0.5f,0.5f,1.0f,0,true,true);
 
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_SQUARE) == Sonetto::KS_PRESS)
-            mKernel->mAudioMan->playMusic(1,0.5f,0.5f);
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_SQUARE) == Sonetto::KS_PRESS)
+            mKernel->getAudioMan()->playMusic(1,0.5f,0.5f);
 
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_R1) == Sonetto::KS_PRESS)
-            printf("New SourceID (environmental): %d\n",mKernel->mAudioMan->playSound(0,NULL));
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_R1) == Sonetto::KS_PRESS) {
+            size_t id = mKernel->getAudioMan()->playSound(0,NULL);
+            printf("New SourceID (environmental): %d\n",id);
+        }
 
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_L1) == Sonetto::KS_PRESS)
-            printf("New SourceID (dry): %d\n",mKernel->mAudioMan->playSound(0,NULL,false));
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_L1) == Sonetto::KS_PRESS)
+            printf("New SourceID (dry): %d\n",mKernel->getAudioMan()->playSound(0,NULL,false));
 
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_DPAD_DOWN) == Sonetto::KS_RELEASE)
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_DPAD_DOWN) == Sonetto::KS_RELEASE)
             mKernel->shutdown();
 
-        alGetListener3f(AL_POSITION,&pos[0],&pos[1],&pos[2]);
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_DPAD_LEFT) == Sonetto::KS_HOLD)
-            pos[0] -= 0.000002f;
+        pos = mCamera->getPosition();
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_DPAD_LEFT) == Sonetto::KS_RELEASE) {
+            float rolloff = mKernel->getAudioMan()->getSourceRolloff(0)+0.1f;
+            if(rolloff > 1.0f)
+                rolloff = 1.0f;
 
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_DPAD_RIGHT) == Sonetto::KS_HOLD)
-            pos[0] += 0.000002f;
+            mKernel->getAudioMan()->setSourceRolloff(0,rolloff);
+        }
 
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_DPAD_UP) == Sonetto::KS_HOLD)
-            pos[2] += 0.000002f;
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_DPAD_RIGHT) == Sonetto::KS_RELEASE) {
+            float rolloff = mKernel->getAudioMan()->getSourceRolloff(0)-0.1f;
+            if(rolloff < 0.0f)
+                rolloff = 0.0f;
 
-        if (mKernel->mInputMan->getButtonState(0,Sonetto::BTN_DPAD_DOWN) == Sonetto::KS_HOLD)
-            pos[2] -= 0.000002f;
+            mKernel->getAudioMan()->setSourceRolloff(0,rolloff);
+        }
 
-        alListener3f(AL_POSITION,pos[0],pos[1],pos[2]);
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_DPAD_UP) == Sonetto::KS_HOLD)
+            pos.z += 0.02f;
 
+        if (mKernel->getInputMan()->getButtonState(0,Sonetto::BTN_DPAD_DOWN) == Sonetto::KS_HOLD)
+            pos.z -= 0.02f;
     }
     void exit() {
         Sonetto::Module::exit();
@@ -129,41 +126,32 @@ public:
     }
     void wakeup() {
         Sonetto::Module::wakeup();
-        mKernel->mViewport->setBackgroundColour(ColourValue(1,0,0));
+        mKernel->getViewport()->setBackgroundColour(Ogre::ColourValue(1,0,0));
     }
 };
 
-int main(int argc, char **argv) {
-    Sonetto::KERNEL         = new Sonetto::Kernel();
-    TestModule *mTestModule = new TestModule();
-
+int main(int argc,char **argv) {
     try {
-        // Initialise Kernel
-        if (!Sonetto::KERNEL->initialise()) {
-            printf("Failed initialising kernel.\n");
-            delete mTestModule;
-            delete Sonetto::KERNEL;
+        int     errorCode;
+        Module *mainModule;
 
-            return -1;
-        }
+        Kernel::initialise();
 
-        // Push main module and run
-        Sonetto::KERNEL->pushModule(mTestModule,false);
-        Sonetto::KERNEL->run();
+        mainModule = new TestModule();
+        Kernel::getSingleton()->pushModule(mainModule);
+
+        errorCode = Kernel::getSingleton()->run();
+
+        delete mainModule;
+        return errorCode;
     } catch (Exception &e) {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-        MessageBox(NULL,e.getFullDescription().c_str(),"An exception has occured!",
+        MessageBox(NULL,e.what(),"An exception has occured!",
                    MB_OK|MB_ICONERROR|MB_TASKMODAL);
 #else
-        cerr << "An exception has occured: " << e.getFullDescription();
+        cerr << "An exception has occured!\n" << e.what() << "\n";
 #endif
     }
 
-    // Clean stuff
-    delete mTestModule;
-
-    // <fixme> Delete kernel correctly
-    // This is crashing, I don't know why
-    // delete Sonetto::KERNEL;
-    return 0;
+    return -1;
 }

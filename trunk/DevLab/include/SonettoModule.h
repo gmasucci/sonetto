@@ -28,18 +28,13 @@ namespace Sonetto {
     class Module;
 };
 
+#include <Ogre.h>
 #include "SonettoKernel.h"
 
 namespace Sonetto {
     class Module {
     public:
-        Module() :
-        mSceneMan     (NULL),
-        mOverlay      (NULL),
-        mCamera       (NULL) {
-        mKernel = Sonetto::KERNEL;
-        }
-
+        Module();
         virtual ~Module() {}
 
         /** @brief Module initialization
@@ -80,7 +75,7 @@ namespace Sonetto {
         friend class Kernel;
 
     public:
-        /// Use this in place of Kernel::getSingletonPtr().
+        /// Use this in place of Kernel::getSingleton().
         Kernel              *mKernel;
         /// Module Scene Manager
         Ogre::SceneManager  *mSceneMan;

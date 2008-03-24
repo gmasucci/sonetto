@@ -30,6 +30,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <alc.h>
 #include <efx.h>
 #include <vorbis/vorbisfile.h>
+#include "SonettoVirtualFile.h"
 
 namespace Sonetto {
     /** @brief Definitions about *the* sound
@@ -236,6 +237,10 @@ namespace Sonetto {
                         float rolloffFactor,bool loopEnabled = false,ogg_int64_t loopBegin = 0,
                         ogg_int64_t loopEnd = 0);
 
+        size_t addSound(VirtualFile *file,float minGain,float maxGain,float gain,
+                        float rolloffFactor,bool loopEnabled = false,ogg_int64_t loopBegin = 0,
+                        ogg_int64_t loopEnd = 0);
+
         /** @brief Add music information
          *
          *  This method creates a MusicInfo based on the arguments passed, and inserts
@@ -344,17 +349,32 @@ namespace Sonetto {
          *
          *  The maximal and minimal gain is a gain to which the final sound source's gain
          *  is compared. This final gain is then truncated inside this range.
+         *  @param minGain Allowed values: 0.0f ~ 1.0f
+         *  @param maxGain Allowed values: 0.0f ~ 1.0f
          */
         void setSourceGainRange(size_t sourceID,float minGain,float maxGain);
 
-        /// @brief Set the gain of a sound source
+        /** @brief Set the gain of a sound source
+         *
+         *  @param gain Allowed values: 0.0f ~ Any
+         */
         void setSourceGain(size_t sourceID,float gain);
 
         void setSourceRolloff(size_t sourceID,float factor);
 
+        /** @brief Set the gain of a sound source's lowpass filter
+         *
+         *  @param gain Allowed values: 0.0f ~ 1.0f
+         */
         void setSourceFilterGain(size_t sourceID,float gain);
 
+        /** @brief Set the high-frequency gain of a sound source's lowpass filter
+         *
+         *  @param gain Allowed values: 0.0f ~ 1.0f
+         */
         void setSourceFilterGainHF(size_t sourceID,float gain);
+
+        float getSourceRolloff(size_t sourceID);
 
         /// @brief Update AudioManager
         bool update();
@@ -412,6 +432,6 @@ namespace Sonetto {
         /// @brief Memorized music data
         MusicMemory mMusicMem;
     };
-}; // namespace
+} // namespace
 
 #endif

@@ -27,53 +27,48 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoTailedWindow.h"
 #include "SonettoSlimWindow.h"
 
-namespace Sonetto
-{
-    using namespace Ogre;
-    class WindowFactory: public OverlayElementFactory
-    {
+namespace Sonetto {
+    class WindowFactory: public Ogre::OverlayElementFactory {
     public:
         /** See OverlayElementFactory */
-        OverlayElement* createOverlayElement(const String& instanceName)
+        Ogre::OverlayElement* createOverlayElement(const Ogre::String& instanceName)
         {
             return new Sonetto::Window(instanceName);
         }
         /** See OverlayElementFactory */
-        const String& getTypeName(void) const
+        const Ogre::String& getTypeName(void) const
         {
-            static String name = "Window";
+            static Ogre::String name = "Window";
             return name;
         }
     };
 
-    class TailedWindowFactory: public OverlayElementFactory
-    {
+    class TailedWindowFactory: public Ogre::OverlayElementFactory {
     public:
         /** See OverlayElementFactory */
-        OverlayElement* createOverlayElement(const String& instanceName)
+        Ogre::OverlayElement* createOverlayElement(const Ogre::String& instanceName)
         {
             return new Sonetto::TailedWindow(instanceName);
         }
         /** See OverlayElementFactory */
-        const String& getTypeName(void) const
+        const Ogre::String& getTypeName(void) const
         {
-            static String name = "TailedWindow";
+            static Ogre::String name = "TailedWindow";
             return name;
         }
     };
 
-    class SlimWindowFactory: public OverlayElementFactory
-    {
+    class SlimWindowFactory: public Ogre::OverlayElementFactory {
     public:
         /** See OverlayElementFactory */
-        OverlayElement* createOverlayElement(const String& instanceName)
+        Ogre::OverlayElement* createOverlayElement(const Ogre::String& instanceName)
         {
             return new Sonetto::SlimWindow(instanceName);
         }
         /** See OverlayElementFactory */
-        const String& getTypeName(void) const
+        const Ogre::String& getTypeName(void) const
         {
-            static String name = "SlimWindow";
+            static Ogre::String name = "SlimWindow";
             return name;
         }
     };

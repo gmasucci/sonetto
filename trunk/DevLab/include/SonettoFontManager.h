@@ -24,9 +24,8 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include <OgreResourceManager.h>
 #include "SonettoFont.h"
-namespace Sonetto
-{
-    using namespace Ogre;
+
+namespace Sonetto {
     class FontManager : public Ogre::ResourceManager, public Ogre::Singleton<FontManager>
     {
     protected:

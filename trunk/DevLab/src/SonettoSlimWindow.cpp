@@ -30,6 +30,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <OgreHardwareBufferManager.h>
 #include <OgreRoot.h>
 #include <OgreRenderSystem.h>
+
 namespace Sonetto
 {
     Ogre::String SlimWindow::msTypeName = "SlimWindow";

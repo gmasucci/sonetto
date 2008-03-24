@@ -24,40 +24,48 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoModule.h"
 
 namespace Sonetto {
+    Module::Module() :
+            mSceneMan (NULL),
+            mOverlay  (NULL),
+            mCamera   (NULL) {
+        mKernel = Kernel::getSingleton();
+    }
+
     void Module::enter() {
-        if(mKernel->mWindow->getNumViewports() != 0)
-            mKernel->mWindow->removeAllViewports();
+        if (mKernel->getRenderWindow()->getNumViewports() != 0)
+            mKernel->getRenderWindow()->removeAllViewports();
 
         // Create the scene manager for this module.
-        mSceneMan = mKernel->mRoot->createSceneManager(Ogre::ST_GENERIC);
+        mSceneMan = mKernel->getOgreRoot()->createSceneManager(Ogre::ST_GENERIC);
         mCamera   = mSceneMan->createCamera(Ogre::StringUtil::BLANK);
 
-        mKernel->mViewport = mKernel->mWindow->addViewport(mCamera);
-        mKernel->mViewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
-        mCamera->setAspectRatio(Ogre::Real(mKernel->mViewport->getActualWidth()) /
-                                Ogre::Real(mKernel->mViewport->getActualHeight()));
+        mKernel->setViewport(mKernel->getRenderWindow()->addViewport(mCamera));
+        mKernel->getViewport()->setBackgroundColour(Ogre::ColourValue(0,0,0));
+        mCamera->setAspectRatio(Ogre::Real(mKernel->getViewport()->getActualWidth()) /
+                                Ogre::Real(mKernel->getViewport()->getActualHeight()));
     }
 
     void Module::exit() {
-        if(mKernel->mWindow->getNumViewports() != 0)
-            mKernel->mWindow->removeAllViewports();
+        if (mKernel->getRenderWindow()->getNumViewports() != 0)
+            mKernel->getRenderWindow()->removeAllViewports();
 
         mSceneMan->clearScene();
         mSceneMan->destroyCamera(mCamera);
-        mKernel->mRoot->destroySceneManager(mSceneMan);
+        mKernel->getOgreRoot()->destroySceneManager(mSceneMan);
         mSceneMan = NULL;
     }
 
     void Module::halt() {
-        if(mKernel->mWindow->getNumViewports() != 0)
-            mKernel->mWindow->removeAllViewports();
+        if (mKernel->getRenderWindow()->getNumViewports() != 0)
+            mKernel->getRenderWindow()->removeAllViewports();
     }
 
     void Module::wakeup() {
-        if(mKernel->mWindow->getNumViewports() != 0)
-            mKernel->mWindow->removeAllViewports();
-        mKernel->mViewport = mKernel->mWindow->addViewport(mCamera);
-        mKernel->mViewport->setBackgroundColour(Ogre::ColourValue(0,0,0));
-        mCamera->setAspectRatio(Ogre::Real(mKernel->mViewport->getActualWidth()) / Ogre::Real(mKernel->mViewport->getActualHeight()));
+        if (mKernel->getRenderWindow()->getNumViewports() != 0)
+            mKernel->getRenderWindow()->removeAllViewports();
+        mKernel->setViewport(mKernel->getRenderWindow()->addViewport(mCamera));
+        mKernel->getViewport()->setBackgroundColour(Ogre::ColourValue(0,0,0));
+        mCamera->setAspectRatio(Ogre::Real(mKernel->getViewport()->getActualWidth()) /
+                                Ogre::Real(mKernel->getViewport()->getActualHeight()));
     }
 };

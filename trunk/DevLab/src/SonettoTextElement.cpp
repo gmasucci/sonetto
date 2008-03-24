@@ -31,6 +31,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <OgreStringConverter.h>
 #include "SonettoFont.h"
 #include "SonettoFontManager.h"
+
 namespace Sonetto
 {
     using namespace Ogre;
