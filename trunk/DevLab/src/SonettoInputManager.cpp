@@ -32,8 +32,8 @@ namespace Sonetto {
         if (mInitialised) {
             Kernel::getSingleton()->mLogMan->
                                 logMessage("( InputManager::initialise() ) InputManager was asked to be "
-                                "initialised twice. This will probably cause errors.\n",
-                                Ogre::LML_CRITICAL);
+                                           "initialised twice. This will probably cause errors.\n",
+                                           Ogre::LML_CRITICAL);
 
             return false;
         }
@@ -79,7 +79,7 @@ namespace Sonetto {
         if (!mInitialised) {
             Kernel::getSingleton()->mLogMan->
                                 logMessage("[InputManager::deinitialise()] Trying to deinitialise a non-"
-                                "initialised InputManager.\n",Ogre::LML_CRITICAL);
+                                           "initialised InputManager.\n",Ogre::LML_CRITICAL);
 
             return false;
         }
@@ -103,22 +103,16 @@ namespace Sonetto {
 
     KEYSTATE InputManager::getButtonState(Ogre::uint8 playerID,BUTTON btn) {
         // Makes sure we aren't going to access a non-existent player
-        if(playerID >= MAX_PLAYERS) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "PlayerID outbounds MAX_PLAYERS",
-                        "InputManager::playerPlugged()");
-        }
+        if(playerID >= MAX_PLAYERS)
+            SONETTO_THROW("PlayerID outbounds MAX_PLAYERS");
 
         return mKeyStates[playerID].buttons[btn];
     }
 
     Ogre::Vector2 InputManager::getAxis(Ogre::uint8 playerID,AXIS axis) {
         // Makes sure we aren't going to access a non-existent player
-        if(playerID >= MAX_PLAYERS) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "PlayerID outbounds MAX_PLAYERS",
-                        "InputManager::playerPlugged()");
-        }
+        if(playerID >= MAX_PLAYERS)
+            SONETTO_THROW("PlayerID outbounds MAX_PLAYERS");
 
         return Ogre::Vector2(mKeyStates[playerID].axes[axis+1], // X
                              mKeyStates[playerID].axes[axis]);  // Y
@@ -271,11 +265,8 @@ namespace Sonetto {
 
     void InputManager::setKeyConfig(Ogre::uint8 playerID,KeyConfig *kc) {
         // Makes sure we aren't going to access a non-existent player
-        if(playerID >= MAX_PLAYERS) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "PlayerID outbounds MAX_PLAYERS",
-                        "InputManager::playerPlugged()");
-        }
+        if(playerID >= MAX_PLAYERS)
+            SONETTO_THROW("PlayerID outbounds MAX_PLAYERS");
 
         assert(kc && "Supplied KeyConfig is NULL");
 
@@ -285,22 +276,16 @@ namespace Sonetto {
 
     KeyConfig *InputManager::getKeyConfig(Ogre::uint8 playerID) {
         // Makes sure we aren't going to access a non-existent player
-        if(playerID >= MAX_PLAYERS) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "PlayerID outbounds MAX_PLAYERS",
-                        "InputManager::playerPlugged()");
-        }
+        if(playerID >= MAX_PLAYERS)
+            SONETTO_THROW("PlayerID outbounds MAX_PLAYERS");
 
         return &mKeyConfig[playerID];
     }
 
     bool InputManager::playerPlugged(Ogre::uint8 playerID) {
         // Makes sure we aren't going to access a non-existent player
-        if(playerID >= MAX_PLAYERS) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "PlayerID outbounds MAX_PLAYERS",
-                        "InputManager::playerPlugged()");
-        }
+        if(playerID >= MAX_PLAYERS)
+            SONETTO_THROW("PlayerID outbounds MAX_PLAYERS");
 
         // Device 0 is a Keyboard
         if (mKeyConfig[playerID].inputDevice == 0)

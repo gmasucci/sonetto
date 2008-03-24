@@ -381,9 +381,8 @@ namespace Sonetto {
         errCode = ov_fopen((char *)(str.str().c_str()),&oggStream);
         if (errCode < 0) {
             // Throws an exception if something bad happens
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "A required audio file is missing or it is not an OGG Vorbis file ("+
-                        Ogre::String(str.str())+")","AudioManager::addSound()");
+            SONETTO_THROW("A required audio file is missing or it is not an OGG Vorbis file ("+
+                          Ogre::String(str.str())+")");
         }
 
         // Allocates enough room for the PCM samples of the stream and its channels
@@ -405,20 +404,14 @@ namespace Sonetto {
             } else {
                 // read <  0 means an error has occurred
                 // read == 0 means there isn't more data to read (ie. end of file)
-                if (read < 0) {
-                    OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                                "OGG Vorbis data is corrupted ("+Ogre::String(str.str())+")",
-                                "AudioManager::addSound()");
-                }
+                if (read < 0)
+                    SONETTO_THROW("OGG Vorbis data is corrupted ("+Ogre::String(str.str())+")");
             }
         }
 
         // If no data was read something must be wrong
-        if (size == 0) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "An audio file seems to be empty ("+Ogre::String(str.str())+")",
-                        "AudioManager::addSound()");
-        }
+        if (size == 0)
+            SONETTO_THROW("An audio file seems to be empty ("+Ogre::String(str.str())+")");
 
         // Discovers file format (mono or stereo)
         if (oggStream.vi->channels == 1) {
@@ -471,9 +464,7 @@ namespace Sonetto {
         errCode = ov_open_callbacks((void *)file,&oggStream,NULL,0,vfcallbacks);
         if (errCode < 0) {
             // Throws an exception if something bad happens
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "A required audio file is missing or it is not an OGG Vorbis file",
-                        "AudioManager::addSound()");
+            SONETTO_THROW("A required audio file is missing or it is not an OGG Vorbis file");
         }
 
         // Allocates enough room for the PCM samples of the stream and its channels
@@ -496,18 +487,14 @@ namespace Sonetto {
                 // read <  0 means an error has occurred
                 // read == 0 means there isn't more data to read (ie. end of file)
                 if (read < 0) {
-                    OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                                "OGG Vorbis data is corrupted",
-                                "AudioManager::addSound()");
+                    SONETTO_THROW("OGG Vorbis data is corrupted");
                 }
             }
         }
 
         // If no data was read something must be wrong
         if (size == 0) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "An audio file seems to be empty",
-                        "AudioManager::addSound()");
+            SONETTO_THROW("An audio file seems to be empty");
         }
 
         // Discovers file format (mono or stereo)
@@ -529,11 +516,8 @@ namespace Sonetto {
 
     void AudioManager::playMusic(size_t musicID, float fadeOutSpd, float fadeInSpd, float musicVolume,
                                  ogg_uint64_t pcmPos, bool fadeOutMem, bool fadeOutMemPos) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::pauseMusic()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         int              errCode;                     // OGG Vorbis error code
         MusicInfo       *music     = NULL;            // Music information for the new music
@@ -542,11 +526,8 @@ namespace Sonetto {
         ostringstream    str;                         // String formatter
 
         // Makes sure we're talking about an existing music
-        if (musicID >= mMusics.size()) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "MusicID outbounds mMusics size",
-                        "AudioManager::playMusic()");
-        }
+        if (musicID >= mMusics.size())
+            SONETTO_THROW("MusicID outbounds mMusics size");
 
         // Gets music information and creates an OGG stream
         music   = mMusics[musicID];
@@ -554,9 +535,8 @@ namespace Sonetto {
         errCode = ov_fopen((char *)(str.str().c_str()),&stream->oggStream);
         if (errCode < 0) {
             // Throws an exception if something bad happens
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "A required audio file is missing or it is not an OGG Vorbis file ("+
-                        Ogre::String(str.str())+")","AudioManager::playMusic()");
+            SONETTO_THROW("A required audio file is missing or it is not an OGG Vorbis file ("+
+                          Ogre::String(str.str())+")");
         }
 
         // Creates an OpenAL source and two PCM data buffers (front/back buffer)
@@ -623,22 +603,16 @@ namespace Sonetto {
     }
 
     int AudioManager::playSound(size_t soundID,Ogre::SceneNode *parentNode,bool useEnvEffect) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::pauseMusic()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         size_t       index  = 0;
         SoundInfo   *info   = NULL;
         SoundSource *source = NULL;
 
         // Checks whether soundID is valid
-        if (soundID >= mSounds.size()) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "SoundID outbounds mSounds size",
-                        "AudioManager::playSound()");
-        }
+        if (soundID >= mSounds.size())
+            SONETTO_THROW("SoundID outbounds mSounds size");
 
         // Gets sound information
         info = mSounds[soundID];
@@ -765,47 +739,32 @@ namespace Sonetto {
     }
 
     bool AudioManager::sourceExists(size_t sourceID) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::sourceExists()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // The ending iterator represents a non-existent index
         return mSoundSources.find(sourceID) != mSoundSources.end();
     }
 
     void AudioManager::setSourceNode(size_t sourceID,Ogre::SceneNode *node) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::setSourceNode()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
-        if (!sourceExists(sourceID)) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Invalid sound source ID",
-                        "AudioManager::setSourceNode()");
-        }
+        if (!sourceExists(sourceID))
+            SONETTO_THROW("Invalid sound source ID");
 
         // Changes source to follow the new SceneNode
         mSoundSources[sourceID]->parentNode = node;
     }
 
     void AudioManager::setSourceGainRange(size_t sourceID,float minGain,float maxGain) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::setSourceGainRange()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
-        if (!sourceExists(sourceID)) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Invalid sound source ID",
-                        "AudioManager::setSourceGainRange()");
-        }
+        if (!sourceExists(sourceID))
+            SONETTO_THROW("Invalid sound source ID");
 
         // Changes source properties
         alSourcef(mSoundSources[sourceID]->sourceID,AL_MIN_GAIN,minGain);
@@ -820,18 +779,12 @@ namespace Sonetto {
     }
 
     void AudioManager::setSourceGain(size_t sourceID,float gain) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::setSourceGain()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
-        if (!sourceExists(sourceID)) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Invalid sound source ID",
-                        "AudioManager::setSourceGain()");
-        }
+        if (!sourceExists(sourceID))
+            SONETTO_THROW("Invalid sound source ID");
 
         // Changes source properties
         alSourcef(mSoundSources[sourceID]->sourceID,AL_GAIN,gain);
@@ -843,18 +796,12 @@ namespace Sonetto {
     }
 
     void AudioManager::setSourceRolloff(size_t sourceID,float factor) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::setSourceRolloff()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
-        if (!sourceExists(sourceID)) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Invalid sound source ID",
-                        "AudioManager::setSourceRolloff()");
-        }
+        if (!sourceExists(sourceID))
+            SONETTO_THROW("Invalid sound source ID");
 
         // Changes source properties
         alSourcef(mSoundSources[sourceID]->sourceID,AL_ROLLOFF_FACTOR,factor);
@@ -868,18 +815,12 @@ namespace Sonetto {
     }
 
     void AudioManager::setSourceFilterGain(size_t sourceID,float gain) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::setSourceFilterGain()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
-        if (!sourceExists(sourceID)) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Invalid sound source ID",
-                        "AudioManager::setSourceFilterGain()");
-        }
+        if (!sourceExists(sourceID))
+            SONETTO_THROW("Invalid sound source ID");
 
         // If we are not using effects extension or if the source filter is not
         // valid, this function just fails on its purpose silently
@@ -897,18 +838,12 @@ namespace Sonetto {
     }
 
     void AudioManager::setSourceFilterGainHF(size_t sourceID,float gain) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::setSourceFilterGainHF()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
-        if (!sourceExists(sourceID)) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Invalid sound source ID",
-                        "AudioManager::setSourceFilterGainHF()");
-        }
+        if (!sourceExists(sourceID))
+            SONETTO_THROW("Invalid sound source ID");
 
         // If we are not using effects extension or if the source filter is not
         // valid, this function just fails on its purpose silently
@@ -926,18 +861,12 @@ namespace Sonetto {
     }
 
     float AudioManager::getSourceRolloff(size_t sourceID) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::setSourceRolloff()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
-        if (!sourceExists(sourceID)) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Invalid sound source ID",
-                        "AudioManager::setSourceRolloff()");
-        }
+        if (!sourceExists(sourceID))
+            SONETTO_THROW("Invalid sound source ID");
 
         float factor = 0.0f; // Return value
 
@@ -955,11 +884,8 @@ namespace Sonetto {
     }
 
     void AudioManager::pauseMusic() {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::pauseMusic()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         if (!mStreamQueue.empty()) {
             MusicStream *stream = mStreamQueue.front(); // Current music stream
@@ -973,11 +899,8 @@ namespace Sonetto {
     }
 
     void AudioManager::resumeMusic() {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::pauseMusic()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         if (!mStreamQueue.empty()) {
             MusicStream *stream = mStreamQueue.front(); // Current music stream
@@ -991,11 +914,8 @@ namespace Sonetto {
     }
 
     void AudioManager::stopMusic(float fadeSpd,bool allMusics) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::pauseMusic()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         if (!mStreamQueue.empty()) {
             MusicStream *stream = mStreamQueue.front(); // Current music stream
@@ -1035,11 +955,8 @@ namespace Sonetto {
     }
 
     bool AudioManager::memorizeMusic(bool memorizePos) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::memorizeMusic()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         if (!mStreamQueue.empty()) {
             MusicStream *stream;      // Currently playing music stream
@@ -1106,11 +1023,8 @@ namespace Sonetto {
     }
 
     bool AudioManager::restoreMusic(float fadeOutSpd,float fadeInSpd) {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::pauseMusic()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Play memory (if existent)
         if (mMemorizedMusic) {
@@ -1123,11 +1037,8 @@ namespace Sonetto {
     }
 
     bool AudioManager::update() {
-        if (!mInitialised) {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "Call to a function member before its class' initialisation",
-                        "AudioManager::pauseMusic()");
-        }
+        if (!mInitialised)
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         Ogre::Vector3  camPos;                 // Camera position
         Ogre::Vector3  camDir;                 // Camera direction
@@ -1345,11 +1256,8 @@ namespace Sonetto {
             context = "Context ";
 
         // Throws an Ogre::Exception if OpenAL's state is not error-free
-        if (alGetError() != AL_NO_ERROR || context != "") {
-            OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                        "OpenAL "+context+"Error: "+Ogre::String(errMsg),
-                        source);
-        }
+        if (alGetError() != AL_NO_ERROR || context != "")
+            SONETTO_THROW("OpenAL "+context+"Error: "+Ogre::String(errMsg));
     }
 
     bool AudioManager::pullStream(MusicStream *stream,ALuint buffer) {
@@ -1371,10 +1279,8 @@ namespace Sonetto {
                 // read <  0 means an error has occurred
                 // read == 0 means there isn't more data to read (ie. end of file)
                 if (read < 0) {
-                    OGRE_EXCEPT(Ogre::Exception::ERR_INTERNAL_ERROR,
-                                "OGG Vorbis data is corrupted ("+
-                                Ogre::String(mMusics[stream->musicID]->filename)+
-                                ")","AudioManager::pullStream()");
+                    SONETTO_THROW("OGG Vorbis data is corrupted ("+
+                                Ogre::String(mMusics[stream->musicID]->filename)+")");
                 } else {
                     break; // while loop
                 }

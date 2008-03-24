@@ -144,12 +144,26 @@ int main(int argc,char **argv) {
 
         delete mainModule;
         return errorCode;
-    } catch (Exception &e) {
+    } catch (Sonetto::Exception &e) {
 #if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
-        MessageBox(NULL,e.what(),"An exception has occured!",
+        MessageBox(NULL,e.what(),"A Sonetto exception has occured!",
                    MB_OK|MB_ICONERROR|MB_TASKMODAL);
 #else
         cerr << "An exception has occured!\n" << e.what() << "\n";
+#endif
+    } catch (Ogre::Exception &e) {
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+        MessageBox(NULL,e.getFullDescription().c_str(),"An Ogre exception has occured!",
+                   MB_OK|MB_ICONERROR|MB_TASKMODAL);
+#else
+        cerr << "An exception has occured!\n" << e.getFullDescription().c_str() << "\n";
+#endif
+    } catch (...) {
+#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
+        MessageBox(NULL,"An unexpected exception has occurred.","An exception has occured!",
+                   MB_OK|MB_ICONERROR|MB_TASKMODAL);
+#else
+        cerr << "An unexpected exception has occured!\n";
 #endif
     }
 
