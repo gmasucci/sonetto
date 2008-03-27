@@ -53,6 +53,9 @@ namespace ConfigApplication {
         GLHandler        *gl  = NULL;
 #endif
         try {
+            // Adds a handler for PNG images
+            wxImage::AddHandler(new wxPNGHandler);
+
             // Create ConfigWindow (our main and only window)
             wnd = new ConfigWindowImpl(NULL,this);
 

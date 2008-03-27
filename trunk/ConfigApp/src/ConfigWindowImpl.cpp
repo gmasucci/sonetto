@@ -47,14 +47,6 @@ namespace ConfigApplication {
         mTimer->Start(50);
     }
 
-    void ConfigWindowImpl::onRsysChange( wxChoicebookEvent& event ) {
-        // TODO: Implement onRsysChange
-    }
-
-    void ConfigWindowImpl::onRsysChanging( wxChoicebookEvent& event ) {
-        // TODO: Implement onRsysChanging
-    }
-
     void ConfigWindowImpl::onChoiceD3D9Res( wxCommandEvent& event ) {
         // Fill D3D-related widgets again
         // Needed for FSAA level enumeration
@@ -62,43 +54,11 @@ namespace ConfigApplication {
         mApp->getD3DHandler()->fillWindow(this);
     }
 
-    void ConfigWindowImpl::onChoiceD3D9AA( wxCommandEvent& event ) {
-        // TODO: Implement onChoiceD3D9AA
-    }
-
     void ConfigWindowImpl::onCheckD3D9FullScreen( wxCommandEvent& event ) {
         // Fill D3D-related widgets again
         // Needed for FSAA level enumeration
         // See: D3DHandler::D3DHandler() remarks
         mApp->getD3DHandler()->fillWindow(this);
-    }
-
-    void ConfigWindowImpl::onCheckD3D9VSync( wxCommandEvent& event ) {
-        // TODO: Implement onCheckD3D9VSync
-    }
-
-    void ConfigWindowImpl::onChoiceOGLRes( wxCommandEvent& event ) {
-        // TODO: Implement onChoiceOGLRes
-    }
-
-    void ConfigWindowImpl::onChoiceOGLColDepth( wxCommandEvent& event ) {
-        // TODO: Implement onChoiceOGLColDepth
-    }
-
-    void ConfigWindowImpl::onChoiceOGLFreq( wxCommandEvent& event ) {
-        // TODO: Implement onChoiceOGLFreq
-    }
-
-    void ConfigWindowImpl::onChoiceOGLFSAA( wxCommandEvent& event ) {
-        // TODO: Implement onChoiceOGLFSAA
-    }
-
-    void ConfigWindowImpl::onCheckOGLFullScreen( wxCommandEvent& event ) {
-        // TODO: Implement onCheckOGLFullScreen
-    }
-
-    void ConfigWindowImpl::onCheckOGLVSync( wxCommandEvent& event ) {
-        // TODO: Implement onCheckOGLVSync
     }
 
     void ConfigWindowImpl::onTimerEvent( wxTimerEvent& event ) {
