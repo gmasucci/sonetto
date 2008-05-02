@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Main">
-				<Option output="..\bin\Release\ConfigApp" prefix_auto="1" extension_auto="1" />
+				<Option output="..\bin\Release\ConfigApp.exe" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\rundir\" />
 				<Option object_output="..\bin\objs\Release\" />
 				<Option type="1" />
@@ -21,6 +21,8 @@
 					<Add option="-s" />
 					<Add library="wxpng-2.8" />
 					<Add library="wx_msw-2.8" />
+					<Add library="png" />
+					<Add library="zlib" />
 				</Linker>
 			</Target>
 		</Build>
@@ -32,6 +34,8 @@
 			<Add option="-D__WXMSW__" />
 			<Add option="-DCA_USE_OPENGL" />
 			<Add option="-DCA_USE_DIRECT3D" />
+			<Add directory="$(ZLIB_HOME)" />
+			<Add directory="$(PNG_HOME)" />
 			<Add directory="$(WX_HOME)\include" />
 			<Add directory="$(WX_HOME)\contrib\include" />
 			<Add directory="$(DXSDK_HOME)\Include" />
@@ -62,6 +66,8 @@
 			<Add library="d3d9" />
 			<Add library="openal32" />
 			<Add library="OIS" />
+			<Add directory="$(ZLIB_HOME)" />
+			<Add directory="$(PNG_HOME)" />
 			<Add directory="$(WX_HOME)\lib" />
 			<Add directory="$(DXSDK_HOME)\Lib\x86" />
 			<Add directory="$(OPENAL_HOME)\libs\Win32" />
@@ -87,7 +93,6 @@
 		<Extensions>
 			<code_completion />
 			<envvars />
-			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
