@@ -1,0 +1,28 @@
+1 VERSIONINFO
+FILEVERSION 0,0,0,1
+PRODUCTVERSION 0,0,0,1
+FILEFLAGSMASK 0x0000003FL
+FILEFLAGS 0x0000000BL
+FILEOS 0x00010001L
+FILETYPE 0x00000001L
+FILESUBTYPE 0x00000000L
+BEGIN
+BLOCK "StringFileInfo"
+BEGIN
+BLOCK "040904E4"
+BEGIN
+VALUE "CompanyName", "Sonetto"
+VALUE "FileDescription","Configuration Tool"
+VALUE "FileVersion", "0,0,1"
+VALUE "InternalName", "ConfigTool.exe"
+VALUE "LegalCopyright","Sonetto"
+VALUE "OriginalFilename", "ConfigTool.exe"
+VALUE "ProductName", "Sonetto Configuration Tool"
+VALUE "ProductVersion", "0,0,1"
+END
+END
+BLOCK "VarFileInfo"
+BEGIN
+VALUE "Translation", 0x0409,1200
+END
+END

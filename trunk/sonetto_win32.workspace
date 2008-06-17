@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Sonetto">
+		<Project filename="libsonetto\scripts\libsonetto_win32.cbp" />
+		<Project filename="tools\configtool\scripts\configtools_win32.cbp" active="1" />
+		<Project filename="tools\rarccomposer\script\rarccomposer_win32.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>
