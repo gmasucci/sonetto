@@ -2,5 +2,7 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="Sonetto">
 		<Project filename="libsonetto\scripts\libsonetto_linux.cbp" active="1" />
+		<Project filename="tools\configtool\scripts\configtools_win32.cbp" />
+		<Project filename="tools\rarccomposer\script\rarccomposer_win32.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

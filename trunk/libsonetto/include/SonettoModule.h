@@ -30,7 +30,7 @@ namespace Sonetto {
     class SONETTO_EXPORT Module;
 };
 
-#include <OGRE/Ogre.h>
+#include <Ogre.h>
 #include "SonettoKernel.h"
 
 namespace Sonetto {

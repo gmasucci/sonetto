@@ -24,9 +24,9 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
-#include "OGRE/OgreOverlayElement.h"
-#include "OGRE/OgreOverlayElementFactory.h"
-#include "OGRE/OgreOverlayManager.h"
+#include <OgreOverlayElement.h>
+#include <OgreOverlayElementFactory.h>
+#include <OgreOverlayManager.h>
 
 namespace Sonetto {
 
@@ -91,7 +91,9 @@ namespace Sonetto {
         /// Overridden from OverlayElement.
         void _updateRenderQueue(Ogre::RenderQueue* queue);
         /// Visit Renderables
+        /*
         void visitRenderables(Ogre::Renderable::Visitor* visitor, bool debugRenderables = false);
+        */
         /// Overridden from OverlayElement.
         virtual void _update(void);
     protected:
@@ -160,22 +162,12 @@ namespace Sonetto {
         {
             return mpParent->mpMaterial;
         }
-        void getRenderOperation(Ogre::RenderOperation& op)
-        {
-            op = mpParent->mGaugeRenderOp;
-        }
-        void getWorldTransforms(Ogre::Matrix4* xform) const
-        {
-            mpParent->getWorldTransforms(xform);
-        }
-        unsigned short getNumWorldTransforms(void) const
-        {
-            return 1;
-        }
-        Ogre::Real getSquaredViewDepth(const Ogre::Camera* cam) const
-        {
-            return mpParent->getSquaredViewDepth(cam);
-        }
+        void getRenderOperation(Ogre::RenderOperation& op) { op = mpParent->mGaugeRenderOp; }
+        void getWorldTransforms(Ogre::Matrix4* xform) const { mpParent->getWorldTransforms(xform); }
+        const Ogre::Quaternion& getWorldOrientation(void) const { return Ogre::Quaternion::IDENTITY; }
+        const Ogre::Vector3& getWorldPosition(void) const { return Ogre::Vector3::ZERO; }
+        unsigned short getNumWorldTransforms(void) const { return 1; }
+        Ogre::Real getSquaredViewDepth(const Ogre::Camera* cam) const { return mpParent->getSquaredViewDepth(cam); }
         const Ogre::LightList& getLights(void) const
         {
             // N/A, panels are not lit

@@ -27,7 +27,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include <vector>
 #include <queue>
-#include <OGRE/Ogre.h>
+#include <Ogre.h>
 #include <AL/al.h>
 #include <AL/alc.h>
 #include <AL/efx.h>

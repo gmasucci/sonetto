@@ -28,7 +28,7 @@ http://www.gnu.org/copyleft/lesser.txt
 //Use this define to signify OIS will be used as a DLL
 //(so that dll import/export macros are in effect)
 #define OIS_DYNAMIC_LIB
-#include <OGRE/Ogre.h>
+#include <Ogre.h>
 #include <OIS/OIS.h>
 
 namespace Sonetto {

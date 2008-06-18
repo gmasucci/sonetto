@@ -20,15 +20,15 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
-#include <OGRE/OgreStableHeaders.h>
+#include <OgreStableHeaders.h>
 #include "SonettoTextElement.h"
-#include <OGRE/OgreRoot.h>
-#include <OGRE/OgreLogManager.h>
-#include <OGRE/OgreOverlayManager.h>
-#include <OGRE/OgreHardwareBufferManager.h>
-#include <OGRE/OgreHardwareVertexBuffer.h>
-#include <OGRE/OgreException.h>
-#include <OGRE/OgreStringConverter.h>
+#include <OgreRoot.h>
+#include <OgreLogManager.h>
+#include <OgreOverlayManager.h>
+#include <OgreHardwareBufferManager.h>
+#include <OgreHardwareVertexBuffer.h>
+#include <OgreException.h>
+#include <OgreStringConverter.h>
 #include "SonettoFont.h"
 #include "SonettoFontManager.h"
 namespace Sonetto

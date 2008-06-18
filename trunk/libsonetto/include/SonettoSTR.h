@@ -25,8 +25,8 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoMain.h"
 
 #include <vector>
-#include <OGRE/OgrePrerequisites.h>
-#include <OGRE/OgreResourceManager.h>
+#include <OgrePrerequisites.h>
+#include <OgreResourceManager.h>
 
 namespace Sonetto
 {

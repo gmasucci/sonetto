@@ -19,35 +19,38 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
-#ifndef SONETTOSTRMANAGER_H_INCLUDED
-#define SONETTOSTRMANAGER_H_INCLUDED
+#ifndef _SONETTO_H_
+#define _SONETTO_H_
 
+#include "SonettoPrerequisites.h"
+
+// Now we include all classes.
 #include "SonettoMain.h"
-
-#include <OgreResourceManager.h>
+#include "SonettoAudioManager.h"
+#include "SonettoCounter.h"
+#include "SonettoException.h"
+#include "SonettoFont.h"
+#include "SonettoFontManager.h"
+#include "SonettoFontSerializer.h"
+#include "SonettoGauge.h"
+#include "SonettoInputManager.h"
+#include "SonettoKernel.h"
+#include "SonettoModule.h"
+#include "SonettoPlane.h"
+#include "SonettoRARC.h"
 #include "SonettoSTR.h"
+#include "SonettoSTRManager.h"
+#include "SonettoSTRSerializer.h"
+#include "SonettoSlimWindow.h"
+#include "SonettoTailedWindow.h"
+#include "SonettoTextElement.h"
+#include "SonettoTextFactory.h"
+#include "SonettoVirtualFile.h"
+#include "SonettoWindow.h"
+#include "SonettoWindowFactory.h"
+#include "SonettoWindowSkin.h"
+#include "SonettoWindowSkinManager.h"
+#include "SonettoWindowSkinSerializer.h"
+// end of includes.
 
-namespace Sonetto
-{
-    class SONETTO_EXPORT STRManager : public Ogre::ResourceManager, public Ogre::Singleton<STRManager>
-    {
-    protected:
-        // must implement this from ResourceManager's interface
-        Ogre::Resource *createImpl(const Ogre::String &name, Ogre::ResourceHandle handle,
-            const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader,
-            const Ogre::NameValuePairList *createParams);
-
-    public:
-
-        STRManager();
-        virtual ~STRManager();
-
-        virtual STRDataPtr load(const Ogre::String &name, const Ogre::String &group);
-
-        static STRManager &getSingleton();
-        static STRManager *getSingletonPtr();
-
-    };
-} // namespace
-
-#endif // SONETTOSTRMANAGER_H_INCLUDED
+#endif // _SONETTO_H_

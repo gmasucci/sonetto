@@ -23,6 +23,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef SONETTO_MAIN_H_
 #define SONETTO_MAIN_H_
 
+// If it's the client, then import the library from the dll, export otherwise.
 #if defined( WIN32 )
 #   if defined( SONETTO_DLL_BUILD )
 #        define SONETTO_EXPORT __declspec( dllexport )
@@ -31,10 +32,10 @@ http://www.gnu.org/copyleft/lesser.txt
 #   endif
 #endif
 
-#include <al.h>
+#include <AL/al.h>
 #include <vorbis/vorbisfile.h>
 
-#include <OGRE/OgreVector2.h>
+#include <OgreVector2.h>
 
 #include "SonettoException.h"
 

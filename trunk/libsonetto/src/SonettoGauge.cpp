@@ -22,11 +22,11 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoGauge.h"
 
-#include "OGRE/OgreHardwareBufferManager.h"
-#include "OGRE/OgrePrerequisites.h"
-#include "OGRE/OgreRoot.h"
-#include "OGRE/OgreRenderSystem.h"
-#include "OGRE/OgreOverlayManager.h"
+#include <OgreHardwareBufferManager.h>
+#include <OgrePrerequisites.h>
+#include <OgreRoot.h>
+#include <OgreRenderSystem.h>
+#include <OgreOverlayManager.h>
 
 namespace Sonetto {
     //---------------------------------------------------------------------
@@ -285,11 +285,13 @@ namespace Sonetto {
         }
     }
     //---------------------------------------------------------------------
+    /*
     void Gauge::visitRenderables(Ogre::Renderable::Visitor* visitor, bool debugRenderables)
     {
         visitor->visit(mGaugeRenderable, 0, false);
         Ogre::OverlayElement::visitRenderables(visitor, debugRenderables);
     }
+    */
     //---------------------------------------------------------------------
     void Gauge::_update(void)
     {

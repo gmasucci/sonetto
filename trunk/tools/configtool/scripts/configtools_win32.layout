@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Main" />
-	<File name="..\src\AL\ALHandler.cpp" open="1" top="0" tabpos="5">
+	<File name="..\src\AL\ALHandler.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="1148" topLine="9" />
 	</File>
-	<File name="..\src\AppForms.cpp" open="1" top="0" tabpos="1">
+	<File name="..\src\AppForms.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="432" topLine="0" />
 	</File>
-	<File name="..\src\ConfigTool.cpp" open="1" top="0" tabpos="2">
+	<File name="..\src\ConfigTool.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="715" topLine="27" />
 	</File>
-	<File name="..\src\ConfigWindowImpl.cpp" open="1" top="0" tabpos="3">
+	<File name="..\src\ConfigWindowImpl.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="471" topLine="12" />
 	</File>
-	<File name="..\src\D3D\D3DHandler.cpp" open="1" top="0" tabpos="6">
+	<File name="..\src\D3D\D3DHandler.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="460" topLine="15" />
 	</File>
-	<File name="..\src\GL\Win32Handler.cpp" open="1" top="0" tabpos="7">
+	<File name="..\src\GL\Win32Handler.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="743" topLine="15" />
 	</File>
-	<File name="..\src\Utils.cpp" open="1" top="0" tabpos="4">
+	<File name="..\src\Utils.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="0" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

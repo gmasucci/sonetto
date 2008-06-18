@@ -26,8 +26,8 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include <fstream>
 #include <stack>
-#include <OGRE/Ogre.h>
-#include <OGRE/OgreVector2.h>
+#include <Ogre.h>
+#include <OgreVector2.h>
 
 #include "SonettoAudioManager.h"
 #include "SonettoInputManager.h"

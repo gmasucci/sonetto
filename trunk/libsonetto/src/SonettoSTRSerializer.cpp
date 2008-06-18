@@ -21,7 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 #include "SonettoSTRSerializer.h"
 #include "SonettoSTR.h"
-#include <OGRE/OgreException.h>
+#include <OgreException.h>
 
 namespace Sonetto
 {

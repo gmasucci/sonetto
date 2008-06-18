@@ -20,16 +20,16 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 #include "SonettoSlimWindow.h"
-#include <OGRE/OgreStableHeaders.h>
-#include <OGRE/OgreOverlayManager.h>
-#include <OGRE/OgreMaterial.h>
-#include <OGRE/OgreMaterialManager.h>
-#include <OGRE/OgreTechnique.h>
-#include <OGRE/OgrePass.h>
-#include <OGRE/OgreStringConverter.h>
-#include <OGRE/OgreHardwareBufferManager.h>
-#include <OGRE/OgreRoot.h>
-#include <OGRE/OgreRenderSystem.h>
+#include <OgreStableHeaders.h>
+#include <OgreOverlayManager.h>
+#include <OgreMaterial.h>
+#include <OgreMaterialManager.h>
+#include <OgreTechnique.h>
+#include <OgrePass.h>
+#include <OgreStringConverter.h>
+#include <OgreHardwareBufferManager.h>
+#include <OgreRoot.h>
+#include <OgreRenderSystem.h>
 namespace Sonetto
 {
     //-----------------------------------------------------------------------------
@@ -259,11 +259,13 @@ namespace Sonetto
         }
     }
     //-----------------------------------------------------------------------------
+    /*
     void SlimWindow::visitRenderables(Renderable::Visitor* visitor, bool debugRenderables)
     {
         visitor->visit(mpBorderRenderable, 0, false);
         OverlayContainer::visitRenderables(visitor, debugRenderables);
     }
+    */
     //-----------------------------------------------------------------------------
     void SlimWindow::_update(void)
     {

@@ -22,8 +22,8 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef SONETTO_WINDOW_H
 #define SONETTO_WINDOW_H
 
-#include <OGRE/OgreOverlayContainer.h>
-#include <OGRE/OgreVector2.h>
+#include <OgreOverlayContainer.h>
+#include <OgreVector2.h>
 #include "SonettoMain.h"
 #include "SonettoWindowSkin.h"
 
@@ -87,7 +87,9 @@ namespace Sonetto {
         /// Overridden from OverlayContainer.
         void _updateRenderQueue(Ogre::RenderQueue* queue);
         /// Visit Renderables
+        /*
         void visitRenderables(Ogre::Renderable::Visitor* visitor, bool debugRenderables = false);
+        */
         /// Overridden from OverlayContaienr.
         void _update(void);
     protected:
@@ -160,6 +162,8 @@ namespace Sonetto {
         {
             mpParent->getWorldTransforms(xform);
         }
+        const Ogre::Quaternion& getWorldOrientation(void) const { return Ogre::Quaternion::IDENTITY; }
+        const Ogre::Vector3& getWorldPosition(void) const { return Ogre::Vector3::ZERO; }
         unsigned short getNumWorldTransforms(void) const
         {
             return 1;

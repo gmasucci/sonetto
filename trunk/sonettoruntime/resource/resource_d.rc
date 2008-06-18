@@ -1,3 +1,4 @@
+IDI_ICON ICON DISCARDABLE "..\\snticon.ico"
 1 VERSIONINFO
 FILEVERSION 0,0,0,1
 PRODUCTVERSION 0,0,0,1
@@ -12,12 +13,12 @@ BEGIN
 BLOCK "040904E4"
 BEGIN
 VALUE "CompanyName", "Sonetto Team"
-VALUE "FileDescription","Sonetto Library Core"
+VALUE "FileDescription","Sonetto Game Runtime (Debug Version)"
 VALUE "FileVersion", "0,0,0,1"
-VALUE "InternalName", "sonetto.dll"
+VALUE "InternalName", "game"
 VALUE "LegalCopyright","Copyright\251 2008 Sonetto"
-VALUE "OriginalFilename", "sonetto.dll"
-VALUE "ProductName", "Sonetto RPG Engine"
+VALUE "OriginalFilename", "game.exe"
+VALUE "ProductName", "Game Runtime (Debug Version)"
 VALUE "ProductVersion", "0,0,0,1"
 END
 END
@@ -26,3 +27,4 @@ BEGIN
 VALUE "Translation", 0x0409,1200
 END
 END
+

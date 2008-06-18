@@ -19,35 +19,20 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
-#ifndef SONETTOSTRMANAGER_H_INCLUDED
-#define SONETTOSTRMANAGER_H_INCLUDED
+#ifdef _WINDOWS
+#include "windows.h"
+#endif
 
-#include "SonettoMain.h"
+#include "Sonetto.h"
 
-#include <OgreResourceManager.h>
-#include "SonettoSTR.h"
+using namespace Sonetto;
 
-namespace Sonetto
+#ifdef _WINDOWS
+INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
+#else
+int main(int argc, char **argv)
+#endif
 {
-    class SONETTO_EXPORT STRManager : public Ogre::ResourceManager, public Ogre::Singleton<STRManager>
-    {
-    protected:
-        // must implement this from ResourceManager's interface
-        Ogre::Resource *createImpl(const Ogre::String &name, Ogre::ResourceHandle handle,
-            const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader,
-            const Ogre::NameValuePairList *createParams);
-
-    public:
-
-        STRManager();
-        virtual ~STRManager();
-
-        virtual STRDataPtr load(const Ogre::String &name, const Ogre::String &group);
-
-        static STRManager &getSingleton();
-        static STRManager *getSingletonPtr();
-
-    };
-} // namespace
-
-#endif // SONETTOSTRMANAGER_H_INCLUDED
+    std::cout << "Hello world!" << std::endl;
+    return 0;
+}

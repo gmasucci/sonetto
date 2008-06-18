@@ -20,16 +20,16 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
-#include <OGRE/OgreHardwareBufferManager.h>
-#include <OGRE/OgreMaterial.h>
-#include <OGRE/OgreMaterialManager.h>
-#include <OGRE/OgreOverlayManager.h>
-#include <OGRE/OgrePass.h>
-#include <OGRE/OgreStableHeaders.h>
-#include <OGRE/OgreStringConverter.h>
-#include <OGRE/OgreRoot.h>
-#include <OGRE/OgreRenderSystem.h>
-#include <OGRE/OgreTechnique.h>
+#include <OgreHardwareBufferManager.h>
+#include <OgreMaterial.h>
+#include <OgreMaterialManager.h>
+#include <OgreOverlayManager.h>
+#include <OgrePass.h>
+#include <OgreStableHeaders.h>
+#include <OgreStringConverter.h>
+#include <OgreRoot.h>
+#include <OgreRenderSystem.h>
+#include <OgreTechnique.h>
 #include "SonettoWindow.h"
 
 namespace Sonetto {
@@ -260,11 +260,14 @@ namespace Sonetto {
         }
     }
     //-----------------------------------------------------------------------------
+    // Only for Ogre 1.5.0
+    /*
     void Window::visitRenderables(Renderable::Visitor* visitor, bool debugRenderables)
     {
         visitor->visit(mpBorderRenderable, 0, false);
         OverlayContainer::visitRenderables(visitor, debugRenderables);
     }
+    */
     //-----------------------------------------------------------------------------
     void Window::_update(void)
     {

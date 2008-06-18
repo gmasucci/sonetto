@@ -24,7 +24,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
-#include <OGRE/OgreOverlayElementFactory.h>
+#include <OgreOverlayElementFactory.h>
 #include "SonettoWindow.h"
 #include "SonettoTailedWindow.h"
 #include "SonettoSlimWindow.h"

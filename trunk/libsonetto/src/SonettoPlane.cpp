@@ -21,11 +21,11 @@ http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
 #include "SonettoPlane.h"
-#include "OGRE/OgrePrerequisites.h"
-#include "OGRE/OgreHardwareBufferManager.h"
-#include "OGRE/OgreRoot.h"
-#include "OGRE/OgreRenderSystem.h"
-#include "OGRE/OgreOverlayManager.h"
+#include <OgrePrerequisites.h>
+#include <OgreHardwareBufferManager.h>
+#include <OgreRoot.h>
+#include <OgreRenderSystem.h>
+#include <OgreOverlayManager.h>
 
 namespace Sonetto {
     //---------------------------------------------------------------------

@@ -19,35 +19,23 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
-#ifndef SONETTOSTRMANAGER_H_INCLUDED
-#define SONETTOSTRMANAGER_H_INCLUDED
+#ifndef _SONETTO_PREREQUISITES_H_
+#define _SONETTO_PREREQUISITES_H_
 
-#include "SonettoMain.h"
 
-#include <OgreResourceManager.h>
-#include "SonettoSTR.h"
+namespace Sonetto {
 
-namespace Sonetto
-{
-    class SONETTO_EXPORT STRManager : public Ogre::ResourceManager, public Ogre::Singleton<STRManager>
-    {
-    protected:
-        // must implement this from ResourceManager's interface
-        Ogre::Resource *createImpl(const Ogre::String &name, Ogre::ResourceHandle handle,
-            const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader,
-            const Ogre::NameValuePairList *createParams);
+    // Version ID.
+    #define SONETTO_VERSION_MAJOR 0
+    #define SONETTO_VERSION_MINOR 0
+    #define SONETTO_VERSION_PATCH 1
 
-    public:
+    #define SONETTO_VERSION    ((SONETTO_VERSION_MAJOR << 16) | (SONETTO_VERSION_MINOR << 8) | SONETTO_VERSION_PATCH)
 
-        STRManager();
-        virtual ~STRManager();
+    // Use this to set typedefs
 
-        virtual STRDataPtr load(const Ogre::String &name, const Ogre::String &group);
+    // Use this to pre-declare classes to avoid file dependency.
 
-        static STRManager &getSingleton();
-        static STRManager *getSingletonPtr();
+} // namespace Sonetto
 
-    };
-} // namespace
-
-#endif // SONETTOSTRMANAGER_H_INCLUDED
+#endif // _SONETTO_PREREQUISITES_H_

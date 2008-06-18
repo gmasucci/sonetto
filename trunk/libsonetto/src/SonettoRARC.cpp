@@ -21,7 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
 #include "SonettoRARC.h"
-#include "zlib.h"
+#include "zlib/zlib.h"
 
 namespace Sonetto {
     //-----------------------------------------------------------------------------
