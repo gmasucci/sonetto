@@ -178,13 +178,13 @@ namespace Sonetto {
         bool           fadeOutMemPos;
     };
 
-    /** @brief Data struct SONETTO_EXPORT  of a memorized music
+    /** @brief Data struct of a memorized music
      *
-     *  This struct SONETTO_EXPORT  is mostly internal to the AudioManager, and hardly will
+     *  This struct is mostly internal to the AudioManager, and hardly will
      *  need to be known by someone else than an AudioManager coder. It contains
      *  information about the state of a music when it was memorized, like
      *  volume and position. This could perfecly be hardcoded in the AudioManager,
-     *  but we though using a struct SONETTO_EXPORT  would be cleaner.
+     *  but we though using a struct would be cleaner.
      *  @see AudioManager::memorizeMusic()
      *  @see AudioManager::restoreMusic()
      */

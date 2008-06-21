@@ -37,11 +37,11 @@ namespace Sonetto
 
     class SONETTO_EXPORT SlimWindow : public Ogre::OverlayContainer
     {
-        friend class SONETTO_EXPORT SlimBorderRenderable;
+        friend class SlimBorderRenderable;
     public:
-        /// Construct SONETTO_EXPORTor.
+        /// Constructor.
         SlimWindow(const Ogre::String& name);
-        /// Destruct SONETTO_EXPORTor.
+        /// Destructor.
         virtual ~SlimWindow();
         /// Initialise
         virtual void initialise (void);
@@ -132,17 +132,17 @@ namespace Sonetto
         /// This Object's Type Name.
         static Ogre::String msTypeName;
     };
-    /** class SONETTO_EXPORT for rendering the border of a SlimWindow.
+    /** Class for rendering the border of a SlimWindow.
     * @remarks
     * We need this because we have to render twice, once with the inner panel's repeating
-    * material (handled by superclass SONETTO_EXPORT) and once for the border's separate meterial.
+    * material (handled by superclass) and once for the border's separate meterial.
     */
     class SONETTO_EXPORT SlimBorderRenderable : public Ogre::Renderable
     {
     protected:
         SlimWindow* mParent;
     public:
-        /** Construct SONETTO_EXPORTed with pointers to parent. */
+        /** Constructed with pointers to parent. */
         SlimBorderRenderable(SlimWindow* parent) : mParent(parent)
         {
             mUseIdentityProjection = true;

@@ -27,40 +27,12 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     Kernel *Kernel::mSingleton = NULL;
     //-----------------------------------------------------------------------------
-    Kernel::Kernel() : mShutDown(false),
+    Kernel::Kernel() : mShutdown(false),
     mRoot(NULL), mWindow(NULL), mViewport(NULL), mLogMan(NULL),
     mOverlayMan(NULL), mResourceMan(NULL),mResMan(NULL)
     #ifdef _DEBUG
     , mDebugOverlay(NULL)
     #endif
-    {}
-    //-----------------------------------------------------------------------------
-    bool Kernel::initialise()
-    {
-        if (isInitialised())
-            SONETTO_THROW("The Kernel is initialised already,\nbut it was asked to be initialised again.");
-
-        mSingleton = new Kernel();
-        return mSingleton->_initialise();
-    }
-    //-----------------------------------------------------------------------------
-    bool Kernel::deinitialise()
-    {
-        if (!isInitialised())
-            SONETTO_THROW("The kernel is not initialised!");
-
-        if (mSingleton->_deinitialise())
-        {
-            delete mSingleton;
-            mSingleton = NULL;
-
-            return true;
-        }
-
-        return false;
-    }
-    //-----------------------------------------------------------------------------
-    bool Kernel::_initialise()
     {
         KeyConfig kc[4]; // Temporary key configuration for the InputManager
 
@@ -68,13 +40,15 @@ namespace Sonetto {
         // took from the configuration file
         mRoot = new Ogre::Root("plugins.dlc","devlab.dlc","devlab.log");
         if (mRoot->showConfigDialog()) {
-            // If returned true, user clicked OK so initialise
-            // Here we choose to let the system create a default rendering window by passing 'true'
+            // If returned true, the user clicked OK, so initialise
             mRoot->initialise(false);
-
-            mWindow = mRoot->createRenderWindow( "Sonetto Development Laboratory", 640, 480, false, 0 );
+            mWindow = mRoot->createRenderWindow("Sonetto Development Laboratory",640,480,false,0);
         } else {
-            return false;
+            delete mRoot;
+            mRoot     = NULL;
+            mShutdown = true;
+
+            return;
         }
 
         memset(kc,0x00,sizeof(kc));
@@ -160,17 +134,14 @@ namespace Sonetto {
         mResourceMan = Ogre::ResourceGroupManager::getSingletonPtr();
 
         // Create Audio Manager.
-        mAudioMan           = new AudioManager();
+        mAudioMan = new AudioManager();
         mAudioMan->initialise();
         // Create Input Manager.
-        mInputMan           = new InputManager();
+        mInputMan = new InputManager();
         mInputMan->initialise(mWindow,kc);
-
-        return true;
-
     }
-    //-----------------------------------------------------------------------------
-    bool Kernel::_deinitialise()
+
+    Kernel::~Kernel()
     {
         // Deinitialise InputManager
         if (mInputMan) {
@@ -193,13 +164,40 @@ namespace Sonetto {
             delete mRoot;
             mRoot = NULL;
         }
+    }
+
+    //-----------------------------------------------------------------------------
+    bool Kernel::create()
+    {
+        if (isInitialised())
+            SONETTO_THROW("Trying to create Kernel Singleton twice");
+
+        mSingleton = new Kernel();
+        if (mSingleton->mShutdown)
+        {
+            delete mSingleton;
+            mSingleton = NULL;
+
+            return false;
+        }
+
+        return true;
+    }
+    //-----------------------------------------------------------------------------
+    bool Kernel::destroy()
+    {
+        if (!isInitialised())
+            SONETTO_THROW("Trying to destroy unexistent Kernel Singleton");
+
+        delete mSingleton;
+        mSingleton = NULL;
 
         return true;
     }
     //-----------------------------------------------------------------------------
     int Kernel::run()
     {
-        while (!mShutDown) {
+        while (!mShutdown) {
             // Small error check
             if (mModuleList.size() == 0)
                 SONETTO_THROW("Module stack is empty");
@@ -221,8 +219,6 @@ namespace Sonetto {
             mRoot->renderOneFrame();
         }
 
-        // Remove everything from the memory and destroy singleton
-        Kernel::deinitialise();
         return 0;
     }
     //-----------------------------------------------------------------------------

@@ -34,7 +34,7 @@ namespace Sonetto {
     {
         // Fails if we already initialised
         if (mInitialised) {
-            Kernel::getSingleton()->mLogMan->
+            Kernel::get()->mLogMan->
                                 logMessage("( InputManager::initialise() ) InputManager was asked to be "
                                            "initialised twice. This will probably cause errors.\n",
                                            Ogre::LML_CRITICAL);
@@ -82,7 +82,7 @@ namespace Sonetto {
     bool InputManager::deinitialise()
     {
         if (!mInitialised) {
-            Kernel::getSingleton()->mLogMan->
+            Kernel::get()->mLogMan->
                                 logMessage("[InputManager::deinitialise()] Trying to deinitialise a non-"
                                            "initialised InputManager.\n",Ogre::LML_CRITICAL);
 

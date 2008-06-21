@@ -32,7 +32,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 namespace Sonetto {
 
-    /** RARC File Info struct SONETTO_EXPORTure used to store the file name, position and size
+    /** RARC File Info structure used to store the file name, position and size
     @remarks
         These are uncompressed files.
     */
@@ -64,7 +64,7 @@ namespace Sonetto {
         size_t data_size;
     };
 
-    /** Specialisation of the Archive class SONETTO_EXPORT to allow reading of files from a rarc
+    /** Specialisation of the Archive class to allow reading of files from a rarc
         or carc format source archive.
     @remarks
         This archive format supports compressed and uncompressed archives in RARC and CARC formats.
@@ -72,26 +72,26 @@ namespace Sonetto {
     class SONETTO_EXPORT ResourceArchive : public Ogre::Archive
     {
     public:
-        /// Construct SONETTO_EXPORTor
+        /// Constructor
         ResourceArchive(const Ogre::String& name, const Ogre::String& archType);
-        /// Destruct SONETTO_EXPORTor
+        /// Destructor
         ~ResourceArchive();
         /// Returns whether this archive is case sensitive in the way it matches files
         bool isCaseSensitive(void) const { return false; }
 
         /** Loads the archive.
         @remarks
-            This initializes all the internal data of the class SONETTO_EXPORT.
+            This initializes all the internal data of the class.
         @warning
             Do not call this function directly, it is ment to be used
-            only by the ArchiveManager class SONETTO_EXPORT.
+            only by the ArchiveManager class.
         */
         void load();
 
         /** Unloads the archive.
         @warning
             Do not call this function directly, it is ment to be used
-            only by the ArchiveManager class SONETTO_EXPORT.
+            only by the ArchiveManager class.
         */
         void unload();
 
@@ -123,7 +123,7 @@ namespace Sonetto {
             archive has a concept of that)
         @param dirs Set to true if you want the directories to be listed
             instead of files
-        @returns A list of struct SONETTO_EXPORTures detailing quite a lot of information about
+        @returns A list of structures detailing quite a lot of information about
             all the files in the archive.
         */
         virtual Ogre::FileInfoListPtr listFileInfo(bool recursive = true, bool dirs = false);
@@ -153,7 +153,7 @@ namespace Sonetto {
         archive has a concept of that)
         @param dirs Set to true if you want the directories to be listed
             instead of files
-        @returns A list of file information struct SONETTO_EXPORTures for all files matching
+        @returns A list of file information structures for all files matching
             the criteria.
         */
         virtual Ogre::FileInfoListPtr findFileInfo(const Ogre::String& pattern,

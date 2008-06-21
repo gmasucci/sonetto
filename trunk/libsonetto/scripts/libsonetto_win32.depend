@@ -1643,7 +1643,7 @@
 
 1213984202 source:f:\codeenv\sonetto\libsonetto\resource\resource.rc
 
-1213984204 source:f:\codeenv\sonetto\libsonetto\src\sonettoaudiomanager.cpp
+1214023528 source:f:\codeenv\sonetto\libsonetto\src\sonettoaudiomanager.cpp
 	<cstdio>
 	<vector>
 	<queue>
@@ -2827,7 +2827,7 @@
 
 1202562610 f:\codeenv\sonetto\dependencies\include\ogg\config_types.h
 
-1214007492 f:\codeenv\sonetto\libsonetto\include\sonettokernel.h
+1214016986 f:\codeenv\sonetto\libsonetto\include\sonettokernel.h
 	"SonettoMain.h"
 	<fstream>
 	<stack>
@@ -2846,18 +2846,18 @@
 	"SonettoGauge.h"
 	"SonettoCounter.h"
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettomain.h
+1214023528 f:\codeenv\sonetto\libsonetto\include\sonettomain.h
 	<AL/al.h>
 	<vorbis/vorbisfile.h>
 	<OgreVector2.h>
 	"SonettoException.h"
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettoexception.h
+1214020026 f:\codeenv\sonetto\libsonetto\include\sonettoexception.h
 	"SonettoMain.h"
 	<string>
 	<exception>
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettoaudiomanager.h
+1214023528 f:\codeenv\sonetto\libsonetto\include\sonettoaudiomanager.h
 	"SonettoMain.h"
 	<vector>
 	<queue>
@@ -2868,12 +2868,12 @@
 	<vorbis/vorbisfile.h>
 	"SonettoVirtualFile.h"
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettovirtualfile.h
+1214023528 f:\codeenv\sonetto\libsonetto\include\sonettovirtualfile.h
 	"SonettoMain.h"
 	<cstddef>
 	<vorbis/vorbisfile.h>
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettoinputmanager.h
+1214022750 f:\codeenv\sonetto\libsonetto\include\sonettoinputmanager.h
 	"SonettoMain.h"
 	<Ogre.h>
 	<OIS/OIS.h>
@@ -2938,12 +2938,12 @@
 	"OISInterface.h"
 	"OISEffect.h"
 
-1213984194 f:\codeenv\sonetto\libsonetto\include\sonettomodule.h
+1214023766 f:\codeenv\sonetto\libsonetto\include\sonettomodule.h
 	"SonettoMain.h"
 	<Ogre.h>
 	"SonettoKernel.h"
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettorarc.h
+1214023528 f:\codeenv\sonetto\libsonetto\include\sonettorarc.h
 	"SonettoMain.h"
 	<OgreArchive.h>
 	<OgreArchiveFactory.h>
@@ -2962,7 +2962,7 @@
 	<unistd.h>
 	<unixio.h>
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettofontserializer.h
+1214023832 f:\codeenv\sonetto\libsonetto\include\sonettofontserializer.h
 	<OgreSerializer.h>
 	"SonettoMain.h"
 
@@ -2971,7 +2971,7 @@
 	<OgreResourceManager.h>
 	"SonettoFont.h"
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettofont.h
+1214023528 f:\codeenv\sonetto\libsonetto\include\sonettofont.h
 	"SonettoMain.h"
 	<OgreResourceManager.h>
 	<OgreMaterialManager.h>
@@ -3024,7 +3024,7 @@
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1213984194 f:\codeenv\sonetto\libsonetto\include\sonettowindowskin.h
+1214023528 f:\codeenv\sonetto\libsonetto\include\sonettowindowskin.h
 	"SonettoMain.h"
 	<OgreResourceManager.h>
 	<OgreMaterialManager.h>
@@ -3044,33 +3044,33 @@
 	"SonettoTailedWindow.h"
 	"SonettoSlimWindow.h"
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettowindow.h
+1214023766 f:\codeenv\sonetto\libsonetto\include\sonettowindow.h
 	<OgreOverlayContainer.h>
 	<OgreVector2.h>
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettotailedwindow.h
-	"SonettoMain.h"
-	<OgreOverlayContainer.h>
-	<OgreVector2.h>
-	"SonettoMain.h"
-	"SonettoWindowSkin.h"
-
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettoslimwindow.h
+1214023528 f:\codeenv\sonetto\libsonetto\include\sonettotailedwindow.h
 	"SonettoMain.h"
 	<OgreOverlayContainer.h>
 	<OgreVector2.h>
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettogauge.h
+1214023528 f:\codeenv\sonetto\libsonetto\include\sonettoslimwindow.h
+	"SonettoMain.h"
+	<OgreOverlayContainer.h>
+	<OgreVector2.h>
+	"SonettoMain.h"
+	"SonettoWindowSkin.h"
+
+1214023880 f:\codeenv\sonetto\libsonetto\include\sonettogauge.h
 	"SonettoMain.h"
 	<OgreOverlayElement.h>
 	<OgreOverlayElementFactory.h>
 	<OgreOverlayManager.h>
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettocounter.h
+1214023528 f:\codeenv\sonetto\libsonetto\include\sonettocounter.h
 	"SonettoMain.h"
 	<OgreOverlayElement.h>
 	<OgreOverlayElementFactory.h>
@@ -3083,11 +3083,11 @@
 	<OgreRenderSystem.h>
 	<OgreHardwareBufferManager.h>
 
-1213984204 source:f:\codeenv\sonetto\libsonetto\src\sonettoexception.cpp
+1214019998 source:f:\codeenv\sonetto\libsonetto\src\sonettoexception.cpp
 	<sstream>
 	"SonettoException.h"
 
-1213984204 source:f:\codeenv\sonetto\libsonetto\src\sonettofont.cpp
+1214023528 source:f:\codeenv\sonetto\libsonetto\src\sonettofont.cpp
 	"SonettoFont.h"
 	"SonettoFontSerializer.h"
 
@@ -3099,7 +3099,7 @@
 	"SonettoFontSerializer.h"
 	"SonettoFont.h"
 
-1213984204 source:f:\codeenv\sonetto\libsonetto\src\sonettogauge.cpp
+1214023528 source:f:\codeenv\sonetto\libsonetto\src\sonettogauge.cpp
 	"SonettoGauge.h"
 	<OgreHardwareBufferManager.h>
 	<OgrePrerequisites.h>
@@ -3107,15 +3107,15 @@
 	<OgreRenderSystem.h>
 	<OgreOverlayManager.h>
 
-1213984204 source:f:\codeenv\sonetto\libsonetto\src\sonettoinputmanager.cpp
+1214016942 source:f:\codeenv\sonetto\libsonetto\src\sonettoinputmanager.cpp
 	<vector>
 	"SonettoKernel.h"
 	"SonettoInputManager.h"
 
-1213984204 source:f:\codeenv\sonetto\libsonetto\src\sonettokernel.cpp
+1214017042 source:f:\codeenv\sonetto\libsonetto\src\sonettokernel.cpp
 	"SonettoKernel.h"
 
-1213984204 source:f:\codeenv\sonetto\libsonetto\src\sonettomodule.cpp
+1214016938 source:f:\codeenv\sonetto\libsonetto\src\sonettomodule.cpp
 	<Ogre.h>
 	"SonettoModule.h"
 
@@ -3127,12 +3127,12 @@
 	<OgreRenderSystem.h>
 	<OgreOverlayManager.h>
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettoplane.h
+1214023528 f:\codeenv\sonetto\libsonetto\include\sonettoplane.h
 	"SonettoMain.h"
 	<OgreOverlayContainer.h>
 	"SonettoMain.h"
 
-1213984204 source:f:\codeenv\sonetto\libsonetto\src\sonettorarc.cpp
+1214023528 source:f:\codeenv\sonetto\libsonetto\src\sonettorarc.cpp
 	"SonettoRARC.h"
 	"zlib/zlib.h"
 
@@ -3140,13 +3140,13 @@
 	"SonettoSTR.h"
 	"SonettoSTRSerializer.h"
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettostr.h
+1214023528 f:\codeenv\sonetto\libsonetto\include\sonettostr.h
 	"SonettoMain.h"
 	<vector>
 	<OgrePrerequisites.h>
 	<OgreResourceManager.h>
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettostrserializer.h
+1214023766 f:\codeenv\sonetto\libsonetto\include\sonettostrserializer.h
 	"SonettoMain.h"
 	<OgreSerializer.h>
 
@@ -3258,7 +3258,7 @@
 	"SonettoFont.h"
 	"SonettoFontManager.h"
 
-1213984204 source:f:\codeenv\sonetto\libsonetto\src\sonettovirtualfile.cpp
+1214023528 source:f:\codeenv\sonetto\libsonetto\src\sonettovirtualfile.cpp
 	<cstddef>
 	<memory>
 	<vorbis/vorbisfile.h>
@@ -3277,7 +3277,7 @@
 	<OgreTechnique.h>
 	"SonettoWindow.h"
 
-1213984202 source:f:\codeenv\sonetto\libsonetto\src\sonettowindowskin.cpp
+1214008206 source:f:\codeenv\sonetto\libsonetto\src\sonettowindowskin.cpp
 	"SonettoWindowSkin.h"
 	"SonettoWindowSkinSerializer.h"
 

@@ -24,8 +24,8 @@
 					<Add library="OIS" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\release\tools\$(TARGET_NAME)" />
-					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\release\runtime\$(TARGET_NAME)" />
+					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\release\tools\" />
+					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\release\runtime\" />
 				</ExtraCommands>
 			</Target>
 			<Target title="Debug">
@@ -45,8 +45,8 @@
 					<Add library="OIS_d" />
 				</Linker>
 				<ExtraCommands>
-					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\debug\tools\$(TARGET_NAME)" />
-					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\debug\runtime\$(TARGET_NAME)" />
+					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\debug\tools\" />
+					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\debug\runtime\" />
 				</ExtraCommands>
 			</Target>
 		</Build>

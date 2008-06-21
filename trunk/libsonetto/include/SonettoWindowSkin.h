@@ -34,11 +34,11 @@ namespace Sonetto {
 
     class SONETTO_EXPORT WindowSkin : public Ogre::Resource {
     public:
-        /// Construct SONETTO_EXPORTor.
+        /// Constructor.
         WindowSkin(Ogre::ResourceManager *creator, const Ogre::String &name,
                    Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual = false,
                    Ogre::ManualResourceLoader *loader = 0);
-        /// Destruct SONETTO_EXPORTor.
+        /// Destructor.
         virtual ~WindowSkin();
 
     //protected: Let's just keep things simple for now.

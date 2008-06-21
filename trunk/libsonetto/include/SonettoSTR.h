@@ -47,7 +47,7 @@ namespace Sonetto
     public:
         /// The Vector containing all strings for this STR File
         std::vector<Ogre::String> mMessageList;
-        /** Standard construct SONETTO_EXPORTor.
+        /** Standard constructor.
 		@param creator Pointer to the ResourceManager that is creating this resource
 		@param name The unique name of the resource
 		@param group The name of the resource group to which this resource belongs
@@ -64,7 +64,7 @@ namespace Sonetto
         STRData(Ogre::ResourceManager *creator, const Ogre::String &name,
         Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual = false,
         Ogre::ManualResourceLoader *loader = 0);
-        /** Virtual destruct SONETTO_EXPORTor. Shouldn't need to be overloaded, as the resource
+        /** Virtual destructor. Shouldn't need to be overloaded, as the resource
             deallocation code should reside in unload()
             @see
                 STRData::unload()

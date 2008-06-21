@@ -77,9 +77,9 @@ namespace Sonetto {
         TexCoord tail_down;
     };
 
-    /** @brief struct SONETTO_EXPORTure used to store glyph data.
+    /** @brief structure used to store glyph data.
      *
-     * This struct SONETTO_EXPORTure is used to store the texture coordinates and horizontal offset for each character.
+     * This structure is used to store the texture coordinates and horizontal offset for each character.
      */
     struct SONETTO_EXPORT Glyphstruct {
         /// This is the top-left texture UV coordinate for this glyph.
@@ -96,10 +96,10 @@ namespace Sonetto {
 
     /** @brief Stores the number of glyphs in the font texture.
      *
-     * This struct SONETTO_EXPORTure is used to store the texture coordinates and horizontal offset for each character.
+     * This structure is used to store the texture coordinates and horizontal offset for each character.
      */
     struct SONETTO_EXPORT GlyphTable {
-        /** @brief Default construct SONETTO_EXPORTor.
+        /** @brief Default constructor.
         * @param nx is the number of horizontal glyphs in the texture.
         * @param ny is the number of vertical glyphs in the texture.
         */
@@ -115,7 +115,7 @@ namespace Sonetto {
      * Need to redo this, ignore.
      */
     struct SONETTO_EXPORT GlyphHeader {
-        /// Default Construct SONETTO_EXPORTor.
+        /// Default Constructor.
         GlyphHeader() {}
         /// Number of glyphs per line and number of lines.
         GlyphTable glyph_tbl;

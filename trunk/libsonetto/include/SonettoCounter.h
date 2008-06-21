@@ -37,9 +37,9 @@ namespace Sonetto {
     class SONETTO_EXPORT Counter : public Ogre::OverlayElement
     {
     public:
-        /// Construct SONETTO_EXPORTor.
+        /// Constructor.
         Counter(const Ogre::String &name);
-        /// Destruct SONETTO_EXPORTor.
+        /// Destructor.
         virtual ~Counter();
         /// Initialisation function.
         virtual void initialise(void);

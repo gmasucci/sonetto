@@ -30,7 +30,7 @@ http://www.gnu.org/copyleft/lesser.txt
 namespace Sonetto {
     /** OverlayElement representing a flat, single-material plane which can contain other elements.
     @remarks
-        This class SONETTO_EXPORT subclass SONETTO_EXPORTes OverlayContainer because it can contain other elements. Like other
+        This class subclasses OverlayContainer because it can contain other elements. Like other
         containers, if hidden it's contents are also hidden, if moved it's contents also move etc.
         The plane itself is a 2D rectangle which is rendered with a single material and independent alpha
         abd vertex colors.
@@ -45,9 +45,9 @@ namespace Sonetto {
     class SONETTO_EXPORT Plane : public Ogre::OverlayContainer
     {
     public:
-        /// Construct SONETTO_EXPORTor
+        /// Constructor
         Plane(const Ogre::String &name);
-        /// Destruct SONETTO_EXPORTor
+        /// Destructor
         virtual ~Plane();
 
         /// Initialise

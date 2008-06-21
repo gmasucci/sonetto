@@ -25,23 +25,28 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
-#define SONETTO_THROW(desc) throw Sonetto::Exception(desc,__FILE__,__LINE__);
+#define SONETTO_THROW(desc) \
+    { \
+        std::string ___sonetto_throwstr = desc; \
+        throw Sonetto::Exception(___sonetto_throwstr.c_str(),__FILE__,__LINE__); \
+    }
 
 #include <string>
 #include <exception>
 
-namespace Sonetto {
-    class SONETTO_EXPORT Exception : public std::exception {
+namespace Sonetto
+{
+    class SONETTO_EXPORT Exception : public std::exception
+    {
     public:
-        Exception(const std::string &desc,const std::string &src,size_t line) throw();
-        virtual ~Exception() throw() {}
+        Exception(const char *desc,const char *src,size_t line) throw();
 
         const char *what();
 
     private:
-        std::string mDesc;
-        std::string mSrc;
-        size_t      mLine;
+        char   *mDesc;
+        char   *mSrc;
+        size_t  mLine;
     };
 } // namespace
 

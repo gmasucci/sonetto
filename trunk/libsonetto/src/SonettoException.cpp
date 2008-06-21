@@ -29,31 +29,31 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     // Sonetto::Exception implementation.
     //-----------------------------------------------------------------------------
-    Exception::Exception(const string &desc,const string &src,size_t line) throw()
+    Exception::Exception(const char *desc,const char *src,size_t line) throw()
     {
-        mDesc = desc;
-        mSrc  = src;
+        mDesc = new char[strlen(desc)];
+        mSrc  = new char[strlen(src)];
         mLine = line;
+
+        strcpy(mDesc,desc);
+        strcpy(mSrc,src);
     }
     //-----------------------------------------------------------------------------
     const char *Exception::what()
     {
-        size_t        skip = string(__FILE__).find("SonettoException.cpp");
-        ostringstream str;
+        try {
+            size_t        skip;
+            ostringstream str;
 
-        if(skip == string::npos) {
-            // <todo> Use Ogre logger instead
-            printf("Warning! Have you renamed SonettoException.cpp?\n");
+            for (skip = strlen(__FILE__);skip > 0 && __FILE__[skip-1] != '\\' && __FILE__[skip-1] != '/';--skip);
+            str << "Sonetto Exception\n"
+                   "  In: " << (const char *)(mSrc+skip) << " at line " << mLine << "\n\n"
+                   "  " << mDesc << ".";
 
-            skip = 0;
-        } else {
-            skip -= 4;
+            return str.str().c_str();
+        } catch(...) {
+            return NULL;
         }
-
-        str << "Sonetto Exception\n  In: " << (const char *)(mSrc.c_str()+skip) << " at line " <<
-               mLine << "\n\n  " << mDesc << ".";
-
-        return str.str().c_str();
     }
     //-----------------------------------------------------------------------------
 } // namespace

@@ -30,7 +30,8 @@ http://www.gnu.org/copyleft/lesser.txt
 
 namespace Sonetto {
 
-    class SONETTO_EXPORT GaugeRenderable; // Forward declaration
+    class GaugeRenderable; // Forward declaration
+
     /** Simple Gauge object.
     @remarks
         Gauge is an Overlay Element not an Overlay Container,
@@ -44,11 +45,11 @@ namespace Sonetto {
     */
     class SONETTO_EXPORT Gauge : public Ogre::OverlayContainer
     {
-        friend class SONETTO_EXPORT GaugeRenderable;
+        friend class GaugeRenderable;
     public:
-        /// Construct SONETTO_EXPORTor.
+        /// Constructor.
         Gauge(const Ogre::String &name);
-        /// Destruct SONETTO_EXPORTor.
+        /// Destructor.
         virtual ~Gauge();
         /// Initialise.
         void initialise(void);
@@ -133,7 +134,7 @@ namespace Sonetto {
         Ogre::RenderOperation mRenderOp;
         /// Gauge Render Operation.
         Ogre::RenderOperation mGaugeRenderOp;
-        /// internal method for setting up geometry, called by OverlayElement::update.
+        /// Internal method for setting up geometry, called by OverlayElement::update.
         virtual void updatePositionGeometry(void);
         virtual void updateTextureGeometry(void);
         /// Called to update the colours.
@@ -142,17 +143,17 @@ namespace Sonetto {
         static Ogre::String msTypeName;
     };
 
-    /** class SONETTO_EXPORT for rendering the border of a Window.
+    /** Class for rendering the border of a Window.
      *  @remarks
      *  We need this because we have to render twice, once with the inner window's repeating
-     *  material (handled by superclass SONETTO_EXPORT) and once for the border's separate material.
+     *  material (handled by superclass) and once for the border's separate material.
      */
     class SONETTO_EXPORT GaugeRenderable : public Ogre::Renderable
     {
     protected:
         Gauge * mpParent;
     public:
-        /// Construct SONETTO_EXPORTed with pointers to parent.
+        /// Constructed with pointers to parent.
         GaugeRenderable(Gauge* parent) : mpParent(parent)
         {
             mUseIdentityProjection = true;

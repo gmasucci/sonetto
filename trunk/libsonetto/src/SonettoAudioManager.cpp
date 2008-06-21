@@ -84,7 +84,7 @@ namespace Sonetto {
 
         // Fails if already initialised
         if (mInitialised) {
-            Kernel::getSingleton()->mLogMan->
+            Kernel::get()->mLogMan->
             logMessage("( AudioManager::initialise() ) AudioManager was asked "
                        "to be initialised twice. This will probably cause errors.",
                        Ogre::LML_CRITICAL);
@@ -95,7 +95,7 @@ namespace Sonetto {
         // Opens desired audio device
         mpDevice = alcOpenDevice(device);
         if (!mpDevice) {
-            Kernel::getSingleton()->mLogMan->
+            Kernel::get()->mLogMan->
             logMessage("( AudioManager::initialise() ) OpenAL failed openning "
                        "audio device.");
 
@@ -108,7 +108,7 @@ namespace Sonetto {
 
         // Checks whether the current device supports sound effects
         if (alcIsExtensionPresent(mpDevice,"ALC_EXT_EFX") == AL_FALSE) {
-            Kernel::getSingleton()->mLogMan->
+            Kernel::get()->mLogMan->
             logMessage("( AudioManager::initialise() ) OpenAL Effects Extension "
                        "not present.");
 
@@ -125,7 +125,7 @@ namespace Sonetto {
         // Creates a rendering context in the audio device
         mpContext = alcCreateContext(mpDevice,attribs);
         if (!mpContext) {
-            Kernel::getSingleton()->mLogMan->
+            Kernel::get()->mLogMan->
             logMessage("( AudioManager::initialise() ) OpenAL Failed creating rendering "
                        "context.");
 
@@ -183,7 +183,7 @@ namespace Sonetto {
                     !alIsAuxiliaryEffectSlot          || !alAuxiliaryEffectSloti       ||
                     !alAuxiliaryEffectSlotiv          || !alAuxiliaryEffectSlotf       ||
                     !alAuxiliaryEffectSlotfv                                              ) {
-                Kernel::getSingleton()->mLogMan->
+                Kernel::get()->mLogMan->
                 logMessage("( AudioManager::initialise() ) OpenAL effects extension "
                            "function pointers could not be retrieved.");
 
@@ -200,7 +200,7 @@ namespace Sonetto {
             // a Reverb effect and attach it to the slot
             alcGetIntegerv(mpDevice,ALC_MAX_AUXILIARY_SENDS,1,&maxSends);
             if (maxSends < 1) {
-                Kernel::getSingleton()->mLogMan->
+                Kernel::get()->mLogMan->
                 logMessage("( AudioManager::initialise() ) Audio device doesn't support "
                            "auxiliary effect slot sends.");
 
@@ -210,7 +210,7 @@ namespace Sonetto {
 
                 alGenAuxiliaryEffectSlots(1,&mEnvSlotID);
                 if (alGetError() != AL_NO_ERROR) {
-                    Kernel::getSingleton()->mLogMan->
+                    Kernel::get()->mLogMan->
                     logMessage("( AudioManager::initialise() ) Could not create "
                                "environmental effect slot.");
 
@@ -219,7 +219,7 @@ namespace Sonetto {
                     // If one of these fails, it will cascade until the error check
                     alGenEffects(1,&effectID);
                     if (alGetError() != AL_NO_ERROR) {
-                        Kernel::getSingleton()->mLogMan->
+                        Kernel::get()->mLogMan->
                         logMessage("( AudioManager::initialise() ) Could not create "
                                    "environmental effect.");
 
@@ -228,7 +228,7 @@ namespace Sonetto {
                     } else {
                         alEffecti(effectID,AL_EFFECT_TYPE,AL_EFFECT_EAXREVERB);
                         if (alGetError() != AL_NO_ERROR) {
-                            Kernel::getSingleton()->mLogMan->
+                            Kernel::get()->mLogMan->
                             logMessage("( AudioManager::initialise() ) EAX Reverb "
                                        "is not supported by this audio device.");
 
@@ -241,7 +241,7 @@ namespace Sonetto {
                             alEffectf(effectID,AL_EAXREVERB_DECAY_TIME,20.0f);
                             alAuxiliaryEffectSloti(mEnvSlotID,AL_EFFECTSLOT_EFFECT,effectID);
                             if (alGetError() != AL_NO_ERROR) {
-                                Kernel::getSingleton()->mLogMan->
+                                Kernel::get()->mLogMan->
                                 logMessage("( AudioManager::initialise() ) Could not attach effect "
                                            "in the effect slot.");
 
@@ -265,7 +265,7 @@ namespace Sonetto {
     bool AudioManager::deinitialise()
     {
         if (!mInitialised) {
-            Kernel::getSingleton()->mLogMan->
+            Kernel::get()->mLogMan->
             logMessage("( AudioManager::deinitialise() ) AudioManager was asked to be "
                        "deinitialised before its initialisation. This will probably "
                        "cause errors.",Ogre::LML_CRITICAL);
@@ -344,14 +344,14 @@ namespace Sonetto {
     {
         MusicInfo *info = new MusicInfo;
 
-        // Set struct SONETTO_EXPORT fields
+        // Set struct fields
         info->filename    = filename;
         info->loopEnabled = loopEnabled;
         info->loopBegin   = loopBegin;
         info->loopEnd     = loopEnd;
 
         // Insert into vector and return index
-        // The deletion of this struct SONETTO_EXPORT happens when the AudioManager
+        // The deletion of this struct happens when the AudioManager
         // gets deinitialise()'ed
         mMusics.push_back(info);
         return mMusics.size()-1;
@@ -525,7 +525,7 @@ namespace Sonetto {
                                  ogg_uint64_t pcmPos, bool fadeOutMem, bool fadeOutMemPos)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         int              errCode;                     // OGG Vorbis error code
         MusicInfo       *music     = NULL;            // Music information for the new music
@@ -613,7 +613,7 @@ namespace Sonetto {
     int AudioManager::playSound(size_t soundID,Ogre::SceneNode *parentNode,bool useEnvEffect)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         size_t       index  = 0;
         SoundInfo   *info   = NULL;
@@ -635,7 +635,7 @@ namespace Sonetto {
         // Creates one OpenAL sound source and checks for errors
         alGenSources(1,&source->sourceID);
         if (alGetError() != AL_NO_ERROR) {
-            Kernel::getSingleton()->mLogMan->
+            Kernel::get()->mLogMan->
             logMessage("( AudioManager::playSound() ) OpenAL was unable to "
                        "generate a sound source.");
 
@@ -656,7 +656,7 @@ namespace Sonetto {
         if (mUseEffectsExt) {
             alGenFilters(1,&source->filterID);
             if (alGetError() != AL_NO_ERROR) {
-                Kernel::getSingleton()->mLogMan->
+                Kernel::get()->mLogMan->
                 logMessage("( AudioManager::playSound() ) OpenAL was unable to "
                            "generate an audio filter.");
 
@@ -664,7 +664,7 @@ namespace Sonetto {
             } else {
                 alFilteri(source->filterID,AL_FILTER_TYPE,AL_FILTER_LOWPASS);
                 if (alGetError() != AL_NO_ERROR) {
-                    Kernel::getSingleton()->mLogMan->
+                    Kernel::get()->mLogMan->
                     logMessage("( AudioManager::playSound() ) Current hardware doesn't "
                                "support lowpass filter.");
 
@@ -679,7 +679,7 @@ namespace Sonetto {
                     // Direct output sound filtered by source->filterID
                     alSourcei(source->sourceID,AL_DIRECT_FILTER,source->filterID);
                     if (alGetError() != AL_NO_ERROR) {
-                        Kernel::getSingleton()->mLogMan->
+                        Kernel::get()->mLogMan->
                         logMessage("( AudioManager::playSound() ) OpenAL was unable to "
                                    "attach a direct audio filter to sound source.");
 
@@ -696,7 +696,7 @@ namespace Sonetto {
                     // If the filter is invalid, it will not be used
                     alSource3i(source->sourceID,AL_AUXILIARY_SEND_FILTER,mEnvSlotID,0,source->filterID);
                     if (alGetError() != AL_NO_ERROR) {
-                        Kernel::getSingleton()->mLogMan->
+                        Kernel::get()->mLogMan->
                         logMessage("( AudioManager::playSound() ) OpenAL was unable to "
                                    "attach sound source to environmental effect slot or "
                                    "audio filter to sound source auxiliary send.");
@@ -750,7 +750,7 @@ namespace Sonetto {
     bool AudioManager::sourceExists(size_t sourceID)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // The ending iterator represents a non-existent index
         return mSoundSources.find(sourceID) != mSoundSources.end();
@@ -759,7 +759,7 @@ namespace Sonetto {
     void AudioManager::setSourceNode(size_t sourceID,Ogre::SceneNode *node)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
         if (!sourceExists(sourceID))
@@ -772,7 +772,7 @@ namespace Sonetto {
     void AudioManager::setSourceGainRange(size_t sourceID,float minGain,float maxGain)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
         if (!sourceExists(sourceID))
@@ -784,7 +784,7 @@ namespace Sonetto {
 
         // Warn about errors
         if (alGetError() != AL_NO_ERROR) {
-            Kernel::getSingleton()->mLogMan->
+            Kernel::get()->mLogMan->
             logMessage("(AudioManager::setSourceGainRange()) Could not set source gain "
                        "range.");
         }
@@ -793,7 +793,7 @@ namespace Sonetto {
     void AudioManager::setSourceGain(size_t sourceID,float gain)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
         if (!sourceExists(sourceID))
@@ -804,14 +804,14 @@ namespace Sonetto {
 
         // Warn about errors
         if (alGetError() != AL_NO_ERROR)
-            Kernel::getSingleton()->mLogMan->
+            Kernel::get()->mLogMan->
             logMessage("(AudioManager::setSourceGain()) Could not set source gain.");
     }
     //-----------------------------------------------------------------------------
     void AudioManager::setSourceRolloff(size_t sourceID,float factor)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
         if (!sourceExists(sourceID))
@@ -822,7 +822,7 @@ namespace Sonetto {
 
         // Warn about errors
         if (alGetError() != AL_NO_ERROR) {
-            Kernel::getSingleton()->mLogMan->
+            Kernel::get()->mLogMan->
             logMessage("(AudioManager::setSourceRolloff()) Could not set source rolloff "
                        "factor.");
         }
@@ -831,7 +831,7 @@ namespace Sonetto {
     void AudioManager::setSourceFilterGain(size_t sourceID,float gain)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
         if (!sourceExists(sourceID))
@@ -845,7 +845,7 @@ namespace Sonetto {
 
             // Warn about errors
             if (alGetError() != AL_NO_ERROR) {
-                Kernel::getSingleton()->mLogMan->
+                Kernel::get()->mLogMan->
                 logMessage("(AudioManager::setSourceFilterGain()) Could not set source "
                            "rolloff factor.");
             }
@@ -855,7 +855,7 @@ namespace Sonetto {
     void AudioManager::setSourceFilterGainHF(size_t sourceID,float gain)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
         if (!sourceExists(sourceID))
@@ -869,7 +869,7 @@ namespace Sonetto {
 
             // Warn about errors
             if (alGetError() != AL_NO_ERROR) {
-                Kernel::getSingleton()->mLogMan->
+                Kernel::get()->mLogMan->
                 logMessage("(AudioManager::setSourceFilterGainHF()) Could not set source "
                            "rolloff factor.");
             }
@@ -879,7 +879,7 @@ namespace Sonetto {
     float AudioManager::getSourceRolloff(size_t sourceID)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Checks for existance
         if (!sourceExists(sourceID))
@@ -892,7 +892,7 @@ namespace Sonetto {
 
         // Warn about errors
         if (alGetError() != AL_NO_ERROR) {
-            Kernel::getSingleton()->mLogMan->
+            Kernel::get()->mLogMan->
             logMessage("(AudioManager::setSourceRolloff()) Could not set source rolloff "
                        "factor.");
         }
@@ -903,7 +903,7 @@ namespace Sonetto {
     void AudioManager::pauseMusic()
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         if (!mStreamQueue.empty()) {
             MusicStream *stream = mStreamQueue.front(); // Current music stream
@@ -935,7 +935,7 @@ namespace Sonetto {
     void AudioManager::stopMusic(float fadeSpd,bool allMusics)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         if (!mStreamQueue.empty()) {
             MusicStream *stream = mStreamQueue.front(); // Current music stream
@@ -977,7 +977,7 @@ namespace Sonetto {
     bool AudioManager::memorizeMusic(bool memorizePos)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         if (!mStreamQueue.empty()) {
             MusicStream *stream;      // Currently playing music stream
@@ -1046,7 +1046,7 @@ namespace Sonetto {
     bool AudioManager::restoreMusic(float fadeOutSpd,float fadeInSpd)
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         // Play memory (if existent)
         if (mMemorizedMusic) {
@@ -1061,7 +1061,7 @@ namespace Sonetto {
     bool AudioManager::update()
     {
         if (!mInitialised)
-            SONETTO_THROW("Call to a function member before its class SONETTO_EXPORT' initialisation");
+            SONETTO_THROW("Call to a function member before its class' initialisation");
 
         Ogre::Vector3  camPos;                 // Camera position
         Ogre::Vector3  camDir;                 // Camera direction
@@ -1070,8 +1070,8 @@ namespace Sonetto {
         Ogre::Real deltatime = 0.012f;
 
         // Gets the camera position and direction
-        camPos = Kernel::getSingleton()->mModuleList.top()->mCamera->getPosition();
-        camDir = Kernel::getSingleton()->mModuleList.top()->mCamera->getDirection();
+        camPos = Kernel::get()->mModuleList.top()->mCamera->getPosition();
+        camDir = Kernel::get()->mModuleList.top()->mCamera->getDirection();
 
         // Setups listener orientation values
         // The first 3 array fields compose a vector defining the up direction
@@ -1165,7 +1165,7 @@ namespace Sonetto {
                     if (stream->fadeOutMem) {
                         // Small error checking, just to ensure no future surprises
                         if (!memorizeMusic(stream->fadeOutMemPos)) {
-                            Kernel::getSingleton()->mLogMan->
+                            Kernel::get()->mLogMan->
                             logMessage("( AudioManager::update() ) Failed memorizing "
                                        "music on fade out.");
                         }

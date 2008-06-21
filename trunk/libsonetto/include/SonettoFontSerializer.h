@@ -28,7 +28,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoMain.h"
 
 namespace Sonetto {
-    class SONETTO_EXPORT Font; // forward declaration
+    class Font; // forward declaration
 
     class SONETTO_EXPORT FontSerializer : public Ogre::Serializer
     {

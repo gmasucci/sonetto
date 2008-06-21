@@ -20,13 +20,13 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
-#ifndef __SONETTO_INPUTMANAGER_H_
-#define __SONETTO_INPUTMANAGER_H_
+#ifndef SONETTO_INPUTMANAGER_H
+#define SONETTO_INPUTMANAGER_H
 
 #include "SonettoMain.h"
 
-//Use this define to signify OIS will be used as a DLL
-//(so that dll import/export macros are in effect)
+// Use this define to signify OIS will be used as a DLL
+// (so that dll import/export macros are in effect)
 #define OIS_DYNAMIC_LIB
 #include <Ogre.h>
 #include <OIS/OIS.h>

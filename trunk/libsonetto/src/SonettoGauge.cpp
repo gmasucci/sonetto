@@ -274,7 +274,7 @@ namespace Sonetto {
     {
         // Add the renderable to the update render queue
         queue->addRenderable(mGaugeRenderable, Ogre::RENDER_QUEUE_OVERLAY, mZOrder+1);
-        // Now call the base class SONETTO_EXPORT function
+        // Now call the base class function
         OverlayElement::_updateRenderQueue(queue);
 
         ChildIterator it = getChildIterator();

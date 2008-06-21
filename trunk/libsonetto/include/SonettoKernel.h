@@ -19,8 +19,9 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
-#ifndef __SONETTO_KERNEL__
-#define __SONETTO_KERNEL__
+
+#ifndef SONETTO_KERNEL_H
+#define SONETTO_KERNEL_H
 
 #include "SonettoMain.h"
 
@@ -42,26 +43,32 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoGauge.h"
 #include "SonettoCounter.h"
 
-namespace Sonetto {
-
+namespace Sonetto
+{
     class SONETTO_EXPORT Kernel
     {
-        friend class SONETTO_EXPORT InputManager;
-        friend class SONETTO_EXPORT AudioManager;
     public:
-        /// Return the singleton pointer to this class SONETTO_EXPORT.
-        inline static Kernel *getSingleton()  { return mSingleton; }
+        friend class InputManager;
+        friend class AudioManager;
+
+        /// Return the singleton pointer to this class.
+        inline static Kernel *get() { return mSingleton; }
+
         /// Check if the kernel is initialised.
-        inline static bool    isInitialised() { return mSingleton; }
-        /** Initialise Ogre, OIS, and other Sonetto dependencies
+        inline static bool isInitialised() { return mSingleton; }
+
+        /** Create a Sonetto singleton and initialises Ogre, OIS, and other Sonetto dependencies
         @return
             Wheter it was successful or not.
         */
-        static bool initialise();
+        static bool create();
+
         /// Deinitialise everything initialised before by initialise().
-        static bool deinitialise();
+        static bool destroy();
+
         /// Start the game's Main Loop
         int run();
+
         /** Add a module in the module stack
         @remarks
             The module in the top of the stack is
@@ -69,43 +76,47 @@ namespace Sonetto {
             if you put a new module in the stack,
             It'll become the active module.
         @param
-            pModule the Module pointer to add in the stack
+            pModule The Module pointer to add in the stack
         @param
-            haldMode if it's true, the old module will be kept in the memory
-            and the new module will become the active one, if it's false, then
+            haldMode If it's true, the old module will be kept in memory
+            and the new module will become the active one. If it's false, then
             the old module will be deleted and the new module will become the active module.
         */
         void pushModule(Module *pModule,bool haltMode = false);
+
         /// Remove a module from the top of the stack.
         void popModule();
+
         /// Shutdown / Close the game.
-        void shutdown() { mShutDown = true; }
+        void shutdown() { mShutdown = true; }
 
-        Ogre::Viewport * getViewport();
-        void setViewport(Ogre::Viewport * viewport);
-        Ogre::RenderWindow * getRenderWindow();
-        Ogre::Root * getOgreRoot();
+        Ogre::Viewport     *getViewport();
+        void                setViewport(Ogre::Viewport * viewport);
+        Ogre::RenderWindow *getRenderWindow();
+        Ogre::Root         *getOgreRoot();
 
-        InputManager * getInputMan();
-        AudioManager * getAudioMan();
+        InputManager *getInputMan();
+        AudioManager *getAudioMan();
 
         /// Load and parse the configuration file.
         std::map<std::string,std::string> Kernel::loadConfig(const char *fname);
     private:
-        bool _initialise();
-        bool _deinitialise();
-        /// Default construct SONETTO_EXPORTor.
+        /// Default constructor.
         Kernel();
-        /// Default destruct SONETTO_EXPORTor.
-        ~Kernel() {}
+
+        /// Default destructor.
+        ~Kernel();
     public:
         /// Flag indicating the program will be closed.
-        bool mShutDown;
-        /// Static pointer to this class SONETTO_EXPORT.
+        bool mShutdown;
+
+        /// Static pointer to this class.
         static Kernel *mSingleton;
+
         /// Module List stack (holds the active modules).
         std::stack<Module *>          mModuleList;
-        /// Ogre pointers.
+
+        // Ogre pointers.
         Ogre::Root                   *mRoot; // Ogre Root pointer.
         Ogre::RenderWindow           *mWindow; // Ogre Render Window.
         Ogre::Viewport               *mViewport; // Over Viewport.
@@ -113,16 +124,17 @@ namespace Sonetto {
         Ogre::OverlayManager         *mOverlayMan; // Ogre Overlay Manager.
         Ogre::ResourceGroupManager   *mResourceMan; // Ogre Resource Group Manager.
         Ogre::ResourceManager        *mResMan; // Ogre Resource Manager.
+
         // Debug Stuff.
         #ifdef _DEBUG
         Ogre::Overlay                *mDebugOverlay; // Sonetto Debug Overlay.
         #endif
-        /// Sonetto Pointers.
+
+        // Sonetto Pointers.
         AudioManager                 *mAudioMan; // Sonetto Audio Manager.
         InputManager                 *mInputMan; // Sonetto Input Manager.
 
     };
-
-}; // namespace Sonetto
+} // namespace Sonetto
 
 #endif // __SONETTO_KERNEL__

@@ -80,7 +80,7 @@ namespace Sonetto {
     }
 
     int VirtualFile::close(VirtualFile *file) {
-        // Simply delete class SONETTO_EXPORT
+        // Simply delete class
         delete file;
         return 0;
     }

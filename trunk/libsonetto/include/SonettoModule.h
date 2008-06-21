@@ -27,7 +27,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 // Forward declarations
 namespace Sonetto {
-    class SONETTO_EXPORT Module;
+    class Module;
 };
 
 #include <Ogre.h>
@@ -74,10 +74,10 @@ namespace Sonetto {
          */
         virtual void wakeup();
 
-        friend class SONETTO_EXPORT Kernel;
+        friend class Kernel;
 
     public:
-        /// Use this in place of Kernel::getSingleton().
+        /// Use this in place of Kernel::get().
         Kernel              *mKernel;
         /// Module Scene Manager
         Ogre::SceneManager  *mSceneMan;

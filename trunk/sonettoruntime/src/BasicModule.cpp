@@ -19,27 +19,17 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
-#ifndef SONETTOSTRSERIALIZER_H_INCLUDED
-#define SONETTOSTRSERIALIZER_H_INCLUDED
 
-#include "SonettoMain.h"
+#include <Ogre.h>
+#include "BasicModule.h"
 
-#include <OgreSerializer.h>
+using namespace Ogre;
+using namespace Sonetto;
 
-// Side note: All this class has been coded under the sound track of Goof Troop - Capcom - SNES (1993)
-namespace Sonetto
+void BasicModule::enter()
 {
-    class STRData; // Forward declaration
+    Module::enter();
 
-    class SONETTO_EXPORT STRSerializer : public Ogre::Serializer
-    {
-    public:
-        STRSerializer();
-        ~STRSerializer();
-
-        void exportSTR(const STRData *pSTR, const Ogre::String &fileName, Ogre::Serializer::Endian endianMode = Ogre::Serializer::ENDIAN_NATIVE);
-        void importSTR(Ogre::DataStreamPtr &stream, STRData *pDest);
-    };
-
-} // namespace
-#endif // SONETTOSTRSERIALIZER_H_INCLUDED
+    // Let's select a nice background colour for our viewport
+    mKernel->getViewport()->setBackgroundColour(ColourValue(0.95f,0.95f,0.95f));
+}

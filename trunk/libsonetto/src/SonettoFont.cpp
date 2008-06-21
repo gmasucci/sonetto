@@ -63,7 +63,7 @@ namespace Sonetto
     void Font::unloadImpl()
     {
         /* If you were storing a pointer to an object, then you would check the pointer here,
-        and if it is not NULL, you would destruct SONETTO_EXPORT the object and set its pointer to NULL again.
+        and if it is not NULL, you would destruct the object and set its pointer to NULL again.
         */
         glyphs.clear();
         mColorList.clear();

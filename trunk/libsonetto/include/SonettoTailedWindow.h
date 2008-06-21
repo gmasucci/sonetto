@@ -38,11 +38,11 @@ namespace Sonetto
 
     class SONETTO_EXPORT TailedWindow : public Ogre::OverlayContainer
     {
-        friend class SONETTO_EXPORT TailedBorderRenderable;
+        friend class TailedBorderRenderable;
     public:
-        /// Construct SONETTO_EXPORTor.
+        /// Constructor.
         TailedWindow(const Ogre::String& name);
-        /// Destruct SONETTO_EXPORTor.
+        /// Destructor.
         virtual ~TailedWindow();
         /// Initialise
         virtual void initialise (void);
@@ -177,16 +177,16 @@ namespace Sonetto
             return a + t * (b - a);
         }
     };
-    /** class SONETTO_EXPORT for rendering the border of a Window.
+    /** Class for rendering the border of a Window.
      *  @remarks
      *  We need this because we have to render twice, once with the inner window's repeating
-     *  material (handled by superclass SONETTO_EXPORT) and once for the border's separate material.
+     *  material (handled by superclass) and once for the border's separate material.
      */
     class SONETTO_EXPORT TailedBorderRenderable : public Ogre::Renderable {
     protected:
         TailedWindow * mpParent;
     public:
-        /// Construct SONETTO_EXPORTed with pointers to parent.
+        /// Constructed with pointers to parent.
         TailedBorderRenderable(TailedWindow* parent) : mpParent(parent)
         {
             mUseIdentityProjection = true;

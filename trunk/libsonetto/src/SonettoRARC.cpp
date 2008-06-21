@@ -41,7 +41,7 @@ namespace Sonetto {
     {
         // Use filesystem to determine size
         // (quicker than streaming to the end and back)
-        struct SONETTO_EXPORT stat tagStat;
+        struct stat tagStat;
         int ret = stat(mName.c_str(), &tagStat);
         assert(ret == 0 && "Problem getting file size" );
 
@@ -88,7 +88,7 @@ namespace Sonetto {
             break;
             case 0:
             {
-                // Construct SONETTO_EXPORT the file stream, tell it to delete on destroy
+                // Construct the file stream, tell it to delete on destroy
                 mDataStream = new Ogre::MemoryDataStream(mName, tempData, tagStat.st_size, true);
             }
             break;

@@ -31,7 +31,7 @@ http://www.gnu.org/copyleft/lesser.txt
 namespace Sonetto {
     /** @brief Virtual file
      *
-     *  A virtual file is a class SONETTO_EXPORT used by the AudioManager to present
+     *  A virtual file is a class used by the AudioManager to present
      *  functions for Vorbisfile library to treat RAM memory addresses as
      *  files. This way files loaded into memory by Ogre can serve
      *  as virtual OGG Vorbis files to be decompressed.
@@ -39,7 +39,7 @@ namespace Sonetto {
      */
     class SONETTO_EXPORT VirtualFile {
     public:
-        /** @brief Construct SONETTO_EXPORTor
+        /** @brief Constructor
          *
          *  @param _address Address of to the beginning of the file.
          *  @param _length  The actual file size.

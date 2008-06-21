@@ -32,7 +32,7 @@ namespace Sonetto {
             mOverlay  (NULL),
             mCamera   (NULL)
     {
-        mKernel = Kernel::getSingleton();
+        mKernel = Kernel::get();
     }
     //-----------------------------------------------------------------------------
     void Module::enter()

@@ -31,9 +31,9 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoMain.h"
 
 namespace Sonetto {
-    /** @brief This is a class SONETTO_EXPORT that stores the texture font data.
+    /** @brief This is a class that stores the texture font data.
     *
-    * This class SONETTO_EXPORT is used to set up a Font Texture for use with Sonetto::SonettoTextElement.
+    * This class is used to set up a Font Texture for use with Sonetto::SonettoTextElement.
     */
     class SONETTO_EXPORT Font : public Ogre::Resource
     {
@@ -57,9 +57,9 @@ namespace Sonetto {
 
         Ogre::uint16 font_filtering_mode;
 
-        /// Glyph struct SONETTO_EXPORTure List.
+        /// Glyph structure List.
         std::vector<Glyphstruct > glyphs;
-        /// Glyph struct SONETTO_EXPORTure List Iterator.
+        /// Glyph structure List Iterator.
         std::vector<Glyphstruct >::iterator glyph_itr;
         /// Color List.
         std::vector<Ogre::ColourValue> mColorList;
@@ -83,11 +83,11 @@ namespace Sonetto {
         size_t calculateSize() const;
 
     public:
-        /// Construct SONETTO_EXPORTor.
+        /// Constructor.
         Font(Ogre::ResourceManager *creator, const Ogre::String &name,
                     Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual = false,
                     Ogre::ManualResourceLoader *loader = 0);
-        /// Destruct SONETTO_EXPORTor.
+        /// Destructor.
         virtual ~Font();
 
         // Manual Custom Font file creation methods

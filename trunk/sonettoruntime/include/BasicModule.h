@@ -19,27 +19,19 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
-#ifndef SONETTOSTRSERIALIZER_H_INCLUDED
-#define SONETTOSTRSERIALIZER_H_INCLUDED
 
-#include "SonettoMain.h"
+#ifndef BASICMODULE_H
+#define BASICMODULE_H
 
-#include <OgreSerializer.h>
+#include "SonettoModule.h"
 
-// Side note: All this class has been coded under the sound track of Goof Troop - Capcom - SNES (1993)
-namespace Sonetto
+class BasicModule : public Sonetto::Module
 {
-    class STRData; // Forward declaration
-
-    class SONETTO_EXPORT STRSerializer : public Ogre::Serializer
-    {
     public:
-        STRSerializer();
-        ~STRSerializer();
+        void enter();
+        void update(Ogre::Real deltatime) {}
+        void exit()   { Module::exit();   }
+        void wakeup() { Module::wakeup(); }
+};
 
-        void exportSTR(const STRData *pSTR, const Ogre::String &fileName, Ogre::Serializer::Endian endianMode = Ogre::Serializer::ENDIAN_NATIVE);
-        void importSTR(Ogre::DataStreamPtr &stream, STRData *pDest);
-    };
-
-} // namespace
-#endif // SONETTOSTRSERIALIZER_H_INCLUDED
+#endif

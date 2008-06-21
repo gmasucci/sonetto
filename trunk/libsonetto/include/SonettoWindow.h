@@ -29,21 +29,21 @@ http://www.gnu.org/copyleft/lesser.txt
 
 namespace Sonetto {
 
-    class SONETTO_EXPORT WindowBorderRenderable; // Forward declaration
+    class WindowBorderRenderable; // Forward declaration
 
     // Define the number of vertex for this object.
     #define NUM_VERTEX 54
 
-    /** @brief class SONETTO_EXPORT brief description
+    /** @brief class brief description
      *
      *  @remarks
      */
     class SONETTO_EXPORT Window : public Ogre::OverlayContainer {
-        friend class SONETTO_EXPORT WindowBorderRenderable;
+        friend class WindowBorderRenderable;
     public:
-        /// Construct SONETTO_EXPORTor.
+        /// Constructor.
         Window(const Ogre::String& name);
-        /// Destruct SONETTO_EXPORTor.
+        /// Destructor.
         virtual ~Window();
         /// Initialise
         virtual void initialise (void);
@@ -135,16 +135,16 @@ namespace Sonetto {
         static Ogre::String msTypeName;
     };
 
-    /** class SONETTO_EXPORT for rendering the border of a Window.
+    /** Class for rendering the border of a Window.
      *  @remarks
      *  We need this because we have to render twice, once with the inner window's repeating
-     *  material (handled by superclass SONETTO_EXPORT) and once for the border's separate material.
+     *  material (handled by superclass) and once for the border's separate material.
      */
     class SONETTO_EXPORT WindowBorderRenderable : public Ogre::Renderable {
     protected:
         Window * mpParent;
     public:
-        /// Construct SONETTO_EXPORTed with pointers to parent.
+        /// Constructed with pointers to parent.
         WindowBorderRenderable(Window* parent) : mpParent(parent)
         {
             mUseIdentityProjection = true;
