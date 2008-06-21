@@ -116,6 +116,8 @@ namespace Sonetto {
         Ogre::TextureUnitState * borderMaskTexture = borderMatPass->createTextureUnitState(mBorderTextureName);
         borderMaskTexture->setTextureCoordSet(0);
         borderMaskTexture->setTextureFiltering(Ogre::FO_LINEAR, Ogre::FO_LINEAR, Ogre::FO_NONE);
+
+        return true;
     }
     //-----------------------------------------------------------------------------
     bool WindowSkin::deleteMaterial()

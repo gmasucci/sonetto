@@ -1065,7 +1065,6 @@ namespace Sonetto {
 
         Ogre::Vector3  camPos;                 // Camera position
         Ogre::Vector3  camDir;                 // Camera direction
-        ALfloat        listenerOrientation[6]; // Listener orientation
 
         // <fixme> Get real deltatime
         Ogre::Real deltatime = 0.012f;

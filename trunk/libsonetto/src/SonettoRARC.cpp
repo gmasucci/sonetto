@@ -77,7 +77,9 @@ namespace Sonetto {
                 readSize(compSize, tempData+4+sizeof(size_t));
                 char * uncmpTempData = new char[uncSize];
 
-                int ret = _decompressData(tempData+4+(sizeof(size_t)*2), compSize, uncmpTempData, uncSize);
+                // Is the line below really needed? (you didn't use the variable `ret')
+                //int ret = _decompressData(tempData+4+(sizeof(size_t)*2), compSize, uncmpTempData, uncSize);
+                _decompressData(tempData+4+(sizeof(size_t)*2), compSize, uncmpTempData, uncSize);
 
                 mDataStream = new Ogre::MemoryDataStream(mName, uncmpTempData, uncSize, true);
 
@@ -268,7 +270,7 @@ namespace Sonetto {
     {
         // ret: zlib return codes
         int ret;
-        // strm struct SONETTO_EXPORTure is used to pass information to and from the zlib routines
+        // strm structure is used to pass information to and from the zlib routines
         z_stream strm;
         // Allocate the default state
         strm.zalloc = Z_NULL;
@@ -303,6 +305,7 @@ namespace Sonetto {
                 return ret; // Return the status
         }
 
+        return Z_OK;
     }
     //-----------------------------------------------------------------------------
     int ResourceArchive::checkHeader(char * head)

@@ -48,7 +48,6 @@ namespace Sonetto {
     {
         friend class SONETTO_EXPORT InputManager;
         friend class SONETTO_EXPORT AudioManager;
-        friend class SONETTO_EXPORT AudioManager;
     public:
         /// Return the singleton pointer to this class SONETTO_EXPORT.
         inline static Kernel *getSingleton()  { return mSingleton; }

@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="SonettoRARC_Composer" />
+		<Option title="Sonetto_RARCComposer" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="..\..\..\bin\debug\tools\RARC Composer" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\..\bin\debug\tools\RARC Composer.exe" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\..\..\bin\debug\tools\" />
 				<Option object_output="..\obj\debug\" />
 				<Option type="1" />
@@ -17,7 +17,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="..\..\..\bin\release\tools\RARC Composer" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\..\bin\release\tools\RARC Composer.exe" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\..\..\bin\release\tools\" />
 				<Option object_output="..\obj\release\" />
 				<Option type="1" />
@@ -80,20 +80,6 @@
 		<Extensions>
 			<code_completion />
 			<envvars />
-			<debugger>
-				<remote_debugging target="Debug">
-					<options conn_type="0" serial_port="" serial_baud="115200" ip_address="" ip_port="" additional_cmds="" additional_cmds_before="" skip_ld_path="0" />
-				</remote_debugging>
-				<remote_debugging target="Release">
-					<options conn_type="0" serial_port="" serial_baud="115200" ip_address="" ip_port="" additional_cmds="" additional_cmds_before="" skip_ld_path="0" />
-				</remote_debugging>
-				<remote_debugging target="Debug">
-					<options conn_type="0" serial_port="" serial_baud="115200" ip_address="" ip_port="" additional_cmds="" additional_cmds_before="" skip_ld_path="0" />
-				</remote_debugging>
-				<remote_debugging target="Release">
-					<options conn_type="0" serial_port="" serial_baud="115200" ip_address="" ip_port="" additional_cmds="" additional_cmds_before="" skip_ld_path="0" />
-				</remote_debugging>
-			</debugger>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
