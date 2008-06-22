@@ -21,7 +21,6 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="OgreMain" />
-					<Add library="OIS" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\release\tools\" />
@@ -42,7 +41,6 @@
 				</Compiler>
 				<Linker>
 					<Add library="OgreMain_d" />
-					<Add library="OIS_d" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\debug\tools\" />
@@ -71,12 +69,14 @@
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
 			<Add option="-Wl,--enable-auto-image-base" />
 			<Add option="-Wl,--add-stdcall-alias" />
+			<Add library="EFX-Util" />
 			<Add library="OpenAL32" />
-			<Add library="libogg-0" />
-			<Add library="libvorbis-0" />
-			<Add library="libvorbisfile-3" />
-			<Add library="libvorbisenc-2" />
+			<Add library="vorbisenc" />
+			<Add library="vorbisfile" />
+			<Add library="vorbis" />
+			<Add library="ogg" />
 			<Add library="zlib" />
+			<Add library="SDL" />
 			<Add directory="..\..\dependencies\lib\zlib" />
 			<Add directory="..\..\dependencies\lib\ogg" />
 			<Add directory="..\..\dependencies\lib\vorbis" />

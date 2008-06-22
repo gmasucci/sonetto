@@ -19,7 +19,13 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
+
+#include <SDL/SDL.h>
+#include <SDL/SDL_syswm.h>
 #include "SonettoKernel.h"
+
+using namespace std;
+using namespace Ogre;
 
 namespace Sonetto {
     //-----------------------------------------------------------------------------
@@ -27,22 +33,67 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     Kernel *Kernel::mSingleton = NULL;
     //-----------------------------------------------------------------------------
-    Kernel::Kernel() : mShutdown(false),
+    Kernel::Kernel() : mShutdown(false), mScreen(NULL),
     mRoot(NULL), mWindow(NULL), mViewport(NULL), mLogMan(NULL),
     mOverlayMan(NULL), mResourceMan(NULL),mResMan(NULL)
     #ifdef _DEBUG
     , mDebugOverlay(NULL)
     #endif
     {
-        KeyConfig kc[4]; // Temporary key configuration for the InputManager
+        NameValuePairList  wndParamList; // Needed for Ogre to use SDL rendering window
+        SDL_SysWMinfo      wmInfo;       // Structure holding SDL window information
+
+        // Initialises SDL video and joystick subsystems
+        if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_JOYSTICK) == -1)
+        {
+            SONETTO_THROW("Could not initialise SDL");
+        }
+
+        // Create SDL rendering window
+        // <todo> Load resolution from configuration file
+        mScreen = SDL_SetVideoMode(640,480,0,0);
+        if (!mScreen)
+        {
+            SONETTO_THROW("Could not create SDL window");
+        }
+
+        // RPGs don't use mouse, bwagahgah
+        SDL_ShowCursor(SDL_DISABLE);
+        SDL_WM_SetCaption("Sonetto Game Runtime","Sonetto Game Runtime");
+
+        // <todo> Add some loading imagery here
+        SDL_Flip(mScreen);
+
+        // Get window info to attach Ogre at it
+        SDL_VERSION(&wmInfo.version);
+        SDL_GetWMInfo(&wmInfo);
+
+        #ifdef _WINDOWS
+            // Under Windows we just need to pass the window handle(HWND) as a string to
+            // Ogre::Root::createRenderWindow() for Ogre to use such window for its drawings
+            wndParamList["externalWindowHandle"] = StringConverter::toString((unsigned long)wmInfo.window);
+        #else
+            // Under *nixes, Ogre uses GLX for rendering. The syntax of
+            // externalWindowHandle in this case is a bit different, but it
+            // does essentially the same thing.
+            string         wndHandleStr;
+            string         dsp(&(DisplayString(info.info.x11.display)[1]));
+            vector<String> tokens = StringUtil::split(dsp,".");
+
+            wndHandleStr = StringConverter::toString((long)info.info.x11.display)+
+                        ":"+tokens[1]+":"+
+                        StringConverter::toString((long)info.info.x11.window);
+
+            wndParamList["externalWindowHandle"] = wndHandleStr;
+        #endif
 
         // Creates and configures Ogre root object, based on configuration
         // took from the configuration file
-        mRoot = new Ogre::Root("plugins.dlc","devlab.dlc","devlab.log");
+        mRoot = new Root("plugins.dlc","devlab.dlc","devlab.log");
         if (mRoot->showConfigDialog()) {
             // If returned true, the user clicked OK, so initialise
             mRoot->initialise(false);
-            mWindow = mRoot->createRenderWindow("Sonetto Development Laboratory",640,480,false,0);
+            mWindow = mRoot->createRenderWindow("",640,480,false,&wndParamList);
         } else {
             delete mRoot;
             mRoot     = NULL;
@@ -51,102 +102,23 @@ namespace Sonetto {
             return;
         }
 
-        memset(kc,0x00,sizeof(kc));
-
-        // Temporary input configurations (debugging purposes)
-        kc[0].inputDevice  = 1;     // Joystick ID (0: No Joystick)
-        kc[0].analogCount  = 2;     // Two analog sticks or emulated buttons
-        kc[0].enableRumble = false; // Let's disable it for now.
-
-        // Analog Axes
-        kc[0].axes[0]                 = 0x1000;
-        kc[0].axes[1]                 = 0x2000;
-        kc[0].axes[2]                 = 0x4000;
-        kc[0].axes[3]                 = 0x3000;
-
-        // Unused (used when the analog input is emulated using buttons)
-        kc[0].axes[4]                 = 0x0000;
-        kc[0].axes[5]                 = 0x0000;
-        kc[0].axes[6]                 = 0x0000;
-        kc[0].axes[7]                 = 0x0000;
-
-        kc[0].buttons[BTN_TRIANGLE]   = 0x00FF;
-        kc[0].buttons[BTN_CIRCLE]     = 0x0100;
-        kc[0].buttons[BTN_CROSS]      = 0x0200;
-        kc[0].buttons[BTN_SQUARE]     = 0x0300;
-
-        kc[0].buttons[BTN_L2]         = 0x0400;
-        kc[0].buttons[BTN_R2]         = 0x0500;
-        kc[0].buttons[BTN_L1]         = 0x0600;
-        kc[0].buttons[BTN_R1]         = 0x0700;
-
-        kc[0].buttons[BTN_SELECT]     = 0x0800;
-        kc[0].buttons[BTN_START]      = 0x0900;
-
-        kc[0].buttons[BTN_L3]         = 0x0A00;
-        kc[0].buttons[BTN_R3]         = 0x0B00;
-
-        kc[0].buttons[BTN_DPAD_UP]    = 0x0C00;
-        kc[0].buttons[BTN_DPAD_RIGHT] = 0x0D00;
-        kc[0].buttons[BTN_DPAD_DOWN]  = 0x0E00;
-        kc[0].buttons[BTN_DPAD_LEFT]  = 0x0F00;
-
-        kc[1].inputDevice  = 2;     // Joystick ID (0: No Joystick)
-        kc[1].analogCount  = 2;     // Two analog sticks or emulated buttons
-        kc[1].enableRumble = false; // Let's disable it for now.
-
-        // Analog Axes
-        kc[1].axes[0]                 = 0x1000;
-        kc[1].axes[1]                 = 0x2000;
-        kc[1].axes[2]                 = 0x4000;
-        kc[1].axes[3]                 = 0x3000;
-
-        // Unused (used when the analog input is emulated using buttons)
-        kc[1].axes[4]                 = 0x0000;
-        kc[1].axes[5]                 = 0x0000;
-        kc[1].axes[6]                 = 0x0000;
-        kc[1].axes[7]                 = 0x0000;
-
-        kc[1].buttons[BTN_TRIANGLE]   = 0x00FF;
-        kc[1].buttons[BTN_CIRCLE]     = 0x0100;
-        kc[1].buttons[BTN_CROSS]      = 0x0200;
-        kc[1].buttons[BTN_SQUARE]     = 0x0300;
-
-        kc[1].buttons[BTN_L2]         = 0x0400;
-        kc[1].buttons[BTN_R2]         = 0x0500;
-        kc[1].buttons[BTN_L1]         = 0x0600;
-        kc[1].buttons[BTN_R1]         = 0x0700;
-
-        kc[1].buttons[BTN_SELECT]     = 0x0800;
-        kc[1].buttons[BTN_START]      = 0x0900;
-
-        kc[1].buttons[BTN_L3]         = 0x0A00;
-        kc[1].buttons[BTN_R3]         = 0x0B00;
-
-        kc[1].buttons[BTN_DPAD_UP]    = 0x0C00;
-        kc[1].buttons[BTN_DPAD_RIGHT] = 0x0D00;
-        kc[1].buttons[BTN_DPAD_DOWN]  = 0x0E00;
-        kc[1].buttons[BTN_DPAD_LEFT]  = 0x0F00;
-
         // Get Ogre singletons for easier use
-        mLogMan      = Ogre::LogManager::getSingletonPtr();
-        mOverlayMan  = Ogre::OverlayManager::getSingletonPtr();
-        mResourceMan = Ogre::ResourceGroupManager::getSingletonPtr();
+        mLogMan      = LogManager::getSingletonPtr();
+        mOverlayMan  = OverlayManager::getSingletonPtr();
+        mResourceMan = ResourceGroupManager::getSingletonPtr();
 
-        // Create Audio Manager.
+        // Create Audio Manager
         mAudioMan = new AudioManager();
         mAudioMan->initialise();
-        // Create Input Manager.
-        mInputMan = new InputManager();
-        mInputMan->initialise(mWindow,kc);
+
+        // Create Input Manager
+        mInputMan = new InputManager(4,mWindow);
     }
 
     Kernel::~Kernel()
     {
         // Deinitialise InputManager
         if (mInputMan) {
-            mInputMan->deinitialise();
-
             delete mInputMan;
             mInputMan = NULL;
         }
@@ -164,6 +136,8 @@ namespace Sonetto {
             delete mRoot;
             mRoot = NULL;
         }
+
+        SDL_Quit();
     }
 
     //-----------------------------------------------------------------------------
@@ -198,15 +172,17 @@ namespace Sonetto {
     int Kernel::run()
     {
         while (!mShutdown) {
+            SDL_Event evt; // Check for quit events
+
             // Small error check
             if (mModuleList.size() == 0)
                 SONETTO_THROW("Module stack is empty");
 
             // Update game window (Message Pump)
-            Ogre::WindowEventUtilities::messagePump();
+            WindowEventUtilities::messagePump();
 
             // First update input
-            mInputMan->updateInput();
+            mInputMan->update();
 
             // Update stack's top Module
             mModuleList.top()->update(1.0f);
@@ -302,32 +278,32 @@ namespace Sonetto {
         return entries;
     }
     //-----------------------------------------------------------------------------
-    Ogre::Viewport * Kernel::getViewport()
+    Viewport *Kernel::getViewport()
     {
         return mViewport;
     }
     //-----------------------------------------------------------------------------
-    void Kernel::setViewport(Ogre::Viewport * viewport)
+    void Kernel::setViewport(Viewport *viewport)
     {
         mViewport = viewport;
     }
     //-----------------------------------------------------------------------------
-    Ogre::RenderWindow * Kernel::getRenderWindow()
+    RenderWindow *Kernel::getRenderWindow()
     {
         return mWindow;
     }
     //-----------------------------------------------------------------------------
-    Ogre::Root * Kernel::getOgreRoot()
+    Root *Kernel::getOgreRoot()
     {
         return mRoot;
     }
     //-----------------------------------------------------------------------------
-    InputManager * Kernel::getInputMan()
+    InputManager *Kernel::getInputMan()
     {
         return mInputMan;
     }
     //-----------------------------------------------------------------------------
-    AudioManager * Kernel::getAudioMan()
+    AudioManager *Kernel::getAudioMan()
     {
         return mAudioMan;
     }

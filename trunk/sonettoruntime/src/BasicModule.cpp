@@ -28,8 +28,22 @@ using namespace Sonetto;
 
 void BasicModule::enter()
 {
+    PlayerInput *player;
     Module::enter();
 
     // Let's select a nice background colour for our viewport
     mKernel->getViewport()->setBackgroundColour(ColourValue(0.95f,0.95f,0.95f));
+
+    // And setup the first controller
+    player = mKernel->getInputMan()->getPlayer(0);
+    // player->setEnabled(true);
+    // player->configureBtn(Sonetto::BTN_CROSS,Sonetto::InputSource(true,Sonetto::IST_BUTTON,2));
+}
+
+void BasicModule::update(Ogre::Real deltatime)
+{
+    /*if (player->getButtonState(Sonetto::BTN_CROSS) == Sonetto::KS_PRESS)
+    {
+        std::cout << "Fear the cross, demon..!\n";
+    }*/
 }

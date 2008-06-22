@@ -29,6 +29,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <stack>
 #include <Ogre.h>
 #include <OgreVector2.h>
+#include <SDL/SDL_video.h>
 
 #include "SonettoAudioManager.h"
 #include "SonettoInputManager.h"
@@ -114,7 +115,10 @@ namespace Sonetto
         static Kernel *mSingleton;
 
         /// Module List stack (holds the active modules).
-        std::stack<Module *>          mModuleList;
+        std::stack<Module *> mModuleList;
+
+        // SDL pointers.
+        SDL_Surface *mScreen;
 
         // Ogre pointers.
         Ogre::Root                   *mRoot; // Ogre Root pointer.

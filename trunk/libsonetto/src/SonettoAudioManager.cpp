@@ -19,6 +19,7 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
+
 #include <cstdio>
 #include <vector>
 #include <queue>
@@ -1063,6 +1064,7 @@ namespace Sonetto {
         if (!mInitialised)
             SONETTO_THROW("Call to a function member before its class' initialisation");
 
+        // omg
         Ogre::Vector3  camPos;                 // Camera position
         Ogre::Vector3  camDir;                 // Camera direction
 

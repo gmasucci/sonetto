@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
 This source file is part of Sonetto RPG Engine.
 
-Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr√° Vieira
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr· Vieira
 
 
 Sonetto RPG Engine is free software: you can redistribute it and/or modify
@@ -23,102 +23,129 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef SONETTO_INPUTMANAGER_H
 #define SONETTO_INPUTMANAGER_H
 
+#include <vector>
 #include "SonettoMain.h"
 
-// Use this define to signify OIS will be used as a DLL
-// (so that dll import/export macros are in effect)
-#define OIS_DYNAMIC_LIB
 #include <Ogre.h>
-#include <OIS/OIS.h>
+#include <SDL/SDL_joystick.h>
 
-namespace Sonetto {
-    const Ogre::uint8 MAX_PLAYERS = 4;
+// <todo> Comment this file
 
-    enum BUTTON {
-        BTN_TRIANGLE    = 0x00,
-        BTN_CIRCLE      = 0x01,
-        BTN_CROSS       = 0x02,
-        BTN_SQUARE      = 0x03,
-        BTN_L2          = 0x04,
-        BTN_R2          = 0x05,
-        BTN_L1          = 0x06,
-        BTN_R1          = 0x07,
-        BTN_START       = 0x08,
-        BTN_SELECT      = 0x09,
-        BTN_L3          = 0x0A,
-        BTN_R3          = 0x0B,
-        BTN_DPAD_UP     = 0x0C,
-        BTN_DPAD_RIGHT  = 0x0D,
-        BTN_DPAD_DOWN   = 0x0E,
-        BTN_DPAD_LEFT   = 0x0F
+namespace Sonetto
+{
+    enum BUTTON
+    {
+        BTN_TRIANGLE = 0,
+        BTN_CIRCLE,
+        BTN_CROSS,
+        BTN_SQUARE,
+        BTN_L2,
+        BTN_R2,
+        BTN_L1,
+        BTN_R1,
+        BTN_START,
+        BTN_SELECT,
+        BTN_L3,
+        BTN_R3,
+        BTN_DPAD_UP,
+        BTN_DPAD_RIGHT,
+        BTN_DPAD_DOWN,
+        BTN_DPAD_LEFT
     };
 
-    enum AXIS {
-        AX_LEFT         = 0x00,
-        AX_RIGHT        = 0x02
+    enum AXIS
+    {
+        AX_LEFT = 0,
+        AXE_LEFT_UP,
+        AXE_LEFT_RIGHT,
+        AXE_LEFT_DOWN,
+        AXE_LEFT_LEFT,
+        AX_RIGHT,
+        AXE_RIGHT_UP,
+        AXE_RIGHT_RIGHT,
+        AXE_RIGHT_DOWN,
+        AXE_RIGHT_LEFT
     };
 
-    enum KEYSTATE {
-        KS_NONE     = 0x00, // 0000
-        KS_PRESS    = 0x01, // 0001
-        KS_RELEASE  = 0x02, // 0010
-        KS_HOLD     = 0x03  // 0011
+    enum KEYSTATE
+    {
+        KS_NONE = 0,
+        KS_PRESS,
+        KS_RELEASE,
+        KS_HOLD
     };
 
-    struct SONETTO_EXPORT KeyStates {
-        float    axes[4];       // Controller axis
-        KEYSTATE buttons[16];   // Common buttons
+    enum INPUTSOURCETYPE {
+        IST_KEY = 0,
+        IST_BUTTON,
+        IST_AXIS
     };
 
-    struct SONETTO_EXPORT KeyConfig {
-        char inputDevice;
+    class SONETTO_EXPORT InputSource
+    {
+        public:
+            InputSource(bool aEnabled = false,INPUTSOURCETYPE aType = IST_KEY,char aValue = 0)
+                    : enabled(aEnabled), type(aType), value(aValue) {}
 
-        char analogCount;
-        bool enableRumble;
-
-        Ogre::uint16 axes[8];       // Controller axes
-        Ogre::uint16 buttons[16];   // Common buttons
+            bool enabled : 1;
+            char type    : 2;
+            char value;
     };
 
-    class SONETTO_EXPORT InputManager {
-    public:
-        InputManager() : mInputManager(0), mInitialised(0) {
-            for (size_t i = 0; i != MAX_PLAYERS; ++i) {
-                for (size_t b = 0; b != 16; ++b)
-                    mKeyStates[i].buttons[b] = KS_NONE;
-                for (size_t b = 0; b != 8; ++b)
-                    mKeyStates[i].axes[b] = 0.0f;
-            }
-        }
+    class SONETTO_EXPORT PlayerInput
+    {
+        public:
+            static const size_t INPUT_SRC_NUM = 24;
 
-    ~InputManager() {}
+            void update();
 
-        bool           initialise(Ogre::RenderWindow *win,KeyConfig *kc);
-        bool           deinitialise();
+            void configureBtn(BUTTON btn,const InputSource &input) { mInputCfg[btn] = input; }
+            void configureAxis(AXIS axs,const InputSource &input);
+            void configureAll(const InputSource input[INPUT_SRC_NUM]);
 
-        void           updateInput();
+            inline const InputSource    &getBtnConfiguration(BUTTON btn) const { return mInputCfg[btn]; }
+            const        InputSource    &getAxisConfiguration(AXIS axs);
+            inline const InputSource    *getAllConfiguration()           const { return mInputCfg; }
 
-        void           setKeyConfig(Ogre::uint8 playerID, KeyConfig *kc);
-        KeyConfig     *getKeyConfig(Ogre::uint8 playerID);
+            inline       void            setEnabled(bool enable)               { mEnabled = enable; }
+            inline       bool            isEnabled()                     const { return mEnabled;   }
+            inline       void            setRumbleEnabled(bool enable)         { mEnabled = enable; }
+            inline       bool            isRumbleEnabled()               const { return mEnabled;   }
 
-        bool           playerPlugged(Ogre::uint8 playerID);
-        KEYSTATE       getButtonState(Ogre::uint8 playerID, BUTTON btn);
-        Ogre::Vector2  getAxis(Ogre::uint8 playerID, AXIS axis);
+            inline const KEYSTATE        getButtonState(BUTTON btn)      const { return mBtnStates[btn]; }
+            inline       Ogre::Vector2   getAxisValue(AXIS axs);
 
-    protected:
-        // OIS devices (RPG Games don't need mouse support, bwahahaha)
-        OIS::InputManager                       *mInputManager;
-        OIS::Keyboard                           *mKeyboard;
-        std::vector<OIS::JoyStick *>            mJoy;
-        std::vector<OIS::JoyStick *>::iterator  mJoyItr;
-        std::vector<OIS::JoyStick *>::iterator  mJoyItrEnd;
+        private:
+            PlayerInput(bool enabled,bool rumbleEnabled,SDL_Joystick *joy = NULL);
+            ~PlayerInput();
 
-        bool mInitialised;
+            bool           mEnabled;
+            bool           mRumbleEnabled;
+            SDL_Joystick  *mJoy;
 
-        KeyStates mKeyStates[MAX_PLAYERS];
-        KeyConfig mKeyConfig[MAX_PLAYERS];
+            InputSource mInputCfg[INPUT_SRC_NUM];
+            KEYSTATE    mBtnStates[16];
+            float       mAxesValues[4];
+
+            friend class InputManager;
     };
-}
-; // namespace
+
+    class SONETTO_EXPORT InputManager
+    {
+        public:
+            void update();
+
+            PlayerInput   *getPlayer(size_t num) const;
+            inline size_t  getPlayerNum() const { return mPlayers.size(); }
+
+        private:
+            InputManager(size_t players,Ogre::RenderWindow *win = NULL);
+            ~InputManager() {}
+
+            std::vector<PlayerInput *>  mPlayers;
+
+            friend class Kernel;
+    };
+} // namespace
 
 #endif

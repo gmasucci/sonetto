@@ -1466,14 +1466,14 @@
 	"SonettoMain.h"
 	<OgreSerializer.h>
 
-1214022540 source:f:\codeenv\sonetto\sonettoruntime\src\main.cpp
+1214161562 source:f:\codeenv\sonetto\sonettoruntime\src\main.cpp
 	<cstdio>
 	"windows.h"
 	<Ogre.h>
 	"Sonetto.h"
 	"BasicModule.h"
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonetto.h
+1214102984 f:\codeenv\sonetto\libsonetto\include\sonetto.h
 	"SonettoPrerequisites.h"
 	"SonettoMain.h"
 	"SonettoAudioManager.h"
@@ -2741,20 +2741,21 @@
 	<OgreResourceManager.h>
 	"SonettoFont.h"
 
-1213984196 f:\codeenv\sonetto\libsonetto\include\sonettofontserializer.h
+1214023832 f:\codeenv\sonetto\libsonetto\include\sonettofontserializer.h
 	<OgreSerializer.h>
 	"SonettoMain.h"
 
-1214023528 f:\codeenv\sonetto\libsonetto\include\sonettogauge.h
+1214023880 f:\codeenv\sonetto\libsonetto\include\sonettogauge.h
 	"SonettoMain.h"
 	<OgreOverlayElement.h>
 	<OgreOverlayElementFactory.h>
 	<OgreOverlayManager.h>
 
-1214022750 f:\codeenv\sonetto\libsonetto\include\sonettoinputmanager.h
+1214166194 f:\codeenv\sonetto\libsonetto\include\sonettoinputmanager.h
+	<vector>
 	"SonettoMain.h"
 	<Ogre.h>
-	<OIS/OIS.h>
+	<SDL/SDL_joystick.h>
 
 1171195524 f:\codeenv\sonetto\dependencies\include\ois\ois.h
 	"OISPrereqs.h"
@@ -2816,12 +2817,13 @@
 	"OISInterface.h"
 	"OISEffect.h"
 
-1214016986 f:\codeenv\sonetto\libsonetto\include\sonettokernel.h
+1214161214 f:\codeenv\sonetto\libsonetto\include\sonettokernel.h
 	"SonettoMain.h"
 	<fstream>
 	<stack>
 	<Ogre.h>
 	<OgreVector2.h>
+	<SDL/SDL_video.h>
 	"SonettoAudioManager.h"
 	"SonettoInputManager.h"
 	"SonettoModule.h"
@@ -2835,7 +2837,7 @@
 	"SonettoGauge.h"
 	"SonettoCounter.h"
 
-1214016954 f:\codeenv\sonetto\libsonetto\include\sonettomodule.h
+1214023766 f:\codeenv\sonetto\libsonetto\include\sonettomodule.h
 	"SonettoMain.h"
 	<Ogre.h>
 	"SonettoKernel.h"
@@ -2850,10 +2852,10 @@
 	"OgrePrerequisites.h"
 	"OgreFactoryObj.h"
 
-1121668010 f:\codeenv\sonetto\dependencies\include\zlib\zlib.h
+1121671610 f:\codeenv\sonetto\dependencies\include\zlib\zlib.h
 	"zconf.h"
 
-1121888426 f:\codeenv\sonetto\dependencies\include\zlib\zconf.h
+1117280436 f:\codeenv\sonetto\dependencies\include\zlib\zconf.h
 	<windows.h>
 	<sys/types.h>
 	<unistd.h>
@@ -2900,7 +2902,7 @@
 	"SonettoTailedWindow.h"
 	"SonettoSlimWindow.h"
 
-1214023528 f:\codeenv\sonetto\libsonetto\include\sonettowindow.h
+1214023766 f:\codeenv\sonetto\libsonetto\include\sonettowindow.h
 	<OgreOverlayContainer.h>
 	<OgreVector2.h>
 	"SonettoMain.h"
@@ -2936,16 +2938,1181 @@
 	<OgreResourceManager.h>
 	"SonettoSTR.h"
 
-1214023144 f:\codeenv\sonetto\libsonetto\include\sonettostrserializer.h
+1214023766 f:\codeenv\sonetto\libsonetto\include\sonettostrserializer.h
 	"SonettoMain.h"
 	<OgreSerializer.h>
 
 1213998734 source:f:\codeenv\sonetto\sonettoruntime\resource\resource_d.rc
 
-1214022500 source:f:\codeenv\sonetto\sonettoruntime\src\basicmodule.cpp
+1214160882 source:f:\codeenv\sonetto\sonettoruntime\src\basicmodule.cpp
 	<Ogre.h>
 	"BasicModule.h"
 
-1214022194 f:\codeenv\sonetto\sonettoruntime\include\basicmodule.h
+1214031688 f:\codeenv\sonetto\sonettoruntime\include\basicmodule.h
+	<cstdio>
 	"SonettoModule.h"
+	"SonettoInputManager.h"
+
+1165514534 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogre.h
+	"OgrePrerequisites.h"
+	"OgreAnimation.h"
+	"OgreAnimationState.h"
+	"OgreAnimationTrack.h"
+	"OgreAny.h"
+	"OgreArchive.h"
+	"OgreArchiveManager.h"
+	"OgreAxisAlignedBox.h"
+	"OgreBillboardChain.h"
+	"OgreBillboardSet.h"
+	"OgreBone.h"
+	"OgreCamera.h"
+	"OgreConfigFile.h"
+	"OgreControllerManager.h"
+	"OgreDataStream.h"
+	"OgreEntity.h"
+	"OgreException.h"
+	"OgreFrustum.h"
+	"OgreGpuProgram.h"
+	"OgreGpuProgramManager.h"
+	"OgreHardwareBufferManager.h"
+	"OgreHardwareIndexBuffer.h"
+	"OgreHardwarePixelBuffer.h"
+	"OgreHardwareOcclusionQuery.h"
+	"OgreHardwareVertexBuffer.h"
+	"OgreHardwarePixelBuffer.h"
+	"OgreHighLevelGpuProgram.h"
+	"OgreHighLevelGpuProgramManager.h"
+	"OgreKeyFrame.h"
+	"OgreLight.h"
+	"OgreLogManager.h"
+	"OgreManualObject.h"
+	"OgreMaterial.h"
+	"OgreMaterialManager.h"
+	"OgreMaterialSerializer.h"
+	"OgreMath.h"
+	"OgreMatrix3.h"
+	"OgreMatrix4.h"
+	"OgreMesh.h"
+	"OgreMeshManager.h"
+	"OgreMeshSerializer.h"
+	"OgreOverlay.h"
+	"OgreOverlayContainer.h"
+	"OgreOverlayElement.h"
+	"OgreOverlayManager.h"
+	"OgreParticleAffector.h"
+	"OgreParticleEmitter.h"
+	"OgreParticleSystemManager.h"
+	"OgrePass.h"
+	"OgrePatchMesh.h"
+	"OgrePatchSurface.h"
+	"OgreProfiler.h"
+	"OgreRadixSort.h"
+	"OgreRenderQueueInvocation.h"
+	"OgreRenderQueueListener.h"
+	"OgreRenderSystem.h"
+	"OgreRenderTargetListener.h"
+	"OgreRenderTexture.h"
+	"OgreRenderWindow.h"
+	"OgreResourceBackgroundQueue.h"
+	"OgreResourceGroupManager.h"
+	"OgreRibbonTrail.h"
+	"OgreRoot.h"
+	"OgreSceneManager.h"
+	"OgreSceneManagerEnumerator.h"
+	"OgreSceneNode.h"
+	"OgreSimpleRenderable.h"
+	"OgreSkeleton.h"
+	"OgreSkeletonInstance.h"
+	"OgreSkeletonManager.h"
+	"OgreSkeletonSerializer.h"
+	"OgreStaticGeometry.h"
+	"OgreString.h"
+	"OgreStringConverter.h"
+	"OgreStringVector.h"
+	"OgreSubEntity.h"
+	"OgreSubMesh.h"
+	"OgreTechnique.h"
+	"OgreTextureManager.h"
+	"OgreTextureUnitState.h"
+	"OgreUserDefinedObject.h"
+	"OgreVector2.h"
+	"OgreViewport.h"
+	"OgreCompositor.h"
+	"OgreCompositorManager.h"
+	"OgreCompositorChain.h"
+	"OgreCompositorInstance.h"
+	"OgreCompositionTechnique.h"
+	"OgreCompositionPass.h"
+	"OgreCompositionTargetPass.h"
+	"OgreWindowEventUtilities.h"
+	"OgreShadowCameraSetup.h"
+	"OgreShadowCameraSetupFocused.h"
+	"OgreShadowCameraSetupLiSPSM.h"
+	"OgreShadowCameraSetupPlaneOptimal.h"
+
+1213626576 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreprerequisites.h
+	"OgrePlatform.h"
+	"OgreMemoryManager.h"
+
+1187373210 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreplatform.h
+	"OgreConfig.h"
+	<_mingw.h>
+	"config.h"
+
+1177360570 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreconfig.h
+	"config.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrememorymanager.h
+	"OgrePlatform.h"
+	"OgreStdHeaders.h"
+	"OgreMemoryMacros.h"
+
+1172518172 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrestdheaders.h
+	<cassert>
+	<cstdio>
+	<cstdlib>
+	<ctime>
+	<cstring>
+	<cstdarg>
+	<cmath>
+	<vector>
+	<map>
+	<string>
+	<set>
+	<list>
+	<deque>
+	<queue>
+	<bitset>
+	<ext/hash_map>
+	<ext/hash_set>
+	<hash_set>
+	<hash_map>
+	<algorithm>
+	<functional>
+	<limits>
+	<fstream>
+	<iostream>
+	<iomanip>
+	<sstream>
+	<sys/types.h>
+	<sys/stat.h>
+	<unistd.h>
+	<unistd.h>
+	<dlfcn.h>
+	<unistd.h>
+	<sys/param.h>
+	<CoreFoundation/CoreFoundation.h>
+	<boost/thread/recursive_mutex.hpp>
+
+1174423824 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrememorymacros.h
+
+1171700924 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreanimation.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreIteratorWrappers.h"
+	"OgreAnimable.h"
+	"OgreAnimationTrack.h"
+
+1176238706 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrestring.h
+	"OgrePrerequisites.h"
+	<ext/hash_map>
+
+1183752886 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreiteratorwrappers.h
+	"OgrePrerequisites.h"
+
+1166471356 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreanimable.h
+	"OgrePrerequisites.h"
+	"OgreVector2.h"
+	"OgreVector3.h"
+	"OgreVector4.h"
+	"OgreQuaternion.h"
+	"OgreColourValue.h"
+	"OgreSharedPtr.h"
+	"OgreStringVector.h"
+	"OgreException.h"
+	"OgreAny.h"
+
+1166471356 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrevector2.h
+	"OgrePrerequisites.h"
+	"OgreMath.h"
+
+1168611078 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogremath.h
+	"OgrePrerequisites.h"
+
+1178929062 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrevector3.h
+	"OgrePrerequisites.h"
+	"OgreMath.h"
+	"OgreQuaternion.h"
+
+1174413600 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrequaternion.h
+	"OgrePrerequisites.h"
+	"OgreMath.h"
+
+1166471356 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrevector4.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+
+1171027424 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecolourvalue.h
+	"OgrePrerequisites.h"
+
+1196797924 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogresharedptr.h
+	"OgrePrerequisites.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrestringvector.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreSharedPtr.h"
+
+1182781400 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreexception.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	<exception>
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreany.h
+	"OgrePrerequisites.h"
+	"OgreException.h"
+	"OgreString.h"
+	<algorithm>
+	<typeinfo>
+
+1189092346 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreanimationtrack.h
+	"OgrePrerequisites.h"
+	"OgreSimpleSpline.h"
+	"OgreRotationalSpline.h"
+	"OgreKeyFrame.h"
+	"OgreAnimable.h"
+	"OgrePose.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogresimplespline.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+	"OgreMatrix4.h"
+
+1172400040 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrematrix4.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+	"OgreMatrix3.h"
+	"OgreVector4.h"
+	"OgrePlane.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrematrix3.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+
+1183403830 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreplane.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerotationalspline.h
+	"OgrePrerequisites.h"
+	"OgreQuaternion.h"
+
+1158546986 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrekeyframe.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+	"OgreQuaternion.h"
+	"OgreAny.h"
+	"OgreHardwareVertexBuffer.h"
+	"OgreIteratorWrappers.h"
+
+1171132666 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrehardwarevertexbuffer.h
+	"OgrePrerequisites.h"
+	"OgreHardwareBuffer.h"
+	"OgreSharedPtr.h"
+	"OgreColourValue.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrehardwarebuffer.h
+	"OgrePrerequisites.h"
+
+1173008324 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrepose.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreHardwareVertexBuffer.h"
+	"OgreVector3.h"
+	"OgreIteratorWrappers.h"
+
+1174425192 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreanimationstate.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreController.h"
+	"OgreIteratorWrappers.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecontroller.h
+	"OgrePrerequisites.h"
+	"OgreSharedPtr.h"
+
+1168119608 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrearchive.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreDataStream.h"
+	"OgreSharedPtr.h"
+	"OgreStringVector.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogredatastream.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreSharedPtr.h"
+	<istream>
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrearchivemanager.h
+	"OgrePrerequisites.h"
+	"OgreResourceManager.h"
+	"OgreSingleton.h"
+
+1178128036 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreresourcemanager.h
+	"OgrePrerequisites.h"
+	"OgreResource.h"
+	"OgreResourceGroupManager.h"
+	"OgreIteratorWrappers.h"
+	"OgreCommon.h"
+	"OgreDataStream.h"
+	"OgreStringVector.h"
+	"OgreScriptLoader.h"
+
+1200604056 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreresource.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreSharedPtr.h"
+	"OgreStringInterface.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrestringinterface.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreCommon.h"
+
+1172518172 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecommon.h
+	"OgreString.h"
+	<utility>
+	<vector>
+	<map>
+
+1199664526 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreresourcegroupmanager.h
+	"OgrePrerequisites.h"
+	"OgreSingleton.h"
+	"OgreCommon.h"
+	"OgreDataStream.h"
+	"OgreResource.h"
+	"OgreArchive.h"
+	"OgreIteratorWrappers.h"
+
+1177788562 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogresingleton.h
+	"OgrePrerequisites.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrescriptloader.h
+	"OgrePrerequisites.h"
+	"OgreDataStream.h"
+	"OgreStringVector.h"
+
+1187198398 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreaxisalignedbox.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+	"OgreMatrix4.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrebillboardchain.h
+	"OgrePrerequisites.h"
+	"OgreMovableObject.h"
+	"OgreRenderable.h"
+
+1169641446 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogremovableobject.h
+	"OgrePrerequisites.h"
+	"OgreRenderQueue.h"
+	"OgreAxisAlignedBox.h"
+	"OgreSphere.h"
+	"OgreShadowCaster.h"
+	"OgreFactoryObj.h"
+	"OgreAnimable.h"
+	"OgreAny.h"
+	"OgreUserDefinedObject.h"
+
+1183244990 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerenderqueue.h
+	"OgrePrerequisites.h"
+	"OgreIteratorWrappers.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogresphere.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+
+1169641446 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreshadowcaster.h
+	"OgrePrerequisites.h"
+	"OgreRenderable.h"
+
+1172755640 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerenderable.h
+	"OgrePrerequisites.h"
+	"OgreCommon.h"
+	"OgreRenderOperation.h"
+	"OgreMatrix4.h"
+	"OgreMaterial.h"
+	"OgrePlane.h"
+	"OgreGpuProgram.h"
+	"OgreVector4.h"
+	"OgreException.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerenderoperation.h
+	"OgrePrerequisites.h"
+	"OgreVertexIndexData.h"
+
+1171132666 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrevertexindexdata.h
+	"OgrePrerequisites.h"
+	"OgreHardwareVertexBuffer.h"
+	"OgreHardwareIndexBuffer.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrehardwareindexbuffer.h
+	"OgrePrerequisites.h"
+	"OgreHardwareBuffer.h"
+	"OgreSharedPtr.h"
+
+1168713090 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrematerial.h
+	"OgrePrerequisites.h"
+	"OgreResource.h"
+	"OgreIteratorWrappers.h"
+	"OgreCommon.h"
+	"OgreColourValue.h"
+	"OgreBlendMode.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreblendmode.h
+	"OgrePrerequisites.h"
+	"OgreColourValue.h"
+
+1173768130 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogregpuprogram.h
+	"OgrePrerequisites.h"
+	"OgreResource.h"
+	"OgreSharedPtr.h"
+	"OgreIteratorWrappers.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrefactoryobj.h
+	"OgrePrerequisites.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreuserdefinedobject.h
+	"OgrePrerequisites.h"
+
+1174084358 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrebillboardset.h
+	"OgrePrerequisites.h"
+	"OgreMovableObject.h"
+	"OgreRenderable.h"
+	"OgreRadixSort.h"
+	"OgreCommon.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreradixsort.h
+	"OgrePrerequisites.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrebone.h
+	"OgrePrerequisites.h"
+	"OgreNode.h"
+
+1182781400 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrenode.h
+	"OgrePrerequisites.h"
+	"OgreMatrix3.h"
+	"OgreMatrix4.h"
+	"OgreQuaternion.h"
+	"OgreString.h"
+	"OgreRenderable.h"
+	"OgreIteratorWrappers.h"
+
+1173908146 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecamera.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreMovableObject.h"
+	"OgreMatrix4.h"
+	"OgreVector3.h"
+	"OgrePlane.h"
+	"OgreQuaternion.h"
+	"OgreCommon.h"
+	"OgreFrustum.h"
+	"OgreRay.h"
+
+1165682246 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrefrustum.h
+	"OgrePrerequisites.h"
+	"OgreMovableObject.h"
+	"OgreRenderable.h"
+	"OgreAxisAlignedBox.h"
+	"OgreVertexIndexData.h"
+	"OgreMovablePlane.h"
+
+1166471356 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogremovableplane.h
+	"OgrePrerequisites.h"
+	"OgrePlane.h"
+	"OgreMovableObject.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreray.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+	"OgrePlaneBoundedVolume.h"
+
+1171137280 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreplaneboundedvolume.h
+	"OgrePrerequisites.h"
+	"OgreAxisAlignedBox.h"
+	"OgreSphere.h"
+	"OgreMath.h"
+	"OgrePlane.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreconfigfile.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreStringVector.h"
+	"OgreIteratorWrappers.h"
+	"OgreDataStream.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecontrollermanager.h
+	"OgrePrerequisites.h"
+	"OgreCommon.h"
+	"OgreSingleton.h"
+	"OgreController.h"
+	"OgrePredefinedControllers.h"
+	"OgreTextureUnitState.h"
+	"OgreSharedPtr.h"
+
+1174051348 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrepredefinedcontrollers.h
+	"OgrePrerequisites.h"
+	"OgreCommon.h"
+	"OgreController.h"
+	"OgreFrameListener.h"
+	"OgreGpuProgram.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreframelistener.h
+	"OgrePrerequisites.h"
+
+1183751074 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogretextureunitstate.h
+	"OgrePrerequisites.h"
+	"OgreCommon.h"
+	"OgreBlendMode.h"
+	"OgreMatrix4.h"
+	"OgreIteratorWrappers.h"
+	"OgreString.h"
+	"OgreTexture.h"
+
+1179497760 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogretexture.h
+	"OgrePrerequisites.h"
+	"OgreHardwareBuffer.h"
+	"OgreResource.h"
+	"OgreImage.h"
+
+1157078874 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreimage.h
+	"OgrePrerequisites.h"
+	"OgreCommon.h"
+	"OgrePixelFormat.h"
+	"OgreDataStream.h"
+
+1174248766 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrepixelformat.h
+	"OgrePrerequisites.h"
+	"OgreCommon.h"
+
+1172691454 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreentity.h
+	"OgrePrerequisites.h"
+	"OgreCommon.h"
+	"OgreString.h"
+	"OgreMovableObject.h"
+	"OgreQuaternion.h"
+	"OgreVector3.h"
+	"OgreHardwareBufferManager.h"
+	"OgreMesh.h"
+
+1159153802 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrehardwarebuffermanager.h
+	"OgrePrerequisites.h"
+	"OgreSingleton.h"
+	"OgreHardwareVertexBuffer.h"
+	"OgreHardwareIndexBuffer.h"
+
+1159045760 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogremesh.h
+	"OgrePrerequisites.h"
+	"OgreResource.h"
+	"OgreVertexIndexData.h"
+	"OgreAxisAlignedBox.h"
+	"OgreVertexBoneAssignment.h"
+	"OgreIteratorWrappers.h"
+	"OgreProgressiveMesh.h"
+	"OgreHardwareVertexBuffer.h"
+	"OgreSkeleton.h"
+	"OgreAnimationTrack.h"
+	"OgrePose.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrevertexboneassignment.h
+	"OgrePrerequisites.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreprogressivemesh.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+	"OgreHardwareVertexBuffer.h"
+	"OgreHardwareIndexBuffer.h"
+	"OgreRenderOperation.h"
+
+1163785528 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreskeleton.h
+	"OgrePrerequisites.h"
+	"OgreResource.h"
+	"OgreQuaternion.h"
+	"OgreVector3.h"
+	"OgreIteratorWrappers.h"
+	"OgreStringVector.h"
+
+1160339646 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogregpuprogrammanager.h
+	"OgrePrerequisites.h"
+	"OgreResourceManager.h"
+	"OgreException.h"
+	"OgreGpuProgram.h"
+	"OgreSingleton.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrehardwarepixelbuffer.h
+	"OgrePrerequisites.h"
+	"OgreHardwareBuffer.h"
+	"OgreSharedPtr.h"
+	"OgrePixelFormat.h"
+	"OgreImage.h"
+
+1164564452 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrehardwareocclusionquery.h
+	"OgrePrerequisites.h"
+
+1168541248 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrehighlevelgpuprogram.h
+	"OgrePrerequisites.h"
+	"OgreGpuProgram.h"
+
+1175627924 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrehighlevelgpuprogrammanager.h
+	"OgrePrerequisites.h"
+	"OgreResourceManager.h"
+	"OgreSingleton.h"
+	"OgreException.h"
+	"OgreHighLevelGpuProgram.h"
+
+1199801548 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrelight.h
+	"OgrePrerequisites.h"
+	"OgreColourValue.h"
+	"OgreVector3.h"
+	"OgreVector4.h"
+	"OgreString.h"
+	"OgreMovableObject.h"
+	"OgrePlaneBoundedVolume.h"
+	"OgreShadowCameraSetup.h"
+
+1165533590 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreshadowcamerasetup.h
+	"OgrePrerequisites.h"
+	"OgreMovablePlane.h"
+	"OgreSharedPtr.h"
+
+1163450024 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrelogmanager.h
+	"OgrePrerequisites.h"
+	"OgreLog.h"
+	"OgreSingleton.h"
+	"OgreString.h"
+
+1197489662 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrelog.h
+	"OgrePrerequisites.h"
+
+1174423998 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogremanualobject.h
+	"OgrePrerequisites.h"
+	"OgreMovableObject.h"
+	"OgreRenderable.h"
+	"OgreResourceGroupManager.h"
+
+1161133230 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrematerialmanager.h
+	"OgrePrerequisites.h"
+	"OgreSingleton.h"
+	"OgreResourceManager.h"
+	"OgreMaterial.h"
+	"OgreStringVector.h"
+	"OgreMaterialSerializer.h"
+	"OgreNoMemoryMacros.h"
+	<boost/thread/tss.hpp>
+	"OgreMemoryMacros.h"
+
+1168541248 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrematerialserializer.h
+	"OgrePrerequisites.h"
+	"OgreMaterial.h"
+	"OgreBlendMode.h"
+	"OgreTextureUnitState.h"
+	"OgreGpuProgram.h"
+	"OgreStringVector.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrenomemorymacros.h
+
+1167942512 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogremeshmanager.h
+	"OgrePrerequisites.h"
+	"OgreResourceManager.h"
+	"OgreSingleton.h"
+	"OgreVector3.h"
+	"OgreHardwareBuffer.h"
+	"OgreMesh.h"
+	"OgrePatchMesh.h"
+
+1159153802 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrepatchmesh.h
+	"OgrePrerequisites.h"
+	"OgreMesh.h"
+	"OgrePatchSurface.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrepatchsurface.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+	"OgreString.h"
+	"OgreRenderOperation.h"
+	"OgreAxisAlignedBox.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogremeshserializer.h
+	"OgrePrerequisites.h"
+	"OgreMeshSerializerImpl.h"
+	"OgreSerializer.h"
+
+1167855840 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogremeshserializerimpl.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreSerializer.h"
+	"OgreMaterial.h"
+	"OgreMesh.h"
+	"OgreEdgeListBuilder.h"
+
+1166471356 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreserializer.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreDataStream.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreedgelistbuilder.h
+	"OgrePrerequisites.h"
+	"OgreVector4.h"
+	"OgreHardwareVertexBuffer.h"
+	"OgreRenderOperation.h"
+	"OgreAlignedAllocator.h"
+
+1158979450 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrealignedallocator.h
+	"OgrePrerequisites.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreoverlay.h
+	"OgrePrerequisites.h"
+	"OgreSceneNode.h"
+	"OgreIteratorWrappers.h"
+	"OgreMatrix4.h"
+
+1182781400 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrescenenode.h
+	"OgrePrerequisites.h"
+	"OgreNode.h"
+	"OgreIteratorWrappers.h"
+	"OgreAxisAlignedBox.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreoverlaycontainer.h
+	"OgrePrerequisites.h"
+	"OgreOverlayElement.h"
+	"OgreIteratorWrappers.h"
+
+1172189854 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreoverlayelement.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreRenderable.h"
+	"OgreUTFString.h"
+	"OgreStringInterface.h"
+	"OgreOverlayElementCommands.h"
+	"OgreColourValue.h"
+	"OgreRectangle.h"
+
+1173431518 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreutfstring.h
+	"OgrePrerequisites.h"
+	<iterator>
+	<string>
+	<stdexcept>
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreoverlayelementcommands.h
+	"OgrePrerequisites.h"
+	"OgreStringInterface.h"
+
+1164564452 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerectangle.h
+	"OgrePrerequisites.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreoverlaymanager.h
+	"OgrePrerequisites.h"
+	"OgreSingleton.h"
+	"OgreStringVector.h"
+	"OgreOverlay.h"
+	"OgreScriptLoader.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreparticleaffector.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreStringInterface.h"
+
+1160882396 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreparticleemitter.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreVector3.h"
+	"OgreColourValue.h"
+	"OgreStringInterface.h"
+	"OgreParticleEmitterCommands.h"
+	"OgreParticle.h"
+
+1159482832 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreparticleemittercommands.h
+	"OgrePrerequisites.h"
+	"OgreStringInterface.h"
+
+1160882396 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreparticle.h
+	"OgrePrerequisites.h"
+	"OgreBillboard.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrebillboard.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+	"OgreColourValue.h"
+	"OgreCommon.h"
+
+1168194860 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreparticlesystemmanager.h
+	"OgrePrerequisites.h"
+	"OgreParticleSystem.h"
+	"OgreFrameListener.h"
+	"OgreSingleton.h"
+	"OgreIteratorWrappers.h"
+	"OgreScriptLoader.h"
+	"OgreResourceGroupManager.h"
+
+1159482832 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreparticlesystem.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+	"OgreString.h"
+	"OgreParticleIterator.h"
+	"OgreStringInterface.h"
+	"OgreMovableObject.h"
+	"OgreRadixSort.h"
+	"OgreController.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreparticleiterator.h
+	"OgrePrerequisites.h"
+
+1173821400 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrepass.h
+	"OgrePrerequisites.h"
+	"OgreGpuProgram.h"
+	"OgreColourValue.h"
+	"OgreBlendMode.h"
+	"OgreCommon.h"
+	"OgreLight.h"
+	"OgreTextureUnitState.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreprofiler.h
+	"OgrePrerequisites.h"
+	"OgreSingleton.h"
+	"OgreString.h"
+	"OgreOverlay.h"
+
+1173008324 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerenderqueueinvocation.h
+	"OgrePrerequisites.h"
+	"OgreRenderQueueSortingGrouping.h"
+	"OgreIteratorWrappers.h"
+
+1188506942 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerenderqueuesortinggrouping.h
+	"OgrePrerequisites.h"
+	"OgreIteratorWrappers.h"
+	"OgreMaterial.h"
+	"OgreTechnique.h"
+	"OgrePass.h"
+	"OgreRadixSort.h"
+
+1168713090 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogretechnique.h
+	"OgrePrerequisites.h"
+	"OgreIteratorWrappers.h"
+	"OgreBlendMode.h"
+	"OgreCommon.h"
+	"OgrePass.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerenderqueuelistener.h
+	"OgrePrerequisites.h"
+	"OgreRenderQueue.h"
+
+1182794176 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerendersystem.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreTextureUnitState.h"
+	"OgreCommon.h"
+	"OgreRenderOperation.h"
+	"OgreRenderSystemCapabilities.h"
+	"OgreRenderTarget.h"
+	"OgreRenderTexture.h"
+	"OgreFrameListener.h"
+	"OgreConfigOptionMap.h"
+	"OgreGpuProgram.h"
+	"OgrePlane.h"
+	"OgreIteratorWrappers.h"
+
+1180734148 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerendersystemcapabilities.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+
+1172505114 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerendertarget.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreTextureManager.h"
+	"OgreViewport.h"
+	"OgreTimer.h"
+
+1179497760 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogretexturemanager.h
+	"OgrePrerequisites.h"
+	"OgreResourceManager.h"
+	"OgreTexture.h"
+	"OgreSingleton.h"
+
+1172505114 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreviewport.h
+	"OgrePrerequisites.h"
+	"OgreCommon.h"
+	"OgreColourValue.h"
+
+1164286334 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogretimer.h
+	"OgrePrerequisites.h"
+	"OgrePlatform.h"
+	"WIN32/OgreTimerImp.h"
+	"GLX/OgreTimerImp.h"
+	"OSX/OgreTimerImp.h"
+
+1203716684 f:\codeenv\libraries\ogre_eihort\ogremain\include\win32\ogretimerimp.h
+	"windows.h"
+
+1203716684 f:\codeenv\libraries\ogre_eihort\ogremain\include\glx\ogretimerimp.h
+	"OgrePrerequisites.h"
+
+1203716684 f:\codeenv\libraries\ogre_eihort\ogremain\include\osx\ogretimerimp.h
+	<Ogre/OgrePrerequisites.h>
+
+1181567496 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerendertexture.h
+	"OgrePrerequisites.h"
+	"OgreRenderTarget.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreconfigoptionmap.h
+	"OgrePrerequisites.h"
+	"OgreStringVector.h"
+	"OgreString.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerendertargetlistener.h
+	"OgrePrerequisites.h"
+
+1180128918 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerenderwindow.h
+	"OgrePrerequisites.h"
+	"OgreRenderTarget.h"
+
+1200604056 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreresourcebackgroundqueue.h
+	"OgrePrerequisites.h"
+	"OgreCommon.h"
+	"OgreSingleton.h"
+	"OgreResource.h"
+	<boost/thread/thread.hpp>
+	<boost/thread/condition.hpp>
+
+1198437380 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreribbontrail.h
+	"OgrePrerequisites.h"
+	"OgreBillboardChain.h"
+	"OgreNode.h"
+	"OgreIteratorWrappers.h"
+	"OgreFrameListener.h"
+	"OgreControllerManager.h"
+
+1174538030 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreroot.h
+	"OgrePrerequisites.h"
+	"OgreSingleton.h"
+	"OgreString.h"
+	"OgreSceneManagerEnumerator.h"
+	"OgreResourceGroupManager.h"
+	<exception>
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrescenemanagerenumerator.h
+	"OgrePrerequisites.h"
+	"OgreSceneManager.h"
+	"OgreSingleton.h"
+	"OgreIteratorWrappers.h"
+
+1192054252 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrescenemanager.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreSceneNode.h"
+	"OgrePlane.h"
+	"OgreQuaternion.h"
+	"OgreColourValue.h"
+	"OgreCommon.h"
+	"OgreSceneQuery.h"
+	"OgreAutoParamDataSource.h"
+	"OgreAnimationState.h"
+	"OgreRenderQueue.h"
+	"OgreRenderQueueSortingGrouping.h"
+	"OgreRectangle2D.h"
+	"OgrePixelFormat.h"
+	"OgreResourceGroupManager.h"
+	"OgreTexture.h"
+	"OgreShadowCameraSetup.h"
+	"OgreShadowTextureManager.h"
+	"OgreCamera.h"
+	"OgreInstancedGeometry.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrescenequery.h
+	"OgrePrerequisites.h"
+	"OgreAxisAlignedBox.h"
+	"OgreSphere.h"
+	"OgreRay.h"
+	"OgreRenderOperation.h"
+	"OgrePlaneBoundedVolume.h"
+
+1170609806 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreautoparamdatasource.h
+	"OgrePrerequisites.h"
+	"OgreCommon.h"
+	"OgreMatrix4.h"
+	"OgreVector4.h"
+	"OgreLight.h"
+	"OgreColourValue.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrerectangle2d.h
+	"OgrePrerequisites.h"
+	"OgreSimpleRenderable.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogresimplerenderable.h
+	"OgrePrerequisites.h"
+	"OgreMovableObject.h"
+	"OgreRenderable.h"
+	"OgreAxisAlignedBox.h"
+	"OgreMaterial.h"
+
+1168980574 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreshadowtexturemanager.h
+	"OgrePrerequisites.h"
+	"OgreSingleton.h"
+	"OgrePixelFormat.h"
+	"OgreTexture.h"
+	"OgreIteratorWrappers.h"
+
+1170379880 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreinstancedgeometry.h
+	"OgrePrerequisites.h"
+	"OgreMovableObject.h"
+	"OgreSimpleRenderable.h"
+	"OgreSkeleton.h"
+	"OgreSkeletonInstance.h"
+	"OgreAnimationTrack.h"
+	"OgreBone.h"
+
+1168019276 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreskeletoninstance.h
+	"OgrePrerequisites.h"
+	"OgreSkeleton.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreskeletonmanager.h
+	"OgrePrerequisites.h"
+	"OgreResourceManager.h"
+	"OgreSingleton.h"
+
+1184703914 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreskeletonserializer.h
+	"OgrePrerequisites.h"
+	"OgreSkeleton.h"
+	"OgreSerializer.h"
+
+1174538214 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrestaticgeometry.h
+	"OgrePrerequisites.h"
+	"OgreMovableObject.h"
+	"OgreRenderable.h"
+
+1173545692 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrestringconverter.h
+	"OgrePrerequisites.h"
+	"OgreMath.h"
+	"OgreString.h"
+	"OgreStringVector.h"
+
+1167855840 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogresubentity.h
+	"OgrePrerequisites.h"
+	"OgreString.h"
+	"OgreRenderable.h"
+	"OgreHardwareBufferManager.h"
+
+1167855840 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogresubmesh.h
+	"OgrePrerequisites.h"
+	"OgreVertexIndexData.h"
+	"OgreMaterial.h"
+	"OgreRenderOperation.h"
+	"OgreVertexBoneAssignment.h"
+	"OgreProgressiveMesh.h"
+	"OgreAnimationTrack.h"
+
+1159153802 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecompositor.h
+	"OgrePrerequisites.h"
+	"OgreIteratorWrappers.h"
+	"OgreResource.h"
+
+1197835274 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecompositormanager.h
+	"OgrePrerequisites.h"
+	"OgreResourceManager.h"
+	"OgreCompositor.h"
+	"OgreRectangle2D.h"
+	"OgreCompositorSerializer.h"
+	"OgreRenderSystem.h"
+	"OgreNoMemoryMacros.h"
+	<boost/thread/tss.hpp>
+	"OgreMemoryMacros.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecompositorserializer.h
+	"OgrePrerequisites.h"
+	"OgreDataStream.h"
+
+1204221936 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecompositorchain.h
+	"OgrePrerequisites.h"
+	"OgreRenderTargetListener.h"
+	"OgreRenderQueueListener.h"
+	"OgreCompositorInstance.h"
+	"OgreCompositor.h"
+
+1204579802 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecompositorinstance.h
+	"OgrePrerequisites.h"
+	"OgreMaterial.h"
+	"OgreTexture.h"
+	"OgreRenderQueue.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecompositiontechnique.h
+	"OgrePrerequisites.h"
+	"OgrePixelFormat.h"
+	"OgreIteratorWrappers.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecompositionpass.h
+	"OgrePrerequisites.h"
+	"OgreMaterial.h"
+	"OgreRenderSystem.h"
+	"OgreRenderQueue.h"
+
+1187295834 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrecompositiontargetpass.h
+	"OgrePrerequisites.h"
+	"OgreIteratorWrappers.h"
+
+1205931156 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrewindoweventutilities.h
+	"OgrePrerequisites.h"
+	"OgrePlatform.h"
+	<windows.h>
+
+1166117200 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreshadowcamerasetupfocused.h
+	"OgrePrerequisites.h"
+	"OgreShadowCameraSetup.h"
+	"OgrePolygon.h"
+	"OgreConvexBody.h"
+
+1173908146 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrepolygon.h
+	"OgrePrerequisites.h"
+	"OgreVector3.h"
+
+1173908146 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreconvexbody.h
+	"OgrePrerequisites.h"
+	"OgrePolygon.h"
+
+1166021680 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreshadowcamerasetuplispsm.h
+	"OgrePrerequisites.h"
+	"OgreShadowCameraSetupFocused.h"
+
+1166187180 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreshadowcamerasetupplaneoptimal.h
+	"OgrePrerequisites.h"
+	"OgreShadowCameraSetup.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrearchivefactory.h
+	"OgrePrerequisites.h"
+	"OgreFactoryObj.h"
+
+1172519706 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreoverlayelementfactory.h
+	"OgrePrerequisites.h"
+	"OgreOverlayElement.h"
+	"OgrePanelOverlayElement.h"
+	"OgreBorderPanelOverlayElement.h"
+	"OgreTextAreaOverlayElement.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrepaneloverlayelement.h
+	"OgreOverlayContainer.h"
+
+1156335588 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogreborderpaneloverlayelement.h
+	"OgrePanelOverlayElement.h"
+
+1172189854 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogretextareaoverlayelement.h
+	"OgreOverlayElement.h"
+	"OgreFont.h"
+
+1172519706 f:\codeenv\libraries\ogre_eihort\ogremain\include\ogrefont.h
+	"OgrePrerequisites.h"
+	"OgreResource.h"
+	"OgreTexture.h"
+	"OgreMaterial.h"
+	"OgreCommon.h"
+
+1213998736 source:f:\codeenv\sonetto\sonettoruntime\resource\resource.rc
 

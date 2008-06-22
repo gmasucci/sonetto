@@ -23,13 +23,17 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef BASICMODULE_H
 #define BASICMODULE_H
 
+#include <cstdio>
 #include "SonettoModule.h"
+#include "SonettoInputManager.h"
 
 class BasicModule : public Sonetto::Module
 {
     public:
         void enter();
-        void update(Ogre::Real deltatime) {}
+
+        void update(Ogre::Real deltatime);
+
         void exit()   { Module::exit();   }
         void wakeup() { Module::wakeup(); }
 };

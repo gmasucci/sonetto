@@ -2,7 +2,7 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
 	<File name="..\include\MainFrame.h" open="0" top="0" tabpos="7">
-		<Cursor position="487" topLine="9" />
+		<Cursor position="350" topLine="0" />
 	</File>
 	<File name="..\include\MainFrameImpl.h" open="0" top="0" tabpos="8">
 		<Cursor position="724" topLine="12" />
