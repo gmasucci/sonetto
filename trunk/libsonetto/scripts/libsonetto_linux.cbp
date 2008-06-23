@@ -50,13 +50,10 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="-mthreads" />
 			<Add option="-fmessage-length=0" />
 			<Add option="-fexceptions" />
 			<Add option="-fident" />
 			<Add option="-D_STFU_VORBIS" />
-			<Add option="-DWIN32" />
-			<Add option="-D_WINDOWS" />
 			<Add option="-DSONETTO_DLL_BUILD" />
 			<Add directory="..\include" />
 			<Add directory="..\dependencies\include" />

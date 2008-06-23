@@ -30,6 +30,8 @@ http://www.gnu.org/copyleft/lesser.txt
 #   else
 #       define SONETTO_EXPORT __declspec( dllimport )
 #   endif
+#else
+#   define SONETTO_EXPORT
 #endif
 
 #include <AL/al.h>
