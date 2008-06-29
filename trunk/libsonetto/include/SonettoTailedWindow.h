@@ -40,11 +40,11 @@ namespace Sonetto
     {
         friend class TailedBorderRenderable;
     public:
-        /// Constructor.
+        /// @brief Constructor.
         TailedWindow(const Ogre::String& name);
-        /// Destructor.
+        /// @brief Destructor.
         virtual ~TailedWindow();
-        /// Initialise
+        /// @brief Initialise.
         virtual void initialise (void);
         /** @brief Set the WindowSkin this element will use.
          *
@@ -75,98 +75,98 @@ namespace Sonetto
         void setBorderAlpha(Ogre::Real alpha);
         /// @brief Get Border Alpha.
         Ogre::Real getBorderAlpha(void);
-        /** Show or Hide the TailedWindow Tail, set it's direction and it's position.
+        /** @brief Show or Hide the TailedWindow Tail, set it's direction and it's position.
         *
         * @param visible The tail visibility, false for invisible and true for visible.
         * @param dir The tail direction, false is down, true is up.
         * @param dir The tail position, range from 0.0 to 1.0, from one side of the TailedWindow to the other.
         */
         void setWindowTail(bool visible, bool dir, float pos);
-        /** Show or Hide the TailedWindow Tail.
+        /** @brief Show or Hide the TailedWindow Tail.
         *
         * @param visible The tail visibility, false for invisible and true for visible.
         */
         void setTailVisibility(bool visible);
-        /// Return whether the tail is visible or not.
+        /// @brief Return whether the tail is visible or not.
         bool isVisible();
-        /** Set tail direction.
+        /** @brief Set tail direction.
         *
         * @param dir The tail direction, false is down, true is up.
         */
         void setTailDirection(bool dir);
-        /// Return the tail direction.
+        /// @brief Return the tail direction.
         bool getTailDirection();
-        /** Set tail position.
+        /** @brief Set tail position.
         *
         * @param dir The tail position, range from 0.0 to 1.0, from one side of the TailedWindow to the other.
         */
         void setTailPosition(float pos);
-        /// Return the tail position.
+        /// @brief Return the tail position.
         float getTailPosition();
         /// @brief Tells this element how to interpret the position and dimension values it is given.
         void setScrMetricsMode(ScreenMetricsMode smm);
         /// @brief Get this element metrics mode.
         ScreenMetricsMode getScrMetricsMode(void);
-        /// See OverlayElement.
+        /// @brief See Ogre::OverlayElement.
         virtual const Ogre::String& getTypeName(void) const;
-        /// See Renderable.
+        /// @brief See Ogre::Renderable.
         void getRenderOperation(Ogre::RenderOperation& op);
-        /// Overridden from OverlayContainer.
+        /// @brief Overridden from Ogre::OverlayContainer.
         void _updateRenderQueue(Ogre::RenderQueue* queue);
-        /// Visit Renderables (only for Ogre 1.5.0 and up)
-        /*
+        /* /// Visit Renderables (only for Ogre 1.5.0 and up)
+
         void visitRenderables(Ogre::Renderable::Visitor* visitor, bool debugRenderables = false);
         */
-        /// Overridden from OverlayContaienr.
+        /// @brief Overridden from Ogre::OverlayContainer.
         void _update(void);
     protected:
-        /// Internal method for setting up geometry, called by OverlayElement::update.
+        /// @brief Internal method for setting up geometry, called by Ogre::OverlayElement::update.
         virtual void updatePositionGeometry(void);
-        /// Called to update the texture coords.
+        /// @brief Called to update the texture coords.
         virtual void updateTextureGeometry(void);
-        /// Called to update the border colors.
+        /// @brief Called to update the border colors.
         void updateBorderColors(void);
-        /// Called to update the background colors.
+        /// @brief Called to update the background colors.
         void updateWindowColors(void);
-        /// Called to calculate the window's vertexes
+        /// @brief Called to calculate the window's vertexes
         void calculatePosition(void);
-        /// Called to calculate the window's background texture coordinates
+        /// @brief Called to calculate the window's background texture coordinates
         void calculateTexCoord(void);
-        /// This Element's WindowSkin.
+        /// @brief This Element's WindowSkin.
         WindowSkinPtr mpWindowSkin;
-        /// This Element's Window Type.
+        /// @brief This Element's Window Type.
         WindowType mWindowType;
-        /// Window Alpha.
+        /// @brief Window Alpha.
         Ogre::Real mWindowAlpha;
-        /// Border Alpha.
+        /// @brief Border Alpha.
         Ogre::Real mBorderAlpha;
-        /// Whether updating the window colors is needed.
+        /// @brief Whether updating the window colors is needed.
         bool mUpdateWindowColors;
-        /// Whether updating the border colors is needed.
+        /// @brief Whether updating the border colors is needed.
         bool mUpdateBorderColors;
-        /// Window Border Renderable Pointer.
+        /// @brief Window Border Renderable Pointer.
         TailedBorderRenderable * mpBorderRenderable;
-        /// Tail Visibility
+        /// @brief Tail Visibility
         bool mTailVisible;
-        /// Tail Direction
+        /// @brief Tail Direction
         bool mTailDirection;
-        /// Tail Position
+        /// @brief Tail Position
         float mTailPosition;
-        /// Window vertex coordinates.
+        /// @brief Window vertex coordinates.
         Ogre::Vector2 mPosCoord[TAILED_NUM_VERTEX];
-        /// Background texture coordinates.
+        /// @brief Background texture coordinates.
         Ogre::Vector2 mTexCoord[TAILED_NUM_VERTEX];
-        /// This Element's Screen Metrics Mode.
+        /// @brief This Element's Screen Metrics Mode.
         ScreenMetricsMode mScrMetricsMode;
-        /// Viewport Aspect Ratio.
+        /// @brief Viewport Aspect Ratio.
         Ogre::Real mAspectRatio;
-        /// Window Render Operation.
+        /// @brief Window Render Operation.
         Ogre::RenderOperation mWindowRenderOp;
-        /// Border Render Operation.
+        /// @brief Border Render Operation.
         Ogre::RenderOperation mBorderRenderOp;
-        /// This Object's Type Name.
+        /// @brief This Object's Type Name.
         static Ogre::String msTypeName;
-        /** Linear interpolation, interpolate between two values
+        /** @brief Linear interpolation, interpolate between two values
         *
         * @param a The initial value.
         * @param b The destiny value.
@@ -177,7 +177,7 @@ namespace Sonetto
             return a + t * (b - a);
         }
     };
-    /** Class for rendering the border of a Window.
+    /** @brief Class for rendering the border of a Window.
      *  @remarks
      *  We need this because we have to render twice, once with the inner window's repeating
      *  material (handled by superclass) and once for the border's separate material.
@@ -186,7 +186,7 @@ namespace Sonetto
     protected:
         TailedWindow * mpParent;
     public:
-        /// Constructed with pointers to parent.
+        /// @brief Constructed with pointers to parent.
         TailedBorderRenderable(TailedWindow* parent) : mpParent(parent)
         {
             mUseIdentityProjection = true;

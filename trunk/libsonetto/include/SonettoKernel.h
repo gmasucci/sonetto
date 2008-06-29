@@ -52,25 +52,25 @@ namespace Sonetto
         friend class InputManager;
         friend class AudioManager;
 
-        /// Return the singleton pointer to this class.
+        /// @brief Return the singleton pointer to this class.
         inline static Kernel *get() { return mSingleton; }
 
-        /// Check if the kernel is initialised.
+        /// @brief Check if the kernel is initialised.
         inline static bool isInitialised() { return mSingleton; }
 
-        /** Create a Sonetto singleton and initialises Ogre, SDL, and other Sonetto dependencies
+        /** @brief Create a Sonetto singleton and initialises Ogre, SDL, and other Sonetto dependencies
         @return
             Whether it was successful or not.
         */
         static bool create();
 
-        /// Deinitialise everything initialised before by initialise().
+        /// @brief Deinitialise everything initialised before by initialise().
         static bool destroy();
 
-        /// Start the game's Main Loop
+        /// @brief Start the game's Main Loop
         int run();
 
-        /** Add a module in the module stack
+        /** @brief Add a module in the module stack
         @remarks
             The module in the top of the stack is
             Allways the active module, basically,
@@ -85,10 +85,10 @@ namespace Sonetto
         */
         void pushModule(Module *pModule,bool haltMode = false);
 
-        /// Remove a module from the top of the stack.
+        /// @brief Remove a module from the top of the stack.
         void popModule();
 
-        /// Shutdown / Close the game.
+        /// @brief Shutdown / Close the game.
         void shutdown() { mShutdown = true; }
 
         Ogre::Viewport     *getViewport();
@@ -99,22 +99,22 @@ namespace Sonetto
         InputManager *getInputMan();
         AudioManager *getAudioMan();
 
-        /// Load and parse the configuration file.
+        /// @brief Load and parse the configuration file.
         std::map<std::string,std::string> Kernel::loadConfig(const char *fname);
     private:
-        /// Default constructor.
+        /// @brief Constructor.
         Kernel();
 
-        /// Default destructor.
+        /// @brief Destructor.
         ~Kernel();
     public:
-        /// Flag indicating the program will be closed.
+        /// @brief Flag indicating the program will be closed.
         bool mShutdown;
 
-        /// Static pointer to this class.
+        /// @brief Static pointer to this class.
         static Kernel *mSingleton;
 
-        /// Module List stack (holds the active modules).
+        /// @brief Module List stack (holds the active modules).
         std::stack<Module *> mModuleList;
 
         // SDL pointers.

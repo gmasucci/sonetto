@@ -34,16 +34,16 @@ namespace Sonetto
 {
     using namespace Ogre;
 
-    /** Factory for creating CustomTextElement instances. */
+    /// @brief Factory for creating CustomTextElement instances.
     class SONETTO_EXPORT TextElementFactory: public OverlayElementFactory
     {
     public:
-        /** See OverlayElementFactory */
+        /// @brief See OverlayElementFactory
         OverlayElement* createOverlayElement(const String& instanceName)
         {
             return new Sonetto::TextElement(instanceName);
         }
-        /** See OverlayElementFactory */
+        /// @brief See OverlayElementFactory
         const String& getTypeName(void) const
         {
             static String name = "Text";

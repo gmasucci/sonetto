@@ -79,20 +79,20 @@ namespace Sonetto {
         TexCoord tail_down;
     };
 
-    /** @brief structure used to store glyph data.
+    /** @brief Structure used to store glyph data.
      *
      * This structure is used to store the texture coordinates and horizontal offset for each character.
      */
     struct SONETTO_EXPORT Glyphstruct {
-        /// This is the top-left texture UV coordinate for this glyph.
+        /// @brief This is the top-left texture UV coordinate for this glyph.
         Ogre::Vector2 texcoord0;
-        /// This is the top-right texture UV coordinate for this glyph.
+        /// @brief This is the top-right texture UV coordinate for this glyph.
         Ogre::Vector2 texcoord1;
-        /// This is the bottom-left texture UV coordinate for this glyph.
+        /// @brief This is the bottom-left texture UV coordinate for this glyph.
         Ogre::Vector2 texcoord2;
-        /// This is the bottom-right texture UV coordinate for this glyph.
+        /// @brief This is the bottom-right texture UV coordinate for this glyph.
         Ogre::Vector2 texcoord3;
-        /// This is the horizontal offset, the horizontal size for this glyph.
+        /// @brief This is the horizontal offset, the horizontal size for this glyph.
         float x_offset;
     };
 
@@ -106,26 +106,26 @@ namespace Sonetto {
         * @param ny is the number of vertical glyphs in the texture.
         */
         GlyphTable(unsigned long nx = 0, unsigned long ny = 0) : x(nx),y(ny) {}
-        /// Number of horizontal glyphs in the texture.
+        /// @brief Number of horizontal glyphs in the texture.
         Ogre::uint32 x;
-        /// Number of vertical glyphs in the texture.
+        /// @brief Number of vertical glyphs in the texture.
         Ogre::uint32 y;
     };
 
-    /** @brief ???.
+    /** @brief ???
      *
      * Need to redo this, ignore.
      */
     struct SONETTO_EXPORT GlyphHeader {
-        /// Default Constructor.
+        /// @brief Constructor.
         GlyphHeader() {}
-        /// Number of glyphs per line and number of lines.
+        /// @brief Number of glyphs per line and number of lines.
         GlyphTable glyph_tbl;
-        /// Default Vertical Space for each new line.
+        /// @brief Default Vertical Space for each new line.
         float default_y_space;
-        /// Total number of Glyphs
+        /// @brief Total number of Glyphs
         Ogre::uint32 num_glyphs;
-        // Offset value for Glyph Mapping
+        /// @brief Offset value for Glyph Mapping
         Ogre::Vector2 glyph_coord_offset;
     };
 

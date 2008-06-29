@@ -34,11 +34,11 @@ namespace Sonetto {
 
     class SONETTO_EXPORT WindowSkin : public Ogre::Resource {
     public:
-        /// Constructor.
+        /// @brief Constructor.
         WindowSkin(Ogre::ResourceManager *creator, const Ogre::String &name,
                    Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual = false,
                    Ogre::ManualResourceLoader *loader = 0);
-        /// Destructor.
+        /// @brief Destructor.
         virtual ~WindowSkin();
 
     //protected: Let's just keep things simple for now.
@@ -104,7 +104,7 @@ namespace Sonetto {
             }
         }
 
-        /// Operator used to convert a ResourcePtr to a WindowSkinPtr
+        /// @brief Operator used to convert a Ogre::ResourcePtr into a WindowSkinPtr
         WindowSkinPtr& operator=(const Ogre::ResourcePtr& r) {
             if (pRep == static_cast<WindowSkin*>(r.getPointer()))
                 return *this;

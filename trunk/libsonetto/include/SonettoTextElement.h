@@ -63,19 +63,19 @@ namespace Sonetto
         void _update(void); // Overridden from OverlayElement.
 
         // Aditional, ultility functions
-        /// Get the specified string lenght on screen
+        /// @brief Get the specified string lenght on screen
         Ogre::Real getLineLenght(const char * line);
-        /// Get the largest line on a string
+        /// @brief Get the largest line on a string
         const char * getLargestLine(const char * str);
-        /// Get the lenght of the largest line on a string
+        /// @brief Get the lenght of the largest line on a string
         Ogre::Real getLargestLineLenght(const char * str);
-        /// Get the heigh of the text
+        /// @brief Get the heigh of the text
         Ogre::Real getStringHeight(const char * str);
-        /// Return the dimensions of the text on the screen
+        /// @brief Return the dimensions of the text on the screen
         Ogre::Vector2 getTextDimensions();
 
     protected:
-        /// Member Variables
+        // Member Variables
         static String msTypeName; // Type name
 
         // Text data
@@ -115,7 +115,7 @@ namespace Sonetto
         Real mDefAnimSpeed; // Default Speed wich the text will appear on the screen
         Real mFadeSpeed; // Speed wich the text will fade on the screen
 
-        /// Member Functions
+        // Member Functions
         void allocateFadeList(size_t size, float value = 0.0f); // Allocate the fade list
         void animate(); // Function used to manage the text animation
         void checkMemoryAllocation(size_t num_chars); // Internal method to allocate memory, only reallocates when necessary

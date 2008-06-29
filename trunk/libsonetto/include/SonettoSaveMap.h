@@ -25,18 +25,20 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoMain.h"
 
 namespace Sonetto {
-    /** MemoryFrame for use by the SaveMap,
+    /** @brief MemoryFrame for use by the SaveMap,
         it stores each SaveMap object's pointer and size.
         (Note that it stores a local pointer)
     */
     struct SONETTO_EXPORT MemoryFrame
     {
-        /// Local pointer to the object inside a SaveMap.
+        /// @brief Local pointer to the object inside a SaveMap.
         size_t mDataPtr;
-        /// The size of the object inside a SaveMap.
+        /// @brief The size of the object inside a SaveMap.
         size_t mDataSize;
     };
-    /** The save map is a static memory block that must be initialized
+    /** @brief Save memory block
+
+        The SaveMap is a static memory block that must be initialized
         before using, also note that you can't change it's structure or
         size after the initialization.
 
@@ -46,70 +48,69 @@ namespace Sonetto {
     class SONETTO_EXPORT SaveMap
     {
     public:
-        /// Default constructor.
+        /// @brief Constructor.
         SaveMap();
-        /// Default destructor.
+        /// @brief Destructor.
         ~SaveMap();
-        /** Initialize the SaveMap, after the save map is initialized
+        /** @brief Initialize the SaveMap, after the save map is initialized
             it will not be possible to modify the structure!
         */
         void initialize();
-        /// Return a pointer to the start of the memory frame.
+        /// @brief Return a pointer to the start of the memory frame.
         void * getMemoryFramePtr();
-        /// Return the Memory Frame size.
+        /// @brief Return the Memory Frame size.
         size_t getMemoryFrameSize();
-        /// Return a pointer to the start of the memory block.
+        /// @brief Return a pointer to the start of the memory block.
         void * getMemoryPtr();
-        /// Return the Memory Block size.
+        /// @brief Return the Memory Block size.
         size_t getMemorySize();
-        /** Register a object in the memory module,
-            it returns it's ID, use it to get the pointer
+        /** @brief Register a object in the memory module
+
+            It returns its ID. Use it to get the pointer
             after the SaveMap is initialized.
-            MUST be done before initializing!
+            This MUST be done before initializing!
         */
         size_t registerObject(size_t objSize);
-        /** Get a pointer to the object inside
-            the memory frame.
-        */
+        /// @brief Get a pointer to the object inside the memory frame
         void * getObject(size_t objectID);
-        /// Return the object size.
+        /// @brief Return the object size.
         size_t getObjectSize(size_t objectID);
-        /// Return the number of objects.
+        /// @brief Return the number of objects.
         size_t getNumObjects();
-        /** Reset the SaveMap data,
+        /** @brief Reset the SaveMap data,
             Only works when it is already initialized,
             It will empty all the SaveMap, but will not
             reset the MemoryFrame.
         */
         void resetSaveMap();
-        /** Write data to a object in SaveMap.
+        /** @brief Write data to a object in SaveMap.
             If the original object is bigger than the destiny object
             it will crop everything bigger, if it's smaller, it will
             fill the space with zeroes.
         */
         void writeToObject(void * ptr, size_t size, size_t objID);
-        /** Overwrite data to a object in SaveMap.
+        /** @brief Overwrite data to a object in SaveMap.
             Similar to the writeToMemory(), it will crop data bigger than
             the destiny object, but if the object is smaller, it will
             leave the original contents and only overwrite part of it.
         */
         void overwriteToObject(void * ptr, size_t size, size_t objID);
-        /// Reset the specified object to zero.
+        /// @brief Reset the specified object to zero.
         void SaveMap::resetObject(size_t objID);
     private:
-        /// Check if it's initialized.
+        /// @brief Check if it's initialized.
         bool mInitialized;
-        /// A pointer to the beginning of the memory frame.
+        /// @brief A pointer to the beginning of the memory frame.
         void * mMemoryFrameStart;
-        /// The total size of the memory block.
+        /// @brief The total size of the memory block.
         size_t mMemoryFrameSize;
-        /// Total number of elements in the SaveMap.
+        /// @brief Total number of elements in the SaveMap.
         size_t mMemoryFrameNum;
-        /// The total size of the memory block.
+        /// @brief The total size of the memory block.
         size_t mMemorySize;
-        /// Stores the MemoryFrame.
+        /// @brief Stores the MemoryFrame.
         std::vector<MemoryFrame> mMemoryFrame;
-        /// Stores the actual SaveMap data.
+        /// @brief Stores the actual SaveMap data.
         char * mMemoryData;
     };
 

@@ -29,7 +29,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoMain.h"
 
 namespace Sonetto {
-    /** Counter object for showing Integer values.
+    /** @brief Counter object for showing Integer values.
     @remarks
         Please note that setDimensions() function will
         be each Digit, not the entire object.
@@ -37,13 +37,13 @@ namespace Sonetto {
     class SONETTO_EXPORT Counter : public Ogre::OverlayElement
     {
     public:
-        /// Constructor.
+        /// @brief Constructor.
         Counter(const Ogre::String &name);
-        /// Destructor.
+        /// @brief Destructor.
         virtual ~Counter();
-        /// Initialisation function.
+        /// @brief Initialisation function.
         virtual void initialise(void);
-        /** Set this element flags.
+        /** @brief Set this element flags.
         @remarks
             You must use bitwise operators to set the desired flags,
             note that the previous configuration will be overriden by this operation.
@@ -53,26 +53,26 @@ namespace Sonetto {
             FLAG_SHOW_MAXIMUM_VALUE and FLAG_COLOR_NUMBERS are on by default.
         */
         void setFlags(unsigned char flags);
-        /// Return the current flag configuration.
+        /// @brief Return the current flag configuration.
         unsigned char getFlags();
-        /** Set the number of maximum digits this object will display.
+        /** @brief Set the number of maximum digits this object will display.
         @remarks
             Note that the number of digits if the flag FLAG_SHOW_MAXIMUM_VALUE
             is on is the double plus one (for the separators)
             as it will show the maximum value too.
         */
         void setNumDigits(unsigned char num);
-        /// Return the number of digits this object will display.
+        /// @brief Return the number of digits this object will display.
         unsigned char getNumDigits();
-        /** Set the percentage threshold.
+        /** @brief Set the percentage threshold.
         @remarks
             If the current value is n% below the maximum value,
             the number will be shown in the specified color.
         */
         void setThreshold(char percentage);
-        /// Return the current threshold for this object.
+        /// @brief Return the current threshold for this object.
         char getThreshold();
-        /** Set the current value pointer for this counter.
+        /** @brief Set the current value pointer for this counter.
         @remarks
             This is the Current Value Pointer.
             The object will read from here every frame, so
@@ -80,9 +80,9 @@ namespace Sonetto {
             is pointer set.
         */
         void setCurValPtr(int * ptr);
-        /// Get the Current Value Pointer.
+        /// @brief Get the Current Value Pointer.
         int * getCurValPtr();
-        /** Set the maximum value pointer for this counter.
+        /** @brief Set the maximum value pointer for this counter.
         @remarks
             This is the Maximum Value Pointer.
             The object will read from here every frame, so
@@ -90,56 +90,56 @@ namespace Sonetto {
             is pointer set.
         */
         void setMaxValPtr(int * ptr);
-        /// Get the Maximum Value Pointer.
+        /// @brief Get the Maximum Value Pointer.
         int * getMaxValPtr();
 
         /*  Those functions are temporary!
             Later, they will be replaced by
             a "System".
         */
-        /// Set the inclination level.
+        /// @brief Set the inclination level.
         void setInclination(Ogre::Real incl);
-        /// Set the Object colors.
+        /// @brief Set the Object colors.
         void setColors(const Ogre::ColourValue &normal,const Ogre::ColourValue &below,const Ogre::ColourValue &zero);
-        /// Set this object's material name.
+        /// @brief Set this object's material name.
         void setMaterialName(const Ogre::String& matName); // Overridden from OverlayElement.
         /* End of temporary functions */
 
-        /// Tells this element how to interpret the position and dimension values it is given.
+        /// @brief Tells this element how to interpret the position and dimension values it is given.
         void setScrMetricsMode(ScreenMetricsMode smm);
-        /// Get this element metrics mode.
+        /// @brief Get this element metrics mode.
         ScreenMetricsMode getScrMetricsMode(void);
-        /// Get the object type name.
+        /// @brief Get the object type name.
         virtual const Ogre::String& getTypeName(void) const; // See OverlayElement.
-        /// Return the Render Operation for this object.
+        /// @brief Return the Render Operation for this object.
         void getRenderOperation(Ogre::RenderOperation& op); // See Renderable.
-        /// Update Function
+        /// @brief Update Function
         void _update(void); // Overridden from OverlayElement.
-        /// Enum used to set the flags for this object
+        /// @brief Enum used to set the flags for this object
         enum CounterFlags {
-            /// Show Maximum Value (separated by an '/')
+            /// @brief Show Maximum Value (separated by an '/')
             FLAG_SHOW_MAXIMUM_VALUE = 0x01,
-            /// Show Zeroes in front of numbers. ( e.g: 0001 )
+            /// @brief Show Zeroes in front of numbers. ( e.g: 0001 )
             FLAG_SHOW_ZEROES = 0x2,
-            /// Color numbers when current value is below n% of maximum value.
+            /// @brief Color numbers when current value is below n% of maximum value.
             FLAG_COLOR_NUMBERS = 0x04
         };
     private:
-        /// Digit Aspect data.
+        /// @brief Digit Aspect data.
         Ogre::Real t_left, b_left, t_right, b_right, top, bottom;
-        /// Viewport Aspect Ratio.
+        /// @brief Viewport Aspect Ratio.
         Ogre::Real mViewportAspect;
-        /// Counter Inclination Level.
+        /// @brief Counter Inclination Level.
         Ogre::Real mInclination;
-        /// Space allocated in memory for this object.
+        /// @brief Space allocated in memory for this object.
         unsigned char mAllocSize;
-        /// This Element's Screen Metrics Mode.
+        /// @brief This Element's Screen Metrics Mode.
         ScreenMetricsMode mScrMetricsMode;
-        /// Object Type Name.
+        /// @brief Object Type Name.
         static Ogre::String msTypeName;
-        /// Render Operation.
+        /// @brief Render Operation.
         Ogre::RenderOperation mRenderOp;
-        /** Counter configuration flags.
+        /** @brief Counter configuration flags.
         @remarks
             The bits stands for the folowing flags:
             0x01 - Show Maximum Value (separated by an '/')
@@ -147,47 +147,48 @@ namespace Sonetto {
             0x04 - Color numbers when current value is below n% of maximum value.
         */
         unsigned char mFlags;
-        /// Maximum number of digits to show.
+        /// @brief Maximum number of digits to show.
         unsigned char mNumDigits;
-        /** Threshold percentage.
+        /** @brief Threshold percentage.
         @remarks
              Values below n% of the maximun value will be shown in a different color.
              The percentage ranges from 0 to 100.
         */
         char mThreshold;
-        /// Pointer to a (int) value to display.
+        /// @brief Pointer to a (int) value to display.
         int * mCurrentValue;
-        /// Pointer to a Maximum value to use as basis for calculations.
+        /// @brief Pointer to a Maximum value to use as basis for calculations.
         int * mMaxValue;
-        /// Normal counter color.
+        /// @brief Normal counter color.
         Ogre::ColourValue mNormalColor;
-        /// Value below threshold color.
+        /// @brief Value below threshold color.
         Ogre::ColourValue mBelowThrColor;
-        /// Zero value color.
+        /// @brief Zero value color.
         Ogre::ColourValue mZeroValColor;
-        /// Allocate the memory to hold the digits.
+        /// @brief Allocate the memory to hold the digits.
         void allocateMemory(char numchar);
-        /// Unused, Inherited function.
+        /// @brief Unused, Inherited function.
         virtual void updatePositionGeometry(); // Inherited function
-        /// Unused, Inherited function.
+        /// @brief Unused, Inherited function.
         virtual void updateTextureGeometry(); // Inherited function
-        /// Simple Power of Function.
+        /// @brief Simple Power of Function.
         int simplePow(int a, char b);
-        /// Return the specified digit.
+        /// @brief Return the specified digit.
         char getDigit(int value, char idx);
-        /// Specialized function to draw the digits on screen.
+        /// @brief Specialized function to draw the digits on screen.
         void drawDigit(float *& pvert, Ogre::RGBA *& pcolor, char digit, Ogre::RGBA color, float offset, float depth);
     };
 
     class SONETTO_EXPORT CounterFactory : public Ogre::OverlayElementFactory
     {
     public:
-        /** See OverlayElementFactory */
+        /// @brief See OverlayElementFactory
         Ogre::OverlayElement* createOverlayElement(const Ogre::String& instanceName)
         {
             return new Sonetto::Counter(instanceName);
         }
-        /** See OverlayElementFactory */
+
+        /// @brief See OverlayElementFactory
         const Ogre::String& getTypeName(void) const
         {
             static Ogre::String name = "Counter";

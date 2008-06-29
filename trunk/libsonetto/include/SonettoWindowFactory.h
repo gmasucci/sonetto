@@ -35,12 +35,12 @@ namespace Sonetto
     class SONETTO_EXPORT WindowFactory: public OverlayElementFactory
     {
     public:
-        /** See OverlayElementFactory */
+        /// @brief See OverlayElementFactory
         OverlayElement* createOverlayElement(const String& instanceName)
         {
             return new Sonetto::Window(instanceName);
         }
-        /** See OverlayElementFactory */
+        /// @brief See OverlayElementFactory
         const String& getTypeName(void) const
         {
             static String name = "Window";
@@ -51,12 +51,12 @@ namespace Sonetto
     class SONETTO_EXPORT TailedWindowFactory: public OverlayElementFactory
     {
     public:
-        /** See OverlayElementFactory */
+        /// @brief See OverlayElementFactory
         OverlayElement* createOverlayElement(const String& instanceName)
         {
             return new Sonetto::TailedWindow(instanceName);
         }
-        /** See OverlayElementFactory */
+        /// @brief See OverlayElementFactory
         const String& getTypeName(void) const
         {
             static String name = "TailedWindow";
@@ -67,12 +67,12 @@ namespace Sonetto
     class SONETTO_EXPORT SlimWindowFactory: public OverlayElementFactory
     {
     public:
-        /** See OverlayElementFactory */
+        /// @brief See OverlayElementFactory
         OverlayElement* createOverlayElement(const String& instanceName)
         {
             return new Sonetto::SlimWindow(instanceName);
         }
-        /** See OverlayElementFactory */
+        /// @brief See OverlayElementFactory
         const String& getTypeName(void) const
         {
             static String name = "SlimWindow";

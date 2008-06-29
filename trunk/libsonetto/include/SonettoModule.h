@@ -77,13 +77,13 @@ namespace Sonetto {
         friend class Kernel;
 
     public:
-        /// Use this in place of Kernel::get().
+        /// @brief Use this in place of Kernel::get().
         Kernel              *mKernel;
-        /// Module Scene Manager
+        /// @brief Module Scene Manager
         Ogre::SceneManager  *mSceneMan;
-        /// Module Overlay
+        /// @brief Module Overlay
         Ogre::Overlay       *mOverlay;
-        /// Module Camera
+        /// @brief Module Camera
         Ogre::Camera        *mCamera;
     };
 }; // namespace

@@ -32,7 +32,7 @@ namespace Sonetto {
 
     class GaugeRenderable; // Forward declaration
 
-    /** Simple Gauge object.
+    /** @brief Simple Gauge object.
     @remarks
         Gauge is an Overlay Element not an Overlay Container,
         as it cannot hold objects inside it.
@@ -47,103 +47,103 @@ namespace Sonetto {
     {
         friend class GaugeRenderable;
     public:
-        /// Constructor.
+        /// @brief Constructor.
         Gauge(const Ogre::String &name);
-        /// Destructor.
+        /// @brief Destructor.
         virtual ~Gauge();
-        /// Initialise.
+        /// @brief Initialise.
         void initialise(void);
-        /// Set the pointer to the max value for this gauge
+        /// @brief Set the pointer to the max value for this gauge
         void setMaxValPtr(int * ptr);
-        /// Get the pointer to the max value for this gauge
-        int * getMaxValPtr();
-        /// Set the pointer to the current value for this gauge
+        /// @brief Get the pointer to the max value for this gauge
+        int *getMaxValPtr();
+        /// @brief Set the pointer to the current value for this gauge
         void setCurValPtr(int * ptr);
-        /// Get the pointer to the current value for this gauge
-        int * getCurValPtr();
-        /// Set Gauge Color (Left and Right side colors)
+        /// @brief Get the pointer to the current value for this gauge
+        int *getCurValPtr();
+        /// @brief Set Gauge Color (Left and Right side colors)
         void setGaugeColor(const Ogre::ColourValue &lcolor, const Ogre::ColourValue &rcolor);
-        /// Get the left gauge color.
+        /// @brief Get the left gauge color.
         Ogre::ColourValue getLeftGaugeColor();
-        /// Get the right gauge color.
+        /// @brief Get the right gauge color.
         Ogre::ColourValue getRightGaugeColor();
-        /// Set the Gauge's Back color.
+        /// @brief Set the Gauge's Back color.
         void setBackColor(const Ogre::ColourValue &color);
-        /// Get the Gauge's Back color.
+        /// @brief Get the Gauge's Back color.
         Ogre::ColourValue getBackColor();
-        /// Set the Gauge inclination (can be either positive or negative).
+        /// @brief Set the Gauge inclination (can be either positive or negative).
         void setGaugeInclination(const Ogre::Real incl);
-        /// Get the Gauge inclintation.
+        /// @brief Get the Gauge inclintation.
         Ogre::Real getGaugeInclination();
-        /// Set the Gauge size.
+        /// @brief Set the Gauge size.
         void setGaugeSize(const Ogre::Real size);
-        /// Get the Gauge size.
+        /// @brief Get the Gauge size.
         Ogre::Real getGaugeSize();
-        /// Set the Back distance.
+        /// @brief Set the Back distance.
         void setBackDistance(const Ogre::Real size);
-        /// Get the Back distance.
+        /// @brief Get the Back distance.
         Ogre::Real getBackDistance();
-        /// See OverlayElement.
+        /// @brief See OverlayElement.
         virtual const Ogre::String& getTypeName(void) const;
-        /// See Renderable.
+        /// @brief See Ogre::Renderable.
         void getRenderOperation(Ogre::RenderOperation& op);
-        /// Overridden from OverlayElement.
+        /// @brief Overridden from Ogre::OverlayElement.
         void setMaterialName(const Ogre::String& matName);
-        /// Overridden from OverlayElement.
+        /// @brief Overridden from Ogre::OverlayElement.
         void _updateRenderQueue(Ogre::RenderQueue* queue);
-        /// Visit Renderables
-        /*
+        /* /// @brief Visit Renderables
+
         void visitRenderables(Ogre::Renderable::Visitor* visitor, bool debugRenderables = false);
         */
-        /// Overridden from OverlayElement.
+        /// @brief Overridden from Ogre::OverlayElement.
         virtual void _update(void);
     protected:
-        /// Gauge Renderable
-        GaugeRenderable * mGaugeRenderable;
-        /// Metrics Mode
+        /// @brief Gauge Renderable
+        GaugeRenderable *mGaugeRenderable;
+        /// @brief Metrics Mode
         ScreenMetricsMode mScrMetricsMode;
-        /// Update Colors flag.
+        /// @brief Update Colors flag.
         bool mUpdateColor;
-        /// Aspect Ratio
+        /// @brief Aspect Ratio
         Ogre::Real mAspectRatio;
-        /// Inclination Level
+        /// @brief Inclination Level
         Ogre::Real mInclination;
-        /// Gauge Size
+        /// @brief Gauge Size
         Ogre::Real mGaugeSize;
-        /// Gauge Back Distance
+        /// @brief Gauge Back Distance
         Ogre::Real mBackDistance;
-        /** Maximun Gauge Value
+        /** @brief Maximum Gauge Value
         @remarks
             This is a pointer to a value, the function will read
             from here to set the gauge appearence
         */
-        int * mMaxVal;
-        /** Current Gauge Value
+        int *mMaxVal;
+        /** @brief Current Gauge Value
         @remarks
             This is a pointer to a value, the function will read
             from here to set the gauge appearence
         */
-        int * mCurVal;
-        /// Left Gauge Color
+        int *mCurVal;
+        /// @brief Left Gauge Color
         Ogre::ColourValue mLeftColor;
-        /// Right Gauge Color
+        /// @brief Right Gauge Color
         Ogre::ColourValue mRightColor;
-        /// Background Color Value
+        /// @brief Background Color Value
         Ogre::ColourValue mBgColor;
-        /// Gauge Background Render Operation.
+        /// @brief Gauge Background Render Operation.
         Ogre::RenderOperation mRenderOp;
-        /// Gauge Render Operation.
+        /// @brief Gauge Render Operation.
         Ogre::RenderOperation mGaugeRenderOp;
-        /// Internal method for setting up geometry, called by OverlayElement::update.
+        /// @brief Internal method for setting up geometry, called by Ogre::OverlayElement::update.
         virtual void updatePositionGeometry(void);
         virtual void updateTextureGeometry(void);
-        /// Called to update the colours.
+        /// @brief Called to update the colours.
         virtual void updateColors(void);
-        /// Typename for identification.
+        /// @brief Typename for identification.
         static Ogre::String msTypeName;
     };
 
-    /** Class for rendering the border of a Window.
+    /** @brief Class for rendering the border of a Window.
      *  @remarks
      *  We need this because we have to render twice, once with the inner window's repeating
      *  material (handled by superclass) and once for the border's separate material.
@@ -151,9 +151,9 @@ namespace Sonetto {
     class SONETTO_EXPORT GaugeRenderable : public Ogre::Renderable
     {
     protected:
-        Gauge * mpParent;
+        Gauge *mpParent;
     public:
-        /// Constructed with pointers to parent.
+        /// @brief Constructed with pointers to parent.
         GaugeRenderable(Gauge* parent) : mpParent(parent)
         {
             mUseIdentityProjection = true;
@@ -184,12 +184,12 @@ namespace Sonetto {
     class SONETTO_EXPORT GaugeFactory : public Ogre::OverlayElementFactory
     {
     public:
-        /** See OverlayElementFactory */
+        /// @brief See OverlayElementFactory
         Ogre::OverlayElement* createOverlayElement(const Ogre::String& instanceName)
         {
             return new Sonetto::Gauge(instanceName);
         }
-        /** See OverlayElementFactory */
+        /// @brief See OverlayElementFactory
         const Ogre::String& getTypeName(void) const
         {
             static Ogre::String name = "Gauge";

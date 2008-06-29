@@ -33,21 +33,21 @@ namespace Sonetto
     class SONETTO_EXPORT STRData : public Ogre::Resource
     {
     protected:
-        /** Internal implementation of the meat of the 'load' action, only called if this
+        /** @brief Internal implementation of the meat of the 'load' action, only called if this
 		*	resource is not being loaded from a ManualResourceLoader.
 		*/
         void loadImpl();
-        /** Internal implementation of the 'unload' action; called regardless of
+        /** @brief Internal implementation of the 'unload' action; called regardless of
 		*	whether this resource is being loaded from a ManualResourceLoader.
 		*/
         void unloadImpl();
-        /** Calculate the size of a resource; this will only be called after 'load' */
+        /// @brief Calculate the size of a resource; this will only be called after 'load'
         size_t calculateSize() const;
 
     public:
-        /// The Vector containing all strings for this STR File
+        /// @brief The Vector containing all strings for this STR File
         std::vector<Ogre::String> mMessageList;
-        /** Standard constructor.
+        /** @brief Standard constructor.
 		@param creator Pointer to the ResourceManager that is creating this resource
 		@param name The unique name of the resource
 		@param group The name of the resource group to which this resource belongs
@@ -64,37 +64,37 @@ namespace Sonetto
         STRData(Ogre::ResourceManager *creator, const Ogre::String &name,
         Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual = false,
         Ogre::ManualResourceLoader *loader = 0);
-        /** Virtual destructor. Shouldn't need to be overloaded, as the resource
+        /** @brief Virtual destructor. Shouldn't need to be overloaded, as the resource
             deallocation code should reside in unload()
             @see
                 STRData::unload()
         */
         virtual ~STRData();
-        /** Get a message from the vector.
+        /** @brief Get a message from the vector.
         *   @param msg_id The message ID.
         *   @return A pointer to the string.
         */
         const Ogre::String * getMessage(size_t msg_id);
-        /** Change a message contained in this STR.
+        /** @brief Change a message contained in this STR.
         *   @param msg The message to put in the STR.
         *   @param position The position of the message you want to replace.
         */
         void setMessage(Ogre::String& msg, size_t position);
-        /** Add a new message to the STR.
+        /** @brief Add a new message to the STR.
         *   @remarks The message will be added at last.
         *   @param msg The message to put in the STR.
         *   @return The message ID.
         */
         size_t insertMessage(Ogre::String& msg);
-        /** Insert a message at the specified position on the STR.
+        /** @brief Insert a message at the specified position on the STR.
         *   @remarks This will change all ids after this one.
         *   @param msg The message to put in the STR.
         *   @param position The position where you want to put it.
         */
         void insertMessage(Ogre::String& msg, size_t position);
-        /// Remove a message from the back of the vector.
+        /// @brief Remove a message from the back of the vector.
         void removeMessage();
-        /** Remove a message from a specified position at the STR.
+        /** @brief Remove a message from a specified position at the STR.
         *   @remarks This will change all ids after this one.
         */
         void removeMessage(size_t position);
@@ -119,7 +119,7 @@ namespace Sonetto
             }
         }
 
-        /// Operator used to convert a ResourcePtr to a STRDataPtr
+        /// @brief Operator used to convert a Ogre::ResourcePtr into a STRDataPtr
         STRDataPtr& operator=(const Ogre::ResourcePtr& r)
         {
             if (pRep == static_cast<STRData*>(r.getPointer()))

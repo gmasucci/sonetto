@@ -39,11 +39,11 @@ namespace Sonetto
     {
         friend class SlimBorderRenderable;
     public:
-        /// Constructor.
+        /// @brief Constructor.
         SlimWindow(const Ogre::String& name);
-        /// Destructor.
+        /// @brief Destructor.
         virtual ~SlimWindow();
-        /// Initialise
+        /// @brief Initialise.
         virtual void initialise (void);
         /** @brief Set the WindowSkin this element will use.
          *
@@ -78,61 +78,61 @@ namespace Sonetto
         void setScrMetricsMode(ScreenMetricsMode smm);
         /// @brief Get this element metrics mode.
         ScreenMetricsMode getScrMetricsMode(void);
-        /// See OverlayElement.
+        /// @brief See Ogre::OverlayElement.
         virtual const Ogre::String& getTypeName(void) const;
-        /// See Renderable.
+        /// @brief See Ogre::Renderable.
         void getRenderOperation(Ogre::RenderOperation& op);
-        /// Overridden from OverlayContainer.
+        /// @brief Overridden from Ogre::OverlayContainer.
         void _updateRenderQueue(Ogre::RenderQueue* queue);
-        /// Visit Renderables
-        /*
+        /* /// Visit Renderables
+
         void visitRenderables(Ogre::Renderable::Visitor* visitor, bool debugRenderables = false);
         */
-        /// Overridden from OverlayContaienr.
+        /// @brief Overridden from Ogre::OverlayContainer.
         void _update(void);
     protected:
-        /// Internal method for setting up geometry, called by OverlayElement::update.
+        /// @brief Internal method for setting up geometry, called by Ogre::OverlayElement::update.
         virtual void updatePositionGeometry(void);
-        /// Called to update the texture coords.
+        /// @brief Called to update the texture coords.
         virtual void updateTextureGeometry(void);
-        /// Called to update the border colors.
+        /// @brief Called to update the border colors.
         void updateBorderColors(void);
-        /// Called to update the background colors.
+        /// @brief Called to update the background colors.
         void updateWindowColors(void);
-        /// Called to calculate the window's vertexes
+        /// @brief Called to calculate the window's vertexes
         void calculatePosition(void);
-        /// Called to calculate the window's background texture coordinates
+        /// @brief Called to calculate the window's background texture coordinates
         void calculateTexCoord(void);
-        /// This Element's WindowSkin.
+        /// @brief This Element's WindowSkin.
         WindowSkinPtr mpWindowSkin;
-        /// This Element's Window Type.
+        /// @brief This Element's Window Type.
         WindowType mWindowType;
-        /// Window Alpha.
+        /// @brief Window Alpha.
         Ogre::Real mWindowAlpha;
-        /// Border Alpha.
+        /// @brief Border Alpha.
         Ogre::Real mBorderAlpha;
-        /// Whether updating the window colors is needed.
+        /// @brief Whether updating the window colors is needed.
         bool mUpdateWindowColors;
-        /// Whether updating the border colors is needed.
+        /// @brief Whether updating the border colors is needed.
         bool mUpdateBorderColors;
-        /// Window Border Renderable Pointer.
+        /// @brief Window Border Renderable Pointer.
         SlimBorderRenderable * mpBorderRenderable;
-        /// Window vertex coordinates.
+        /// @brief Window vertex coordinates.
         Ogre::Vector2 mPosCoord[SLIM_NUM_VERTEX];
-        /// Background texture coordinates.
+        /// @brief Background texture coordinates.
         Ogre::Vector2 mTexCoord[SLIM_NUM_VERTEX];
-        /// This Element's Screen Metrics Mode.
+        /// @brief This Element's Screen Metrics Mode.
         ScreenMetricsMode mScrMetricsMode;
-        /// Viewport Aspect Ratio.
+        /// @brief Viewport Aspect Ratio.
         Ogre::Real mAspectRatio;
-        /// Window Render Operation.
+        /// @brief Window Render Operation.
         Ogre::RenderOperation mWindowRenderOp;
-        /// Border Render Operation.
+        /// @brief Border Render Operation.
         Ogre::RenderOperation mBorderRenderOp;
-        /// This Object's Type Name.
+        /// @brief This Object's Type Name.
         static Ogre::String msTypeName;
     };
-    /** Class for rendering the border of a SlimWindow.
+    /** @brief Class for rendering the border of a SlimWindow.
     * @remarks
     * We need this because we have to render twice, once with the inner panel's repeating
     * material (handled by superclass) and once for the border's separate meterial.
@@ -142,7 +142,7 @@ namespace Sonetto
     protected:
         SlimWindow* mParent;
     public:
-        /** Constructed with pointers to parent. */
+        /// @brief Constructed with pointers to parent.
         SlimBorderRenderable(SlimWindow* parent) : mParent(parent)
         {
             mUseIdentityProjection = true;

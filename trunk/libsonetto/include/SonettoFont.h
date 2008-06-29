@@ -38,15 +38,15 @@ namespace Sonetto {
     class SONETTO_EXPORT Font : public Ogre::Resource
     {
     public:
-        /// Number of glyphs per line and number of lines.
+        /// @brief Number of glyphs per line and number of lines.
         GlyphTable glyph_tbl;
-        /// Default Vertical Space for each new line.
+        /// @brief Default Vertical Space for each new line.
         float default_y_space;
-        /// Number of Glyphs.
+        /// @brief Number of Glyphs.
         Ogre::uint32 num_glyphs;
-        /// Offset value for Glyph Mapping.
+        /// @brief Offset value for Glyph Mapping.
         Ogre::Vector2 glyph_coord_offset;
-        /// Name of the current texture used on this font. (deprecated?)
+        /// @brief Name of the current texture used on this font. (deprecated?)
         Ogre::String font_texture_name;
 
         Ogre::uint16 font_blend_mode;
@@ -57,21 +57,21 @@ namespace Sonetto {
 
         Ogre::uint16 font_filtering_mode;
 
-        /// Glyph structure List.
+        /// @brief Glyph structure List.
         std::vector<Glyphstruct > glyphs;
-        /// Glyph structure List Iterator.
+        /// @brief Glyph structure List Iterator.
         std::vector<Glyphstruct >::iterator glyph_itr;
-        /// Color List.
+        /// @brief Color List.
         std::vector<Ogre::ColourValue> mColorList;
-        /// Color List Iterator.
+        /// @brief Color List Iterator.
         std::vector<Ogre::ColourValue>::iterator mColorList_itr;
 
-        /// Pointer to the material for this font.
+        /// @brief Pointer to the material for this font.
         Ogre::MaterialPtr font_material;
-        /// Pointer to the font material's texture.
+        /// @brief Pointer to the font material's texture.
         Ogre::TexturePtr font_texture;
 
-        /// If the font material exist or not.
+        /// @brief If the font material exist or not.
         bool materialExist;
 
 
@@ -83,11 +83,11 @@ namespace Sonetto {
         size_t calculateSize() const;
 
     public:
-        /// Constructor.
+        /// @brief Constructor.
         Font(Ogre::ResourceManager *creator, const Ogre::String &name,
                     Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual = false,
                     Ogre::ManualResourceLoader *loader = 0);
-        /// Destructor.
+        /// @brief Destructor.
         virtual ~Font();
 
         // Manual Custom Font file creation methods
@@ -100,7 +100,7 @@ namespace Sonetto {
         * @param name is the texture name for this font.
         */
         void setUpFont(unsigned long x, unsigned long y, float default_space, const Ogre::String &name);
-        /// Calculate the Glyph coords for a new font texture.
+        /// @brief Calculate the Glyph coords for a new font texture.
         void calculateGlyphCoords();
         /** @brief Set the horizontal space for a specifig glyph.
         *
@@ -123,10 +123,10 @@ namespace Sonetto {
         */
         bool deleteMaterial();     // Destroy/Delete font material from memory
 
-        /// Set the font texture name
+        /// @brief Set the font texture name
         void setTextureName(const Ogre::String &name_a);
 
-        /// Get the font texture name.
+        /// @brief Get the font texture name.
         const Ogre::String & getTextureName();
 
     };
@@ -150,7 +150,7 @@ namespace Sonetto {
             }
         }
 
-        /// Operator used to convert a ResourcePtr to a FontPtr
+        /// @brief Operator used to convert a ResourcePtr to a FontPtr
         FontPtr& operator=(const Ogre::ResourcePtr& r)
         {
             if (pRep == static_cast<Font*>(r.getPointer()))

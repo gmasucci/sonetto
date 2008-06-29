@@ -28,7 +28,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoMain.h"
 
 namespace Sonetto {
-    /** OverlayElement representing a flat, single-material plane which can contain other elements.
+    /** @brief OverlayElement representing a flat, single-material plane which can contain other elements.
     @remarks
         This class subclasses OverlayContainer because it can contain other elements. Like other
         containers, if hidden it's contents are also hidden, if moved it's contents also move etc.
@@ -45,67 +45,67 @@ namespace Sonetto {
     class SONETTO_EXPORT Plane : public Ogre::OverlayContainer
     {
     public:
-        /// Constructor
+        /// @brief Constructor
         Plane(const Ogre::String &name);
-        /// Destructor
+        /// @brief Destructor
         virtual ~Plane();
 
-        /// Initialise
+        /// @brief Initialise
         void initialise(void);
 
-        /// Sets the texture coordinates for the plane.
+        /// @brief Sets the texture coordinates for the plane.
         void setUV(Ogre::Real u1, Ogre::Real v1, Ogre::Real u2, Ogre::Real v2);
 
-        /// Get the uv coordinates for the plane.
+        /// @brief Get the uv coordinates for the plane.
         void getUV(Ogre::Real& u1, Ogre::Real& v1, Ogre::Real& u2, Ogre::Real& v2) const;
 
-        /// Set the vertex colors (and alpha).
+        /// @brief Set the vertex colors (and alpha).
         void setColors(Ogre::Real r, Ogre::Real g, Ogre::Real b, Ogre::Real a);
 
-        /// Set the Colour for this element.
+        /// @brief Set the Colour for this element.
         virtual void setColour(const Ogre::ColourValue& col);
 
-        /// Gets the colour for this element.
+        /// @brief Gets the colour for this element.
         virtual const Ogre::ColourValue& getColour(void) const;
 
-        /// See OverlayElement.
+        /// @brief See Ogre::OverlayElement.
         virtual const Ogre::String& getTypeName(void) const;
-        /// See Renderable.
+        /// @brief See Ogre::Renderable.
         void getRenderOperation(Ogre::RenderOperation& op);
-        /// Overridden from OverlayElement.
+        /// @brief Overridden from Ogre::OverlayElement.
         void setMaterialName(const Ogre::String& matName);
-        /// Overridden from OverlayContainer.
+        /// @brief Overridden from Ogre::OverlayContainer.
         void _updateRenderQueue(Ogre::RenderQueue* queue);
-        /// Overridden from OverlayElement.
+        /// @brief Overridden from Ogre::OverlayElement.
         virtual void _update(void);
 
     protected:
-        /// Update color.
+        /// @brief Update color
         bool mUpdateColors;
-        /// Aspect Ratio
+        /// @brief Aspect Ratio
         Ogre::Real mAspectRatio;
 
         ScreenMetricsMode mScrMetricsMode;
 
-        /// Number of Texture Coordinates in the buffer.
+        /// @brief Number of Texture Coordinates in the buffer.
         size_t mNumTexCoordsInBuffer;
 
-        /// UV Coordinates.
+        /// @brief UV Coordinates.
         Ogre::Real mU1, mV1, mU2, mV2;
 
-        /// Render Operation.
+        /// @brief Render Operation.
         Ogre::RenderOperation mRenderOp;
 
-        /// internal method for setting up geometry, called by OverlayElement::update
+        /// @brief Internal method for setting up geometry, called by OverlayElement::update
         virtual void updatePositionGeometry(void);
 
-        /// Called to update the texture coords when layers change
+        /// @brief Called to update the texture coords when layers change
         virtual void updateTextureGeometry(void);
 
-        /// Called to update the colours
+        /// @brief Called to update the colours
         virtual void updateColors(void);
 
-        /// Typename for identification.
+        /// @brief Typename for identification.
         static Ogre::String msTypeName;
     };
 }; // namespace Sonetto
