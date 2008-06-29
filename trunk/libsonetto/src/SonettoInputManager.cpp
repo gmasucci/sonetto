@@ -49,7 +49,7 @@ namespace Sonetto
     void PlayerInput::update()
     {
         // <todo> Remember to clean button states before disabling a PlayerInput
-        if (mEnabled)
+        if (mEnabled && Kernel::get()->isWndFocused())
         {
             Uint8 *keystates = SDL_GetKeyState(NULL);
 
@@ -360,6 +360,11 @@ namespace Sonetto
     SDL_Joystick *InputManager::getJoystick(size_t index) const
     {
          return SDL_JoystickOpen(index);
+    }
+
+    size_t InputManager::getJoystickNum() const
+    {
+        return (size_t)SDL_NumJoysticks();
     }
 
     bool InputManager::joystickAttached(size_t index)

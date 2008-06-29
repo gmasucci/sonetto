@@ -317,16 +317,25 @@ namespace Sonetto
 
             /** @brief Retrieves a Sonetto::PlayerInput given its index
 
+            @remarks
                 Be careful not to access an index greater than
                 or equal to Sonetto::InputManager::getPlayerNum().
             */
-            PlayerInput   *getPlayer(size_t num)     const;
+            PlayerInput *getPlayer(size_t num) const;
 
             /// @brief Retrieves the number of PlayerInputs in the manager
-            inline size_t  getPlayerNum()            const { return mPlayers.size(); }
+            inline size_t getPlayerNum() const { return mPlayers.size(); }
 
-            /// @brief Gets a joystick to be used in a Sonetto::PlayerInput::setJoystick() call
-            SDL_Joystick  *getJoystick(size_t index) const;
+            /** @brief Gets a joystick to be used in a Sonetto::PlayerInput::setJoystick() call
+
+            @remarks
+                Be careful not to access an index greater than
+                or equal to Sonetto::InputManager::getJoystickNum().
+            */
+            SDL_Joystick *getJoystick(size_t index) const;
+
+            /// @brief Returns the number of available joysticks for use
+            size_t getJoystickNum() const;
 
             /// @brief Checks whether the joystick in the given index is being used by a PlayerInput or not
             bool joystickAttached(size_t index);

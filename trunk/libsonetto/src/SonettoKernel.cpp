@@ -172,12 +172,36 @@ namespace Sonetto {
     int Kernel::run()
     {
         while (!mShutdown) {
+            SDL_Event evt;
+
             // Small error check
+            // A game cannot run without modules
             if (mModuleList.size() == 0)
                 SONETTO_THROW("Module stack is empty");
 
-            // Update game window (Message Pump)
-            WindowEventUtilities::messagePump();
+            // Pump events
+            while (SDL_PollEvent(&evt))
+            {
+                if (evt.type == SDL_QUIT)
+                {
+                    // Shutdowns the game when asked to
+                    shutdown();
+                }
+            }
+
+            // Stops game while window is deactivated (minimised)
+            if (!(SDL_GetAppState() & SDL_APPACTIVE))
+            {
+                // Loop until the window gets activated again
+                while (SDL_WaitEvent(&evt))
+                {
+                    if (SDL_GetAppState() & SDL_APPACTIVE)
+                    {
+                        // Window activated; break the loop and continue the game
+                        break;
+                    }
+                }
+            }
 
             // First update input
             mInputMan->update();
@@ -210,6 +234,11 @@ namespace Sonetto {
 
         mModuleList.push(module);   // Insert the new module on the stack's top
         module->enter();            // Enter the new module
+    }
+    //-----------------------------------------------------------------------------
+    bool Kernel::isWndFocused() const
+    {
+        return (SDL_GetAppState() & SDL_APPINPUTFOCUS);
     }
     //-----------------------------------------------------------------------------
     void Kernel::popModule() {

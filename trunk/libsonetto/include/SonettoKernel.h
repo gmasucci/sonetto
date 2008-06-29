@@ -91,6 +91,9 @@ namespace Sonetto
         /// @brief Shutdown / Close the game.
         void shutdown() { mShutdown = true; }
 
+        /// @brief Checks whether window is focused or not
+        bool isWndFocused() const;
+
         Ogre::Viewport     *getViewport();
         void                setViewport(Ogre::Viewport * viewport);
         Ogre::RenderWindow *getRenderWindow();
