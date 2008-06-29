@@ -112,7 +112,7 @@ namespace Sonetto {
         mAudioMan->initialise();
 
         // Create Input Manager
-        mInputMan = new InputManager(4,mWindow);
+        mInputMan = new InputManager(4);
     }
 
     Kernel::~Kernel()
@@ -172,8 +172,6 @@ namespace Sonetto {
     int Kernel::run()
     {
         while (!mShutdown) {
-            SDL_Event evt; // Check for quit events
-
             // Small error check
             if (mModuleList.size() == 0)
                 SONETTO_THROW("Module stack is empty");

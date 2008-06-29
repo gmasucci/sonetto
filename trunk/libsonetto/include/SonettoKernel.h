@@ -58,9 +58,9 @@ namespace Sonetto
         /// Check if the kernel is initialised.
         inline static bool isInitialised() { return mSingleton; }
 
-        /** Create a Sonetto singleton and initialises Ogre, OIS, and other Sonetto dependencies
+        /** Create a Sonetto singleton and initialises Ogre, SDL, and other Sonetto dependencies
         @return
-            Wheter it was successful or not.
+            Whether it was successful or not.
         */
         static bool create();
 

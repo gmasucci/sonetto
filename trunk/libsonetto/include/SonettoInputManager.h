@@ -33,6 +33,11 @@ http://www.gnu.org/copyleft/lesser.txt
 
 namespace Sonetto
 {
+    /** Describes a Sonetto virtual button
+
+        These "virtual" buttons are going to be attached to "physical"
+        keyboard keys, joystick buttons and axes.
+    */
     enum BUTTON
     {
         BTN_TRIANGLE = 0,
@@ -53,6 +58,13 @@ namespace Sonetto
         BTN_DPAD_LEFT
     };
 
+    /** Describes a Sonetto virtual axis
+
+        These "virtual" axis are going to be attached to "physical"
+        keyboard keys, joystick buttons and axes.
+    @see
+        Sonetto::BUTTON
+    */
     enum AXIS
     {
         AX_LEFT = 0,
@@ -67,6 +79,16 @@ namespace Sonetto
         AXE_RIGHT_LEFT
     };
 
+    /** Describes a Sonetto virtual button state
+
+        These are the states a button can assume.
+        KS_NONE means it is not pressed;
+        KS_PRESS means it has just been pressed;
+        KS_RELEASE means it has just been released;
+        KS_HOLD means it is currently being held down;
+    @see
+        Sonetto::PlayerInput::getButtonState()
+    */
     enum KEYSTATE
     {
         KS_NONE = 0,
@@ -75,74 +97,254 @@ namespace Sonetto
         KS_HOLD
     };
 
-    enum INPUTSOURCETYPE {
-        IST_KEY = 0,
-        IST_BUTTON,
-        IST_AXIS
-    };
+    /** Physical input attachment
 
+        Sonetto button checks are made through a call to
+        Sonetto::PlayerInput::getButtonState(). Each of these buttons(Sonetto::BUTTON)
+        can be configured to a physical attachment, that is, an Input Source. A Sonetto
+        button can be attached to a keyboard key, joystick button or even an axis. This
+        structure is attached to these virtual buttons and axis to link them to the
+        physical input that is going to determine their states.
+    @see
+        Sonetto::INPUTSOURCETYPE
+    @see
+        Sonetto::PlayerInput::configureBtn()
+    @see
+        Sonetto::PlayerInput::configureAxis()
+    @see
+        Sonetto::PlayerInput::configure()
+    */
     class SONETTO_EXPORT InputSource
     {
         public:
-            InputSource(bool aEnabled = false,INPUTSOURCETYPE aType = IST_KEY,char aValue = 0)
+            /** Describes a physical input attachment type
+
+                When a button or axis is attached to a Sonetto::InputSource struct,
+                this button's state will be based in a keyboard key when the struct is
+                set to a type of IST_KEY, a joystick button when it's set to a type of
+                IST_BUTTON, or a joystick axis when it's set to a type of IST_AXIS.
+            @see
+                Sonetto::InputSource
+            @see
+                Sonetto::PlayerInput::configureBtn()
+            @see
+                Sonetto::PlayerInput::configureAxis()
+            @see
+                Sonetto::PlayerInput::configure()
+            */
+            enum INPUTSOURCETYPE {
+                IST_KEY    = 0,
+                IST_BUTTON,
+                IST_AXIS
+            };
+
+            /** Constructor
+
+            @param
+                aEnabled Whether the button attached to this source will be enabled or not. If not,
+                the button will always be in a KS_NONE state.
+            @param
+                aType Defines the kind of input source
+            @param
+                aValue This argument depends on aType. If aType is set to IST_KEY, this value is
+                a keyboard keycode. If it's set to IST_BUTTON, this is a Sonetto::BUTTON value.
+                And if it's set to IST_AXIS, this is a Sonetto::AXIS value.
+            */
+            InputSource(bool aEnabled = false,INPUTSOURCETYPE aType = IST_KEY,unsigned char aValue = 0)
                     : enabled(aEnabled), type(aType), value(aValue) {}
 
-            bool enabled : 1;
-            char type    : 2;
-            char value;
+            /// Whether this source is enabled or not
+            bool          enabled : 1;
+
+            /// Source type (Sonetto::INPUTSOURCETYPE)
+            char          type    : 3;
+
+            /// Source value (depends on Sonetto::InputSource::type)
+            unsigned char value;
     };
 
+    /** Player input class
+
+        This class is the interface used to configure and retrieve information
+        regarding a player's input. They are maintened by Sonetto::InputManager
+        and are all disabled by default. To use a PlayerInput class, you first
+        have to configure and enable it. You can assign buttons and axes to your
+        joysticks and keyboard using configureBtn(), configureAxis() and
+        configure() methods. After you are done, you can just enable it by
+        calling setEnabled(true). PlayerInput constructors and destructors are
+        private, and thus you cannot create or delete them manually. Use the
+        Sonetto::InputManager::getPlayer() to access them instead.
+    @see
+        Sonetto::InputManager
+    */
     class SONETTO_EXPORT PlayerInput
     {
         public:
+            /** Size of input configuration arrays
+
+            @see
+                Sonetto::configure()
+            @see
+                Sonetto::getConfig()
+            */
             static const size_t INPUT_SRC_NUM = 24;
 
+            /** Update input states
+
+                This is called by Sonetto::InputManager::update(), so you don't
+                have to really care about it.
+            */
             void update();
 
-            void configureBtn(BUTTON btn,const InputSource &input) { mInputCfg[btn] = input; }
+            /// Configure an independent button
+            inline void configureBtn(BUTTON btn,const InputSource &input) { mInputCfg[btn] = input; }
+
+            /// Configure an independent axis
             void configureAxis(AXIS axs,const InputSource &input);
-            void configureAll(const InputSource input[INPUT_SRC_NUM]);
 
-            inline const InputSource    &getBtnConfiguration(BUTTON btn) const { return mInputCfg[btn]; }
-            const        InputSource    &getAxisConfiguration(AXIS axs);
-            inline const InputSource    *getAllConfiguration()           const { return mInputCfg; }
+            /** Configure all input sources at once
 
-            inline       void            setEnabled(bool enable)               { mEnabled = enable; }
-            inline       bool            isEnabled()                     const { return mEnabled;   }
-            inline       void            setRumbleEnabled(bool enable)         { mEnabled = enable; }
-            inline       bool            isRumbleEnabled()               const { return mEnabled;   }
+                This method is useful for loading configuration directly
+                from a file or memory region.
+            @see
+                Sonetto::InputSource::getConfig()
+            */
+            void configure(const InputSource input[INPUT_SRC_NUM]);
 
-            inline const KEYSTATE        getButtonState(BUTTON btn)      const { return mBtnStates[btn]; }
-            inline       Ogre::Vector2   getAxisValue(AXIS axs);
+            /// Get independent button configuration
+            inline const InputSource &getBtnConfig(BUTTON btn) const { return mInputCfg[btn]; }
+
+            /// Get independent axis configuration
+            const InputSource &getAxisConfig(AXIS axs);
+
+            /** Get all input sources at once
+
+                This method is useful for saving configuration directly to
+                a file or memory region, as you don't have to check each
+                input source independetly.
+            @see
+                Sonetto::InputSource::configure()
+            */
+            inline const InputSource *getConfig() const { return mInputCfg; }
+
+            /** Set joystick from which this class will get information from
+
+            @param
+                joy SDL_Joystick pointer, which can be taken from
+                Sonetto::InputManager::getJoystick(), or NULL to not use a joystick.
+            */
+            inline void setJoystick(SDL_Joystick *joy) { mJoy = joy; }
+
+            /** Get joystick from which this class will get information from
+
+            @return
+                SDL_Joystick pointer, or NULL when no joystick was set
+            */
+            inline SDL_Joystick *getJoystick() { return mJoy; }
+
+            /// Enables or disables this player's input updates
+            inline void setEnabled(bool enable) { mEnabled = enable; }
+
+            /// Checks whether this PlayerInput is enabled or not
+            inline bool isEnabled() const { return mEnabled; }
+
+            /// Enables or disables joystick rumble
+            inline void setRumbleEnabled(bool enable) { mEnabled = enable; }
+
+            /// Checks whether rumble is enabled or not
+            inline bool isRumbleEnabled() const { return mEnabled; }
+
+            /// Gets a button state
+            inline const KEYSTATE getButtonState(BUTTON btn) const { return mBtnStates[btn]; }
+
+            /// Gets an axis current values
+            Ogre::Vector2 getAxisValue(AXIS axs);
 
         private:
+            /** Constructor
+
+                Can only be used by Sonetto::InputManager.
+            @param
+                enabled Whether this instance is enabled or not
+            @param
+                rumbleEnabled Whether this instance's rumble is enabled or not
+            @param
+                joy Joystick from which this instance will get input from
+            */
             PlayerInput(bool enabled,bool rumbleEnabled,SDL_Joystick *joy = NULL);
+
+            /// Destructor
             ~PlayerInput();
 
-            bool           mEnabled;
-            bool           mRumbleEnabled;
-            SDL_Joystick  *mJoy;
+            /// Whether this PlayerInput is enabled or not
+            bool mEnabled;
 
+            /// Whether is PlayerInput has rumble enabled or not
+            bool mRumbleEnabled;
+
+            /// Joystick from which this PlayerInput will get its input from
+            SDL_Joystick *mJoy;
+
+            /// Input source configurations
             InputSource mInputCfg[INPUT_SRC_NUM];
-            KEYSTATE    mBtnStates[16];
-            float       mAxesValues[4];
+
+            /// Button states
+            KEYSTATE mBtnStates[16];
+
+            /// Axes values
+            Ogre::Vector2 mAxesValues[2];
 
             friend class InputManager;
     };
 
+    /** Class responsible for managing input resources
+
+        The InputManager is a class created and maintaned by Sonetto::Kernel.
+        Its constructor and destructor are private, so you cannot create or delete
+        them. From this class, you can get Sonetto::PlayerInput instances, which you
+        can use for retrieving input from joysticks and keyboard. This class' instance
+        can be accessed through a call to Sonetto::Kernel::get()->getInputMan().
+    */
     class SONETTO_EXPORT InputManager
     {
         public:
+            /** Update all PlayerInputs.
+
+                This is called by Sonetto::Kernel::update(), so you
+                don't have to care about it.
+            */
             void update();
 
-            PlayerInput   *getPlayer(size_t num) const;
-            inline size_t  getPlayerNum() const { return mPlayers.size(); }
+            /** Retrieves a Sonetto::PlayerInput given its index
+
+                Be careful not to access an index greater than
+                or equal to Sonetto::InputManager::getPlayerNum().
+            */
+            PlayerInput   *getPlayer(size_t num)     const;
+
+            /// Retrieves the number of PlayerInputs in the manager
+            inline size_t  getPlayerNum()            const { return mPlayers.size(); }
+
+            /// Gets a joystick to be used in a Sonetto::PlayerInput::setJoystick() call
+            SDL_Joystick  *getJoystick(size_t index) const;
+
+            /// Checks whether the joystick in the given index is being used by a PlayerInput or not
+            bool joystickAttached(size_t index);
 
         private:
-            InputManager(size_t players,Ogre::RenderWindow *win = NULL);
-            ~InputManager() {}
+            /** Constructor
 
-            std::vector<PlayerInput *>  mPlayers;
+                Called by Sonetto::Kernel.
+            @param
+                players Number of PlayerInputs to be created
+            */
+            InputManager(size_t players);
+
+            /// Destructor
+            ~InputManager();
+
+            /// PlayerInput vector
+            std::vector<PlayerInput *> mPlayers;
 
             friend class Kernel;
     };

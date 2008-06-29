@@ -36,14 +36,19 @@ void BasicModule::enter()
 
     // And setup the first controller
     player = mKernel->getInputMan()->getPlayer(0);
-    // player->setEnabled(true);
-    // player->configureBtn(Sonetto::BTN_CROSS,Sonetto::InputSource(true,Sonetto::IST_BUTTON,2));
+    player->setJoystick(mKernel->getInputMan()->getJoystick(1));
+    player->configureAxis(Sonetto::AX_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_AXIS,Sonetto::AX_RIGHT));
+    player->configureAxis(Sonetto::AXE_LEFT_UP,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,Sonetto::BTN_DPAD_UP));
+    player->configureAxis(Sonetto::AXE_LEFT_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,Sonetto::BTN_DPAD_RIGHT));
+    player->configureAxis(Sonetto::AXE_LEFT_DOWN,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,Sonetto::BTN_DPAD_DOWN));
+    player->configureAxis(Sonetto::AXE_LEFT_LEFT,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,Sonetto::BTN_DPAD_LEFT));
+    player->setEnabled(true);
 }
 
 void BasicModule::update(Ogre::Real deltatime)
 {
-    /*if (player->getButtonState(Sonetto::BTN_CROSS) == Sonetto::KS_PRESS)
-    {
-        std::cout << "Fear the cross, demon..!\n";
-    }*/
+    PlayerInput *player = mKernel->getInputMan()->getPlayer(0);
+
+    // Axes test
+    std::cout << player->getAxisValue(AX_LEFT) << " / " << player->getAxisValue(AX_RIGHT) << "\n";
 }

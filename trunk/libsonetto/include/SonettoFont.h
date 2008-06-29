@@ -114,12 +114,12 @@ namespace Sonetto {
 
         /** @brief Create the font material.
         *
-        * @return wheter the material was sucessfully created.
+        * @return Whether the material was sucessfully created.
         */
         bool createMaterial();
         /** @brief Destroy/Delete font material from memory.
         *
-        * @return wheter the material was sucessfully deleted.
+        * @return Whether the material was sucessfully deleted.
         */
         bool deleteMaterial();     // Destroy/Delete font material from memory
 
