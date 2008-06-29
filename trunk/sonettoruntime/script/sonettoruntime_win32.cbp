@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Release">
-				<Option output="..\..\bin\release\runtime\game.exe" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\bin\release\runtime\game" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\..\bin\release\runtime\" />
 				<Option object_output="..\obj\release\" />
 				<Option type="1" />
@@ -23,7 +23,7 @@
 				</Linker>
 			</Target>
 			<Target title="Debug">
-				<Option output="..\..\bin\debug\runtime\game.exe" prefix_auto="1" extension_auto="1" />
+				<Option output="..\..\bin\debug\runtime\game" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="..\..\bin\debug\runtime\" />
 				<Option object_output="..\obj\debug\" />
 				<Option type="1" />
@@ -74,6 +74,7 @@
 		<Extensions>
 			<code_completion />
 			<envvars />
+			<debugger />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
