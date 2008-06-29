@@ -77,11 +77,15 @@
 			<Add library="ogg" />
 			<Add library="zlib" />
 			<Add library="SDL" />
+			<Add library="m" />
+			<Add library="user32" />
+			<Add library="gdi32" />
+			<Add library="winmm" />
 			<Add directory="..\..\dependencies\lib\zlib" />
 			<Add directory="..\..\dependencies\lib\ogg" />
 			<Add directory="..\..\dependencies\lib\vorbis" />
 			<Add directory="..\..\dependencies\lib\AL" />
-			<Add directory="..\..\dependencies\lib\OIS" />
+			<Add directory="..\..\dependencies\lib\SDL" />
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
 		<Unit filename="..\include\Sonetto.h">
