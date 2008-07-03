@@ -34,57 +34,74 @@ namespace Sonetto {
 #include "SonettoKernel.h"
 
 namespace Sonetto {
+    /** @brief Game Module interface
+
+        This class is used as an interface to abstract different modules
+        for the Kernel, in such a way that a Map Module can be treated the
+        same way as a Battle Module. Also, there can be additional modules
+        created by you that, of course, are unknown at the point of compiling
+        libSonetto. Such modules must inherit from Sonetto::Module and implement
+        at least the pure virtual method Sonetto::Module::update(). The other
+        methods have useful code that are common to any Module (like creating
+        an Ogre::SceneManager and Ogre::Camera to them). If you happen to make a
+        base call to any of these methods, make sure you do so to ALL of them, as
+        each one expects each other's deeds in the class.
+    @see
+        http://code.google.com/p/sonetto/source/browse/trunk/libsonetto/src/SonettoModule.cpp
+    */
     class SONETTO_EXPORT Module {
     public:
         Module();
         virtual ~Module() {}
 
         /** @brief Module initialization
-         *
-         *  This function gets called by Kernel when it's time to initialize the
-         *  module.
-         */
+
+            This function gets called by Kernel when it's time to initialise the
+            module.
+        */
         virtual void enter();
 
         /** @brief Module update
-         *
-         *  Gets called by Kernel on each frame update.
-         *  @param deltatime Time since last frame.
-         */
+
+            Gets called by Kernel on each frame update.
+        @param
+            deltatime Time since last frame.
+        */
         virtual void update(Ogre::Real deltatime) = 0;
 
         /** @brief Module cleanup
-         *
-         *  Gets called by Kernel prior to a deletion. Should delete it's
-         *  Entities, stop sounds/BGM, etc.
-         */
+
+            Gets called by Kernel prior to a deletion. Should delete it's
+            Entities, stop sounds/BGM, etc.
+        */
         virtual void exit();
 
         /** @brief Module halt
-         *
-         *  Gets called by Kernel when another Module has taken the top of the
-         *  module stack.
-         */
+
+            Gets called by Kernel when another Module has taken the top of the
+            module stack.
+        */
         virtual void halt();
 
         /** @brief Module wakeup
-         *
-         *  Gets called by Kernel when the top Module has been popped and this
-         *  module will start receiving update()'s again.
-         */
+
+            Gets called by Kernel when the top Module has been popped and this
+            module will start receiving update()'s again.
+        */
         virtual void wakeup();
 
-        friend class Kernel;
-
     public:
-        /// @brief Use this in place of Kernel::get().
-        Kernel              *mKernel;
+        /// @brief Use this in place of Kernel::get() for the sake of simplicity
+        Kernel *mKernel;
+
         /// @brief Module Scene Manager
-        Ogre::SceneManager  *mSceneMan;
+        Ogre::SceneManager *mSceneMan;
+
         /// @brief Module Overlay
-        Ogre::Overlay       *mOverlay;
+        Ogre::Overlay *mOverlay;
+
         /// @brief Module Camera
-        Ogre::Camera        *mCamera;
+        Ogre::Camera *mCamera;
     };
 }; // namespace
 

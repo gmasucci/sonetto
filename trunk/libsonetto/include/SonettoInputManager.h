@@ -27,9 +27,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoMain.h"
 
 #include <Ogre.h>
-#include <SDL/SDL_joystick.h>
-
-// <todo> Comment this file
+#include <SDL/SDL.h>
 
 namespace Sonetto
 {
@@ -85,7 +83,7 @@ namespace Sonetto
         KS_RELEASE means it has just been released;
         KS_HOLD means it is currently being held down;
     @see
-        Sonetto::PlayerInput::getButtonState()
+        Sonetto::PlayerInput::getBtnState()
     */
     enum KEYSTATE
     {
@@ -98,7 +96,7 @@ namespace Sonetto
     /** @brief Physical input attachment
 
         Sonetto button checks are made through a call to
-        Sonetto::PlayerInput::getButtonState(). Each of these buttons(Sonetto::BUTTON)
+        Sonetto::PlayerInput::getBtnState(). Each of these buttons(Sonetto::BUTTON)
         can be configured to a physical attachment, that is, an Input Source. A Sonetto
         button can be attached to a keyboard key, joystick button or even an axis. This
         structure is attached to these virtual buttons and axis to link them to the
@@ -106,11 +104,11 @@ namespace Sonetto
     @see
         Sonetto::InputSource::TYPE
     @see
-        Sonetto::PlayerInput::configureBtn()
+        Sonetto::PlayerInput::configBtn()
     @see
-        Sonetto::PlayerInput::configureAxis()
+        Sonetto::PlayerInput::configAxis()
     @see
-        Sonetto::PlayerInput::configure()
+        Sonetto::PlayerInput::config()
     */
     class SONETTO_EXPORT InputSource
     {
@@ -124,11 +122,11 @@ namespace Sonetto
             @see
                 Sonetto::InputSource
             @see
-                Sonetto::PlayerInput::configureBtn()
+                Sonetto::PlayerInput::configBtn()
             @see
-                Sonetto::PlayerInput::configureAxis()
+                Sonetto::PlayerInput::configAxis()
             @see
-                Sonetto::PlayerInput::configure()
+                Sonetto::PlayerInput::config()
             */
             enum TYPE {
                 IST_KEY    = 0,
@@ -145,7 +143,7 @@ namespace Sonetto
                 aType Defines the kind of input source
             @param
                 aValue This argument depends on aType. If aType is set to IST_KEY, this value is
-                an SDLKey. If it's set to IST_BUTTON, this is a Sonetto::BUTTON value.
+                an SDLKey. If it's set to IST_BUTTON, this is the button number in the joystick.
                 And if it's set to IST_AXIS, this is a Sonetto::AXIS value.
             @see
                 http://www.libsdl.org/cgi/docwiki.cgi/SDLKey
@@ -169,8 +167,8 @@ namespace Sonetto
         regarding a player's input. They are maintened by Sonetto::InputManager
         and are all disabled by default. To use a PlayerInput class, you first
         have to configure and enable it. You can assign buttons and axes to your
-        joysticks and keyboard using configureBtn(), configureAxis() and
-        configure() methods. After you are done, you can just enable it by
+        joysticks and keyboard using configBtn(), configAxis() and
+        config() methods. After you are done, you can just enable it by
         calling setEnabled(true). PlayerInput constructors and destructors are
         private, and thus you cannot create or delete them manually. Use the
         Sonetto::InputManager::getPlayer() to access them instead.
@@ -183,7 +181,7 @@ namespace Sonetto
             /** @brief Size of input configuration arrays
 
             @see
-                Sonetto::configure()
+                Sonetto::config()
             @see
                 Sonetto::getConfig()
             */
@@ -197,10 +195,10 @@ namespace Sonetto
             void update();
 
             /// @brief Configure an independent button
-            inline void configureBtn(BUTTON btn,const InputSource &input) { mInputCfg[btn] = input; }
+            inline void configBtn(BUTTON btn,const InputSource &input) { mInputCfg[btn] = input; }
 
             /// @brief Configure an independent axis
-            void configureAxis(AXIS axs,const InputSource &input);
+            void configAxis(AXIS axs,const InputSource &input);
 
             /** @brief Configure all input sources at once
 
@@ -209,7 +207,7 @@ namespace Sonetto
             @see
                 Sonetto::InputSource::getConfig()
             */
-            void configure(const InputSource input[INPUT_SRC_NUM]);
+            void config(const InputSource input[INPUT_SRC_NUM]);
 
             /// @brief Get independent button configuration
             inline const InputSource &getBtnConfig(BUTTON btn) const { return mInputCfg[btn]; }
@@ -223,7 +221,7 @@ namespace Sonetto
                 a file or memory region, as you don't have to check each
                 input source independetly.
             @see
-                Sonetto::InputSource::configure()
+                Sonetto::InputSource::config()
             */
             inline const InputSource *getConfig() const { return mInputCfg; }
 
@@ -255,7 +253,7 @@ namespace Sonetto
             inline bool isRumbleEnabled() const { return mEnabled; }
 
             /// @brief Gets a button state
-            inline const KEYSTATE getButtonState(BUTTON btn) const { return mBtnStates[btn]; }
+            inline const KEYSTATE getBtnState(BUTTON btn) const { return mBtnStates[btn]; }
 
             /// @brief Gets an axis current values
             Ogre::Vector2 getAxisValue(AXIS axs);

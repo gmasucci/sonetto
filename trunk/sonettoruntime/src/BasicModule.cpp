@@ -21,6 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
 #include <Ogre.h>
+#include "SonettoInputManager.h"
 #include "BasicModule.h"
 
 using namespace Ogre;
@@ -37,11 +38,11 @@ void BasicModule::enter()
     // And setup the first controller
     player = mKernel->getInputMan()->getPlayer(0);
     player->setJoystick(mKernel->getInputMan()->getJoystick(1));
-    player->configureAxis(Sonetto::AX_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_AXIS,Sonetto::AX_RIGHT));
-    player->configureAxis(Sonetto::AXE_LEFT_UP,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,Sonetto::BTN_DPAD_UP));
-    player->configureAxis(Sonetto::AXE_LEFT_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,Sonetto::BTN_DPAD_RIGHT));
-    player->configureAxis(Sonetto::AXE_LEFT_DOWN,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,Sonetto::BTN_DPAD_DOWN));
-    player->configureAxis(Sonetto::AXE_LEFT_LEFT,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,Sonetto::BTN_DPAD_LEFT));
+    player->configAxis(Sonetto::AX_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_AXIS,Sonetto::AX_RIGHT));
+    player->configAxis(Sonetto::AXE_LEFT_UP,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_w));
+    player->configAxis(Sonetto::AXE_LEFT_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_d));
+    player->configAxis(Sonetto::AXE_LEFT_DOWN,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_s));
+    player->configAxis(Sonetto::AXE_LEFT_LEFT,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_a));
     player->setEnabled(true);
 }
 

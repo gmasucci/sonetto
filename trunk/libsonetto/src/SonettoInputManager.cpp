@@ -288,7 +288,7 @@ namespace Sonetto
         }
     }
 
-    void PlayerInput::configureAxis(AXIS axs,const InputSource &input)
+    void PlayerInput::configAxis(AXIS axs,const InputSource &input)
     {
         switch (axs)
         {
@@ -328,7 +328,7 @@ namespace Sonetto
         return mPlayers[num];
     }
 
-    void PlayerInput::configure(const InputSource input[INPUT_SRC_NUM])
+    void PlayerInput::config(const InputSource input[INPUT_SRC_NUM])
     {
         // Just copies new info over the old ones
         memcpy(mInputCfg,input,sizeof(mInputCfg));

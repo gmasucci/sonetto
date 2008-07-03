@@ -20,6 +20,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
+#include <string>
 #include <sstream>
 #include "SonettoException.h"
 
@@ -30,28 +31,45 @@ namespace Sonetto {
     // Sonetto::Exception implementation.
     //-----------------------------------------------------------------------------
     Exception::Exception(const char *desc,const char *src,size_t line) throw()
+            : mLine(line)
     {
+        // Allocates room to store exception description and source file and
+        // copies them to these buffers
         mDesc = new char[strlen(desc)];
         mSrc  = new char[strlen(src)];
-        mLine = line;
-
         strcpy(mDesc,desc);
         strcpy(mSrc,src);
+    }
+    //-----------------------------------------------------------------------------
+    Exception::~Exception() throw()
+    {
+        // Get rid of allocated buffers
+        delete mDesc;
+        delete mSrc;
     }
     //-----------------------------------------------------------------------------
     const char *Exception::what()
     {
         try {
-            size_t        skip;
-            ostringstream str;
+            size_t        skip; // Filename position in __FILE__ (excluding directories)
+            ostringstream str;  // String parser
 
+            // Searches for the filename (ugly, but works)
             for (skip = strlen(__FILE__);skip > 0 && __FILE__[skip-1] != '\\' && __FILE__[skip-1] != '/';--skip);
+
+            // Parse exception
             str << "Sonetto Exception\n"
                    "  In: " << (const char *)(mSrc+skip) << " at line " << mLine << "\n\n"
                    "  " << mDesc << ".";
 
-            return str.str().c_str();
+            // Saves parsed exception string into class
+            mParsed = str.str();
+
+            // Returns the parsed exception as a NULL-ended, C-like const char pointer
+            // This pointer will remain valid until this exception is deallocated
+            return mParsed.c_str();
         } catch(...) {
+            // If something goes terribly wrong, a NULL pointer is returned
             return NULL;
         }
     }

@@ -36,17 +36,56 @@ http://www.gnu.org/copyleft/lesser.txt
 
 namespace Sonetto
 {
+    /** @brief Sonetto Exception class
+
+        Instances of this class are thrown when Sonetto exceptions occurs. They
+        are typically thrown using the macro SONETTO_THROW, that accepts any
+        std::string-assignable value. It also uses __FILE__ and __LINE__ macros
+        to display the place from which the exception was thrown. SONETTO_THROW
+        throws a Sonetto::Exception, and thus the catch block should catch it by
+        reference, as an assignment between two Sonetto::Exceptions would lead to
+        a crash (the pointers of the strings would be copied, and the old exception
+        would be destructed, deallocating such pointers).
+    */
     class SONETTO_EXPORT Exception : public std::exception
     {
     public:
+        /** @brief Constructor
+
+            Copies `desc' and `src' to buffers held by Sonetto::Exception.
+        @param
+            desc Exception description
+        @param
+            src Source file from which the exception was thrown
+        @param
+            line The line in file `src' from which the exception was thrown
+        */
         Exception(const char *desc,const char *src,size_t line) throw();
 
+        /// @brief Destructor
+        ~Exception() throw();
+
+        /** @brief Get parsed exception in a NULL-ended C-like string.
+
+        @remarks
+            This pointer is only valid as long as the Exception is not
+            destructed. It can be NULL if another exception gets thrown
+            while it was parsing the string.
+        */
         const char *what();
 
     private:
-        char   *mDesc;
-        char   *mSrc;
-        size_t  mLine;
+        /// @brief Exception description
+        char *mDesc;
+
+        /// @brief Complete path and source file from where the exception was thrown
+        char *mSrc;
+
+        /// @brief Line in source from which the exception was thrown
+        size_t mLine;
+
+        /// @brief Parsed message to be shown to the end-user
+        std::string mParsed;
     };
 } // namespace
 

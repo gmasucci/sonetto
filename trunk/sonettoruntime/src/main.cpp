@@ -53,6 +53,7 @@ int main(int argc, char **argv)
         Kernel::destroy();
     } catch(Sonetto::Exception &e) {
         const char *what = e.what();
+
         if (!what)
         {
             what = "Sonetto Exception\n"
