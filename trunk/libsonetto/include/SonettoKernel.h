@@ -35,6 +35,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoInputManager.h"
 #include "SonettoModule.h"
 #include "SonettoRARC.h"
+#include "SonettoSTR.h"
 #include "SonettoFontSerializer.h"
 #include "SonettoFontManager.h"
 #include "SonettoTextFactory.h"
@@ -140,6 +141,9 @@ namespace Sonetto
         // Sonetto Pointers.
         AudioManager                 *mAudioMan; // Sonetto Audio Manager.
         InputManager                 *mInputMan; // Sonetto Input Manager.
+
+        // Sonetto Resources and Objects.
+        STRFileManager               *mStrFileManager;
 
     };
 } // namespace Sonetto

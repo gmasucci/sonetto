@@ -38,7 +38,7 @@ namespace Sonetto
     // Sonetto::TextElement implementation
     //-----------------------------------------------------------------------------
     #define DEFAULT_INITIAL_CHARS 12
-    #define NEW_LINE_CHARACTER 0x0D
+    #define NEW_LINE_CHARACTER 0x0A
     #define TEXT_COMMAND 0x0C
     #define TEXT_COLOR_COMMAND 0x43
     #define TEXT_SPEED_COMMAND 0x53

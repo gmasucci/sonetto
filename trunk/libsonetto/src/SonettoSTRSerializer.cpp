@@ -33,7 +33,7 @@ namespace Sonetto
     STRSerializer::STRSerializer()
     {
         // Version number
-        mVersion = "SntSTR000";
+        mVersion = "STR0";
     }
     //-----------------------------------------------------------------------------
     STRSerializer::~STRSerializer()
@@ -45,22 +45,24 @@ namespace Sonetto
     {
         // Decide on endian mode
 		Serializer::determineEndianness(endianMode);
-
+        // Open/create the file
 		mpfFile = fopen(fileName.c_str(), "wb");
 		if (!mpfFile)
 		{
-		    using namespace Ogre;
-			OGRE_EXCEPT(Ogre::Exception::ERR_CANNOT_WRITE_TO_FILE,
-				"Unable to open file " + fileName + " for writing",
-				"STRData::exportSTR");
+		    // Throw an error if the file was not found, or was not possible to read
+		    SONETTO_THROW("A file was not found!");
 		}
-
+        // Start the file header
 		writeFileHeader();
+		// Get the number of strings.
+		unsigned int totalnstrings = pSTR->mMessageList.size();
+		// Write the number of strings in the file.
+		writeInts(&totalnstrings,1);
 
+        // Now write every string to the file.
 		for (size_t i = 0; i < pSTR->mMessageList.size()-1; ++i)
         {
-            writeChunkHeader(0xFFFF, STREAM_OVERHEAD_SIZE + pSTR->mMessageList[i].size());
-            writeString(pSTR->mMessageList[i]);
+            writeStr(pSTR->mMessageList[i]);
         }
 
         fclose(mpfFile);
@@ -75,19 +77,36 @@ namespace Sonetto
 
 		// Check header
         readFileHeader(stream);
-
-        unsigned short streamID;
-        while(!stream->eof())
+        // Get the number of strings
+        unsigned int numStrs;
+        readInts(stream, &numStrs, 1);
+        // Loop through the file reading all the strings.
+        for(unsigned int i = 0; i < numStrs; ++i)
         {
-            streamID = readChunk(stream);
-            switch (streamID)
-            {
-                case 0xFFFF:
-                    pDest->mMessageList.push_back(readString(stream));
-                    std::cout<<"Message:\n"<<pDest->mMessageList.back()<<"\n";
-                break;
-            }
+            pDest->mMessageList.push_back(readStr(stream));
         }
+    }
+    //-----------------------------------------------------------------------------
+    void STRSerializer::writeStr(const Ogre::String& string)
+    {
+        // Get the string size
+        unsigned int strsize = string.size();
+        // Write the string size to the file.
+        writeInts(&strsize,1);
+        // Now write the actual string.
+        fputs(string.c_str(), mpfFile);
+        // Add the zero at the end of every string.
+        fputc(0x0, mpfFile);
+    }
+    //-----------------------------------------------------------------------------
+    Ogre::String STRSerializer::readStr(Ogre::DataStreamPtr& stream)
+    {
+        // Variable to store the string size.
+        unsigned int strsize;
+        // Read the string size from the file.
+        readInts(stream, &strsize, 1);
+        // Now read the string.
+        return readString(stream, strsize);
     }
     //-----------------------------------------------------------------------------
 } // namespace

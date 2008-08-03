@@ -29,6 +29,11 @@ http://www.gnu.org/copyleft/lesser.txt
 // Side note: All this class has been coded under the sound track of Goof Troop - Capcom - SNES (1993)
 namespace Sonetto
 {
+    struct StrTable
+    {
+        size_t mStrStart;
+        size_t mStrSize;
+    };
     class STRData; // Forward declaration
 
     class SONETTO_EXPORT STRSerializer : public Ogre::Serializer
@@ -39,6 +44,9 @@ namespace Sonetto
 
         void exportSTR(const STRData *pSTR, const Ogre::String &fileName, Ogre::Serializer::Endian endianMode = Ogre::Serializer::ENDIAN_NATIVE);
         void importSTR(Ogre::DataStreamPtr &stream, STRData *pDest);
+
+        void writeStr(const Ogre::String& string);
+        Ogre::String readStr(Ogre::DataStreamPtr& stream);
     };
 
 } // namespace

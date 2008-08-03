@@ -113,6 +113,9 @@ namespace Sonetto {
 
         // Create Input Manager
         mInputMan = new InputManager(4);
+
+        // Register Sonetto Resources and Objects
+        mStrFileManager = new STRFileManager();
     }
 
     Kernel::~Kernel()
