@@ -26,7 +26,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 // Now we include all classes.
 #include "SonettoMain.h"
-#include "SonettoAudioManager.h"
+//#include "SonettoAudioManager.h"
 #include "SonettoCounter.h"
 #include "SonettoException.h"
 #include "SonettoFont.h"
@@ -45,7 +45,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoTailedWindow.h"
 #include "SonettoTextElement.h"
 #include "SonettoTextFactory.h"
-#include "SonettoVirtualFile.h"
+//#include "SonettoVirtualFile.h"
 #include "SonettoWindow.h"
 #include "SonettoWindowFactory.h"
 #include "SonettoWindowSkin.h"

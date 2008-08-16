@@ -18,8 +18,9 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="libsonetto" />
+					<Add library="/home/yoasakura/workspace/sonetto/trunk/lib/sonetto.so" />
 					<Add library="OgreMain" />
+					<Add library="SDL" />
 				</Linker>
 			</Target>
 			<Target title="Debug">
@@ -43,6 +44,7 @@
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="`pkg-config --cflags OGRE`" />
 			<Add option="-fmessage-length=0" />
 			<Add option="-fexceptions" />
 			<Add option="-fident" />
@@ -50,14 +52,11 @@
 			<Add option="-D_STFU_VORBIS" />
 			<Add directory="../include" />
 			<Add directory="../../libsonetto/include" />
-			<Add directory="../../dependencies/include" />
-			<Add directory="/usr/local/include" />
-			<Add directory="/usr/include" />
 		</Compiler>
 		<Linker>
+			<Add option="`pkg-config --libs OGRE`" />
+			<Add library="GL" />
 			<Add directory="../../lib" />
-			<Add directory="/usr/local/lib" />
-			<Add directory="/usr/lib" />
 		</Linker>
 		<Unit filename="../include/BasicModule.h" />
 		<Unit filename="../src/BasicModule.cpp" />

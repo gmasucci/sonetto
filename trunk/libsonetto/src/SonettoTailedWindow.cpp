@@ -1222,7 +1222,7 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     void TailedWindow::calculatePosition(void)
     {
-        float left, right, top, bottom, tail;
+        float left, right, top, bottom, tail=0;
 
         left = _getDerivedLeft();
         right = left + mWidth;
@@ -1504,7 +1504,7 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     void TailedWindow::calculateTexCoord(void)
     {
-        float left, right, top, bottom, tail;
+        float left, right, top, bottom, tail=0;
 
         Ogre::Vector2 mBorderFixed;
 

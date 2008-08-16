@@ -24,8 +24,8 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
-#include <OGRE/OgreOverlayElement.h>
-#include <OGRE/OgreControllerManager.h>
+#include <OgreOverlayElement.h>
+#include <OgreControllerManager.h>
 #include "SonettoMain.h"
 #include "SonettoFontManager.h"
 

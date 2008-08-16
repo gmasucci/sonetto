@@ -26,7 +26,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "windows.h"
 #endif
 
-#include <OGRE/Ogre.h>
+#include <Ogre.h>
 #include "Sonetto.h"
 #include "BasicModule.h"
 

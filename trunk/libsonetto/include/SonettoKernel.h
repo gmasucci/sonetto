@@ -20,22 +20,17 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_KERNEL_H
-#define SONETTO_KERNEL_H
-
-namespace Sonetto{
-    class Kernel; // forward declaration.
-    class Module;
-}
+#ifndef SONETTO_Kernel_H
+#define SONETTO_Kernel_H
 
 #include "SonettoMain.h"
 
 #include <fstream>
 #include <stack>
-#include <OGRE/Ogre.h>
-#include <OGRE/OgreVector2.h>
-#include <SDL/SDL_video.h>
+#include <Ogre.h>
+#include <OgreVector2.h>
 
+//#include "SonettoAudioManager.h"
 #include "SonettoInputManager.h"
 #include "SonettoModule.h"
 #include "SonettoRARC.h"
@@ -49,10 +44,14 @@ namespace Sonetto{
 #include "SonettoGauge.h"
 #include "SonettoCounter.h"
 
+#include <SDL/SDL_video.h>
+
+namespace Sonetto {
+    class Module; // Forward declaration
+}
+
 namespace Sonetto
 {
-
-
     class SONETTO_EXPORT Kernel
     {
     public:
@@ -62,7 +61,7 @@ namespace Sonetto
         /// @brief Return the singleton pointer to this class.
         inline static Kernel *get() { return mSingleton; }
 
-        /// @brief Check if the kernel is initialised.
+        /// @brief Check if the Kernel is initialised.
         inline static bool isInitialised() { return mSingleton; }
 
         /** @brief Create a Sonetto singleton and initialises Ogre, SDL, and other Sonetto dependencies
@@ -107,6 +106,7 @@ namespace Sonetto
         Ogre::Root         *getOgreRoot();
 
         InputManager *getInputMan();
+//        AudioManager *getAudioMan();
 
         /// @brief Load and parse the configuration file.
         std::map<std::string,std::string> loadConfig(const char *fname);
@@ -144,12 +144,13 @@ namespace Sonetto
         #endif
 
         // Sonetto Pointers.
+//        AudioManager                 *mAudioMan; // Sonetto Audio Manager.
         InputManager                 *mInputMan; // Sonetto Input Manager.
 
         // Sonetto Resources and Objects.
-        //STRFileManager               *mStrFileManager;
+        //STRManager               *mStrManager;
 
     };
 } // namespace Sonetto
 
-#endif // __SONETTO_KERNEL__
+#endif // __SONETTO_Kernel__

@@ -20,12 +20,17 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
+#include "SonettoKernel.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_syswm.h>
-#include "SonettoKernel.h"
 
 using namespace std;
 using namespace Ogre;
+
+// Forward declarations
+namespace Sonetto {
+    class Module;
+};
 
 namespace Sonetto {
     //-----------------------------------------------------------------------------
@@ -77,12 +82,12 @@ namespace Sonetto {
             // externalWindowHandle in this case is a bit different, but it
             // does essentially the same thing.
             string         wndHandleStr;
-            string         dsp(&(DisplayString(info.info.x11.display)[1]));
+            string         dsp(&(DisplayString(wmInfo.info.x11.display)[1]));
             vector<String> tokens = StringUtil::split(dsp,".");
 
-            wndHandleStr = StringConverter::toString((long)info.info.x11.display)+
+            wndHandleStr = StringConverter::toString((long)wmInfo.info.x11.display)+
                         ":"+tokens[1]+":"+
-                        StringConverter::toString((long)info.info.x11.window);
+                        StringConverter::toString((long)wmInfo.info.x11.window);
 
             wndParamList["externalWindowHandle"] = wndHandleStr;
         #endif
@@ -108,14 +113,14 @@ namespace Sonetto {
         mResourceMan = ResourceGroupManager::getSingletonPtr();
 
         // Create Audio Manager
-        mAudioMan = new AudioManager();
-        mAudioMan->initialise();
+//        mAudioMan = new AudioManager();
+//        mAudioMan->initialise();
 
         // Create Input Manager
         mInputMan = new InputManager(4);
 
         // Register Sonetto Resources and Objects
-        mStrFileManager = new STRFileManager();
+        //mStrFileManager = new STRFileManager();
     }
 
     Kernel::~Kernel()
@@ -127,12 +132,12 @@ namespace Sonetto {
         }
 
         // Deinitialise AudioManager
-        if (mAudioMan) {
+/*        if (mAudioMan) {
             mAudioMan->deinitialise();
 
             delete mAudioMan;
             mAudioMan = NULL;
-        }
+        }*/
 
         // At last, delete the Ogre::Root
         if (mRoot) {
@@ -213,9 +218,9 @@ namespace Sonetto {
             mModuleList.top()->update(1.0f);
 
             // Update audio manager
-            if (mAudioMan)
+/*            if (mAudioMan)
                 mAudioMan->update();
-
+*/
             // Render !
             mRoot->renderOneFrame();
         }
@@ -333,9 +338,9 @@ namespace Sonetto {
         return mInputMan;
     }
     //-----------------------------------------------------------------------------
-    AudioManager *Kernel::getAudioMan()
+    /*AudioManager *Kernel::getAudioMan()
     {
         return mAudioMan;
-    }
+    }*/
     //-----------------------------------------------------------------------------
 }; // namespace Sonetto

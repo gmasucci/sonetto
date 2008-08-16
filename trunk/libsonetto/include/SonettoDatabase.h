@@ -26,51 +26,73 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoMain.h"
 
 namespace Sonetto {
-    class SONETTO_EXPORT Database {
+	struct SystemHeader
+	{
+		// Internal Identification Strings.
+		std::string mGameTitle;
+		std::string mGameVersion;
+		std::string mGameDatabaseVersion;
+		std::string mGameAuthor;
+		
+		// In-Game Menu/System Sounds.
+		size_t mCursorOk;
+		size_t mCursorCancel;
+		size_t mCursorMove;
+		size_t mUseItem;
+		size_t mSystemError;
+		
+		// Game/System Messages.
+		size_t mMsgOk;
+		size_t mMsgCancel;
+		size_t mMsgYes;
+		size_t mMsgNo;
+		size_t mMsgPressStart;
+		size_t mMsgNewGame;
+		size_t mMsgLoadGame;
+		size_t mMsgExitGame;
+		size_t mMsgOptions;
+		size_t mMsgLoadMsg;
+		size_t mMsgLoadScrSlot;
+		size_t mMsgLoadMsgOpt;
+		size_t mMsgLoading;
+		size_t mMsgLoadComplete;
+		size_t mMsgSaveMsg;
+		size_t mMsgSaveScrSlot;
+		size_t mMsgSaveMsgOpt;
+		size_t mMsgSaving;
+		size_t mMsgSaveComplete;
+		size_t mMsgOptionsTitle;
+		size_t mMsgOptsWinSkinID; // Some games allow multiple windowskins.
+		
+		// Default WindowSkin;
+		size_t mDefaultWindowSkin;
+		// Default Font
+		size_t mDefaultFont;
+	};
+    class SONETTO_EXPORT Database
+    {
     public:
         Database();
         ~Database();
 
-        /** @brief Initialise the Game's Database
+        /** @brief Initialise Game's Database
          *
          *  This function will load, create and manage the game's database.
          */
         bool initialise();
-
-        /** @brief Item access by ID
-         *
-         *  @remarks Access to an unexistent item ID will cause unexpected behaviour.
-         *  @param itemID Item index
-         *  @return Desired item data
-         */
-        const HeroData *getHero(size_t heroID) { return mHero[heroID]; }
-        const ItemData *getItem(size_t itemID) { return mItems[itemID]; }
-        const SkillData *getSkill(size_t skillID) { return mSkill[skillID]; }
-        const EnemyData *getEnemy(size_t enemyID) { return mEnemy[enemyID]; }
-        const BtlBgData *getBtlBgData(size_t btlBgID) { return mBtlBgData[btlBgID]; }
-
-        /// @brief Gets the number of items in the database
-        size_t getNumHeroes() { return mHero.size(); }
-        size_t getNumItems() { return mItem.size(); }
-        size_t getNumSkills() { return mSkill.size(); }
-        size_t getEnemy() { return mEnemy.size(); }
-        size_t getBtlBg() { return mBtlBg.size(); }
+        /** Deinitialise database. */
+        bool deinitialise();
+        /** Load a database file from disk. */
+        bool load(std::string filename);
+        /** Save the current database to a file. */
+        bool save(std::string filename);
 
     private:
-        // Hero Data
-        std::vector<HeroData *> mHero;
-        // Item Data
-        std::vector<ItemData *> mItem;
-        // Skill Data
-        std::vector<SkillData *> mSkill;
-        // Enemy Data
-        std::vector<EnemyData *> mEnemy;
-        // Enemy Group Data
-        std::vector<EnemuGroupData *> mEnemyGroupData;
-        // Battle Background
-        std::vector<BtlBgData *> mBtlBgData;
-        // TODO: Everything
-
+    	// System configuration.
+    	SystemHeader mSystemHeader;
+    	std::vector<WindowSkinPtr> mWindowSkinList;
+    	std::vector<FontPtr> mFontList;
+    	STRFilePtr mSystemMessageList;
     };
 } // namespace
 

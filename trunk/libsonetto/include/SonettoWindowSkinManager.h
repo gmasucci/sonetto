@@ -24,7 +24,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
-#include <OGRE/OgreResourceManager.h>
+#include <OgreResourceManager.h>
 #include "SonettoWindowSkin.h"
 
 namespace Sonetto {
@@ -45,6 +45,6 @@ namespace Sonetto {
         static WindowSkinManager &getSingleton();
         static WindowSkinManager *getSingletonPtr();
     };
-} // namespace
+}; // namespace
 
 #endif // _SONETTO_WINDOWSKIN_MANAGER_H_

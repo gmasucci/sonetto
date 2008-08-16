@@ -21,7 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
 #include "SonettoRARC.h"
-#include "zlib/zlib.h"
+#include "zlib.h"
 
 namespace Sonetto {
     //-----------------------------------------------------------------------------
@@ -42,7 +42,8 @@ namespace Sonetto {
         // Use filesystem to determine size
         // (quicker than streaming to the end and back)
         struct stat tagStat;
-        int ret = stat(mName.c_str(), &tagStat);
+        //int ret =
+        stat(mName.c_str(), &tagStat);
         assert(ret == 0 && "Problem getting file size" );
 
         // Create a pointer to a file stream and open it always in binary mode

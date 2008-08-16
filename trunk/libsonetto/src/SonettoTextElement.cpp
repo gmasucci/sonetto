@@ -571,8 +571,8 @@ namespace Sonetto
             view_ratio = mViewportAspectCoef;
 
 
-        Real txtPosX,o_txtPosX;
-        Real txtPosY,o_txtPosY;
+        Real txtPosX,o_txtPosX=0;
+        Real txtPosY,o_txtPosY=0;
 
         switch(mScrMetricsMode)
         {

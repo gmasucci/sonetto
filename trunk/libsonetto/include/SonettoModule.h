@@ -25,14 +25,12 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
-// Forward declarations
-namespace Sonetto {
-    class Kernel;
-    class Module;
-};
-
-#include <OGRE/Ogre.h>
+#include <Ogre.h>
 #include "SonettoKernel.h"
+
+namespace Sonetto {
+    class Kernel; // Forward declaration
+}
 
 namespace Sonetto {
     /** @brief Game Module interface
