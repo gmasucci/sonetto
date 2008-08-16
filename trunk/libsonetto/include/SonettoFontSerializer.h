@@ -23,7 +23,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef FONTSERIALIZER_H_INCLUDED
 #define FONTSERIALIZER_H_INCLUDED
 
-#include <OgreSerializer.h>
+#include <OGRE/OgreSerializer.h>
 
 #include "SonettoMain.h"
 

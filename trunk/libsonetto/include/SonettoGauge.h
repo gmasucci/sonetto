@@ -24,9 +24,9 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
-#include <OgreOverlayElement.h>
-#include <OgreOverlayElementFactory.h>
-#include <OgreOverlayManager.h>
+#include <OGRE/OgreOverlayElement.h>
+#include <OGRE/OgreOverlayElementFactory.h>
+#include <OGRE/OgreOverlayManager.h>
 
 namespace Sonetto {
 
@@ -197,6 +197,6 @@ namespace Sonetto {
         }
     };
 
-}; // namespace Sonetto
+} // namespace Sonetto
 
 #endif // __SONETTO_GAUGE__

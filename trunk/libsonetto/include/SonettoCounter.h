@@ -24,8 +24,8 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
-#include <OgreOverlayElement.h>
-#include <OgreOverlayElementFactory.h>
+#include <OGRE/OgreOverlayElement.h>
+#include <OGRE/OgreOverlayElementFactory.h>
 #include "SonettoMain.h"
 
 namespace Sonetto {
@@ -196,6 +196,6 @@ namespace Sonetto {
         }
     };
 
-}; // namespace Sonetto
+} // namespace Sonetto
 
 #endif // __SONETTO_COUNTER__

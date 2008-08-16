@@ -37,7 +37,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <AL/al.h>
 #include <vorbis/vorbisfile.h>
 
-#include <OgreVector2.h>
+#include <OGRE/OgreVector2.h>
 
 #include "SonettoException.h"
 
@@ -173,7 +173,6 @@ namespace Sonetto {
         FT_LINEAR = 0x2222,
         FT_ANISOTROPIC = 0x3333
     };
-}
-; // namespace
+} // namespace
 
 #endif // SONETTO_MAIN_H_

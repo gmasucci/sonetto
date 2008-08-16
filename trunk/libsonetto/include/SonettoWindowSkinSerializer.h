@@ -24,7 +24,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
-#include <OgreSerializer.h>
+#include <OGRE/OgreSerializer.h>
 #include "SonettoMain.h"
 #include "SonettoWindowSkin.h"
 

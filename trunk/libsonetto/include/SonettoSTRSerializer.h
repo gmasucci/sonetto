@@ -24,7 +24,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
-#include <OgreSerializer.h>
+#include <OGRE/OgreSerializer.h>
 
 // Side note: All this class has been coded under the sound track of Goof Troop - Capcom - SNES (1993)
 namespace Sonetto

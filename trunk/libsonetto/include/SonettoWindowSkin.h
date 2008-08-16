@@ -24,10 +24,10 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
-#include <OgreResourceManager.h>
-#include <OgreMaterialManager.h>
-#include <OgreTextureManager.h>
-#include <OgreTechnique.h>
+#include <OGRE/OgreResourceManager.h>
+#include <OGRE/OgreMaterialManager.h>
+#include <OGRE/OgreTextureManager.h>
+#include <OGRE/OgreTechnique.h>
 #include "SonettoMain.h"
 
 namespace Sonetto {

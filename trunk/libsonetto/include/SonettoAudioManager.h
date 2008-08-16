@@ -27,10 +27,9 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include <vector>
 #include <queue>
-#include <Ogre.h>
+#include <OGRE/Ogre.h>
 #include <AL/al.h>
 #include <AL/alc.h>
-#include <AL/efx.h>
 #include <vorbis/vorbisfile.h>
 #include "SonettoVirtualFile.h"
 
@@ -53,10 +52,10 @@ namespace Sonetto {
         bool         loopEnabled;
 
         /// @brief PCM Sample where the sound begins
-        ogg_uint64_t loopBegin;
+//        ogg_uint64_t loopBegin;
 
         /// @brief PCM Sample where the sound ends
-        ogg_uint64_t loopEnd;
+//        ogg_uint64_t loopEnd;
 
         /// @brief Minimal volume gain (when far from the listener)
         float        minGain;
@@ -117,10 +116,10 @@ namespace Sonetto {
         bool         loopEnabled;
 
         /// @brief PCM Sample where the sound begins
-        ogg_uint64_t loopBegin;
-
+//        ogg_uint64_t loopBegin;
+//
         /// @brief PCM Sample where the sound ends
-        ogg_uint64_t loopEnd;
+//        ogg_uint64_t loopEnd;
     };
 
     /** @brief Definitions about *a* music stream
@@ -277,7 +276,7 @@ namespace Sonetto {
          *                       This argument is ignored if fadeOutMem is false. Defaults to false.
          */
         void playMusic(size_t musicID, float fadeOutSpd = 0.0f, float fadeInSpd = 0.0f,
-                       float musicVolume = 1.0f, ogg_uint64_t pcmPos = 0, bool fadeOutMem = false,
+                       float musicVolume = 1.0f, /*ogg_uint64_t pcmPos = 0,*/ bool fadeOutMem = false,
                        bool fadeOutMemPos = false);
 
         /** @brief Stop the actual music or all musics

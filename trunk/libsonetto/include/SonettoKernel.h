@@ -23,15 +23,19 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef SONETTO_KERNEL_H
 #define SONETTO_KERNEL_H
 
+namespace Sonetto{
+    class Kernel; // forward declaration.
+    class Module;
+}
+
 #include "SonettoMain.h"
 
 #include <fstream>
 #include <stack>
-#include <Ogre.h>
-#include <OgreVector2.h>
+#include <OGRE/Ogre.h>
+#include <OGRE/OgreVector2.h>
 #include <SDL/SDL_video.h>
 
-#include "SonettoAudioManager.h"
 #include "SonettoInputManager.h"
 #include "SonettoModule.h"
 #include "SonettoRARC.h"
@@ -47,6 +51,8 @@ http://www.gnu.org/copyleft/lesser.txt
 
 namespace Sonetto
 {
+
+
     class SONETTO_EXPORT Kernel
     {
     public:
@@ -101,10 +107,9 @@ namespace Sonetto
         Ogre::Root         *getOgreRoot();
 
         InputManager *getInputMan();
-        AudioManager *getAudioMan();
 
         /// @brief Load and parse the configuration file.
-        std::map<std::string,std::string> Kernel::loadConfig(const char *fname);
+        std::map<std::string,std::string> loadConfig(const char *fname);
     private:
         /// @brief Constructor.
         Kernel();
@@ -139,11 +144,10 @@ namespace Sonetto
         #endif
 
         // Sonetto Pointers.
-        AudioManager                 *mAudioMan; // Sonetto Audio Manager.
         InputManager                 *mInputMan; // Sonetto Input Manager.
 
         // Sonetto Resources and Objects.
-        STRFileManager               *mStrFileManager;
+        //STRFileManager               *mStrFileManager;
 
     };
 } // namespace Sonetto

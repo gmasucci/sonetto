@@ -508,4 +508,4 @@ namespace Sonetto {
         }
     }
     //---------------------------------------------------------------------
-};  // namespace Sonetto
+}  // namespace Sonetto

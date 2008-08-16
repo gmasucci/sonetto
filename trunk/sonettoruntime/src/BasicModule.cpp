@@ -20,7 +20,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
-#include <Ogre.h>
+#include <OGRE/Ogre.h>
 #include "SonettoInputManager.h"
 #include "BasicModule.h"
 

@@ -27,10 +27,11 @@ http://www.gnu.org/copyleft/lesser.txt
 
 // Forward declarations
 namespace Sonetto {
+    class Kernel;
     class Module;
 };
 
-#include <Ogre.h>
+#include <OGRE/Ogre.h>
 #include "SonettoKernel.h"
 
 namespace Sonetto {

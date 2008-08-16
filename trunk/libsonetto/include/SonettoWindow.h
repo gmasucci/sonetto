@@ -22,8 +22,8 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef SONETTO_WINDOW_H
 #define SONETTO_WINDOW_H
 
-#include <OgreOverlayContainer.h>
-#include <OgreVector2.h>
+#include <OGRE/OgreOverlayContainer.h>
+#include <OGRE/OgreVector2.h>
 #include "SonettoMain.h"
 #include "SonettoWindowSkin.h"
 
@@ -184,6 +184,6 @@ namespace Sonetto {
         }
     };
 
-}; //namespace
+} //namespace
 
 #endif //SONETTO_WINDOW_H

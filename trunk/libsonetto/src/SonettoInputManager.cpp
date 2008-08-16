@@ -399,4 +399,4 @@ namespace Sonetto
             delete mPlayers[i];
         }
     }
-};
+}

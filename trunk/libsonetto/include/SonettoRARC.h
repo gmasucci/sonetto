@@ -25,10 +25,9 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
-#include <OgreArchive.h>
-#include <OgreArchiveFactory.h>
+#include <OGRE/OgreArchive.h>
+#include <OGRE/OgreArchiveFactory.h>
 
-#include "zlib/zlib.h"
 
 namespace Sonetto {
 
