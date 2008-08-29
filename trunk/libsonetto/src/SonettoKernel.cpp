@@ -44,6 +44,12 @@ namespace Sonetto {
     #ifdef _DEBUG
     , mDebugOverlay(NULL)
     #endif
+    , mFrameTime(0.0f)
+    , mFadeOverlay(NULL)
+    , mFadeStatus(FS_IDLE_IN)
+    , mFadeSpeed(60.0f)
+    , mFadeAlpha(0.0f)
+
     {
         NameValuePairList  wndParamList; // Needed for Ogre to use SDL rendering window
         SDL_SysWMinfo      wmInfo;       // Structure holding SDL window information
@@ -111,6 +117,7 @@ namespace Sonetto {
         mLogMan      = LogManager::getSingletonPtr();
         mOverlayMan  = OverlayManager::getSingletonPtr();
         mResourceMan = ResourceGroupManager::getSingletonPtr();
+        mMaterialMan = MaterialManager::getSingletonPtr();
 
         // Create Audio Manager
 //        mAudioMan = new AudioManager();
@@ -120,11 +127,65 @@ namespace Sonetto {
         mInputMan = new InputManager(4);
 
         // Register Sonetto Resources and Objects
-        //mStrFileManager = new STRFileManager();
+        mStrManager = new STRManager();
+        mFontManager = new FontManager();
+        mWindowSkinManager = new WindowSkinManager();
+
+        // Create the object factory
+        mPlaneFactory = new PlaneFactory();
+        mTextElementFactory = new TextElementFactory();
+        mWindowFactory = new WindowFactory();
+        mTailedWindowFactory = new TailedWindowFactory();
+        mSlimWindowFactory = new SlimWindowFactory();
+        // Then register it.
+        mOverlayMan->addOverlayElementFactory(mPlaneFactory);
+        mOverlayMan->addOverlayElementFactory(mTextElementFactory);
+        mOverlayMan->addOverlayElementFactory(mWindowFactory);
+        mOverlayMan->addOverlayElementFactory(mTailedWindowFactory);
+        mOverlayMan->addOverlayElementFactory(mSlimWindowFactory);
+        // Create the Database
+        mDatabase = new Database();
+        mDatabase->mKernel = this;
+        mDatabase->load("testdatabase.dat");
+        mDatabase->initialise();
+
+        mResourceMan->createResourceGroup("TEMP");
+
+        ManualFontLoader * defaultFont = new ManualFontLoader();
+        mResourceMan->declareResource("dfont.bin", "Font", "TEMP", defaultFont);
+        mResourceMan->addResourceLocation("font/","FileSystem","TEMP");
+        mResourceMan->declareResource("dfont_texture_512.dds", "Texture", "TEMP");
+
+        ManualSTRLoader * defaultSTR = new ManualSTRLoader();
+        mResourceMan->declareResource("system.str", "STR", "TEMP", defaultSTR);
+
+        ManualWindowSkinLoader * defaultWndSkin = new ManualWindowSkinLoader();
+
+        mResourceMan->addResourceLocation("windowskin/","FileSystem","TEMP");
+        mResourceMan->declareResource("windowskin_00_00.dds", "Texture", "TEMP");
+        mResourceMan->declareResource("windowskin_00_01.dds", "Texture", "TEMP");
+        mResourceMan->declareResource("windowskin_00_02.dds", "Texture", "TEMP");
+        mResourceMan->declareResource("windowskin_00.bin", "WindowSkin", "TEMP", defaultWndSkin);
+
+        mResourceMan->initialiseResourceGroup("TEMP");
+
+        mDatabase->mSystemMessage = mStrManager->load("system.str", "TEMP");
+        mDatabase->mGameFont = mFontManager->load("dfont.bin", "TEMP");
+        WindowSkinPtr newWindowskin = mWindowSkinManager->load("windowskin_00.bin", "TEMP");
+        mDatabase->mWindowSkinList.push_back(newWindowskin);
+
+        initialiseFade();
+        setupFade(1.0f/60.0f);
     }
 
     Kernel::~Kernel()
     {
+        // Deinitialise Database
+        if (mDatabase) {
+            mDatabase->deinitialise();
+            delete mDatabase;
+            mDatabase = NULL;
+        }
         // Deinitialise InputManager
         if (mInputMan) {
             delete mInputMan;
@@ -180,6 +241,8 @@ namespace Sonetto {
     int Kernel::run()
     {
         while (!mShutdown) {
+            Ogre::ControllerValueRealPtr tmpFTV = Ogre::ControllerManager::getSingleton().getFrameTimeSource();
+            mFrameTime = tmpFTV->getValue();
             SDL_Event evt;
 
             // Small error check
@@ -214,8 +277,10 @@ namespace Sonetto {
             // First update input
             mInputMan->update();
 
+            // Update the FadeScreen
+            updateFade();
             // Update stack's top Module
-            mModuleList.top()->update(1.0f);
+            mModuleList.top()->update(mFrameTime);
 
             // Update audio manager
 /*            if (mAudioMan)
@@ -234,6 +299,7 @@ namespace Sonetto {
             if (haltMode) {
                 mModuleList.top()->halt(); // Put the current module to sleep
             } else {
+                mModuleList.top()->exit(); // First, exit the current module.
                 delete mModuleList.top();  // If it's going to change for real,
                                            // delete the current one.
                 mModuleList.pop();         // Then remove it from the stack
@@ -332,6 +398,11 @@ namespace Sonetto {
     {
         return mRoot;
     }
+    void Kernel::setWindowCaption(const Ogre::String& capt)
+    {
+
+        SDL_WM_SetCaption(capt.c_str(),capt.c_str());
+    }
     //-----------------------------------------------------------------------------
     InputManager *Kernel::getInputMan()
     {
@@ -343,4 +414,82 @@ namespace Sonetto {
         return mAudioMan;
     }*/
     //-----------------------------------------------------------------------------
+    void Kernel::initialiseFade()
+    {
+        MaterialPtr mFadeMaterial = mMaterialMan->create("FADE_MATERIAL", "FADE_RESOURCES");
+        mFadeMaterial->setSceneBlending( Ogre::SBT_TRANSPARENT_ALPHA );
+        mFadeOverlay = mOverlayMan->create("FADE_OVERLAY");
+        mFadeOverlayPlane = static_cast<Ogre::OverlayContainer*>(mOverlayMan->createOverlayElement("Plane", "FADE_PLANE"));
+        mFadeOverlayPlane->setPosition(0.0f,0.0f);
+        mFadeOverlayPlane->setDimensions(1.0f,1.0f);
+        mFadeOverlayPlane->setMaterialName("FADE_MATERIAL");
+        mFadeOverlayPlane->setColour(Ogre::ColourValue(0.0f,0.0f,0.0f,1.0f));
+        static_cast<Plane*>(mFadeOverlayPlane)->setScrMetricsMode(SMM_RELATIVE);
+        mFadeOverlay->add2D(mFadeOverlayPlane);
+        mFadeOverlay->setZOrder(600);
+        mFadeOverlay->show();
+    }
+    //-----------------------------------------------------------------------------
+    void Kernel::deinitialiseFade()
+    {
+        mFadeOverlay->clear();
+    }
+    FadeStatus Kernel::getFadeStatus()
+    {
+        return mFadeStatus;
+    }
+    void Kernel::setupFade(Ogre::Real fadespeed)
+    {
+        mFadeSpeed = fadespeed;
+    }
+    void Kernel::setFadeSpeed(Ogre::Real fadespeed)
+    {
+        mFadeSpeed = fadespeed;
+    }
+    void Kernel::startFade(bool fadeDir)
+    {
+        if( mFadeStatus == FS_IDLE_IN || mFadeStatus == FS_IDLE_OUT )
+        {
+            switch (fadeDir)
+            {
+                case false:
+                    mFadeStatus = FS_FADE_ACTIVE_IN;
+                    mFadeAlpha = 1.0f;
+                break;
+                case true:
+                    mFadeStatus = FS_FADE_ACTIVE_OUT;
+                    mFadeAlpha = 0.0f;
+                    mFadeOverlayPlane->show();
+                break;
+            }
+        }
+    }
+    void Kernel::updateFade()
+    {
+        switch (mFadeStatus)
+        {
+            case FS_FADE_ACTIVE_IN:
+                mFadeAlpha -= mFadeSpeed * mFrameTime;
+                if(mFadeAlpha <= 0.0f || mFadeAlpha > 1.0f)
+                {
+                    mFadeAlpha = 0.0f;
+                    mFadeStatus = FS_IDLE_IN;
+                    mFadeOverlayPlane->hide();
+                }
+                static_cast<Plane*>(mFadeOverlayPlane)->setAlpha(mFadeAlpha);
+            break;
+            case FS_FADE_ACTIVE_OUT:
+                mFadeAlpha += mFadeSpeed * mFrameTime;
+                if(mFadeAlpha >= 1.0f || mFadeAlpha < 0.0f)
+                {
+                    mFadeAlpha = 1.0f;
+                    mFadeStatus = FS_IDLE_OUT;
+                }
+                static_cast<Plane*>(mFadeOverlayPlane)->setAlpha(mFadeAlpha);
+            break;
+            default:
+                // Do Nothing
+            break;
+        }
+    }
 }; // namespace Sonetto

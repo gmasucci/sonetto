@@ -29,6 +29,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <Ogre.h>
 #include "Sonetto.h"
 #include "BasicModule.h"
+#include "TESTMapFileManager.h"
 
 using namespace std;
 using namespace Sonetto;
@@ -48,8 +49,10 @@ int main(int argc, char **argv)
         }
 
         Kernel::get()->pushModule(new BasicModule());
+        // Set up Custom Resources.
+        MapFileManager * mapFileMan = new MapFileManager();
         Kernel::get()->run();
-
+        Ogre::ResourceGroupManager::getSingleton()._unregisterResourceManager(mapFileMan->getResourceType());
         Kernel::destroy();
     } catch(Sonetto::Exception &e) {
         const char *what = e.what();

@@ -76,6 +76,10 @@ namespace Sonetto {
         // Now, create the Window Border Material
         mBorderMaterial = Ogre::MaterialManager::getSingleton().create(mName+"_border", mGroup);
 
+        mCursorMaterial = Ogre::MaterialManager::getSingleton().create(mName+"_cursor", mGroup);
+
+        mCursorLineMaterial = Ogre::MaterialManager::getSingleton().create(mName+"_cursor_line", mGroup);
+
 
 
         if(mWindowMaterial.isNull() || mBorderMaterial.isNull())
@@ -116,6 +120,32 @@ namespace Sonetto {
         Ogre::TextureUnitState * borderMaskTexture = borderMatPass->createTextureUnitState(mBorderTextureName);
         borderMaskTexture->setTextureCoordSet(0);
         borderMaskTexture->setTextureFiltering(Ogre::FO_LINEAR, Ogre::FO_LINEAR, Ogre::FO_NONE);
+
+        // Cursor Material
+        // Setup the material basics (Non-configurable Mandatory Data)
+        mCursorMaterial->setLightingEnabled(false);
+        mCursorMaterial->setDepthCheckEnabled(false);
+        mCursorMaterial->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
+        // We'll use the base technique for now, no shader support.
+        Ogre::Technique * cursorMatTech = mCursorMaterial->getTechnique(0);
+        Ogre::Pass * cursorMatPass = cursorMatTech->getPass(0);
+        // Create the texture unit for mask and background textures
+        Ogre::TextureUnitState * cursorTexture = cursorMatPass->createTextureUnitState(mCursorTextureName);
+        cursorTexture->setTextureCoordSet(0);
+        cursorTexture->setTextureFiltering(Ogre::FO_LINEAR, Ogre::FO_LINEAR, Ogre::FO_NONE);
+
+        // Cursor Line Material
+        // Setup the material basics (Non-configurable Mandatory Data)
+        mCursorLineMaterial->setLightingEnabled(false);
+        mCursorLineMaterial->setDepthCheckEnabled(false);
+        mCursorLineMaterial->setSceneBlending(Ogre::SBT_TRANSPARENT_ALPHA);
+        // We'll use the base technique for now, no shader support.
+        Ogre::Technique * cursorLineMatTech = mCursorLineMaterial->getTechnique(0);
+        Ogre::Pass * cursorLineMatPass = cursorLineMatTech->getPass(0);
+        // Create the texture unit for mask and background textures
+        Ogre::TextureUnitState * cursorLineTexture = cursorLineMatPass->createTextureUnitState(mCursorLineTextureName);
+        cursorLineTexture->setTextureCoordSet(0);
+        cursorLineTexture->setTextureFiltering(Ogre::FO_LINEAR, Ogre::FO_LINEAR, Ogre::FO_NONE);
 
         return true;
     }

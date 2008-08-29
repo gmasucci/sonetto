@@ -63,7 +63,9 @@ namespace Sonetto
         mAnimSpeed = 20.0f;
         mDefAnimSpeed = mAnimSpeed;
         mFadeSpeed = 0.5f;
+        mDefaultColor = 0;
         mFadeLevel = 1.0f;
+        mObjFade = 1.0f;
         mScrMetricsMode = SMM_RELATIVE_ASPECT_ADJUSTED;
         initialise();
     }
@@ -115,6 +117,17 @@ namespace Sonetto
     void TextElement::setMessage(const Ogre::String& text)
     {
         mCaption = text;
+        mStringSize = getStrSize(mCaption, 0);
+        checkMemoryAllocation(mStringSize);
+        allocateFadeList(mStringSize);
+        forceAnimReset();
+        mGeomPositionsOutOfDate = true;
+        mGeomUVsOutOfDate = true;
+    }
+    //-----------------------------------------------------------------------------
+    void TextElement::setMessage(const Ogre::String * text)
+    {
+        mCaption = *text;
         mStringSize = getStrSize(mCaption, 0);
         checkMemoryAllocation(mStringSize);
         allocateFadeList(mStringSize);
@@ -417,6 +430,26 @@ namespace Sonetto
         getStringHeight(&mCaption[0]));
     }
     //-----------------------------------------------------------------------------
+    void TextElement::setAlpha(Ogre::Real alpha)
+    {
+        mObjFade = alpha;
+        mGeomPositionsOutOfDate = true;
+    }
+    //-----------------------------------------------------------------------------
+    Ogre::Real TextElement::getAlpha()
+    {
+        return mObjFade;
+    }
+    void TextElement::setColor(size_t colorID)
+    {
+        mDefaultColor = colorID;
+        mGeomPositionsOutOfDate = true;
+    }
+    size_t TextElement::getColor()
+    {
+        return mDefaultColor;
+    }
+    //-----------------------------------------------------------------------------
     void TextElement::allocateFadeList(size_t size, float value)
     {
         mFadeList.clear();
@@ -563,13 +596,12 @@ namespace Sonetto
                           c_vbuf->lock(HardwareBuffer::HBL_DISCARD) );
         RGBA color_cursor;
         Real fade_alpha;
-        mCurTextColor = mFontPtr->mColorList[0];
+        mCurTextColor = mFontPtr->mColorList[mDefaultColor];
 
         Real view_ratio = 1.0f;
 
         if(SMM_RELATIVE_ASPECT_ADJUSTED)
             view_ratio = mViewportAspectCoef;
-
 
         Real txtPosX,o_txtPosX=0;
         Real txtPosY,o_txtPosY=0;
@@ -763,7 +795,7 @@ namespace Sonetto
                 break;
             }
 
-            mCurTextColor.a = fade_alpha;
+            mCurTextColor.a = fade_alpha * mObjFade;
             Root::getSingleton().convertColourValue(mCurTextColor, &color_cursor);
             // Now update the colors
             // First tri (top, bottom, top)

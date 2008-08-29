@@ -26,6 +26,7 @@
 				<ExtraCommands>
 					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\release\tools\" />
 					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\release\runtime\" />
+					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
 			<Target title="Debug">
@@ -46,6 +47,7 @@
 				<ExtraCommands>
 					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\debug\tools\" />
 					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\bin\debug\runtime\" />
+					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
 		</Build>
@@ -65,6 +67,7 @@
 			<Add directory="..\include" />
 			<Add directory="..\..\dependencies\include" />
 			<Add directory="$(OGRE_HOME)\OgreMain\include" />
+			<Add directory="..\..\dependencies\include\zlib" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
@@ -94,6 +97,7 @@
 		</Unit>
 		<Unit filename="..\include\SonettoAudioManager.h" />
 		<Unit filename="..\include\SonettoCounter.h" />
+		<Unit filename="..\include\SonettoDatabase.h" />
 		<Unit filename="..\include\SonettoException.h" />
 		<Unit filename="..\include\SonettoFont.h" />
 		<Unit filename="..\include\SonettoFontManager.h" />
@@ -104,6 +108,7 @@
 		<Unit filename="..\include\SonettoMain.h" />
 		<Unit filename="..\include\SonettoModule.h" />
 		<Unit filename="..\include\SonettoPlane.h" />
+		<Unit filename="..\include\SonettoPlaneFactory.h" />
 		<Unit filename="..\include\SonettoPrerequisites.h" />
 		<Unit filename="..\include\SonettoRARC.h" />
 		<Unit filename="..\include\SonettoSTR.h" />
@@ -117,6 +122,7 @@
 		<Unit filename="..\include\SonettoVirtualFile.h" />
 		<Unit filename="..\include\SonettoWindow.h" />
 		<Unit filename="..\include\SonettoWindowFactory.h" />
+		<Unit filename="..\include\SonettoWindowManager.h" />
 		<Unit filename="..\include\SonettoWindowSkin.h" />
 		<Unit filename="..\include\SonettoWindowSkinManager.h" />
 		<Unit filename="..\include\SonettoWindowSkinSerializer.h" />
@@ -125,6 +131,7 @@
 		</Unit>
 		<Unit filename="..\src\SonettoAudioManager.cpp" />
 		<Unit filename="..\src\SonettoCounter.cpp" />
+		<Unit filename="..\src\SonettoDatabase.cpp" />
 		<Unit filename="..\src\SonettoException.cpp" />
 		<Unit filename="..\src\SonettoFont.cpp" />
 		<Unit filename="..\src\SonettoFontManager.cpp" />
@@ -144,6 +151,7 @@
 		<Unit filename="..\src\SonettoTextElement.cpp" />
 		<Unit filename="..\src\SonettoVirtualFile.cpp" />
 		<Unit filename="..\src\SonettoWindow.cpp" />
+		<Unit filename="..\src\SonettoWindowManager.cpp" />
 		<Unit filename="..\src\SonettoWindowSkin.cpp" />
 		<Unit filename="..\src\SonettoWindowSkinManager.cpp" />
 		<Unit filename="..\src\SonettoWindowSkinSerializer.cpp" />

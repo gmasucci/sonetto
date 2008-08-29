@@ -54,6 +54,8 @@ namespace Sonetto {
         Ogre::String        mWindowMaskTextureName;
         Ogre::String        mWindowBgTextureName;
         Ogre::String        mBorderTextureName;
+        Ogre::String        mCursorTextureName;
+        Ogre::String        mCursorLineTextureName;
 
         // Materials
         Ogre::MaterialPtr   mWindowMaterial;
@@ -82,6 +84,10 @@ namespace Sonetto {
         Ogre::ColourValue   mMenuBgTopRight;
         Ogre::ColourValue   mMenuBgBottomLeft;
         Ogre::ColourValue   mMenuBgBottomRight;
+
+        // Cursor
+        Ogre::MaterialPtr   mCursorMaterial;
+        Ogre::ColourValue   mCursorColor;
 
         // Cursor Line
         Ogre::MaterialPtr   mCursorLineMaterial;

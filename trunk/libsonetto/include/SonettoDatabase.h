@@ -24,8 +24,15 @@ http://www.gnu.org/copyleft/lesser.txt
 #define SONETTO_DATABASE_H
 
 #include "SonettoMain.h"
+#include "SonettoWindowSkinManager.h"
+#include "SonettoSTRManager.h"
+#include "SonettoFontManager.h"
+#include "SonettoSaveMap.h"
 
 namespace Sonetto {
+
+    class Kernel;
+
 	struct SystemHeader
 	{
 		// Internal Identification Strings.
@@ -33,14 +40,14 @@ namespace Sonetto {
 		std::string mGameVersion;
 		std::string mGameDatabaseVersion;
 		std::string mGameAuthor;
-		
+
 		// In-Game Menu/System Sounds.
 		size_t mCursorOk;
 		size_t mCursorCancel;
 		size_t mCursorMove;
 		size_t mUseItem;
 		size_t mSystemError;
-		
+
 		// Game/System Messages.
 		size_t mMsgOk;
 		size_t mMsgCancel;
@@ -63,7 +70,7 @@ namespace Sonetto {
 		size_t mMsgSaveComplete;
 		size_t mMsgOptionsTitle;
 		size_t mMsgOptsWinSkinID; // Some games allow multiple windowskins.
-		
+
 		// Default WindowSkin;
 		size_t mDefaultWindowSkin;
 		// Default Font
@@ -87,12 +94,31 @@ namespace Sonetto {
         /** Save the current database to a file. */
         bool save(std::string filename);
 
-    private:
+    //private:
+        Kernel * mKernel;
     	// System configuration.
+    	SaveMap * mSaveMap;
     	SystemHeader mSystemHeader;
     	std::vector<WindowSkinPtr> mWindowSkinList;
-    	std::vector<FontPtr> mFontList;
-    	STRFilePtr mSystemMessageList;
+    	FontPtr mGameFont;
+    	STRDataPtr mSystemMessage;
+    	// Temporary "Map To Load" memory area.
+    	// This area is set up by future scripts or commands
+    	// used to change from one map to another.
+    	// The function will always read from here to set its "destiny".
+    	size_t mMapID;
+    	// Temporary Map Start Position.
+    	float mPlayerPosX;
+    	float mPlayerPosY;
+    	float mPlayerPosZ;
+    	// Temporary Map Start Rotation. (only Y axis is used for now)
+    	float mPlayerRotX; // Unused
+    	float mPlayerRotY;
+    	float mPlayerRotZ; // Unused
+    	float mPlayerRotW; // Unused
+
+    	// Temporary map list.
+    	std::map<size_t, std::string> mMapList;
     };
 } // namespace
 

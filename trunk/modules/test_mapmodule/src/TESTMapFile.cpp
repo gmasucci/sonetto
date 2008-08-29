@@ -19,40 +19,40 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
-#ifndef _SONETTO_H_
-#define _SONETTO_H_
+#include "TESTMapFile.h"
+#include "TESTMapFileSerializer.h"
 
-#include "SonettoPrerequisites.h"
+namespace Sonetto{
 
-// Now we include all classes.
-#include "SonettoMain.h"
-//#include "SonettoAudioManager.h"
-#include "SonettoCounter.h"
-#include "SonettoException.h"
-#include "SonettoFont.h"
-#include "SonettoFontManager.h"
-#include "SonettoFontSerializer.h"
-#include "SonettoGauge.h"
-#include "SonettoInputManager.h"
-#include "SonettoKernel.h"
-#include "SonettoModule.h"
-#include "SonettoPlane.h"
-#include "SonettoPlaneFactory.h"
-#include "SonettoRARC.h"
-#include "SonettoSTR.h"
-#include "SonettoSTRManager.h"
-#include "SonettoSTRSerializer.h"
-#include "SonettoSlimWindow.h"
-#include "SonettoTailedWindow.h"
-#include "SonettoTextElement.h"
-#include "SonettoTextFactory.h"
-//#include "SonettoVirtualFile.h"
-#include "SonettoWindow.h"
-#include "SonettoWindowFactory.h"
-#include "SonettoChoiceWindow.h"
-#include "SonettoWindowSkin.h"
-#include "SonettoWindowSkinManager.h"
-#include "SonettoWindowSkinSerializer.h"
-// end of includes.
+    MapFile::MapFile(Ogre::ResourceManager* creator, const Ogre::String &name,
+                        Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual,
+                        Ogre::ManualResourceLoader *loader) :
+    Ogre::Resource(creator, name, handle, group, isManual, loader)
+    {
+        /* If you were storing a pointer to an object, then you would set that pointer to NULL here.
+        */
+    }
 
-#endif // _SONETTO_H_
+    MapFile::~MapFile()
+    {
+        unload();
+    }
+
+    void MapFile::loadImpl()
+    {
+        MapFileSerializer serializer;
+        Ogre::DataStreamPtr stream = Ogre::ResourceGroupManager::getSingleton().openResource(mName, mGroup, true, this);
+        serializer.importMapFile(stream, this);
+    }
+
+    void MapFile::unloadImpl()
+    {
+        mMapLayer.clear();
+    }
+
+    size_t MapFile::calculateSize() const
+    {
+        return 0;
+    }
+
+}; // namespace

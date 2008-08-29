@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Sonetto_TEST_MapModule" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="..\..\..\lib\default_map_d" prefix_auto="1" extension_auto="1" />
+				<Option object_output="..\..\obj\rebug\" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add library="user32" />
+					<Add library="libsonetto_d" />
+					<Add library="OgreMain_d" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\..\bin\debug\tools\" />
+					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\..\bin\debug\runtime\" />
+					<Mode after="always" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Release">
+				<Option output="..\..\..\lib\default_map" prefix_auto="1" extension_auto="1" />
+				<Option object_output="..\..\obj\release\" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wall" />
+					<Add option="-DBUILD_DLL" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="user32" />
+					<Add library="libsonetto" />
+					<Add library="OgreMain" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\..\bin\release\tools\" />
+					<Add after="cmd /c copy $($(TARGET_NAME)_OUTPUT_FILE) ..\..\..\bin\release\runtime\" />
+					<Mode after="always" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="Debug;Release;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-mthreads" />
+			<Add option="-fmessage-length=0" />
+			<Add option="-fexceptions" />
+			<Add option="-fident" />
+			<Add option="-DWIN32" />
+			<Add option="-DMODULE_DLL" />
+			<Add directory="..\include" />
+			<Add directory="..\..\..\libsonetto\include" />
+			<Add directory="$(OGRE_HOME)\OgreMain\include" />
+			<Add directory="..\..\..\dependencies\include" />
+			<Add directory="..\..\..\dependencies\include\zlib" />
+		</Compiler>
+		<Linker>
+			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
+			<Add option="-Wl,--enable-auto-image-base" />
+			<Add option="-Wl,--add-stdcall-alias" />
+			<Add library="SDL" />
+			<Add library="zlib" />
+			<Add directory="$(OGRE_HOME)\lib" />
+			<Add directory="..\..\..\dependencies\lib" />
+			<Add directory="..\..\..\dependencies\lib\SDL" />
+			<Add directory="..\..\..\dependencies\lib\zlib" />
+			<Add directory="..\..\..\lib" />
+		</Linker>
+		<Unit filename="..\include\TESTMapFile.h" />
+		<Unit filename="..\include\TESTMapFileManager.h" />
+		<Unit filename="..\include\TESTMapFileSerializer.h" />
+		<Unit filename="..\include\TESTMapModule.h">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="..\src\TESTMapFile.cpp" />
+		<Unit filename="..\src\TESTMapFileManager.cpp" />
+		<Unit filename="..\src\TESTMapFileSerializer.cpp" />
+		<Unit filename="..\src\TESTMapModule.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

@@ -1,10 +1,11 @@
 # depslib dependency file v1.0
-1214691992 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource.rc
+1219266222 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource.rc
 
-1215120694 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\basicmodule.cpp
+1220038164 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\basicmodule.cpp
 	<Ogre.h>
 	"SonettoInputManager.h"
 	"BasicModule.h"
+	"TESTMapModule.h"
 
 1165514534 c:\workspace\libraries\ogre\ogremain\include\ogre.h
 	"OgrePrerequisites.h"
@@ -1139,15 +1140,13 @@
 	"OgrePrerequisites.h"
 	"OgreShadowCameraSetup.h"
 
-1215120710 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoinputmanager.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoinputmanager.h
 	<vector>
 	"SonettoMain.h"
 	<Ogre.h>
 	<SDL/SDL.h>
 
-1215107913 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomain.h
-	<AL/al.h>
-	<vorbis/vorbisfile.h>
+1219940247 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomain.h
 	<OgreVector2.h>
 	"SonettoException.h"
 
@@ -1173,7 +1172,7 @@
 
 1202562610 c:\workspace\projects\sonetto\trunk\dependencies\include\ogg\config_types.h
 
-1215120710 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoexception.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoexception.h
 	"SonettoMain.h"
 	<string>
 	<exception>
@@ -1358,28 +1357,29 @@
 	"begin_code.h"
 	"close_code.h"
 
-1214691986 c:\workspace\projects\sonetto\trunk\sonettoruntime\include\basicmodule.h
+1220038759 c:\workspace\projects\sonetto\trunk\sonettoruntime\include\basicmodule.h
 	<cstdio>
+	"SonettoChoiceWindow.h"
 	"SonettoModule.h"
 	"SonettoInputManager.h"
 
-1215120700 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomodule.h
+1219735879 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomodule.h
 	"SonettoMain.h"
 	<Ogre.h>
 	"SonettoKernel.h"
 
-1217818714 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettokernel.h
+1220026101 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettokernel.h
 	"SonettoMain.h"
 	<fstream>
 	<stack>
 	<Ogre.h>
 	<OgreVector2.h>
-	<SDL/SDL_video.h>
-	"SonettoAudioManager.h"
+	"SonettoDatabase.h"
 	"SonettoInputManager.h"
 	"SonettoModule.h"
+	"SonettoPlaneFactory.h"
 	"SonettoRARC.h"
-	"SonettoSTR.h"
+	"SonettoSTRManager.h"
 	"SonettoFontSerializer.h"
 	"SonettoFontManager.h"
 	"SonettoTextFactory.h"
@@ -1388,6 +1388,7 @@
 	"SonettoWindowFactory.h"
 	"SonettoGauge.h"
 	"SonettoCounter.h"
+	<SDL/SDL_video.h>
 
 1214692021 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoaudiomanager.h
 	"SonettoMain.h"
@@ -1409,11 +1410,11 @@
 	<cstddef>
 	<vorbis/vorbisfile.h>
 
-1215107913 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettorarc.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettorarc.h
 	"SonettoMain.h"
 	<OgreArchive.h>
 	<OgreArchiveFactory.h>
-	"zlib/zlib.h"
+	"zlib.h"
 
 1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrearchivefactory.h
 	"OgrePrerequisites.h"
@@ -1428,22 +1429,22 @@
 	<unistd.h>
 	<unixio.h>
 
-1215190849 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettostr.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettostr.h
 	"SonettoMain.h"
 	<vector>
 	<OgrePrerequisites.h>
 	<OgreResourceManager.h>
 
-1214692021 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettofontserializer.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettofontserializer.h
 	<OgreSerializer.h>
 	"SonettoMain.h"
 
-1214692021 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettofontmanager.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettofontmanager.h
 	"SonettoMain.h"
 	<OgreResourceManager.h>
 	"SonettoFont.h"
 
-1215107913 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettofont.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettofont.h
 	"SonettoMain.h"
 	<OgreResourceManager.h>
 	<OgreMaterialManager.h>
@@ -1451,7 +1452,7 @@
 	<OgreTechnique.h>
 	"SonettoMain.h"
 
-1215107913 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettotextfactory.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettotextfactory.h
 	"SonettoMain.h"
 	<Ogre.h>
 	<OgrePrerequisites.h>
@@ -1483,20 +1484,20 @@
 	"OgreMaterial.h"
 	"OgreCommon.h"
 
-1215107912 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettotextelement.h
+1220025628 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettotextelement.h
 	"SonettoMain.h"
 	<OgreOverlayElement.h>
 	<OgreControllerManager.h>
 	"SonettoMain.h"
 	"SonettoFontManager.h"
 
-1214692021 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowskinserializer.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowskinserializer.h
 	"SonettoMain.h"
 	<OgreSerializer.h>
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1215107911 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowskin.h
+1219949875 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowskin.h
 	"SonettoMain.h"
 	<OgreResourceManager.h>
 	<OgreMaterialManager.h>
@@ -1504,61 +1505,61 @@
 	<OgreTechnique.h>
 	"SonettoMain.h"
 
-1214692021 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowskinmanager.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowskinmanager.h
 	"SonettoMain.h"
 	<OgreResourceManager.h>
 	"SonettoWindowSkin.h"
 
-1215107913 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowfactory.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowfactory.h
 	"SonettoMain.h"
 	<OgreOverlayElementFactory.h>
 	"SonettoWindow.h"
 	"SonettoTailedWindow.h"
 	"SonettoSlimWindow.h"
 
-1215107913 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindow.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindow.h
 	<OgreOverlayContainer.h>
 	<OgreVector2.h>
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1215107913 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettotailedwindow.h
-	"SonettoMain.h"
-	<OgreOverlayContainer.h>
-	<OgreVector2.h>
-	"SonettoMain.h"
-	"SonettoWindowSkin.h"
-
-1215107913 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoslimwindow.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettotailedwindow.h
 	"SonettoMain.h"
 	<OgreOverlayContainer.h>
 	<OgreVector2.h>
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1215107913 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettogauge.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoslimwindow.h
+	"SonettoMain.h"
+	<OgreOverlayContainer.h>
+	<OgreVector2.h>
+	"SonettoMain.h"
+	"SonettoWindowSkin.h"
+
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettogauge.h
 	"SonettoMain.h"
 	<OgreOverlayElement.h>
 	<OgreOverlayElementFactory.h>
 	<OgreOverlayManager.h>
 
-1215107913 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettocounter.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettocounter.h
 	"SonettoMain.h"
 	<OgreOverlayElement.h>
 	<OgreOverlayElementFactory.h>
 	"SonettoMain.h"
 
-1215120694 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\main.cpp
+1219544814 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\main.cpp
 	<cstdio>
 	"windows.h"
 	<Ogre.h>
 	"Sonetto.h"
 	"BasicModule.h"
+	"TESTMapFileManager.h"
 
-1214692021 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonetto.h
+1220038612 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonetto.h
 	"SonettoPrerequisites.h"
 	"SonettoMain.h"
-	"SonettoAudioManager.h"
 	"SonettoCounter.h"
 	"SonettoException.h"
 	"SonettoFont.h"
@@ -1569,6 +1570,7 @@
 	"SonettoKernel.h"
 	"SonettoModule.h"
 	"SonettoPlane.h"
+	"SonettoPlaneFactory.h"
 	"SonettoRARC.h"
 	"SonettoSTR.h"
 	"SonettoSTRManager.h"
@@ -1577,26 +1579,71 @@
 	"SonettoTailedWindow.h"
 	"SonettoTextElement.h"
 	"SonettoTextFactory.h"
-	"SonettoVirtualFile.h"
 	"SonettoWindow.h"
 	"SonettoWindowFactory.h"
+	"SonettoChoiceWindow.h"
 	"SonettoWindowSkin.h"
 	"SonettoWindowSkinManager.h"
 	"SonettoWindowSkinSerializer.h"
 
-1214692021 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoprerequisites.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoprerequisites.h
 
-1215107913 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoplane.h
+1219941190 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoplane.h
 	"SonettoMain.h"
 	<OgreOverlayContainer.h>
 	"SonettoMain.h"
 
-1214692021 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettostrmanager.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettostrmanager.h
 	"SonettoMain.h"
 	<OgreResourceManager.h>
 	"SonettoSTR.h"
 
-1215191964 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettostrserializer.h
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettostrserializer.h
 	"SonettoMain.h"
 	<OgreSerializer.h>
+
+1219556366 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettodatabase.h
+	"SonettoMain.h"
+	"SonettoWindowSkinManager.h"
+	"SonettoSTRManager.h"
+	"SonettoFontManager.h"
+	"SonettoSaveMap.h"
+
+1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettosavemap.h
+	"SonettoMain.h"
+
+1219539181 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testmapfilemanager.h
+	<OgreResourceManager.h>
+	<OgreSingleton.h>
+	<OgreString.h>
+	"TESTMapFile.h"
+
+1219539380 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testmapfile.h
+	<OgreResourceManager.h>
+	<OgreColourValue.h>
+	<OgreVector3.h>
+
+1219266222 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource_d.rc
+
+1219545385 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testmapmodule.h
+	"SonettoModule.h"
+	"TESTMapFileManager.h"
+
+1219697300 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoplanefactory.h
+	<OgreOverlayElementFactory.h>
+	"SonettoPlane.h"
+
+1220035526 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowmanager.h
+	"SonettoModule.h"
+	"SonettoWindow.h"
+	"SonettoTextElement.h"
+	"SonettoMain.h"
+	"SonettoWindowSkin.h"
+
+1220038735 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettochoicewindow.h
+	"SonettoModule.h"
+	"SonettoWindow.h"
+	"SonettoTextElement.h"
+	"SonettoMain.h"
+	"SonettoWindowSkin.h"
 

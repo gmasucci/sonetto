@@ -77,6 +77,8 @@ namespace Sonetto {
         TexCoord bottom_right;
         TexCoord tail_up;
         TexCoord tail_down;
+        TexCoord cursor;
+        TexCoord cursor_line;
     };
 
     /** @brief Structure used to store glyph data.

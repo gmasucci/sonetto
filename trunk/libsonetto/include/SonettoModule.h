@@ -84,10 +84,19 @@ namespace Sonetto {
 
         /** @brief Module wakeup
 
-            Gets called by Kernel when the top Module has been popped and this
+            Is called by Kernel when the top Module has been popped and this
             module will start receiving update()'s again.
         */
         virtual void wakeup();
+
+        /** Set the Module Background Color
+
+            Change and update the Module Viewport background color,
+            the background color is the shapped color that appear at the
+            back of the screen when there is no polygons.
+            It's usually black on most games.
+        */
+        /*virtual void setBackgroundColor(Ogre::ColourValue col);*/
 
     public:
         /// @brief Use this in place of Kernel::get() for the sake of simplicity
@@ -101,6 +110,12 @@ namespace Sonetto {
 
         /// @brief Module Camera
         Ogre::Camera *mCamera;
+
+        /// Each Module must have it's own Overlay Name.
+        Ogre::String mModuleOverlayName;
+
+        /// Viewport Background Color.
+        Ogre::ColourValue mBackgroundColor;
     };
 }; // namespace
 

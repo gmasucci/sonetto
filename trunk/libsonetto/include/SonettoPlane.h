@@ -28,15 +28,16 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoMain.h"
 
 namespace Sonetto {
-    /** @brief OverlayElement representing a flat, single-material plane which can contain other elements.
+    /** OverlayElement representing a flat, single-material (or transparent) panel which can contain other elements.
     @remarks
         This class subclasses OverlayContainer because it can contain other elements. Like other
         containers, if hidden it's contents are also hidden, if moved it's contents also move etc.
-        The plane itself is a 2D rectangle which is rendered with a single material and independent alpha
-        abd vertex colors.
-        The texture(s) on the plane can be tiled depending on your requirements.
+        The panel itself is a 2D rectangle which is either completely transparent, or is rendered
+        with a single material. The texture(s) on the panel can be tiled depending on your requirements.
     @par
-        This component is suitable for backgrounds and grouping other elements.
+        This component is suitable for backgrounds and grouping other elements. Note that because
+        it has a single repeating material it cannot have a discrete border (unless the texture has one and
+        the texture is tiled only once). For a bordered panel, see it's subclass BorderPanelOverlayElement.
     @par
         Note that the material can have all the usual effects applied to it like multiple texture
         layers, scrolling / animated textures etc. For multiple texture layers, you have to set
@@ -45,69 +46,87 @@ namespace Sonetto {
     class SONETTO_EXPORT Plane : public Ogre::OverlayContainer
     {
     public:
-        /// @brief Constructor
-        Plane(const Ogre::String &name);
-        /// @brief Destructor
+        /** Constructor. */
+        Plane(const Ogre::String& name);
         virtual ~Plane();
 
-        /// @brief Initialise
-        void initialise(void);
+        /** Initialise */
+        virtual void initialise(void);
 
-        /// @brief Sets the texture coordinates for the plane.
+        /** Sets the number of times textures should repeat.
+        @param x The number of times the texture should repeat horizontally
+        @param y The number of times the texture should repeat vertically
+        @param layer The texture layer to specify (only needs to be altered if
+            you're using a multi-texture layer material)
+        */
+        void setTiling(Ogre::Real x, Ogre::Real y, Ogre::ushort layer = 0);
+
+        Ogre::Real getTileX(Ogre::ushort layer = 0) const;
+        /** Gets the number of times the texture should repeat vertically.
+        @param layer The texture layer to specify (only needs to be altered if
+            you're using a multi-texture layer material)
+        */
+        Ogre::Real getTileY(Ogre::ushort layer = 0) const;
+
+        /** Sets the texture coordinates for the panel. */
         void setUV(Ogre::Real u1, Ogre::Real v1, Ogre::Real u2, Ogre::Real v2);
 
-        /// @brief Get the uv coordinates for the plane.
+        /** Get the uv coordinates for the panel*/
         void getUV(Ogre::Real& u1, Ogre::Real& v1, Ogre::Real& u2, Ogre::Real& v2) const;
 
-        /// @brief Set the vertex colors (and alpha).
-        void setColors(Ogre::Real r, Ogre::Real g, Ogre::Real b, Ogre::Real a);
+        /** Sets whether this panel is transparent (used only as a grouping level), or
+            if it is actually renderred.
+        */
+        void setTransparent(bool isTransparent);
 
-        /// @brief Set the Colour for this element.
-        virtual void setColour(const Ogre::ColourValue& col);
+        /** Returns whether this panel is transparent. */
+        bool isTransparent(void) const;
 
-        /// @brief Gets the colour for this element.
-        virtual const Ogre::ColourValue& getColour(void) const;
-
-        /// @brief See Ogre::OverlayElement.
+        /** See OverlayElement. */
         virtual const Ogre::String& getTypeName(void) const;
-        /// @brief See Ogre::Renderable.
+        /** See Renderable. */
         void getRenderOperation(Ogre::RenderOperation& op);
-        /// @brief Overridden from Ogre::OverlayElement.
+        /** Overridden from OverlayElement */
         void setMaterialName(const Ogre::String& matName);
-        /// @brief Overridden from Ogre::OverlayContainer.
+
+        void setScrMetricsMode(ScreenMetricsMode smm);
+        ScreenMetricsMode getScrMetricsMode();
+
+        /** Overridden from OverlayContainer */
         void _updateRenderQueue(Ogre::RenderQueue* queue);
-        /// @brief Overridden from Ogre::OverlayElement.
-        virtual void _update(void);
+
+        void _update(void);
+
+        void setAlpha(Ogre::Real alpha);
 
     protected:
-        /// @brief Update color
-        bool mUpdateColors;
-        /// @brief Aspect Ratio
-        Ogre::Real mAspectRatio;
+        bool mColorUpdate;
+        // Flag indicating if this panel should be visual or just group things
+        bool mTransparent;
+        // Texture tiling
+        Ogre::Real mTileX[OGRE_MAX_TEXTURE_LAYERS];
+        Ogre::Real mTileY[OGRE_MAX_TEXTURE_LAYERS];
+        size_t mNumTexCoordsInBuffer;
+        Ogre::Real mU1, mV1, mU2, mV2;
 
         ScreenMetricsMode mScrMetricsMode;
 
-        /// @brief Number of Texture Coordinates in the buffer.
-        size_t mNumTexCoordsInBuffer;
+        // Object Alpha Level.
+        Ogre::Real mAlphaLevel;
 
-        /// @brief UV Coordinates.
-        Ogre::Real mU1, mV1, mU2, mV2;
-
-        /// @brief Render Operation.
         Ogre::RenderOperation mRenderOp;
 
-        /// @brief Internal method for setting up geometry, called by OverlayElement::update
+        /// internal method for setting up geometry, called by OverlayElement::update
         virtual void updatePositionGeometry(void);
 
-        /// @brief Called to update the texture coords when layers change
+        /// Called to update the texture coords when layers change
         virtual void updateTextureGeometry(void);
 
-        /// @brief Called to update the colours
-        virtual void updateColors(void);
+        void updateColour(void);
 
-        /// @brief Typename for identification.
         static Ogre::String msTypeName;
-    };
-}; // namespace Sonetto
 
+    };
+
+}; // namespace
 #endif // __SONETTO_PLANE__

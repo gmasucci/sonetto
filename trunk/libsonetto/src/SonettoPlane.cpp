@@ -33,18 +33,30 @@ namespace Sonetto {
     //---------------------------------------------------------------------
     // vertex buffer bindings, set at compile time (we could look these up but no point)
     #define POSITION_BINDING 0
-    #define TEXCOORD_BINDING 1
-    #define COLOR_BINDING 2
+    #define COLOUR_BINDING 1
+    #define TEXCOORD_BINDING 2
+
     //---------------------------------------------------------------------
-    Plane::Plane(const Ogre::String &name)
-    : Ogre::OverlayContainer(name),
-    mUpdateColors (true),
-    mNumTexCoordsInBuffer (0),
-    mU1(0.0),
-    mV1(0.0),
-    mU2(1.0),
-    mV2(1.0)
+    Plane::Plane(const Ogre::String& name)
+        : OverlayContainer(name)
+        , mColorUpdate(false)
+        , mTransparent(false)
+        // Defer creation of texcoord buffer until we know how big it needs to be
+        , mNumTexCoordsInBuffer(0)
+        , mU1(0.0)
+        , mV1(0.0)
+        , mU2(1.0)
+        , mV2(1.0)
+        , mScrMetricsMode(SMM_RELATIVE_ASPECT_ADJUSTED)
+        , mAlphaLevel (1.0f)
+
     {
+        // Init tiling
+        for (Ogre::ushort i = 0; i < OGRE_MAX_TEXTURE_COORD_SETS; ++i)
+        {
+            mTileX[i] = 1.0f;
+            mTileY[i] = 1.0f;
+        }
 
     }
     //---------------------------------------------------------------------
@@ -57,7 +69,7 @@ namespace Sonetto {
     {
 		bool init = !mInitialised;
 
-		OverlayContainer::initialise();
+		Ogre::OverlayContainer::initialise();
 		if (init)
 		{
 			// Setup render op in advance
@@ -65,15 +77,8 @@ namespace Sonetto {
 			// Vertex declaration: 1 position, add texcoords later depending on #layers
 			// Create as separate buffers so we can lock & discard separately
 			Ogre::VertexDeclaration* decl = mRenderOp.vertexData->vertexDeclaration;
-			size_t offset = 0;
-			// Positions
-			decl->addElement(POSITION_BINDING, offset, Ogre::VET_FLOAT3, Ogre::VES_POSITION);
-			offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT3);
-			// Positions
-			decl->addElement(TEXCOORD_BINDING, offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES);
-			offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT2);
-			// Colours - store these in a separate buffer because they change less often
-			decl->addElement(COLOR_BINDING, 0, Ogre::VET_COLOUR, Ogre::VES_DIFFUSE);
+			decl->addElement(POSITION_BINDING, 0, Ogre::VET_FLOAT3, Ogre::VES_POSITION);
+			decl->addElement(COLOUR_BINDING, 0, Ogre::VET_COLOUR, Ogre::VES_DIFFUSE);
 
 			// Basic vertex data
 			mRenderOp.vertexData->vertexStart = 0;
@@ -88,30 +93,53 @@ namespace Sonetto {
 			// Bind buffer
 			mRenderOp.vertexData->vertexBufferBinding->setBinding(POSITION_BINDING, vbuf);
 
-            vbuf =
-				Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(
-				decl->getVertexSize(TEXCOORD_BINDING), mRenderOp.vertexData->vertexCount,
+			// Vertex buffer #2
+			vbuf = Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(
+				decl->getVertexSize(COLOUR_BINDING), mRenderOp.vertexData->vertexCount,
 				Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY// mostly static except during resizing
 				);
 			// Bind buffer
-			mRenderOp.vertexData->vertexBufferBinding->setBinding(TEXCOORD_BINDING, vbuf);
-
-			vbuf =
-				Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(
-				decl->getVertexSize(COLOR_BINDING), mRenderOp.vertexData->vertexCount,
-				Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY// mostly static except during resizing
-				);
-			// Bind buffer
-			mRenderOp.vertexData->vertexBufferBinding->setBinding(COLOR_BINDING, vbuf);
+			mRenderOp.vertexData->vertexBufferBinding->setBinding(COLOUR_BINDING, vbuf);
 
 			// No indexes & issue as a strip
 			mRenderOp.useIndexes = false;
 			mRenderOp.operationType = Ogre::RenderOperation::OT_TRIANGLE_STRIP;
 
-            mUpdateColors = true; // force colour buffer regeneration
-
 			mInitialised = true;
+			mColorUpdate = true;
 		}
+    }
+    //---------------------------------------------------------------------
+    void Plane::setTiling(Ogre::Real x, Ogre::Real y, Ogre::ushort layer)
+    {
+        assert (layer < OGRE_MAX_TEXTURE_COORD_SETS);
+        assert (x != 0 && y != 0);
+
+        mTileX[layer] = x;
+        mTileY[layer] = y;
+
+        mGeomUVsOutOfDate = true;
+
+    }
+    //---------------------------------------------------------------------
+    Ogre::Real Plane::getTileX(Ogre::ushort layer) const
+    {
+        return mTileX[layer];
+    }
+    //---------------------------------------------------------------------
+    Ogre::Real Plane::getTileY(Ogre::ushort layer) const
+    {
+        return mTileY[layer];
+    }
+    //---------------------------------------------------------------------
+    void Plane::setTransparent(bool isTransparent)
+    {
+        mTransparent = isTransparent;
+    }
+    //---------------------------------------------------------------------
+    bool Plane::isTransparent(void) const
+    {
+        return mTransparent;
     }
     //---------------------------------------------------------------------
     void Plane::setUV(Ogre::Real u1, Ogre::Real v1, Ogre::Real u2, Ogre::Real v2)
@@ -122,24 +150,12 @@ namespace Sonetto {
 		mV2 = v2;
 		mGeomUVsOutOfDate = true;
     }
-    //---------------------------------------------------------------------
     void Plane::getUV(Ogre::Real& u1, Ogre::Real& v1, Ogre::Real& u2, Ogre::Real& v2) const
     {
 		u1 = mU1;
 		u2 = mU2;
 		v1 = mV1;
 		v2 = mV2;
-    }
-    //---------------------------------------------------------------------
-    void Plane::setColour(const Ogre::ColourValue& col)
-    {
-        mColour = col;
-        mUpdateColors = true;
-    }
-    //-----------------------------------------------------------------------
-    const Ogre::ColourValue& Plane::getColour(void) const
-    {
-        return mColour;
     }
     //---------------------------------------------------------------------
     const Ogre::String& Plane::getTypeName(void) const
@@ -154,14 +170,29 @@ namespace Sonetto {
     //---------------------------------------------------------------------
     void Plane::setMaterialName(const Ogre::String& matName)
     {
-        OverlayContainer::setMaterialName(matName);
+        Ogre::OverlayContainer::setMaterialName(matName);
+    }
+    //---------------------------------------------------------------------
+    void Plane::setScrMetricsMode(ScreenMetricsMode smm)
+    {
+        mScrMetricsMode = smm;
+    }
+    //---------------------------------------------------------------------
+    ScreenMetricsMode Plane::getScrMetricsMode()
+    {
+        return mScrMetricsMode;
     }
     //---------------------------------------------------------------------
     void Plane::_updateRenderQueue(Ogre::RenderQueue* queue)
     {
         if (mVisible)
         {
-            using namespace Ogre;
+
+            if (!mTransparent && !mpMaterial.isNull())
+            {
+                Ogre::OverlayElement::_updateRenderQueue(queue);
+            }
+
             // Also add children
             ChildIterator it = getChildIterator();
             while (it.hasMoreElements())
@@ -171,47 +202,32 @@ namespace Sonetto {
             }
         }
     }
-    //---------------------------------------------------------------------
     void Plane::_update(void)
     {
-        OverlayContainer::_update();
+        Ogre::OverlayContainer::_update();
 
-        // Calculate the aspect ratio
-        Ogre::Real vpWidth, vpHeight;
-        vpWidth = (Ogre::Real) Ogre::OverlayManager::getSingleton().getViewportWidth();
-        vpHeight = (Ogre::Real) Ogre::OverlayManager::getSingleton().getViewportHeight();
-        Ogre::Real tmpAspectRatio = vpHeight/vpWidth;
-
-        // Set up the flags to warn ogre we need an update.
-        if(tmpAspectRatio != mAspectRatio) {
-            mAspectRatio            = tmpAspectRatio;
-            mGeomPositionsOutOfDate = true;
-            mGeomUVsOutOfDate       = true;
+        if(mColorUpdate && mInitialised)
+        {
+            updateColour();
+            mColorUpdate = false;
         }
-
-		if (mUpdateColors && mInitialised)
-		{
-			updateColors();
-			mUpdateColors = false;
-		}
+    }
+    void Plane::setAlpha(Ogre::Real alpha)
+    {
+        mAlphaLevel = alpha;
+        mColorUpdate = true;
     }
     //---------------------------------------------------------------------
     void Plane::updatePositionGeometry(void)
     {
-        // Get the Vertex Buffer (for positions)
-        Ogre::HardwareVertexBufferSharedPtr vbuf =
-            mRenderOp.vertexData->vertexBufferBinding->getBuffer(POSITION_BINDING);
-        // Cast the vertex buffer to a single float
-        float* pPos = static_cast<float*>(
-                          vbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD) );
-        // Get the Z Value for this element
-        Ogre::Real zValue = Ogre::Root::getSingleton().getRenderSystem()->getMaximumDepthInputValue();
-        // Store the aspect ratio in a temporary variable
-        float mAspect = mAspectRatio;
-        // Because if the Metrics Mode is Relative, we need to set it to 1.0
-        if(mScrMetricsMode == SMM_RELATIVE)
-            mAspect = 1.0f;
-
+        Ogre::Real aRatio = 1.0f;
+        if(mScrMetricsMode == SMM_RELATIVE_ASPECT_ADJUSTED)
+        {
+            Ogre::Real vpWidth, vpHeight;
+            vpWidth = (Ogre::Real) (Ogre::OverlayManager::getSingleton().getViewportWidth());
+            vpHeight = (Ogre::Real) (Ogre::OverlayManager::getSingleton().getViewportHeight());
+            aRatio = vpHeight/vpWidth;
+        }
         /*
 			0-----2
 			|    /|
@@ -221,12 +237,27 @@ namespace Sonetto {
 		*/
 		Ogre::Real left, right, top, bottom;
 
-		left = _getDerivedLeft() * (mAspect * 2) - mAspect;
-		right = left + ((mWidth * (mAspect * 2)) - mAspect);
+		/* Convert positions into -1, 1 coordinate space (homogenous clip space).
+			- Left / right is simple range conversion
+			- Top / bottom also need inverting since y is upside down - this means
+			that top will end up greater than bottom and when computing texture
+			coordinates, we have to flip the v-axis (ie. subtract the value from
+			1.0 to get the actual correct value).
+		*/
+		left = _getDerivedLeft() * (aRatio * 2) - aRatio;
+		right = left + (mWidth * (aRatio * 2));
 		top = -((_getDerivedTop() * 2) - 1);
 		bottom =  top -  (mHeight * 2);
 
-        *pPos++ = left;
+		Ogre::HardwareVertexBufferSharedPtr vbuf =
+			mRenderOp.vertexData->vertexBufferBinding->getBuffer(POSITION_BINDING);
+		float* pPos = static_cast<float*>(
+			vbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD) );
+
+		// Use the furthest away depth value, since materials should have depth-check off
+		// This initialised the depth buffer for any 3D objects in front
+		Ogre::Real zValue = Ogre::Root::getSingleton().getRenderSystem()->getMaximumDepthInputValue();
+		*pPos++ = left;
 		*pPos++ = top;
 		*pPos++ = zValue;
 
@@ -242,8 +273,7 @@ namespace Sonetto {
 		*pPos++ = bottom;
 		*pPos++ = zValue;
 
-        // We have finished here, unlock the vertex buffer.
-        vbuf->unlock();
+		vbuf->unlock();
     }
     //---------------------------------------------------------------------
     void Plane::updateTextureGeometry(void)
@@ -251,46 +281,113 @@ namespace Sonetto {
         // Generate for as many texture layers as there are in material
         if (!mpMaterial.isNull() && mInitialised)
         {
-            Ogre::HardwareVertexBufferSharedPtr vbuf =
-            mRenderOp.vertexData->vertexBufferBinding->getBuffer(TEXCOORD_BINDING);
-            float* pTex = static_cast<float*>(
-                              vbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD) );
+            // Assume one technique and pass for the moment
+            size_t numLayers = mpMaterial->getTechnique(0)->getPass(0)->getNumTextureUnitStates();
 
-            *pTex++ = mU1;
-            *pTex++ = mV1;
+            Ogre::VertexDeclaration* decl = mRenderOp.vertexData->vertexDeclaration;
+            // Check the number of texcoords we have in our buffer now
+            if (mNumTexCoordsInBuffer > numLayers)
+            {
+                // remove extras
+                for (size_t i = mNumTexCoordsInBuffer; i > numLayers; --i)
+                {
+                    decl->removeElement(Ogre::VES_TEXTURE_COORDINATES,
+						static_cast<unsigned short>(i));
+                }
+            }
+            else if (mNumTexCoordsInBuffer < numLayers)
+            {
+                // Add extra texcoord elements
+                size_t offset = Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT2) * mNumTexCoordsInBuffer;
+                for (size_t i = mNumTexCoordsInBuffer; i < numLayers; ++i)
+                {
+                    decl->addElement(TEXCOORD_BINDING,
+                        offset, Ogre::VET_FLOAT2, Ogre::VES_TEXTURE_COORDINATES,
+						static_cast<unsigned short>(i));
+                    offset += Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT2);
 
-            *pTex++ = mU1;
-            *pTex++ = mV2;
+                }
+            }
 
-            *pTex++ = mU2;
-            *pTex++ = mV1;
+            // if number of layers changed at all, we'll need to Ogre::Reallocate buffer
+            if (mNumTexCoordsInBuffer != numLayers)
+            {
+                // NB reference counting will take care of the old one if it exists
+                Ogre::HardwareVertexBufferSharedPtr newbuf =
+                    Ogre::HardwareBufferManager::getSingleton().createVertexBuffer(
+                    decl->getVertexSize(TEXCOORD_BINDING), mRenderOp.vertexData->vertexCount,
+                    Ogre::HardwareBuffer::HBU_STATIC_WRITE_ONLY // mostly static except during resizing
+                    );
+                // Bind buffer, note this will unbind the old one and destroy the buffer it had
+                mRenderOp.vertexData->vertexBufferBinding->setBinding(TEXCOORD_BINDING, newbuf);
+                // Set num tex coords in use now
+                mNumTexCoordsInBuffer = numLayers;
+            }
 
-            *pTex++ = mU2;
-            *pTex++ = mV2;
+            // Get the tcoord buffer & lock
+			if (mNumTexCoordsInBuffer)
+			{
+				Ogre::HardwareVertexBufferSharedPtr vbuf =
+					mRenderOp.vertexData->vertexBufferBinding->getBuffer(TEXCOORD_BINDING);
+				float* pVBStart = static_cast<float*>(
+					vbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD) );
 
-            vbuf->unlock();
+				size_t uvSize = Ogre::VertexElement::getTypeSize(Ogre::VET_FLOAT2) / sizeof(float);
+				size_t vertexSize = decl->getVertexSize(TEXCOORD_BINDING) / sizeof(float);
+				for (Ogre::ushort i = 0; i < numLayers; ++i)
+				{
+				    // Calc upper tex coords
+                    Ogre::Real upperX = mU2 * mTileX[i];
+                    Ogre::Real upperY = mV2 * mTileY[i];
+
+
+				    /*
+					    0-----2
+					    |    /|
+					    |  /  |
+					    |/    |
+					    1-----3
+				    */
+				    // Find start offset for this set
+				    float* pTex = pVBStart + (i * uvSize);
+
+                    pTex[0] = mU1;
+                    pTex[1] = mV1;
+
+                    pTex += vertexSize; // jump by 1 vertex stride
+                    pTex[0] = mU1;
+                    pTex[1] = upperY;
+
+                    pTex += vertexSize;
+                    pTex[0] = upperX;
+                    pTex[1] = mV1;
+
+                    pTex += vertexSize;
+                    pTex[0] = upperX;
+                    pTex[1] = upperY;
+				}
+				vbuf->unlock();
+			}
         }
     }
-    //---------------------------------------------------------------------
-    void Plane::updateColors(void)
+    void Plane::updateColour(void)
     {
-        if (mInitialised)
-        {
-            Ogre::HardwareVertexBufferSharedPtr vbuf =
-                mRenderOp.vertexData->vertexBufferBinding->getBuffer(COLOR_BINDING);
+        Ogre::ColourValue finalColor = mColour;
+        finalColor.a = mColour.a * mAlphaLevel;
+        Ogre::RGBA colorOut;
+        Ogre::Root::getSingleton().convertColourValue(finalColor, &colorOut);
 
-            Ogre::RGBA* pDest = static_cast<Ogre::RGBA*>(
-                                    vbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD) );
-            Ogre::RGBA color;
-            Ogre::Root::getSingleton().convertColourValue(mColour, &color);
+        Ogre::HardwareVertexBufferSharedPtr vbuf =
+            mRenderOp.vertexData->vertexBufferBinding->getBuffer(COLOUR_BINDING);
 
-            *pDest++ = color;
-            *pDest++ = color;
-            *pDest++ = color;
-            *pDest++ = color;
+        Ogre::RGBA* pDest = static_cast<Ogre::RGBA*>(
+            vbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD) );
 
-            vbuf->unlock();
-        }
+        *pDest++ = colorOut;
+        *pDest++ = colorOut;
+        *pDest++ = colorOut;
+        *pDest++ = colorOut;
+
+        vbuf->unlock();
     }
-    //---------------------------------------------------------------------
 }; // namespace Sonetto

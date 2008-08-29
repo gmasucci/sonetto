@@ -43,6 +43,7 @@ namespace Sonetto
         virtual void initialise(void);
         virtual void setCaption(const Ogre::String & text); // From OverlayElement
         void setMessage(const Ogre::String & text); // From OverlayElement
+        void setMessage(const Ogre::String * text); // From OverlayElement
 
         //virtual void setCaption(const Ogre::String * text);
 
@@ -74,6 +75,14 @@ namespace Sonetto
         /// @brief Return the dimensions of the text on the screen
         Ogre::Vector2 getTextDimensions();
 
+        void setAlpha(Ogre::Real alpha);
+
+        Ogre::Real getAlpha();
+
+        void setColor(size_t colorID);
+
+        size_t getColor();
+
     protected:
         // Member Variables
         static String msTypeName; // Type name
@@ -82,6 +91,7 @@ namespace Sonetto
         std::string mCaption; // Actual text
         std::vector<Real> mFadeList; // Fade list
         Ogre::Real mFadeLevel;
+        Ogre::Real mObjFade; // This is the maximum fade for the text, useful for fade in animation with windows.
 
         RenderOperation mRenderOp;// Render operation
         FontPtr mFontPtr; // Font pointer
@@ -114,6 +124,8 @@ namespace Sonetto
         Real mAnimSpeed; // Speed wich the text will appear on the screen
         Real mDefAnimSpeed; // Default Speed wich the text will appear on the screen
         Real mFadeSpeed; // Speed wich the text will fade on the screen
+
+        size_t mDefaultColor; // Default Text Color ID
 
         // Member Functions
         void allocateFadeList(size_t size, float value = 0.0f); // Allocate the fade list

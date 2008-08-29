@@ -19,40 +19,40 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
-#ifndef _SONETTO_H_
-#define _SONETTO_H_
+#ifndef TEST_MAPFILESERIALIZER_H
+#define TEST_MAPFILESERIALIZER_H
 
-#include "SonettoPrerequisites.h"
+// If it's the client, then import the library from the dll, export otherwise.
+#if defined( WIN32 )
+#   if defined( MODULE_DLL )
+#        define MODULE_EXPORT __declspec( dllexport )
+#   else
+#       define MODULE_EXPORT __declspec( dllimport )
+#   endif
+#endif
 
-// Now we include all classes.
-#include "SonettoMain.h"
-//#include "SonettoAudioManager.h"
-#include "SonettoCounter.h"
-#include "SonettoException.h"
-#include "SonettoFont.h"
-#include "SonettoFontManager.h"
-#include "SonettoFontSerializer.h"
-#include "SonettoGauge.h"
-#include "SonettoInputManager.h"
-#include "SonettoKernel.h"
-#include "SonettoModule.h"
-#include "SonettoPlane.h"
-#include "SonettoPlaneFactory.h"
-#include "SonettoRARC.h"
-#include "SonettoSTR.h"
-#include "SonettoSTRManager.h"
-#include "SonettoSTRSerializer.h"
-#include "SonettoSlimWindow.h"
-#include "SonettoTailedWindow.h"
-#include "SonettoTextElement.h"
-#include "SonettoTextFactory.h"
-//#include "SonettoVirtualFile.h"
-#include "SonettoWindow.h"
-#include "SonettoWindowFactory.h"
-#include "SonettoChoiceWindow.h"
-#include "SonettoWindowSkin.h"
-#include "SonettoWindowSkinManager.h"
-#include "SonettoWindowSkinSerializer.h"
-// end of includes.
+#include <OgreSerializer.h>
+#include "TESTMapFile.h"
 
-#endif // _SONETTO_H_
+namespace Sonetto{
+
+    class MapFile; // forward declaration
+
+    class MODULE_EXPORT MapFileSerializer : public Ogre::Serializer
+    {
+    public:
+        MapFileSerializer();
+        virtual ~MapFileSerializer();
+
+        void exportMapFile(const MapFile *pText, const Ogre::String &fileName);
+        void importMapFile(Ogre::DataStreamPtr &stream, MapFile *pDest);
+
+        void writeMapLayer(MapLayerFile &maplayer);
+        void readMapLayer(Ogre::DataStreamPtr& stream,MapLayerFile &pDest);
+    protected:
+        static Ogre::String msCurrentVersion;
+    };
+
+}; // namespace.
+
+#endif // TEST_MAPFILESERIALIZER_H

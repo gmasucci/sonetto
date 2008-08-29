@@ -30,7 +30,8 @@ namespace Sonetto {
     Module::Module() :
             mSceneMan (NULL),
             mOverlay  (NULL),
-            mCamera   (NULL)
+            mCamera   (NULL),
+            mBackgroundColor (Ogre::ColourValue(0.0f,0.0f,0.0f,1.0f))
     {
         mKernel = Kernel::get();
     }
@@ -45,13 +46,19 @@ namespace Sonetto {
         mCamera   = mSceneMan->createCamera(Ogre::StringUtil::BLANK);
 
         mKernel->setViewport(mKernel->getRenderWindow()->addViewport(mCamera));
-        mKernel->getViewport()->setBackgroundColour(Ogre::ColourValue(0,0,0));
+        mKernel->getViewport()->setBackgroundColour(mBackgroundColor);
         mCamera->setAspectRatio(Ogre::Real(mKernel->getViewport()->getActualWidth()) /
                                 Ogre::Real(mKernel->getViewport()->getActualHeight()));
+
+        mOverlay = mKernel->mOverlayMan->create(mModuleOverlayName);
+        mOverlay->show();
     }
     //-----------------------------------------------------------------------------
     void Module::exit()
     {
+        mOverlay->clear();
+        mKernel->mOverlayMan->destroy(mOverlay);
+
         if (mKernel->getRenderWindow()->getNumViewports() != 0)
             mKernel->getRenderWindow()->removeAllViewports();
 
@@ -63,6 +70,8 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     void Module::halt()
     {
+        std::cout<<"Halting current active module\n";
+        mOverlay->hide();
         if (mKernel->getRenderWindow()->getNumViewports() != 0)
             mKernel->getRenderWindow()->removeAllViewports();
     }
@@ -72,9 +81,16 @@ namespace Sonetto {
         if (mKernel->getRenderWindow()->getNumViewports() != 0)
             mKernel->getRenderWindow()->removeAllViewports();
         mKernel->setViewport(mKernel->getRenderWindow()->addViewport(mCamera));
-        mKernel->getViewport()->setBackgroundColour(Ogre::ColourValue(0,0,0));
+        mKernel->getViewport()->setBackgroundColour(mBackgroundColor);
         mCamera->setAspectRatio(Ogre::Real(mKernel->getViewport()->getActualWidth()) /
                                 Ogre::Real(mKernel->getViewport()->getActualHeight()));
+        mOverlay->show();
     }
     //-----------------------------------------------------------------------------
+    /*void Module::setBackgroundColor(Ogre::ColourValue col)
+    {
+        mBackgroundColor = col;
+        if(mKernel->getViewport())
+            mKernel->getViewport()->setBackgroundColour(mBackgroundColor);
+    }*/
 };
