@@ -81,6 +81,8 @@ namespace Sonetto {
 		writeColorValue(pWindowSkin->mMenuBgBottomRight);
 
 		writeColorValue(pWindowSkin->mCursorLineColor);
+
+		fclose(mpfFile);
     }
     //-----------------------------------------------------------------------------
     void WindowSkinSerializer::importWindowSkin(Ogre::DataStreamPtr &stream, WindowSkin *pDest)

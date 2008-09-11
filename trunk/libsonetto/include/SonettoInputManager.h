@@ -148,7 +148,7 @@ namespace Sonetto
             @see
                 http://www.libsdl.org/cgi/docwiki.cgi/SDLKey
             */
-            InputSource(bool aEnabled = false,TYPE aType = IST_KEY,unsigned char aValue = 0)
+            InputSource(bool aEnabled = false,TYPE aType = IST_KEY,unsigned short aValue = 0)
                     : enabled(aEnabled), type(aType), value(aValue) {}
 
             /// @brief Whether this source is enabled or not
@@ -158,7 +158,7 @@ namespace Sonetto
             char type : 3;
 
             /// @brief Source value (depends on Sonetto::InputSource::type)
-            unsigned char value;
+            unsigned short value;
     };
 
     /** @brief Player input class

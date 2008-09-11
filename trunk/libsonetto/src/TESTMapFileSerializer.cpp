@@ -23,43 +23,43 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "TESTMapFile.h"
 
 namespace Sonetto{
-
-    Ogre::String MapFileSerializer::msCurrentVersion = "SntMapData000";
-
+    const long STREAM_OVERHEAD_SIZE = sizeof(Ogre::uint16) + sizeof(Ogre::uint32);
     MapFileSerializer::MapFileSerializer()
     {
-
+        mVersion = "MapData0";
     }
     MapFileSerializer::~MapFileSerializer()
     {
 
     }
-    void MapFileSerializer::exportMapFile(const MapFile *pDest, const Ogre::String &fileName)
+    void MapFileSerializer::exportMapFile(const MapFile *pDest, const Ogre::String &fileName, Endian endianMode)
     {
-        determineEndianness(Ogre::Serializer::ENDIAN_NATIVE);
+        determineEndianness(endianMode);
+        mpfFile = fopen(fileName.c_str(), "wb");
+		if (!mpfFile)
+		{
+		    std::cout<<"Cannot open file.\n";
+		}
         writeFileHeader();
         writeString(pDest->mMapName);
         writeFloats(pDest->mAmbientColor.ptr(),4);
         writeFloats(pDest->mBackgroundColor.ptr(),4);
         writeBools(&pDest->mUseLight0,1);
         writeBools(&pDest->mUseLight1,1);
-        writeObject(&pDest->mLightDirection0);
-        writeObject(&pDest->mLightDirection1);
+        writeObject(pDest->mLightDirection0);
+        writeObject(pDest->mLightDirection1);
         writeFloats(pDest->mLightColor0.ptr(),4);
         writeFloats(pDest->mLightColor1.ptr(),4);
-        Ogre::uint32 fogmodeout = pDest->mFogMode;
-        writeInts(&fogmodeout,1);
         writeFloats(pDest->mFogColor.ptr(),4);
         writeFloats(&pDest->mFogExpDensity,1);
         writeFloats(&pDest->mFogStart,1);
         writeFloats(&pDest->mFogEnd,1);
-        size_t num_layers = pDest->mMapLayer.size();
-        writeInts(&num_layers,1);
-        for( size_t start = 0; start < num_layers; ++start )
+        writeInts(&pDest->mNumMapLayers,1);
+        for( Ogre::uint32 start = 0; start < pDest->mNumMapLayers; ++start )
         {
-            MapLayerFile tmpMapLayer = pDest->mMapLayer[start];
-            writeMapLayer(tmpMapLayer);
+            writeMapLayer(pDest->mMapLayer[start]);
         }
+        fclose(mpfFile);
     }
     void MapFileSerializer::importMapFile(Ogre::DataStreamPtr &stream, MapFile *pDest)
     {
@@ -74,30 +74,42 @@ namespace Sonetto{
         readObject(stream,pDest->mLightDirection1);
         readFloats(stream,pDest->mLightColor0.ptr(),4);
         readFloats(stream,pDest->mLightColor1.ptr(),4);
-        Ogre::uint32 fogmodein = 0;
-        readInts(stream,&fogmodein,1);
-        pDest->mFogMode = (Ogre::FogMode)fogmodein;
         readFloats(stream,pDest->mFogColor.ptr(),4);
         readFloats(stream,&pDest->mFogExpDensity,1);
         readFloats(stream,&pDest->mFogStart,1);
         readFloats(stream,&pDest->mFogEnd,1);
-        size_t num_layers = 0;
-        readInts(stream,&num_layers,1);
-        for( size_t start = 0; start < num_layers; ++start )
+        readInts(stream,&pDest->mNumMapLayers,1);
+        for( Ogre::uint32 start = 0; start < pDest->mNumMapLayers; ++start )
         {
             MapLayerFile tmpMapLayer;
             readMapLayer(stream, tmpMapLayer);
             pDest->mMapLayer.push_back(tmpMapLayer);
         }
     }
-    void MapFileSerializer::writeMapLayer(MapLayerFile &maplayer)
+    void MapFileSerializer::writeMapLayer(const MapLayerFile &maplayer)
     {
+        writeString(maplayer.mLayerName);
+        writeString(maplayer.mParentLayerName);
         writeString(maplayer.mLayerModelName);
+        writeObject(maplayer.mLayerPosition);
+        writeObject(maplayer.mLayerOrientation);
+        writeShorts(&maplayer.mLayerSettingsFlags,1);
+        writeString(maplayer.mAnimationName);
+        writeObject(maplayer.mAnimRotation);
         writeFloats(&maplayer.mAnimationSpeed,1);
+        writeString(maplayer.mMaterialName);
     }
     void MapFileSerializer::readMapLayer(Ogre::DataStreamPtr& stream,MapLayerFile &pDest)
     {
+        pDest.mLayerName = readString(stream);
+        pDest.mParentLayerName = readString(stream);
         pDest.mLayerModelName = readString(stream);
+        readObject(stream,pDest.mLayerPosition);
+        readObject(stream,pDest.mLayerOrientation);
+        readShorts(stream,&pDest.mLayerSettingsFlags,1);
+        pDest.mAnimationName = readString(stream);
+        readObject(stream,pDest.mAnimRotation);
         readFloats(stream,&pDest.mAnimationSpeed,1);
+        pDest.mMaterialName = readString(stream);
     }
 }; //namespace

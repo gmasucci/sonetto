@@ -96,6 +96,7 @@
 			<Option weight="0" />
 		</Unit>
 		<Unit filename="..\include\SonettoAudioManager.h" />
+		<Unit filename="..\include\SonettoChoiceWindow.h" />
 		<Unit filename="..\include\SonettoCounter.h" />
 		<Unit filename="..\include\SonettoDatabase.h" />
 		<Unit filename="..\include\SonettoException.h" />
@@ -122,14 +123,17 @@
 		<Unit filename="..\include\SonettoVirtualFile.h" />
 		<Unit filename="..\include\SonettoWindow.h" />
 		<Unit filename="..\include\SonettoWindowFactory.h" />
-		<Unit filename="..\include\SonettoWindowManager.h" />
 		<Unit filename="..\include\SonettoWindowSkin.h" />
 		<Unit filename="..\include\SonettoWindowSkinManager.h" />
 		<Unit filename="..\include\SonettoWindowSkinSerializer.h" />
+		<Unit filename="..\include\TESTMapFile.h" />
+		<Unit filename="..\include\TESTMapFileManager.h" />
+		<Unit filename="..\include\TESTMapFileSerializer.h" />
 		<Unit filename="..\resource\resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="..\src\SonettoAudioManager.cpp" />
+		<Unit filename="..\src\SonettoChoiceWindow.cpp" />
 		<Unit filename="..\src\SonettoCounter.cpp" />
 		<Unit filename="..\src\SonettoDatabase.cpp" />
 		<Unit filename="..\src\SonettoException.cpp" />
@@ -151,10 +155,12 @@
 		<Unit filename="..\src\SonettoTextElement.cpp" />
 		<Unit filename="..\src\SonettoVirtualFile.cpp" />
 		<Unit filename="..\src\SonettoWindow.cpp" />
-		<Unit filename="..\src\SonettoWindowManager.cpp" />
 		<Unit filename="..\src\SonettoWindowSkin.cpp" />
 		<Unit filename="..\src\SonettoWindowSkinManager.cpp" />
 		<Unit filename="..\src\SonettoWindowSkinSerializer.cpp" />
+		<Unit filename="..\src\TESTMapFile.cpp" />
+		<Unit filename="..\src\TESTMapFileManager.cpp" />
+		<Unit filename="..\src\TESTMapFileSerializer.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -50,9 +50,7 @@ int main(int argc, char **argv)
 
         Kernel::get()->pushModule(new BasicModule());
         // Set up Custom Resources.
-        MapFileManager * mapFileMan = new MapFileManager();
         Kernel::get()->run();
-        Ogre::ResourceGroupManager::getSingleton()._unregisterResourceManager(mapFileMan->getResourceType());
         Kernel::destroy();
     } catch(Sonetto::Exception &e) {
         const char *what = e.what();

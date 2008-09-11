@@ -82,15 +82,9 @@
 			<Add directory="..\..\..\dependencies\lib\zlib" />
 			<Add directory="..\..\..\lib" />
 		</Linker>
-		<Unit filename="..\include\TESTMapFile.h" />
-		<Unit filename="..\include\TESTMapFileManager.h" />
-		<Unit filename="..\include\TESTMapFileSerializer.h" />
 		<Unit filename="..\include\TESTMapModule.h">
 			<Option weight="0" />
 		</Unit>
-		<Unit filename="..\src\TESTMapFile.cpp" />
-		<Unit filename="..\src\TESTMapFileManager.cpp" />
-		<Unit filename="..\src\TESTMapFileSerializer.cpp" />
 		<Unit filename="..\src\TESTMapModule.cpp" />
 		<Extensions>
 			<code_completion />

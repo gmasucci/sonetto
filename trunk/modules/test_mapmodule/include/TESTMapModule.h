@@ -40,6 +40,10 @@ namespace Sonetto {
 
     struct MODULE_EXPORT MapLayer
     {
+        Ogre::String mLayerName;
+
+        Ogre::String mParentLayerName;
+
         /// This Layer Model.
         Ogre::Entity * mModel;
 
@@ -49,9 +53,36 @@ namespace Sonetto {
         /// The Node parent.
         Ogre::SceneNode * mParentNode;
 
-        /// Animation speed (zero equals to no animation).
+        /*
+            0x01 - Animate Object (Bone)
+            0x02 - Loop Animation
+            0x04 - Use Rotation Animation
+            0x08 - Cast Shadows
+
+            0x10 - Override Mesh Material
+        */
+        Ogre::uint16 mLayerSettingsFlags;
+
+        Ogre::String mAnimationName;
+
+        Ogre::Vector3 mAnimRotation;
+
         Ogre::Real mAnimationSpeed;
 
+        Ogre::String mMaterialName;
+    };
+
+    struct MapRTT
+    {
+        Ogre::TexturePtr mTexture;
+        Ogre::RenderTexture  * mRTT;
+        Ogre::Camera * mCamera;
+        Ogre::ColourValue mBackgroundColor;
+        MapRTTBehavior mRTTBehavior;
+        std::vector<Ogre::String> mExcludeObjects;
+        std::vector<Ogre::String> mIncludeObjects;
+        Ogre::Vector3 mCameraPositionOffset;
+        Ogre::Vector4 mCameraOrientationOffset;
     };
 
     /** Description coming soon...
@@ -76,22 +107,26 @@ namespace Sonetto {
 
         protected:
         // Map Module internal functions.
-        /** Upon calling this function, a new map will be loaded,
-            and the current active map will be discarded.
-            Do not call this function directly!
-            This function reads from a certain location in the memory,
-            so if you call this function, it will load the map regardless
-            of what's hapenning and will discard everything, even if it's the same map.
-        */
         void changeMap();
-
-        void loadMapFile(std::string filename);
-
-        void cleanMap();
-
     protected:
+        float mFrameNumber;
+        Ogre::Radian mAngle;
+        bool mResourceGroupCreated;
+        size_t mCurrentMapID;
+        Ogre::String mCurrentMapName;
+        Ogre::String mResGroupName;
         MapFilePtr mMapFile;
         std::vector<MapLayer> mMapLayers;
+        std::vector<MapRTT> mMapRTT;
+
+        Ogre::Light * mMainLight0;
+        Ogre::Light * mMainLight1;
+
+        // Temporary Dummy Hero
+        Ogre::Entity * mDummyHero;
+        Ogre::SceneNode * mDummyHeroSceneNode;
+
+        size_t mState;
     };
 }; // namespace Sonetto
 

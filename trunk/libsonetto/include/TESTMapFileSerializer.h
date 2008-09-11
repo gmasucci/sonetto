@@ -22,37 +22,38 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef TEST_MAPFILESERIALIZER_H
 #define TEST_MAPFILESERIALIZER_H
 
+#include "TESTMapFile.h"
+#include <OgreSerializer.h>
+
 // If it's the client, then import the library from the dll, export otherwise.
 #if defined( WIN32 )
-#   if defined( MODULE_DLL )
-#        define MODULE_EXPORT __declspec( dllexport )
+#   if defined( SONETTO_DLL_BUILD )
+#        define SONETTO_EXPORT __declspec( dllexport )
 #   else
-#       define MODULE_EXPORT __declspec( dllimport )
+#       define SONETTO_EXPORT __declspec( dllimport )
 #   endif
+#else
+#   define SONETTO_EXPORT
 #endif
 
-#include <OgreSerializer.h>
-#include "TESTMapFile.h"
+namespace Sonetto {
 
-namespace Sonetto{
+        class MapFile; // forward declaration
 
-    class MapFile; // forward declaration
+        class SONETTO_EXPORT MapFileSerializer : public Ogre::Serializer
+            {
 
-    class MODULE_EXPORT MapFileSerializer : public Ogre::Serializer
-    {
-    public:
-        MapFileSerializer();
-        virtual ~MapFileSerializer();
+                public:
+                    MapFileSerializer();
+                    virtual ~MapFileSerializer();
 
-        void exportMapFile(const MapFile *pText, const Ogre::String &fileName);
-        void importMapFile(Ogre::DataStreamPtr &stream, MapFile *pDest);
+                    void exportMapFile ( const MapFile *pMap, const Ogre::String &fileName, Ogre::Serializer::Endian endianMode = ENDIAN_NATIVE );
+                    void importMapFile ( Ogre::DataStreamPtr &stream, MapFile *pDest );
 
-        void writeMapLayer(MapLayerFile &maplayer);
-        void readMapLayer(Ogre::DataStreamPtr& stream,MapLayerFile &pDest);
-    protected:
-        static Ogre::String msCurrentVersion;
-    };
+                    void writeMapLayer ( const MapLayerFile &maplayer );
+                    void readMapLayer ( Ogre::DataStreamPtr& stream, MapLayerFile &pDest );
+            };
 
-}; // namespace.
+    }; // namespace.
 
 #endif // TEST_MAPFILESERIALIZER_H

@@ -105,13 +105,18 @@ namespace Sonetto {
         static_cast<Window*>(mWindowBackground)->setWindowSkin(mpModule->mKernel->mDatabase->mWindowSkinList[0]);
         static_cast<Window*>(mWindowBackground)->setWindowAlpha(mWindowAlpha);
         static_cast<Window*>(mWindowBackground)->setBorderAlpha(mWindowAlpha);
+
+        mWindowTextContainer = static_cast<Ogre::OverlayContainer*>(overlayman->createOverlayElement("Panel", mWindowName+"_win_text_container"));
+        mWindowTextContainer->setPosition(0.0f,0.0f);
+        mWindowTextContainer->setDimensions(0.0f,0.0f);
+        mWindowBackground->addChild(mWindowTextContainer);
         // Distance between the text and the border, for now let it be hardcoded.
         Ogre::Real bdistX = 16/480.0f;
         Ogre::Real bdistY = 16/480.0f;
 
         Ogre::Real curU1, curV1, curU2, curV2 = 0.0f;
         mCursorLine = overlayman->createOverlayElement("Plane", mWindowName+"_cursor_line");
-        mCursorLine->setPosition(0.0f,0.0f);
+        mCursorLine->setPosition(bdistX,bdistY);
         mCursorLine->setDimensions(mWindowBackground->getWidth() - (bdistX * 2),mTextSize);
         curU1 = mpModule->mKernel->mDatabase->mWindowSkinList[0]->mWinTexCoord.cursor_line.left;
         curU2 = mpModule->mKernel->mDatabase->mWindowSkinList[0]->mWinTexCoord.cursor_line.right;
@@ -135,13 +140,13 @@ namespace Sonetto {
             static_cast<TextElement*>(choiceText)->forceAnimReset();
             static_cast<TextElement*>(choiceText)->setMessage(mpModule->mKernel->mDatabase->mSystemMessage->getMessage(mChoiceMessageID[start]));
             static_cast<TextElement*>(choiceText)->setAlpha(mTextAlpha);
-            mWindowBackground->addChild(choiceText);
+            mWindowTextContainer->addChild(choiceText);
             mChoiceList.push_back(choiceText);
         }
 
         mCursor = overlayman->createOverlayElement("Plane", mWindowName+"_cursor");
-        mCursor->setPosition(0.0f,0.0f);
-        mCursor->setDimensions(mTextSize,mTextSize);
+        mCursor->setPosition(bdistX,bdistY);
+        mCursor->setDimensions(32/480.0f,32/480.0f);
         curU1 = mpModule->mKernel->mDatabase->mWindowSkinList[0]->mWinTexCoord.cursor.left;
         curU2 = mpModule->mKernel->mDatabase->mWindowSkinList[0]->mWinTexCoord.cursor.right;
         curV1 = mpModule->mKernel->mDatabase->mWindowSkinList[0]->mWinTexCoord.cursor.top;
@@ -150,7 +155,7 @@ namespace Sonetto {
         static_cast<Plane*>(mCursor)->setScrMetricsMode(SMM_RELATIVE_ASPECT_ADJUSTED);
         mCursor->setMaterialName(mpModule->mKernel->mDatabase->mWindowSkinList[0]->mCursorMaterial->getName());
 
-        mWindowBackground->addChild(mCursor);
+        mWindowTextContainer->addChild(mCursor);
 
         mCursor->hide();
 
@@ -165,12 +170,15 @@ namespace Sonetto {
 
         for(size_t start = 0; start < mChoiceList.size(); ++start)
         {
-            mWindowBackground->_removeChild(mChoiceList[start]);
+            mWindowTextContainer->_removeChild(mChoiceList[start]);
             mpModule->mKernel->mOverlayMan->destroyOverlayElement(mChoiceList[start]);
         }
 
-        mWindowBackground->_removeChild(mCursor);
+        mWindowTextContainer->_removeChild(mCursor);
         mpModule->mKernel->mOverlayMan->destroyOverlayElement(mCursor);
+
+        mWindowBackground->_removeChild(mWindowTextContainer);
+        mpModule->mKernel->mOverlayMan->destroyOverlayElement(mWindowTextContainer);
 
         mWindowBackground->_removeChild(mCursorLine);
         mpModule->mKernel->mOverlayMan->destroyOverlayElement(mCursorLine);

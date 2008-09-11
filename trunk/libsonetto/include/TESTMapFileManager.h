@@ -22,24 +22,25 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef TEST_MAPFILEMANAGER_H
 #define TEST_MAPFILEMANAGER_H
 
-// If it's the client, then import the library from the dll, export otherwise.
-#if defined( WIN32 )
-#   if defined( MODULE_DLL )
-#        define MODULE_EXPORT __declspec( dllexport )
-#   else
-#       define MODULE_EXPORT __declspec( dllimport )
-#   endif
-#endif
-
+#include "TESTMapFile.h"
 #include <OgreResourceManager.h>
 #include <OgreSingleton.h>
 #include <OgreString.h>
-//#include <Ogre
-#include "TESTMapFile.h"
 
-namespace Sonetto{
+// If it's the client, then import the library from the dll, export otherwise.
+#if defined( WIN32 )
+#   if defined( SONETTO_DLL_BUILD )
+#        define SONETTO_EXPORT __declspec( dllexport )
+#   else
+#       define SONETTO_EXPORT __declspec( dllimport )
+#   endif
+#else
+#   define SONETTO_EXPORT
+#endif
 
-    class MODULE_EXPORT MapFileManager : public Ogre::ResourceManager, public Ogre::Singleton<MapFileManager>
+namespace Sonetto {
+    using namespace Ogre;
+    class SONETTO_EXPORT MapFileManager : public Ogre::ResourceManager, public Ogre::Singleton<MapFileManager>
     {
     protected:
         Ogre::Resource *createImpl(const Ogre::String& name, Ogre::ResourceHandle handle,

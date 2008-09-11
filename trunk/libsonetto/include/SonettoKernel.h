@@ -45,6 +45,8 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoWindowFactory.h"
 #include "SonettoGauge.h"
 #include "SonettoCounter.h"
+#include "TESTMapFile.h"
+#include "TESTMapFileManager.h"
 
 #include <SDL/SDL_video.h>
 
@@ -165,6 +167,8 @@ namespace Sonetto
         STRManager                  *mStrManager;
         FontManager                 *mFontManager;
         WindowSkinManager           *mWindowSkinManager;
+
+        MapFileManager              *mMapFileManager;
 
         PlaneFactory                *mPlaneFactory;
         TextElementFactory          *mTextElementFactory;
@@ -332,8 +336,8 @@ namespace Sonetto
             fontfile->setSpaceWidth(0x6F, 0.0f / 32.0f);*/
 
             ColourValue color1 = ColourValue(1.0f,1.0f,1.0f,1.0f);
-            ColourValue color2 = ColourValue(1.0f, 170.0f/255.0f, 0.0f, 1.0f);
-            ColourValue color3 = ColourValue(1.0f,0.9f,0.5f,1.0f);
+            ColourValue color2 = ColourValue(1.0f, 1.0f, 1.0f, 1.0f);
+            ColourValue color3 = ColourValue(128 / 255.0f, 220 / 255.0f, 1.0f, 1.0f);
             ColourValue color4 = ColourValue(170 / 255.0f, 1.0f, 244 / 255.0f,1.0f);
 
             fontfile->mColorList.push_back(color1);
@@ -352,8 +356,8 @@ namespace Sonetto
         void loadResource(Ogre::Resource *resource)
         {
             STRData *strdata = static_cast<STRData *>(resource);
-            Ogre::String msg0 = "Sonetto Module Test.";
-            Ogre::String msg1 = "Press [O] to select the desired Module.\nWhile insde the module,\npress [Esc] on the keyboard\nto return to the main menu.";
+            Ogre::String msg0 = "Sonetto Module Test";
+            Ogre::String msg1 = "Press \\C0002[O]\\C0000 to select the desired Module.\nWhile insde the module,\npress \\C0002[Esc]\\C0000 on the keyboard\nto return to the \\C0002main menu\\C0000.";
             Ogre::String msg2 = "Map Module";
             Ogre::String msg3 = "Battle Module";
             Ogre::String msg4 = "Menu Module";
@@ -445,13 +449,13 @@ namespace Sonetto
             windowskin->mTileMode = false;
             windowskin->mTiling = Ogre::Vector2(1.0,1.0);
 
-            windowskin->mMenuColor = Ogre::ColourValue(120/255.0f,75/255.0f,60/255.0f,0.9f);
+            windowskin->mMenuColor = Ogre::ColourValue(20/255.0f,70/255.0f,170/255.0f,0.9f);
             windowskin->mMenuBorderColor = Ogre::ColourValue(1.0f,1.0f,1.0f,1.0f);
-            windowskin->mMainColor = Ogre::ColourValue(120/255.0f,75/255.0f,60/255.0f,0.9f);
+            windowskin->mMainColor = Ogre::ColourValue(20/255.0f,70/255.0f,170/255.0f,0.9f);
             windowskin->mMainBorderColor = Ogre::ColourValue(1.0f,1.0f,1.0f,1.0f);
-            windowskin->mEnemyColor = Ogre::ColourValue(120/255.0f,75/255.0f,60/255.0f,0.9f);
+            windowskin->mEnemyColor = Ogre::ColourValue(20/255.0f,70/255.0f,170/255.0f,0.9f);
             windowskin->mEnemyBorderColor = Ogre::ColourValue(1.0f,1.0f,1.0f,1.0f);
-            windowskin->mSystemColor = Ogre::ColourValue(120/255.0f,75/255.0f,60/255.0f,0.9f);
+            windowskin->mSystemColor = Ogre::ColourValue(20/255.0f,70/255.0f,170/255.0f,0.9f);
             windowskin->mSystemBorderColor = Ogre::ColourValue(1.0f,1.0f,1.0f,1.0f);
 
             windowskin->mMenuBgTopLeft = Ogre::ColourValue(1.0f,1.0f,1.0f,1.0f);
@@ -467,6 +471,131 @@ namespace Sonetto
             windowskin->createMaterial();
         }
     };
+
+    class ManualMapFileLoader : public Ogre::ManualResourceLoader
+    {
+    public:
+        ManualMapFileLoader() {}
+        virtual ~ManualMapFileLoader() {}
+
+        void loadResource(Ogre::Resource *resource)
+        {
+            MapFile * map = static_cast<MapFile *>(resource);
+            map->mMapName = "Test Map";
+            map->mAmbientColor = Ogre::ColourValue(0.5f,0.5f,0.5f,1.0f);
+            map->mBackgroundColor = Ogre::ColourValue(0.0f,1.0f,0.0f,1.0f);
+            map->mUseLight0 = true;
+            map->mUseLight1 = false;
+            map->mLightDirection0 = Ogre::Vector3(0.0f,0.0f,0.0f);
+            map->mLightDirection1 = Ogre::Vector3(0.0f,0.0f,0.0f);
+            map->mLightColor0 = Ogre::ColourValue(1.0f,1.0f,1.0f,1.0f);
+            map->mLightColor1 = Ogre::ColourValue(1.0f,1.0f,1.0f,1.0f);
+            map->mFogMode = Ogre::FOG_NONE;
+            map->mFogColor = Ogre::ColourValue(0.0f,0.0f,0.0f,1.0f);
+            map->mFogExpDensity = 0.0f;
+            map->mFogStart = 0.0f;
+            map->mFogEnd = 0.0f;
+
+            MapLayerFile layer0;
+            MapLayerFile layer1;
+            MapLayerFile layer2;
+            MapLayerFile layer3;
+            MapLayerFile layer4;
+            MapLayerFile layer5;
+            MapLayerFile layer6;
+
+            layer0.mLayerName = "map_00";
+            layer0.mParentLayerName = "ROOT";
+            layer0.mLayerModelName = "map_00_l00.mesh";
+            layer0.mLayerPosition = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer0.mLayerOrientation = Ogre::Quaternion::ZERO;
+            layer0.mLayerSettingsFlags = 0x0;
+            layer0.mAnimationName = " ";
+            layer0.mAnimRotation = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer0.mAnimationSpeed = 0.0f;
+            layer0.mMaterialName = " ";
+
+            layer1.mLayerName = "map_01";
+            layer1.mParentLayerName = "map_00";
+            layer1.mLayerModelName = "map_00_l01.mesh";
+            layer1.mLayerPosition = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer1.mLayerOrientation = Ogre::Quaternion::ZERO;
+            layer1.mLayerSettingsFlags = 0x0;
+            layer1.mAnimationName = " ";
+            layer1.mAnimRotation = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer1.mAnimationSpeed = 0.0f;
+            layer1.mMaterialName = " ";
+
+            layer2.mLayerName = "map_02";
+            layer2.mParentLayerName = "map_01";
+            layer2.mLayerModelName = "map_00_l02.mesh";
+            layer2.mLayerPosition = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer2.mLayerOrientation = Ogre::Quaternion::ZERO;
+            layer2.mLayerSettingsFlags = 0x0;
+            layer2.mAnimationName = " ";
+            layer2.mAnimRotation = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer2.mAnimationSpeed = 0.0f;
+            layer2.mMaterialName = " ";
+
+            layer3.mLayerName = "map_03";
+            layer3.mParentLayerName = "map_02";
+            layer3.mLayerModelName = "map_00_l03.mesh";
+            layer3.mLayerPosition = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer3.mLayerOrientation = Ogre::Quaternion::ZERO;
+            layer3.mLayerSettingsFlags = 0x0;
+            layer3.mAnimationName = " ";
+            layer3.mAnimRotation = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer3.mAnimationSpeed = 0.0f;
+            layer3.mMaterialName = " ";
+
+            layer4.mLayerName = "map_04";
+            layer4.mParentLayerName = "map_03";
+            layer4.mLayerModelName = "map_00_l04.mesh";
+            layer4.mLayerPosition = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer4.mLayerOrientation = Ogre::Quaternion::ZERO;
+            layer4.mLayerSettingsFlags = 0x0;
+            layer4.mAnimationName = " ";
+            layer4.mAnimRotation = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer4.mAnimationSpeed = 0.0f;
+            layer4.mMaterialName = " ";
+
+            layer5.mLayerName = "map_05";
+            layer5.mParentLayerName = "map_04";
+            layer5.mLayerModelName = "map_00_l05.mesh";
+            layer5.mLayerPosition = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer5.mLayerOrientation = Ogre::Quaternion::ZERO;
+            layer5.mLayerSettingsFlags = 0x0;
+            layer5.mAnimationName = " ";
+            layer5.mAnimRotation = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer5.mAnimationSpeed = 0.0f;
+            layer5.mMaterialName = " ";
+
+            layer6.mLayerName = "map_06";
+            layer6.mParentLayerName = "map_05";
+            layer6.mLayerModelName = "map_00_l06.mesh";
+            layer6.mLayerPosition = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer6.mLayerOrientation = Ogre::Quaternion::ZERO;
+            layer6.mLayerSettingsFlags = 0x0;
+            layer6.mAnimationName = " ";
+            layer6.mAnimRotation = Ogre::Vector3(0.0f,0.0f,0.0f);
+            layer6.mAnimationSpeed = 0.0f;
+            layer6.mMaterialName = " ";
+
+            map->mMapLayer.push_back(layer0);
+            map->mMapLayer.push_back(layer1);
+            map->mMapLayer.push_back(layer2);
+            map->mMapLayer.push_back(layer3);
+            map->mMapLayer.push_back(layer4);
+            map->mMapLayer.push_back(layer5);
+            map->mMapLayer.push_back(layer6);
+
+            map->mNumMapLayers = map->mMapLayer.size();
+            std::cout<<"Writing, num map: "<<map->mMapLayer.size()<<"\nMap: "<<map->mNumMapLayers<<"\n";
+
+
+        }
+    };
+
 }; // namespace Sonetto
 
 #endif // __SONETTO_Kernel__

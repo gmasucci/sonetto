@@ -23,7 +23,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoKernel.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_syswm.h>
-
+#include "TESTMapFileSerializer.h"
 using namespace std;
 using namespace Ogre;
 
@@ -104,7 +104,7 @@ namespace Sonetto {
         if (mRoot->showConfigDialog()) {
             // If returned true, the user clicked OK, so initialise
             mRoot->initialise(false);
-            mWindow = mRoot->createRenderWindow("",640,480,false,&wndParamList);
+            mWindow = mRoot->createRenderWindow("",640,480,true,&wndParamList);
         } else {
             delete mRoot;
             mRoot     = NULL;
@@ -130,6 +130,7 @@ namespace Sonetto {
         mStrManager = new STRManager();
         mFontManager = new FontManager();
         mWindowSkinManager = new WindowSkinManager();
+        //mMapFileManager = new MapFileManager();
 
         // Create the object factory
         mPlaneFactory = new PlaneFactory();
@@ -159,6 +160,9 @@ namespace Sonetto {
         ManualSTRLoader * defaultSTR = new ManualSTRLoader();
         mResourceMan->declareResource("system.str", "STR", "TEMP", defaultSTR);
 
+        /*ManualMapFileLoader * defaultMap = new ManualMapFileLoader();
+        mResourceMan->declareResource("system.map", "MapFile", "TEMP", defaultMap);*/
+
         ManualWindowSkinLoader * defaultWndSkin = new ManualWindowSkinLoader();
 
         mResourceMan->addResourceLocation("windowskin/","FileSystem","TEMP");
@@ -168,6 +172,10 @@ namespace Sonetto {
         mResourceMan->declareResource("windowskin_00.bin", "WindowSkin", "TEMP", defaultWndSkin);
 
         mResourceMan->initialiseResourceGroup("TEMP");
+
+        /*MapFilePtr mapmap = mMapFileManager->load("system.map", "TEMP");
+        MapFileSerializer exportmap;
+        exportmap.exportMapFile(static_cast<MapFile *>(mapmap.getPointer()), "map/test_map/mapdata.dat");*/
 
         mDatabase->mSystemMessage = mStrManager->load("system.str", "TEMP");
         mDatabase->mGameFont = mFontManager->load("dfont.bin", "TEMP");

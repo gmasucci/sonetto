@@ -6,10 +6,10 @@
 			<Depends filename="libsonetto\scripts\libsonetto_win32.cbp" />
 			<Depends filename="modules\test_mapmodule\script\test_mapmodule.cbp" />
 		</Project>
-		<Project filename="tools\rarccomposer\script\rarccomposer_win32.cbp" />
-		<Project filename="tools\configtool\scripts\configtools_win32.cbp">
+		<Project filename="modules\test_mapmodule\script\test_mapmodule.cbp">
 			<Depends filename="libsonetto\scripts\libsonetto_win32.cbp" />
 		</Project>
-		<Project filename="modules\test_mapmodule\script\test_mapmodule.cbp" />
+		<Project filename="tools\configtool\scripts\configtools_win32.cbp" />
+		<Project filename="tools\rarccomposer\script\rarccomposer_win32.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

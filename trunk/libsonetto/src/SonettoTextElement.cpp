@@ -23,6 +23,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <OgreStableHeaders.h>
 #include "SonettoTextElement.h"
 #include <OgreRoot.h>
+#include <OgreRenderSystem.h>
 #include <OgreLogManager.h>
 #include <OgreOverlayManager.h>
 #include <OgreHardwareBufferManager.h>
@@ -39,7 +40,7 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     #define DEFAULT_INITIAL_CHARS 12
     #define NEW_LINE_CHARACTER 0x0A
-    #define TEXT_COMMAND 0x0C
+    #define TEXT_COMMAND 0x5C
     #define TEXT_COLOR_COMMAND 0x43
     #define TEXT_SPEED_COMMAND 0x53
     //-----------------------------------------------------------------------------
@@ -581,6 +582,8 @@ namespace Sonetto
             t_curPos = mStringSize;
         }
 
+        Ogre::Real zValue = Ogre::Root::getSingleton().getRenderSystem()->getMaximumDepthInputValue();
+
         checkMemoryAllocation(t_curPos); // Allocate the memory to the text
         // Write the text to the screen
         mRenderOp.vertexData->vertexCount = t_curPos * 6;
@@ -673,7 +676,7 @@ namespace Sonetto
                 if (*itr == TEXT_COMMAND)
                 {
                     ++itr;
-                    if (*itr == 'c')
+                    if (*itr == TEXT_COLOR_COMMAND)
                     {
                         ++itr; // go to the next character
                         // Convert the string to int (4 char)
@@ -707,7 +710,7 @@ namespace Sonetto
                         }
                         mCurTextColor = mFontPtr->mColorList[id];
                     }
-                    else if (*itr == 's')
+                    else if (*itr == TEXT_SPEED_COMMAND)
                     {
                         ++itr; // go to the next character
                         if (*itr == 'U')
@@ -769,19 +772,19 @@ namespace Sonetto
             // Top right (again)
             *pVert++ = (txtPosX + square[2]);
             *pVert++ = (txtPosY - square[3]);
-            *pVert++ = -1.0;
+            *pVert++ = zValue;
             *pVert++ = glyphData.texcoord1.x;
             *pVert++ = glyphData.texcoord1.y;
             // Bottom left (again)
             *pVert++ = (txtPosX + square[4]);
             *pVert++ = (txtPosY - square[5]);
-            *pVert++ = -1.0;
+            *pVert++ = zValue;
             *pVert++ = glyphData.texcoord2.x;
             *pVert++ = glyphData.texcoord2.y;
             // Bottom right
             *pVert++ = (txtPosX + square[6]);
             *pVert++ = (txtPosY - square[7]);
-            *pVert++ = -1.0;
+            *pVert++ = zValue;
             *pVert++ = glyphData.texcoord3.x;
             *pVert++ = glyphData.texcoord3.y;
             //-------------------------------------------------------------------------------------

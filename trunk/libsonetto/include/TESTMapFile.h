@@ -22,26 +22,67 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef TEST_MAPFILE_H
 #define TEST_MAPFILE_H
 
-// If it's the client, then import the library from the dll, export otherwise.
-#if defined( WIN32 )
-#   if defined( MODULE_DLL )
-#        define MODULE_EXPORT __declspec( dllexport )
-#   else
-#       define MODULE_EXPORT __declspec( dllimport )
-#   endif
-#endif
-
 #include <OgreResourceManager.h>
 #include <OgreColourValue.h>
 #include <OgreVector3.h>
+#include <OgreVector4.h>
+
+// If it's the client, then import the library from the dll, export otherwise.
+#if defined( WIN32 )
+#   if defined( SONETTO_DLL_BUILD )
+#        define SONETTO_EXPORT __declspec( dllexport )
+#   else
+#       define SONETTO_EXPORT __declspec( dllimport )
+#   endif
+#else
+#   define SONETTO_EXPORT
+#endif
 
 namespace Sonetto {
-    struct MODULE_EXPORT MapLayerFile
+    struct MapLayerFile
     {
+        Ogre::String mLayerName;
+        Ogre::String mParentLayerName;
         Ogre::String mLayerModelName;
+        Ogre::Vector3 mLayerPosition;
+        Ogre::Quaternion mLayerOrientation;
+        /*
+            0x01 - Animate Object (Bone)
+            0x02 - Loop Animation
+            0x04 - Use Rotation Animation
+            0x08 - Cast Shadows
+
+            0x10 - Override Mesh Material
+        */
+        Ogre::uint16 mLayerSettingsFlags;
+        Ogre::String mAnimationName;
+        Ogre::Vector3 mAnimRotation;
         Ogre::Real mAnimationSpeed;
+        Ogre::String mMaterialName;
     };
-    class MODULE_EXPORT MapFile : public Ogre::Resource
+    enum MapRTTBehavior
+    {
+        RTTB_CAMERA_CLONE,
+        RTTB_HORIZONTAL_REFLECTION,
+        RTTB_VERTICAL_REFLECTION,
+        RTTB_STATIC_LOCATION,
+        RTTB_ATTACHED_TO_NODE
+    };
+    struct MapRTTFile
+    {
+        Ogre::String mRTTName;
+        //Ogre::PixelFormat mPixelFormat;
+        size_t mTextureWidth;
+        size_t mTextureHeight;
+        Ogre::ColourValue mBackgroundColor;
+        MapRTTBehavior mRTTBehavior;
+        std::vector<Ogre::String> mExcludeObjects;
+        std::vector<Ogre::String> mIncludeObjects;
+        Ogre::Vector3 mCameraPositionOffset;
+        Ogre::Vector4 mCameraOrientationOffset;
+    };
+
+    class SONETTO_EXPORT MapFile : public Ogre::Resource
     {
     protected:
 
@@ -72,11 +113,13 @@ namespace Sonetto {
         Ogre::Real mFogExpDensity;
         Ogre::Real mFogStart;
         Ogre::Real mFogEnd;
+        Ogre::uint32 mNumMapLayers;
         std::vector<MapLayerFile> mMapLayer;
+        std::vector<MapRTTFile> mMapRTT;
 
     };
 
-    class MODULE_EXPORT MapFilePtr : public Ogre::SharedPtr<MapFile>
+    class SONETTO_EXPORT MapFilePtr : public Ogre::SharedPtr<MapFile>
     {
         public:
         MapFilePtr() : Ogre::SharedPtr<MapFile>() {}

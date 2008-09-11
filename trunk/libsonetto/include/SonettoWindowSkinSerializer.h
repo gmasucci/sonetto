@@ -23,9 +23,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #define _SONETTO_WINDOWSKIN_SERIALIZER_H_
 
 #include "SonettoMain.h"
-
 #include <OgreSerializer.h>
-#include "SonettoMain.h"
 #include "SonettoWindowSkin.h"
 
 namespace Sonetto {

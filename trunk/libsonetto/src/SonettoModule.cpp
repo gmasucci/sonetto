@@ -70,7 +70,6 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     void Module::halt()
     {
-        std::cout<<"Halting current active module\n";
         mOverlay->hide();
         if (mKernel->getRenderWindow()->getNumViewports() != 0)
             mKernel->getRenderWindow()->removeAllViewports();

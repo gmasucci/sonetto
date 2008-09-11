@@ -34,22 +34,44 @@ void BasicModule::enter()
     PlayerInput *player;
     // Set a custom color for the viewport background.
     // Let's select a nice background colour for our viewport
-    mBackgroundColor = Ogre::ColourValue(0.95f,0.95f,0.95f,1.0f);
+    mBackgroundColor = Ogre::ColourValue(0.01f,0.01f,0.01f,1.0f);
     Module::enter();
     // And setup the first controller
     player = mKernel->getInputMan()->getPlayer(0);
+
     player->setJoystick(mKernel->getInputMan()->getJoystick(1));
     player->configAxis(Sonetto::AX_LEFT,Sonetto::InputSource(true,Sonetto::InputSource::IST_AXIS,Sonetto::AX_LEFT));
     player->configAxis(Sonetto::AX_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_AXIS,Sonetto::AX_RIGHT));
+    player->configBtn(Sonetto::BTN_DPAD_UP,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,12));
+    player->configBtn(Sonetto::BTN_DPAD_DOWN,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,14));
+    player->configBtn(Sonetto::BTN_CROSS,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,2));
+    player->configBtn(Sonetto::BTN_CIRCLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,1));
+    player->configBtn(Sonetto::BTN_TRIANGLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,4));
+    player->configBtn(Sonetto::BTN_SQUARE,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,3));
+
+
     /*player->configAxis(Sonetto::AXE_LEFT_UP,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_w));
     player->configAxis(Sonetto::AXE_LEFT_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_d));
     player->configAxis(Sonetto::AXE_LEFT_DOWN,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_s));
     player->configAxis(Sonetto::AXE_LEFT_LEFT,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_a));*/
-    player->configBtn(Sonetto::BTN_DPAD_UP,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,12));
-    player->configBtn(Sonetto::BTN_DPAD_DOWN,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,14));
 
-    player->configBtn(Sonetto::BTN_CROSS,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,2));
-    player->configBtn(Sonetto::BTN_CIRCLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,1));
+/*
+    player->configBtn(Sonetto::BTN_DPAD_UP,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_UP));
+    player->configBtn(Sonetto::BTN_DPAD_DOWN,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_DOWN));
+*/
+/*
+    player->configAxis(Sonetto::AXE_LEFT_UP, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_w));
+    player->configAxis(Sonetto::AXE_LEFT_DOWN, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_s));
+    player->configAxis(Sonetto::AXE_LEFT_LEFT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_a));
+    player->configAxis(Sonetto::AXE_LEFT_RIGHT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_d));
+
+    player->configAxis(Sonetto::AXE_RIGHT_UP, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_UP));
+    player->configAxis(Sonetto::AXE_RIGHT_DOWN, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_DOWN));
+    player->configAxis(Sonetto::AXE_RIGHT_LEFT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_LEFT));
+    player->configAxis(Sonetto::AXE_RIGHT_RIGHT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_RIGHT));
+
+    player->configBtn(Sonetto::BTN_CROSS,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_z));
+    player->configBtn(Sonetto::BTN_CIRCLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_x));*/
     player->setEnabled(true);
 
     mOverlayContainer = static_cast<OverlayContainer*>(mKernel->mOverlayMan->createOverlayElement("Window","text_01_01"));
@@ -74,7 +96,7 @@ void BasicModule::enter()
     static_cast<TextElement*>(text0)->setTextSize(0.07f);
     static_cast<TextElement*>(text0)->setAnimSettings(false, false, false, 0.0f, 0.0f);
     static_cast<TextElement*>(text0)->forceAnimReset();
-    static_cast<TextElement*>(text0)->setMessage("Sonetto Module Test.");
+    static_cast<TextElement*>(text0)->setMessage(mKernel->mDatabase->mSystemMessage->getMessage(0));
 
     Ogre::OverlayElement * text1 = mKernel->mOverlayMan->createOverlayElement("Text","text_00_01");
     static_cast<TextElement*>(text1)->setFont(mKernel->mDatabase->mGameFont);
@@ -84,7 +106,7 @@ void BasicModule::enter()
     static_cast<TextElement*>(text1)->setTextSize(0.05f);
     static_cast<TextElement*>(text1)->setAnimSettings(false, false, false, 0.0f, 0.0f);
     static_cast<TextElement*>(text1)->forceAnimReset();
-    static_cast<TextElement*>(text1)->setMessage("Press [O] to select the desired Module.\nWhile insde the module,\npress [Esc] on the keyboard\nto return to the main menu.");
+    static_cast<TextElement*>(text1)->setMessage(mKernel->mDatabase->mSystemMessage->getMessage(1));
 
     mOverlay->add2D(mOverlayContainer);
     mOverlay->add2D(mOverlayContainer2);
@@ -100,12 +122,15 @@ void BasicModule::enter()
 void BasicModule::update(Ogre::Real deltatime)
 {
     PlayerInput *player = mKernel->getInputMan()->getPlayer(0);
-    mFrameNumber += (1.0f/2.0f) * deltatime;
-    if(mFrameNumber >= 1.0f)
+    if(!mKernel->getRenderWindow()->isFullScreen())
     {
-    const Ogre::RenderTarget::FrameStats& stats = mKernel->getRenderWindow()->getStatistics();
-    mKernel->setWindowCaption("Sonetto - Current FPS: "+Ogre::StringConverter::toString(stats.lastFPS)+" Frame Time: "+Ogre::StringConverter::toString(mKernel->mFrameTime));
-    mFrameNumber -= 1.0f;
+        mFrameNumber += (1.0f/2.0f) * deltatime;
+        if(mFrameNumber >= 1.0f)
+        {
+        const Ogre::RenderTarget::FrameStats& stats = mKernel->getRenderWindow()->getStatistics();
+        mKernel->setWindowCaption("Sonetto - Current FPS: "+Ogre::StringConverter::toString(stats.lastFPS)+" Frame Time: "+Ogre::StringConverter::toString(mKernel->mFrameTime));
+        mFrameNumber -= 1.0f;
+        }
     }
     switch(mStatus)
     {
@@ -157,7 +182,7 @@ void BasicModule::update(Ogre::Real deltatime)
             if((!mChoiceWindow) && (!mChoiceHasShown))
             {
                 mChoiceWindow = new ChoiceWindow("test_choicewindow",static_cast<Module*>(this));
-                mChoiceWindow->setPosition(95.0f/480.0f,150.0f/480.0f);
+                mChoiceWindow->setPosition(95.0f/480.0f,140.0f/480.0f);
                 mChoiceWindow->setDimensions(290.0f/480.0f,180.0f/480.0f);
                 mChoiceWindow->setupChoices(5,5);
                 mChoiceWindow->setChoice(0,2);

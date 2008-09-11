@@ -113,6 +113,7 @@ namespace Sonetto {
         size_t mDisabledTextColor;
 
         Ogre::OverlayContainer * mWindowBackground;
+        Ogre::OverlayContainer * mWindowTextContainer;
         std::vector<size_t> mChoiceMessageID;
         std::vector<Ogre::OverlayElement*> mChoiceList;
         Ogre::OverlayElement * mCursor;

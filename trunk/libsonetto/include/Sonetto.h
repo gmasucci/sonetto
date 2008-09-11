@@ -26,6 +26,11 @@ http://www.gnu.org/copyleft/lesser.txt
 
 // Now we include all classes.
 #include "SonettoMain.h"
+
+#include "TESTMapFile.h"
+#include "TESTMapFileManager.h"
+#include "TESTMapFileSerializer.h"
+
 //#include "SonettoAudioManager.h"
 #include "SonettoCounter.h"
 #include "SonettoException.h"

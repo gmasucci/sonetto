@@ -33,6 +33,12 @@ namespace Sonetto {
 
     class Kernel;
 
+    struct MapIndexData
+    {
+        std::string mType;
+        std::string mFile;
+    };
+
 	struct SystemHeader
 	{
 		// Internal Identification Strings.
@@ -106,7 +112,7 @@ namespace Sonetto {
     	// This area is set up by future scripts or commands
     	// used to change from one map to another.
     	// The function will always read from here to set its "destiny".
-    	size_t mMapID;
+    	size_t mDestMapID;
     	// Temporary Map Start Position.
     	float mPlayerPosX;
     	float mPlayerPosY;
@@ -118,7 +124,7 @@ namespace Sonetto {
     	float mPlayerRotW; // Unused
 
     	// Temporary map list.
-    	std::map<size_t, std::string> mMapList;
+    	std::map<size_t, MapIndexData> mMapList;
     };
 } // namespace
 
