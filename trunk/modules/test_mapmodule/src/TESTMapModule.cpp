@@ -50,7 +50,7 @@ namespace Sonetto {
         mCamera->setPosition(30.0f,30.0f,-30.0f);
         mCamera->lookAt(0.0f,0.0f,0.0f);
         mCamera->setNearClipDistance(0.1f);
-        mCamera->setFOVy(Ogre::Radian(Ogre::Degree(6.5f)));
+        mCamera->setFOVy(Ogre::Radian(Ogre::Degree(13.5f)));
 
         MapIndexData mapdata;
 
@@ -110,6 +110,7 @@ namespace Sonetto {
             mov = player->getAxisValue(AX_LEFT);
             rot = player->getAxisValue(AX_RIGHT);
 
+
             /*if(mov.x < 0.3f && mov.x > -0.3f)
                 mov.x = 0.0f;
 
@@ -127,13 +128,13 @@ namespace Sonetto {
             camera_f = mCamera->getUp();
             camera_r = mCamera->getRight();
 
+            Ogre::Real str = mov.normalise();
+
             camera_final.x = (mov.x * camera_r.x) + ((-mov.y) * camera_f.x);
             camera_final.y = 0.0f;
             camera_final.z = (mov.x * camera_r.z) + ((-mov.y) * camera_f.z);
 
-            Ogre::Real str = mov.normalise();
-
-            Ogre::Vector3 src = mDummyHeroSceneNode->getOrientation() * Ogre::Vector3::UNIT_X;      // Orientation from initial direction
+            Ogre::Vector3 src = mDummyHeroSceneNode->getOrientation() * Ogre::Vector3::UNIT_Z;      // Orientation from initial direction
             src.y = 0;                                                    // Ignore pitch difference angle
             src.normalise();
             camera_final.normalise( );                     // Both vectors modified so renormalize them
@@ -151,10 +152,10 @@ namespace Sonetto {
 
             mDummyHeroSceneNode->translate((camera_final * (speed * str)) * deltatime);
 
-            mAngle += Ogre::Radian(rot.y * deltatime);
+            mAngle += Ogre::Radian(rot.x * deltatime);
 
             Ogre::Vector3 dpos = mDummyHeroSceneNode->getPosition();
-            mCamera->setPosition(dpos.x+(Math::Sin(Ogre::Radian(mAngle)))*60.f,dpos.y + 62.f,dpos.z + (Math::Cos(Ogre::Radian(mAngle))*60.0f));
+            mCamera->setPosition(dpos.x+(Math::Sin(Ogre::Radian(mAngle)))*30.f,dpos.y + 32.f,dpos.z + (Math::Cos(Ogre::Radian(mAngle))*30.0f));
             mCamera->lookAt(dpos.x, dpos.y + 2.0f,dpos.z);
 
             break;

@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
 1219266222 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource.rc
 
-1221097000 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\basicmodule.cpp
+1221186131 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\basicmodule.cpp
 	<Ogre.h>
 	"SonettoInputManager.h"
 	"BasicModule.h"
@@ -1140,7 +1140,7 @@
 	"OgrePrerequisites.h"
 	"OgreShadowCameraSetup.h"
 
-1220153013 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoinputmanager.h
+1221186141 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoinputmanager.h
 	<vector>
 	"SonettoMain.h"
 	<Ogre.h>
@@ -1368,7 +1368,7 @@
 	<Ogre.h>
 	"SonettoKernel.h"
 
-1220797568 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettokernel.h
+1221181058 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettokernel.h
 	"SonettoMain.h"
 	<fstream>
 	<stack>
@@ -1645,7 +1645,7 @@
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1220670257 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettochoicewindow.h
+1221190392 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettochoicewindow.h
 	"SonettoModule.h"
 	"SonettoWindow.h"
 	"SonettoTextElement.h"

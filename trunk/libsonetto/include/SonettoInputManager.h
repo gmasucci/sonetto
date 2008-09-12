@@ -128,10 +128,18 @@ namespace Sonetto
             @see
                 Sonetto::PlayerInput::config()
             */
-            enum TYPE {
+            enum TYPE
+            {
                 IST_KEY    = 0,
                 IST_BUTTON,
                 IST_AXIS
+            };
+
+            enum INVERT_INPUT
+            {
+                INV_ORDER    = 0x01,
+                INV_X_POLARITY = 0x02,
+                INV_Y_POLARITY = 0x04,
             };
 
             /** @brief Constructor
@@ -145,17 +153,23 @@ namespace Sonetto
                 aValue This argument depends on aType. If aType is set to IST_KEY, this value is
                 an SDLKey. If it's set to IST_BUTTON, this is the button number in the joystick.
                 And if it's set to IST_AXIS, this is a Sonetto::AXIS value.
+            @param
+                aInvert An OR'ed combination of InputSource::INVERT_INPUTs.
             @see
                 http://www.libsdl.org/cgi/docwiki.cgi/SDLKey
             */
-            InputSource(bool aEnabled = false,TYPE aType = IST_KEY,unsigned short aValue = 0)
-                    : enabled(aEnabled), type(aType), value(aValue) {}
+            InputSource(bool aEnabled = false,TYPE aType = IST_KEY,
+                    unsigned short aValue = 0,char aInvert = 0x00)
+                    : enabled(aEnabled), type(aType), value(aValue), invert(aInvert) {}
 
             /// @brief Whether this source is enabled or not
             bool enabled : 1;
 
             /// @brief Source type (Sonetto::InputSource::TYPE)
             char type : 3;
+
+            /// @brief Order and polarity inversions (Sonetto::InputSource::INVERT_INPUT)
+            char invert : 2;
 
             /// @brief Source value (depends on Sonetto::InputSource::type)
             unsigned short value;

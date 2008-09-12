@@ -53,6 +53,19 @@ namespace Sonetto {
         WOS_DEINITIALISED
     };
 
+    enum CursorState
+    {
+        CUR_IDLE,
+        CUR_MOVE_UP_START,
+        CUR_MOVE_UP_WAIT,
+        CUR_MOVE_UP,
+        CUR_MOVE_UP_HOLD,
+        CUR_MOVE_DOWN_START,
+        CUR_MOVE_DOWN_WAIT,
+        CUR_MOVE_DOWN,
+        CUR_MOVE_DOWN_HOLD
+    };
+
     class SONETTO_EXPORT ChoiceWindow
     {
     public:
@@ -82,6 +95,14 @@ namespace Sonetto {
         size_t mNumChoices;
         size_t mCancelID;
         int mChoice;
+
+        Ogre::Real mCurHoldTime;
+        Ogre::Real mCurDelayTime;
+
+        Ogre::Real mCurTimer;
+        CursorState mCurState;
+
+        bool mCurSubState;
 
         Ogre::Real mWindowPositionX;
         Ogre::Real mWindowPositionY;

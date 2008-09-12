@@ -77,7 +77,7 @@ namespace Sonetto
                         case InputSource::IST_AXIS:
                             if (mJoy)
                             {
-                                float value;
+                                float  value;
 
                                 switch (mInputCfg[i].value)
                                 {
@@ -269,6 +269,27 @@ namespace Sonetto
                                     mAxesValues[axis].x /= ((mAxesValues[axis].x > 0) ? 32767.0f : 32768.0f);
                                     mAxesValues[axis].y /= ((mAxesValues[axis].y > 0) ? 32767.0f : 32768.0f);
 
+                                    // Inverts axes if needed
+                                    if (mInputCfg[i].invert & InputSource::INV_ORDER)
+                                    {
+                                        float tmp = mAxesValues[axis].x;
+                                        mAxesValues[axis].x = mAxesValues[axis].y;
+                                        mAxesValues[axis].y = tmp;
+                                    }
+
+                                    // Inverts polarity if needed
+                                    if (mInputCfg[i].invert & InputSource::INV_X_POLARITY)
+                                    {
+                                        mAxesValues[axis].x = -mAxesValues[axis].x;
+                                    }
+
+                                    if (mInputCfg[i].invert & InputSource::INV_Y_POLARITY)
+                                    {
+                                        mAxesValues[axis].y = -mAxesValues[axis].y;
+                                    }
+
+
+
                                     i += 3;
                                     continue;
                                 }
@@ -311,7 +332,7 @@ namespace Sonetto
             case AXE_RIGHT_RIGHT:
             case AXE_RIGHT_DOWN:
             case AXE_RIGHT_LEFT:
-                mInputCfg[16+(axs-6)] = input;
+                mInputCfg[20+(axs-6)] = input;
             break;
         }
     }

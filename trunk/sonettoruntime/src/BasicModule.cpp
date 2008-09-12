@@ -41,7 +41,7 @@ void BasicModule::enter()
 
     player->setJoystick(mKernel->getInputMan()->getJoystick(1));
     player->configAxis(Sonetto::AX_LEFT,Sonetto::InputSource(true,Sonetto::InputSource::IST_AXIS,Sonetto::AX_LEFT));
-    player->configAxis(Sonetto::AX_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_AXIS,Sonetto::AX_RIGHT));
+    player->configAxis(Sonetto::AX_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_AXIS,Sonetto::AX_RIGHT,Sonetto::InputSource::INV_ORDER));
     player->configBtn(Sonetto::BTN_DPAD_UP,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,12));
     player->configBtn(Sonetto::BTN_DPAD_DOWN,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,14));
     player->configBtn(Sonetto::BTN_CROSS,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,2));
@@ -49,17 +49,7 @@ void BasicModule::enter()
     player->configBtn(Sonetto::BTN_TRIANGLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,4));
     player->configBtn(Sonetto::BTN_SQUARE,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,3));
 
-
-    /*player->configAxis(Sonetto::AXE_LEFT_UP,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_w));
-    player->configAxis(Sonetto::AXE_LEFT_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_d));
-    player->configAxis(Sonetto::AXE_LEFT_DOWN,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_s));
-    player->configAxis(Sonetto::AXE_LEFT_LEFT,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_a));*/
-
-/*
-    player->configBtn(Sonetto::BTN_DPAD_UP,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_UP));
-    player->configBtn(Sonetto::BTN_DPAD_DOWN,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_DOWN));
-*/
-/*
+    /*
     player->configAxis(Sonetto::AXE_LEFT_UP, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_w));
     player->configAxis(Sonetto::AXE_LEFT_DOWN, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_s));
     player->configAxis(Sonetto::AXE_LEFT_LEFT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_a));
@@ -71,7 +61,8 @@ void BasicModule::enter()
     player->configAxis(Sonetto::AXE_RIGHT_RIGHT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_RIGHT));
 
     player->configBtn(Sonetto::BTN_CROSS,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_z));
-    player->configBtn(Sonetto::BTN_CIRCLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_x));*/
+    player->configBtn(Sonetto::BTN_CIRCLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_x));
+    */
     player->setEnabled(true);
 
     mOverlayContainer = static_cast<OverlayContainer*>(mKernel->mOverlayMan->createOverlayElement("Window","text_01_01"));

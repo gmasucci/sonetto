@@ -258,6 +258,32 @@ namespace Sonetto {
             if (mModuleList.size() == 0)
                 SONETTO_THROW("Module stack is empty");
 
+
+            if (SDL_GetKeyState(NULL)[SDLK_LALT] && SDL_GetKeyState(NULL)[SDLK_F4])
+            {
+                shutdown();
+            }
+
+            if (SDL_GetKeyState(NULL)[SDLK_LALT] && SDL_GetKeyState(NULL)[SDLK_RETURN])
+            {
+                if(mWindow->isFullScreen())
+                {
+                    mWindow->setFullscreen(false, 320, 240);
+                } else {
+                    mWindow->setFullscreen(true, 1024, 768);
+                }
+            }
+
+                        // Pump events
+            while (SDL_PollEvent(&evt))
+            {
+                if (evt.type == SDL_QUIT)
+                {
+                    // Shutdowns the game when asked to
+                    shutdown();
+                }
+            }
+
             // Pump events
             while (SDL_PollEvent(&evt))
             {

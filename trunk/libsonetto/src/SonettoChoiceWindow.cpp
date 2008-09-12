@@ -29,6 +29,11 @@ namespace Sonetto {
     mNumChoices(0),
     mCancelID(0),
     mChoice(0),
+    mCurHoldTime(0.5f),
+    mCurDelayTime(0.06f),
+    mCurTimer(0.0f),
+    mCurState(CUR_IDLE),
+    mCurSubState(false),
     mWindowPositionX(0),
     mWindowPositionY(0),
     mWindowWidth(0),
@@ -256,11 +261,106 @@ namespace Sonetto {
                     PlayerInput *player = mpModule->mKernel->getInputMan()->getPlayer(0);
                     Ogre::Vector2 plInputAxis = player->getAxisValue(Sonetto::AX_LEFT);
 
-                    if(player->getBtnState(Sonetto::BTN_DPAD_UP) == Sonetto::KS_PRESS)
-                        --mChoice;
+                    mCurSubState = false;
 
-                    if(player->getBtnState(Sonetto::BTN_DPAD_DOWN) == Sonetto::KS_PRESS)
-                        ++mChoice;
+                    if((player->getBtnState(Sonetto::BTN_DPAD_UP) == Sonetto::KS_PRESS) || (player->getBtnState(Sonetto::BTN_DPAD_UP) == Sonetto::KS_HOLD) || (player->getAxisValue(AX_LEFT).y < -0.3f))
+                    {
+                        mCurSubState = true;
+                        if(mCurState == CUR_IDLE)
+                            mCurState = CUR_MOVE_UP_START;
+                    }
+
+                    if((player->getBtnState(Sonetto::BTN_DPAD_DOWN) == Sonetto::KS_PRESS) || (player->getBtnState(Sonetto::BTN_DPAD_DOWN) == Sonetto::KS_HOLD) || (player->getAxisValue(AX_LEFT).y > 0.3f))
+                    {
+                        mCurSubState = true;
+                        if(mCurState == CUR_IDLE)
+                            mCurState = CUR_MOVE_DOWN_START;
+                    }
+
+
+                    switch(mCurSubState)
+                    {
+                        case true:
+                        switch(mCurState)
+                        {
+                            default:
+                            case CUR_IDLE:
+                            break;
+                            case CUR_MOVE_UP_START:
+                            {
+                                --mChoice;
+                                mCurState = CUR_MOVE_UP_WAIT;
+                                mCurTimer = mCurHoldTime;
+                            }
+                            break;
+                            case CUR_MOVE_UP_WAIT:
+                            {
+                                mCurTimer -= deltatime;
+                                if(mCurTimer <= 0.0f)
+                                {
+                                    mCurTimer = mCurDelayTime;
+                                    mCurState = CUR_MOVE_UP;
+                                }
+                            }
+                            break;
+                            case CUR_MOVE_UP:
+                            {
+                                --mChoice;
+                                mCurState = CUR_MOVE_UP_HOLD;
+                            }
+                            break;
+                            case CUR_MOVE_UP_HOLD:
+                            {
+                                mCurTimer -= deltatime;
+                                if(mCurTimer <= 0.0f)
+                                {
+                                    mCurTimer = mCurDelayTime;
+                                    mCurState = CUR_MOVE_UP;
+                                }
+                            }
+                            break;
+                            case CUR_MOVE_DOWN_START:
+                            {
+                                ++mChoice;
+                                mCurState = CUR_MOVE_DOWN_WAIT;
+                                mCurTimer = mCurHoldTime;
+                            }
+                            break;
+                            case CUR_MOVE_DOWN_WAIT:
+                            {
+                                mCurTimer -= deltatime;
+                                if(mCurTimer <= 0.0f)
+                                {
+                                    mCurTimer = mCurDelayTime;
+                                    mCurState = CUR_MOVE_DOWN;
+                                }
+                            }
+                            break;
+                            case CUR_MOVE_DOWN:
+                            {
+                                ++mChoice;
+                                mCurState = CUR_MOVE_DOWN_HOLD;
+                            }
+                            break;
+                            case CUR_MOVE_DOWN_HOLD:
+                            {
+                                mCurTimer -= deltatime;
+                                if(mCurTimer <= 0.0f)
+                                {
+                                    mCurTimer = mCurDelayTime;
+                                    mCurState = CUR_MOVE_DOWN;
+                                }
+                            }
+                            break;
+                        }
+                        break;
+                        case false:
+                        {
+                            mCurState = CUR_IDLE;
+                        }
+                        break;
+
+                    }
 
                     if(player->getBtnState(Sonetto::BTN_CIRCLE) == Sonetto::KS_PRESS)
                         mStatus = WOS_CLOSING;
