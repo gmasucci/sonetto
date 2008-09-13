@@ -66,7 +66,7 @@
 			<Add option="-DMODULE_DLL" />
 			<Add directory="..\include" />
 			<Add directory="..\..\..\libsonetto\include" />
-			<Add directory="$(OGRE_HOME)\OgreMain\include" />
+			<Add directory="$(OGRE_HOME)\include" />
 			<Add directory="..\..\..\dependencies\include" />
 			<Add directory="..\..\..\dependencies\include\zlib" />
 		</Compiler>
@@ -76,7 +76,7 @@
 			<Add option="-Wl,--add-stdcall-alias" />
 			<Add library="SDL" />
 			<Add library="zlib" />
-			<Add directory="$(OGRE_HOME)\lib" />
+			<Add directory="$(OGRE_HOME)\..\lib" />
 			<Add directory="..\..\..\dependencies\lib" />
 			<Add directory="..\..\..\dependencies\lib\SDL" />
 			<Add directory="..\..\..\dependencies\lib\zlib" />

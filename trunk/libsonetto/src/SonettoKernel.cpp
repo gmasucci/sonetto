@@ -104,7 +104,7 @@ namespace Sonetto {
         if (mRoot->showConfigDialog()) {
             // If returned true, the user clicked OK, so initialise
             mRoot->initialise(false);
-            mWindow = mRoot->createRenderWindow("",640,480,true,&wndParamList);
+            mWindow = mRoot->createRenderWindow("",640,480,false,&wndParamList);
         } else {
             delete mRoot;
             mRoot     = NULL;
@@ -268,7 +268,7 @@ namespace Sonetto {
             {
                 if(mWindow->isFullScreen())
                 {
-                    mWindow->setFullscreen(false, 320, 240);
+                    mWindow->setFullscreen(false, 640, 480);
                 } else {
                     mWindow->setFullscreen(true, 1024, 768);
                 }

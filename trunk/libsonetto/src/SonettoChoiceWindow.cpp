@@ -263,14 +263,14 @@ namespace Sonetto {
 
                     mCurSubState = false;
 
-                    if((player->getBtnState(Sonetto::BTN_DPAD_UP) == Sonetto::KS_PRESS) || (player->getBtnState(Sonetto::BTN_DPAD_UP) == Sonetto::KS_HOLD) || (player->getAxisValue(AX_LEFT).y < -0.3f))
+                    if((player->getBtnState(Sonetto::BTN_DPAD_UP) == Sonetto::KS_PRESS) || (player->getBtnState(Sonetto::BTN_DPAD_UP) == Sonetto::KS_HOLD) || (player->getAxisValue(AX_LEFT).y < -0.7f))
                     {
                         mCurSubState = true;
                         if(mCurState == CUR_IDLE)
                             mCurState = CUR_MOVE_UP_START;
                     }
 
-                    if((player->getBtnState(Sonetto::BTN_DPAD_DOWN) == Sonetto::KS_PRESS) || (player->getBtnState(Sonetto::BTN_DPAD_DOWN) == Sonetto::KS_HOLD) || (player->getAxisValue(AX_LEFT).y > 0.3f))
+                    if((player->getBtnState(Sonetto::BTN_DPAD_DOWN) == Sonetto::KS_PRESS) || (player->getBtnState(Sonetto::BTN_DPAD_DOWN) == Sonetto::KS_HOLD) || (player->getAxisValue(AX_LEFT).y > 0.7f))
                     {
                         mCurSubState = true;
                         if(mCurState == CUR_IDLE)

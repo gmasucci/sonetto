@@ -66,7 +66,7 @@
 			<Add option="-DSONETTO_DLL_BUILD" />
 			<Add directory="..\include" />
 			<Add directory="..\..\dependencies\include" />
-			<Add directory="$(OGRE_HOME)\OgreMain\include" />
+			<Add directory="$(OGRE_HOME)\include" />
 			<Add directory="..\..\dependencies\include\zlib" />
 		</Compiler>
 		<Linker>
@@ -90,7 +90,7 @@
 			<Add directory="..\..\dependencies\lib\vorbis" />
 			<Add directory="..\..\dependencies\lib\AL" />
 			<Add directory="..\..\dependencies\lib\SDL" />
-			<Add directory="$(OGRE_HOME)\lib" />
+			<Add directory="$(OGRE_HOME)\..\lib" />
 		</Linker>
 		<Unit filename="..\include\Sonetto.h">
 			<Option weight="0" />

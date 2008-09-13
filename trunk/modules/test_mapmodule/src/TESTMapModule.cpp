@@ -100,10 +100,19 @@ namespace Sonetto {
             if( mKernel->getFadeStatus() == FS_IDLE_IN )
                 mState = 2;
             break;
+            case 3:
+                mKernel->setFadeSpeed(1.0f/0.5f);
+                mKernel->startFade(true);
+                mState = 4;
+            break;
+            case 4:
+            if( mKernel->getFadeStatus() == FS_IDLE_OUT )
+            {
+                mKernel->popModule();
+            }
+            break;
             case 2:
             PlayerInput * player = mKernel->getInputMan()->getPlayer(0);
-            if(player->getBtnState(BTN_CROSS) == KS_PRESS)
-                mKernel->popModule();
 
             Ogre::Vector2 mov,rot;
 
@@ -158,6 +167,9 @@ namespace Sonetto {
             mCamera->setPosition(dpos.x+(Math::Sin(Ogre::Radian(mAngle)))*30.f,dpos.y + 32.f,dpos.z + (Math::Cos(Ogre::Radian(mAngle))*30.0f));
             mCamera->lookAt(dpos.x, dpos.y + 2.0f,dpos.z);
 
+            if(player->getBtnState(BTN_CROSS) == KS_PRESS)
+                mState = 3;
+
             break;
         }
     }
@@ -165,7 +177,14 @@ namespace Sonetto {
     void TestMapModule::exit()
     {
         // Unload and remove the resource group.
-        //mKernel->mResourceMan->destroyResourceGroup(mResGroupName);
+        if(mResourceGroupCreated)
+        {
+            mKernel->mResourceMan->unloadResourceGroup(mResGroupName);
+            mKernel->mResourceMan->destroyResourceGroup(mResGroupName);
+        }
+
+        mKernel->mResourceMan->_unregisterResourceManager("MapFile");
+        mKernel->mMapFileManager = 0;
         // Call the Module base function.
         Module::exit();
     }
