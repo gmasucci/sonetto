@@ -20,8 +20,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_MAIN_H_
-#define SONETTO_MAIN_H_
+#ifndef SONETTO_MAIN_H
+#define SONETTO_MAIN_H
 
 // If it's the client, then import the library from the dll, export otherwise.
 #if defined( WIN32 )
@@ -177,4 +177,4 @@ namespace Sonetto {
     };
 }; // namespace
 
-#endif // SONETTO_MAIN_H_
+#endif // SONETTO_MAIN_H

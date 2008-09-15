@@ -33,6 +33,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoModule.h"
 #include "TESTMapFileManager.h"
+#include "TESTHeroObject.h"
 
 namespace Sonetto {
 
@@ -123,8 +124,7 @@ namespace Sonetto {
         Ogre::Light * mMainLight1;
 
         // Temporary Dummy Hero
-        Ogre::Entity * mDummyHero;
-        Ogre::SceneNode * mDummyHeroSceneNode;
+        HeroObject * mDummyHero;
 
         size_t mState;
     };

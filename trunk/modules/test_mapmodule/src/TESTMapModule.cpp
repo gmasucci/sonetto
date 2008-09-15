@@ -20,6 +20,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 #include "TESTMapModule.h"
+
 namespace Sonetto {
     //-----------------------------------------------------------------------------
     // Sonetto::TESTMapModule implementation.
@@ -44,9 +45,13 @@ namespace Sonetto {
 
         mKernel->mResourceMan->addResourceLocation("hero/dummy_hero.zip", "Zip", "DUMMYHERO");
         mKernel->mResourceMan->initialiseResourceGroup("DUMMYHERO");
-        mDummyHero = mSceneMan->createEntity("DummyHero", "dummy_hero.mesh");
-        mDummyHeroSceneNode = mSceneMan->getRootSceneNode()->createChildSceneNode("DummyHeroSceneNode");
-        mDummyHeroSceneNode->attachObject(mDummyHero);
+        mDummyHero = new HeroObject("DummyHero",
+                                    mSceneMan->getRootSceneNode(),
+                                    mSceneMan,
+                                    false,
+                                    "dummy_hero.mesh");
+        mDummyHero->setPosition(0.0f,0.0f,0.0f);
+        mDummyHero->setHeroSpeed(1.5f);
         mCamera->setPosition(30.0f,30.0f,-30.0f);
         mCamera->lookAt(0.0f,0.0f,0.0f);
         mCamera->setNearClipDistance(0.1f);
@@ -73,7 +78,7 @@ namespace Sonetto {
         mFrameNumber = 0.0f;
         mAngle = Ogre::Degree(360);
 
-        mDummyHeroSceneNode->setOrientation(Ogre::Quaternion(Degree(0),Ogre::Vector3::UNIT_Y));
+        mDummyHero->setOrientation(Ogre::Quaternion(Degree(0),Ogre::Vector3::UNIT_Y));
 
     }
     //-----------------------------------------------------------------------------
@@ -132,38 +137,13 @@ namespace Sonetto {
             if(rot.y < 0.3f && rot.y > -0.3f)
                 rot.y = 0.0f;
 
-            Ogre::Vector3 camera_f, camera_r, camera_final;
-
-            camera_f = mCamera->getUp();
-            camera_r = mCamera->getRight();
-
-            Ogre::Real str = mov.normalise();
-
-            camera_final.x = (mov.x * camera_r.x) + ((-mov.y) * camera_f.x);
-            camera_final.y = 0.0f;
-            camera_final.z = (mov.x * camera_r.z) + ((-mov.y) * camera_f.z);
-
-            Ogre::Vector3 src = mDummyHeroSceneNode->getOrientation() * Ogre::Vector3::UNIT_Z;      // Orientation from initial direction
-            src.y = 0;                                                    // Ignore pitch difference angle
-            src.normalise();
-            camera_final.normalise( );                     // Both vectors modified so renormalize them
-            Ogre::Quaternion quat = src.getRotationTo(camera_final);
-            mDummyHeroSceneNode->rotate(quat);
-
-            if(str < 0.3f)
-            {
-                str = 0.0f;
-            } else if(str > 1.0f) {
-                str = 1.0f;
-            }
-
-            Ogre::Real speed = 5.0f;
-
-            mDummyHeroSceneNode->translate((camera_final * (speed * str)) * deltatime);
+            mDummyHero->setBaseDirection(mCamera->getDirection());
+            mDummyHero->setMovementInput(mov);
+            mDummyHero->update(deltatime);
 
             mAngle += Ogre::Radian(rot.x * deltatime);
 
-            Ogre::Vector3 dpos = mDummyHeroSceneNode->getPosition();
+            Ogre::Vector3 dpos = mDummyHero->getPosition();
             mCamera->setPosition(dpos.x+(Math::Sin(Ogre::Radian(mAngle)))*30.f,dpos.y + 32.f,dpos.z + (Math::Cos(Ogre::Radian(mAngle))*30.0f));
             mCamera->lookAt(dpos.x, dpos.y + 2.0f,dpos.z);
 
@@ -185,6 +165,9 @@ namespace Sonetto {
 
         mKernel->mResourceMan->_unregisterResourceManager("MapFile");
         mKernel->mMapFileManager = 0;
+
+        delete mDummyHero;
+
         // Call the Module base function.
         Module::exit();
     }
@@ -316,8 +299,8 @@ namespace Sonetto {
             mSceneMan->setFog(Ogre::FOG_NONE,mapFile->mFogColor,mapFile->mFogExpDensity,mapFile->mFogStart,mapFile->mFogEnd);
 
             // Here we would set the Hero's initial position, so let's set the dummy in their place instead
-            mDummyHeroSceneNode->setPosition(mKernel->mDatabase->mPlayerPosX,mKernel->mDatabase->mPlayerPosY,mKernel->mDatabase->mPlayerPosZ);
-            mDummyHeroSceneNode->setOrientation(mKernel->mDatabase->mPlayerRotW,mKernel->mDatabase->mPlayerRotX,mKernel->mDatabase->mPlayerRotY,mKernel->mDatabase->mPlayerRotZ);
+            mDummyHero->setPosition(mKernel->mDatabase->mPlayerPosX,mKernel->mDatabase->mPlayerPosY,mKernel->mDatabase->mPlayerPosZ);
+            mDummyHero->setOrientation(mKernel->mDatabase->mPlayerRotW,mKernel->mDatabase->mPlayerRotX,mKernel->mDatabase->mPlayerRotY,mKernel->mDatabase->mPlayerRotZ);
         }
 
     }

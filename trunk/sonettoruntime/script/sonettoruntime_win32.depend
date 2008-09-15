@@ -1146,7 +1146,7 @@
 	<Ogre.h>
 	<SDL/SDL.h>
 
-1219940247 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomain.h
+1221497345 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomain.h
 	<OgreVector2.h>
 	"SonettoException.h"
 
@@ -1558,13 +1558,14 @@
 	"BasicModule.h"
 	"TESTMapFileManager.h"
 
-1220740393 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonetto.h
+1221436563 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonetto.h
 	"SonettoPrerequisites.h"
 	"SonettoMain.h"
 	"TESTMapFile.h"
 	"TESTMapFileManager.h"
 	"TESTMapFileSerializer.h"
 	"SonettoCounter.h"
+	"SonettoEventObject.h"
 	"SonettoException.h"
 	"SonettoFont.h"
 	"SonettoFontManager.h"
@@ -1630,9 +1631,10 @@
 
 1219266222 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource_d.rc
 
-1221104149 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testmapmodule.h
+1221504529 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testmapmodule.h
 	"SonettoModule.h"
 	"TESTMapFileManager.h"
+	"TESTHeroObject.h"
 
 1219697300 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoplanefactory.h
 	<OgreOverlayElementFactory.h>
@@ -1667,4 +1669,11 @@
 1220799367 c:\workspace\projects\sonetto\trunk\libsonetto\include\testmapfileserializer.h
 	"TESTMapFile.h"
 	<OgreSerializer.h>
+
+1221503566 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoeventobject.h
+	<Ogre.h>
+	"Sonetto.h"
+
+1221508704 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testheroobject.h
+	"SonettoEventObject.h"
 

@@ -99,6 +99,7 @@
 		<Unit filename="..\include\SonettoChoiceWindow.h" />
 		<Unit filename="..\include\SonettoCounter.h" />
 		<Unit filename="..\include\SonettoDatabase.h" />
+		<Unit filename="..\include\SonettoEventObject.h" />
 		<Unit filename="..\include\SonettoException.h" />
 		<Unit filename="..\include\SonettoFont.h" />
 		<Unit filename="..\include\SonettoFontManager.h" />
@@ -136,6 +137,7 @@
 		<Unit filename="..\src\SonettoChoiceWindow.cpp" />
 		<Unit filename="..\src\SonettoCounter.cpp" />
 		<Unit filename="..\src\SonettoDatabase.cpp" />
+		<Unit filename="..\src\SonettoEventObject.cpp" />
 		<Unit filename="..\src\SonettoException.cpp" />
 		<Unit filename="..\src\SonettoFont.cpp" />
 		<Unit filename="..\src\SonettoFontManager.cpp" />

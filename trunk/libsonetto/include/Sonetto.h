@@ -33,6 +33,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 //#include "SonettoAudioManager.h"
 #include "SonettoCounter.h"
+#include "SonettoEventObject.h"
 #include "SonettoException.h"
 #include "SonettoFont.h"
 #include "SonettoFontManager.h"
