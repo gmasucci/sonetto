@@ -11,5 +11,5 @@ This is the Sonetto Wiki's main page. This is indeed just an index to other wiki
 || [http://code.google.com/p/sonetto/wiki/EngineOverview Engine Overview] || Top-level abstraction of the concepts behind Sonetto ||
 
   * == Managers ==
-|| InputManager || Describes how the InputManager works and how to use it ||
-|| AudioManager || Describes how the AudioManager works and how to use it ||
+|| InputManager || Describes how the input manager works and how to use it ||
+|| AudioManager || Describes how the audio manager works and how to use it ||
