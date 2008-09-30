@@ -35,8 +35,8 @@ namespace Sonetto {
     {
         // Allocates room to store exception description and source file and
         // copies them to these buffers
-        mDesc = new char[strlen(desc)];
-        mSrc  = new char[strlen(src)];
+        mDesc = new char[strlen(desc)+1];
+        mSrc  = new char[strlen(src)+1];
         strcpy(mDesc,desc);
         strcpy(mSrc,src);
     }

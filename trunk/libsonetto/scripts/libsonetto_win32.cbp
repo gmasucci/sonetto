@@ -68,19 +68,19 @@
 			<Add directory="..\..\dependencies\include" />
 			<Add directory="$(OGRE_HOME)\include" />
 			<Add directory="..\..\dependencies\include\zlib" />
+			<Add directory="..\..\dependencies\include\opcode" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,--enable-runtime-pseudo-reloc" />
 			<Add option="-Wl,--enable-auto-image-base" />
 			<Add option="-Wl,--add-stdcall-alias" />
-			<Add library="EFX-Util" />
 			<Add library="OpenAL32" />
-			<Add library="vorbisenc" />
 			<Add library="vorbisfile" />
 			<Add library="vorbis" />
 			<Add library="ogg" />
 			<Add library="zlib" />
 			<Add library="SDL" />
+			<Add library="opcode" />
 			<Add library="m" />
 			<Add library="user32" />
 			<Add library="gdi32" />
@@ -90,6 +90,7 @@
 			<Add directory="..\..\dependencies\lib\vorbis" />
 			<Add directory="..\..\dependencies\lib\AL" />
 			<Add directory="..\..\dependencies\lib\SDL" />
+			<Add directory="..\..\dependencies\lib\opcode" />
 			<Add directory="$(OGRE_HOME)\..\lib" />
 		</Linker>
 		<Unit filename="..\include\Sonetto.h">
@@ -97,6 +98,7 @@
 		</Unit>
 		<Unit filename="..\include\SonettoAudioManager.h" />
 		<Unit filename="..\include\SonettoChoiceWindow.h" />
+		<Unit filename="..\include\SonettoCollisionManager.h" />
 		<Unit filename="..\include\SonettoCounter.h" />
 		<Unit filename="..\include\SonettoDatabase.h" />
 		<Unit filename="..\include\SonettoEventObject.h" />
@@ -109,6 +111,7 @@
 		<Unit filename="..\include\SonettoKernel.h" />
 		<Unit filename="..\include\SonettoMain.h" />
 		<Unit filename="..\include\SonettoModule.h" />
+		<Unit filename="..\include\SonettoMusicStream.h" />
 		<Unit filename="..\include\SonettoPlane.h" />
 		<Unit filename="..\include\SonettoPlaneFactory.h" />
 		<Unit filename="..\include\SonettoPrerequisites.h" />
@@ -135,6 +138,7 @@
 		</Unit>
 		<Unit filename="..\src\SonettoAudioManager.cpp" />
 		<Unit filename="..\src\SonettoChoiceWindow.cpp" />
+		<Unit filename="..\src\SonettoCollisionManager.cpp" />
 		<Unit filename="..\src\SonettoCounter.cpp" />
 		<Unit filename="..\src\SonettoDatabase.cpp" />
 		<Unit filename="..\src\SonettoEventObject.cpp" />
@@ -146,6 +150,7 @@
 		<Unit filename="..\src\SonettoInputManager.cpp" />
 		<Unit filename="..\src\SonettoKernel.cpp" />
 		<Unit filename="..\src\SonettoModule.cpp" />
+		<Unit filename="..\src\SonettoMusicStream.cpp" />
 		<Unit filename="..\src\SonettoPlane.cpp" />
 		<Unit filename="..\src\SonettoRARC.cpp" />
 		<Unit filename="..\src\SonettoSTR.cpp" />

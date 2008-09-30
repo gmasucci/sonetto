@@ -25,6 +25,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoMain.h"
 
+// <todo> I think we don't need this ___sonetto_throwstr thingy
 #define SONETTO_THROW(desc) \
     { \
         std::string ___sonetto_throwstr = desc; \

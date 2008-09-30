@@ -31,7 +31,6 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "TESTMapFileManager.h"
 #include "TESTMapFileSerializer.h"
 
-//#include "SonettoAudioManager.h"
 #include "SonettoCounter.h"
 #include "SonettoEventObject.h"
 #include "SonettoException.h"
@@ -40,6 +39,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoFontSerializer.h"
 #include "SonettoGauge.h"
 #include "SonettoInputManager.h"
+#include "SonettoAudioManager.h"
 #include "SonettoKernel.h"
 #include "SonettoModule.h"
 #include "SonettoPlane.h"
