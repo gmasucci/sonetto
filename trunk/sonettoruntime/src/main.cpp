@@ -30,10 +30,51 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "Sonetto.h"
 #include "BasicModule.h"
 #include "TESTMapFileManager.h"
+#include "TESTMapModule.h"
 
 using namespace std;
 using namespace Sonetto;
 
+class TestModuleFactory : public Sonetto::ModuleFactory
+{
+public:
+    Sonetto::Module * createBootModule()
+    {
+        return new BootModule();
+    }
+    Sonetto::Module * createTitleModule()
+    {
+        return NULL;
+    }
+    Sonetto::Module * createMapModule()
+    {
+        return new TestMapModule();
+    }
+    Sonetto::Module * createMenuModule()
+    {
+        return NULL;
+    }
+    Sonetto::Module * createBattleModule()
+    {
+        return NULL;
+    }
+    Sonetto::Module * createWorldMapModule()
+    {
+        return NULL;
+    }
+    Sonetto::Module * createExtraModuleA()
+    {
+        return NULL;
+    }
+    Sonetto::Module * createExtraModuleB()
+    {
+        return NULL;
+    }
+    Sonetto::Module * createExtraModuleC()
+    {
+        return NULL;
+    }
+};
 #ifdef _WINDOWS
 INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
 #else
@@ -47,11 +88,13 @@ int main(int argc, char **argv)
             cout << "Sonetto Kernel could not be created.\n";
             return -1;
         }
-
+        TestModuleFactory * moduleFactory = new TestModuleFactory();
+        Kernel::get()->registerModuleFactory(moduleFactory);
         Kernel::get()->pushModule(new BasicModule());
         // Set up Custom Resources.
         Kernel::get()->run();
         Kernel::destroy();
+        delete moduleFactory;
     } catch(Sonetto::Exception &e) {
         const char *what = e.what();
 

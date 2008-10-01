@@ -38,7 +38,7 @@ void BasicModule::enter()
     Module::enter();
     // And setup the first controller
     player = mKernel->getInputMan()->getPlayer(0);
-
+/*
     player->setJoystick(mKernel->getInputMan()->getJoystick(1));
     player->configAxis(Sonetto::AX_LEFT,Sonetto::InputSource(true,Sonetto::InputSource::IST_AXIS,Sonetto::AX_LEFT));
     player->configAxis(Sonetto::AX_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_AXIS,Sonetto::AX_RIGHT,Sonetto::InputSource::INV_ORDER));
@@ -48,21 +48,23 @@ void BasicModule::enter()
     player->configBtn(Sonetto::BTN_CIRCLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,1));
     player->configBtn(Sonetto::BTN_TRIANGLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,4));
     player->configBtn(Sonetto::BTN_SQUARE,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,3));
+*/
 
-    /*
-    player->configAxis(Sonetto::AXE_LEFT_UP, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_w));
-    player->configAxis(Sonetto::AXE_LEFT_DOWN, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_s));
-    player->configAxis(Sonetto::AXE_LEFT_LEFT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_a));
-    player->configAxis(Sonetto::AXE_LEFT_RIGHT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_d));
+    player->configAxis(Sonetto::AXE_LEFT_UP, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_UP));
+    player->configAxis(Sonetto::AXE_LEFT_DOWN, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_DOWN));
+    player->configAxis(Sonetto::AXE_LEFT_LEFT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_LEFT));
+    player->configAxis(Sonetto::AXE_LEFT_RIGHT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_RIGHT));
 
     player->configAxis(Sonetto::AXE_RIGHT_UP, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_UP));
     player->configAxis(Sonetto::AXE_RIGHT_DOWN, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_DOWN));
-    player->configAxis(Sonetto::AXE_RIGHT_LEFT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_LEFT));
-    player->configAxis(Sonetto::AXE_RIGHT_RIGHT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_RIGHT));
+    player->configAxis(Sonetto::AXE_RIGHT_LEFT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_q));
+    player->configAxis(Sonetto::AXE_RIGHT_RIGHT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_w));
 
     player->configBtn(Sonetto::BTN_CROSS,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_z));
     player->configBtn(Sonetto::BTN_CIRCLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_x));
-    */
+    player->configBtn(Sonetto::BTN_TRIANGLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_s));
+    player->configBtn(Sonetto::BTN_SQUARE,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_a));
+
     player->setEnabled(true);
 
     mOverlayContainer = static_cast<OverlayContainer*>(mKernel->mOverlayMan->createOverlayElement("Window","text_01_01"));
@@ -107,22 +109,12 @@ void BasicModule::enter()
     text1->show();
 
     mChoiceHasShown = false;
-
 }
 
 void BasicModule::update(Ogre::Real deltatime)
 {
     PlayerInput *player = mKernel->getInputMan()->getPlayer(0);
-    if(!mKernel->getRenderWindow()->isFullScreen())
-    {
-        mFrameNumber += (1.0f/2.0f) * deltatime;
-        if(mFrameNumber >= 1.0f)
-        {
-        const Ogre::RenderTarget::FrameStats& stats = mKernel->getRenderWindow()->getStatistics();
-        mKernel->setWindowCaption("Sonetto - Current FPS: "+Ogre::StringConverter::toString(stats.lastFPS)+" Frame Time: "+Ogre::StringConverter::toString(mKernel->mFrameTime));
-        mFrameNumber -= 1.0f;
-        }
-    }
+
     switch(mStatus)
     {
         case BMS_FADEIN_START:
@@ -147,18 +139,36 @@ void BasicModule::update(Ogre::Real deltatime)
                     case 0:
                         mChoiceHasShown = false;
                         mStatus = BMS_FADEIN_START;
-                        mKernel->pushModule(new TestMapModule(), true);
+                        mKernel->pushModule(Kernel::get()->createModule(ModuleFactory::MI_BOOT), true);
                     break;
                     case 1:
-                        mKernel->shutdown();
+                        mChoiceHasShown = false;
+                        mStatus = BMS_FADEIN_START;
+                        mKernel->pushModule(Kernel::get()->createModule(ModuleFactory::MI_TITLE), true);
                     break;
                     case 2:
-                        mKernel->shutdown();
+                        mChoiceHasShown = false;
+                        mStatus = BMS_FADEIN_START;
+                        mKernel->pushModule(Kernel::get()->createModule(ModuleFactory::MI_MAP), true);
                     break;
                     case 3:
-                        mKernel->shutdown();
+                        mChoiceHasShown = false;
+                        mStatus = BMS_FADEIN_START;
+                        mKernel->pushModule(Kernel::get()->createModule(ModuleFactory::MI_BATTLE), true);
                     break;
                     case 4:
+                        mChoiceHasShown = false;
+                        mStatus = BMS_FADEIN_START;
+                        mKernel->pushModule(Kernel::get()->createModule(ModuleFactory::MI_MENU), true);
+                    break;
+                    case 5:
+                        mChoiceHasShown = false;
+                        mStatus = BMS_FADEIN_START;
+                        mKernel->pushModule(Kernel::get()->createModule(ModuleFactory::MI_WORLD_MAP), true);
+                    break;
+                    case 6:
+                        mChoiceHasShown = false;
+                        mStatus = BMS_FADEIN_START;
                         mKernel->shutdown();
                     break;
                 }
@@ -173,14 +183,16 @@ void BasicModule::update(Ogre::Real deltatime)
             if((!mChoiceWindow) && (!mChoiceHasShown))
             {
                 mChoiceWindow = new ChoiceWindow("test_choicewindow",static_cast<Module*>(this));
-                mChoiceWindow->setPosition(95.0f/480.0f,140.0f/480.0f);
-                mChoiceWindow->setDimensions(290.0f/480.0f,180.0f/480.0f);
-                mChoiceWindow->setupChoices(5,5);
+                mChoiceWindow->setPosition(65.0f/480.0f,91.0f/480.0f);
+                mChoiceWindow->setDimensions(350.0f/480.0f,230.0f/480.0f);
+                mChoiceWindow->setupChoices(7,7,mChoiceState);
                 mChoiceWindow->setChoice(0,2);
                 mChoiceWindow->setChoice(1,3);
                 mChoiceWindow->setChoice(2,4);
                 mChoiceWindow->setChoice(3,5);
                 mChoiceWindow->setChoice(4,6);
+                mChoiceWindow->setChoice(5,7);
+                mChoiceWindow->setChoice(6,8);
                 mChoiceWindow->initialise();
                 mChoiceHasShown = true;
             } else {

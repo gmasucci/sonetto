@@ -211,7 +211,7 @@ namespace Sonetto
         if ((int)mStreamLen == OV_EINVAL)
         {
             SONETTO_THROW("Failed telling OGG/Vorbis stream length ("+
-                    Ogre::StringConverter::toString(mStreamLen)+")");
+                    Ogre::StringConverter::toString((int)mStreamLen)+")");
         }
 
         // Sets current music index
@@ -522,8 +522,8 @@ namespace Sonetto
         // Fills an OpenAL audio data buffer with our
         // just decompressed audio data
         alBufferData(buffer,format,data,offset,mFile.vi->rate);
-        mAudioMan->_alErrorCheck("AudioManager::pullStream()",
-                "Out of memory, could not allocate sound buffer");
+        mAudioMan->_alErrorCheck("MusicStream::pullStream()",
+                "Could not fill OpenAL audio buffer");
     }
 } // namespace
 

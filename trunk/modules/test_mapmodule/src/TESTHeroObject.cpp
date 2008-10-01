@@ -20,18 +20,20 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 #include "TESTHeroObject.h"
-namespace Sonetto{
+namespace Sonetto {
     HeroObject::HeroObject( const Ogre::String & name,
                             Ogre::SceneNode * parent,
                             Ogre::SceneManager * manager,
+                            CollisionManager * colmanager,
                             bool noVisibleEntity,
                             const Ogre::String & modelname ) :
-                            EventObject(name, parent, manager, noVisibleEntity, modelname ),
+                            EventObject(name, parent, manager, colmanager, noVisibleEntity, modelname ),
                             mHeroSpeed(0.0f),
                             mMovementInput(Ogre::Vector2::ZERO),
                             mBaseFront(Ogre::Vector3::ZERO),
                             mBaseRight(Ogre::Vector3::ZERO),
-                            mDirection(Ogre::Vector3::ZERO)
+                            mDirection(Ogre::Vector3::ZERO),
+                            mOldInputMag(0.0f)
     {
     }
     HeroObject::~HeroObject()
@@ -44,22 +46,17 @@ namespace Sonetto{
         // this will represent how many the player has pressed the Analog Stick, and we use this to move the hero.
         float inputMagnitude = mMovementInput.normalise();
 
-        directionFinal.x = (mMovementInput.x * mBaseRight.x) + (mMovementInput.y * mBaseFront.x);
+        directionFinal.x = ((-mMovementInput.x) * mBaseRight.x) + ((-mMovementInput.y) * mBaseFront.x);
         directionFinal.y = 0.0f;
-        directionFinal.z = (mMovementInput.x * mBaseRight.z) + (mMovementInput.y * mBaseFront.z);
+        directionFinal.z = ((-mMovementInput.x) * mBaseRight.z) + ((-mMovementInput.y) * mBaseFront.z);
 
         // Get the Orientation from initial direction.
-        sourceDirection = getOrientation() * Ogre::Vector3::UNIT_Z;
+        sourceDirection = getOrientation() * Ogre::Vector3::UNIT_X;
         // Ignore the pitch difference angle.
         sourceDirection.y = 0.0f;
         // Normalise the vectors.
         sourceDirection.normalise();
         directionFinal.normalise();
-
-        Ogre::Quaternion finalOrientation = sourceDirection.getRotationTo(directionFinal);
-
-        // Set the new orientation relative to current one.
-        setOrientation(finalOrientation * getOrientation());
 
         // Ensure that the hero will not move while the controller is in the "dead zone".
         if(inputMagnitude < 0.3f)
@@ -68,10 +65,28 @@ namespace Sonetto{
         } else if(inputMagnitude > 1.0f) {
             inputMagnitude = 1.0f;
         }
+        Ogre::Vector3 interpFDir;
+        if(inputMagnitude > 0.3f)
+        {
+            /*interpFDir = (sourceDirection * (0.025f - deltatime)) + (directionFinal * deltatime);*/
+            interpFDir = (sourceDirection * (1.0f - (deltatime*25.0f))) + (directionFinal * (deltatime*25.0f));
+        } else {
+            interpFDir = sourceDirection;
+        }
+        Ogre::Quaternion finalOrientation = sourceDirection.getRotationTo(interpFDir);
 
-        std::cout<<"inputMagnitude: "<<inputMagnitude<<"\n";
+        // Set the new orientation relative to current one.
+        setOrientation(finalOrientation * getOrientation());
 
-        moveObject(-(directionFinal * (mHeroSpeed * inputMagnitude)));
+        /*std::cout<<"inputMagnitude: "<<inputMagnitude<<"\n";
+
+        if (directionFinal.x != 0.0f || directionFinal.z != 0.0f)
+        {
+            directionFinal = calculateSlide(directionFinal,Ogre::Vector3(1.0f,0.0f,1.0f));
+        }*/
+
+        moveObject(directionFinal * (mHeroSpeed * inputMagnitude));
+
         EventObject::update(deltatime);
         mMovementInput = Ogre::Vector2::ZERO;
     }

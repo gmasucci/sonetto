@@ -23,6 +23,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #define SONETTO_EVENTOBJECT_H
 
 #include <Ogre.h>
+#include "SonettoCollisionManager.h"
 #include "Sonetto.h"
 
 namespace Sonetto{
@@ -37,8 +38,7 @@ namespace Sonetto{
         Usually is used in maps to represent the Player, NPCs and other objects
         such as event triggers and wrap gateways (used to change maps).
         They may and may not contain visible models, but always contain position, orientation
-        and collision objects, note that this class contains collision tests in its update function
-        so must be set up properly.
+        and collision objects.
     */
     class SONETTO_EXPORT EventObject
     {
@@ -46,6 +46,7 @@ namespace Sonetto{
         EventObject(const Ogre::String & name,
                     Ogre::SceneNode * parent,
                     Ogre::SceneManager * manager,
+                    CollisionManager * colmanager,
                     bool noVisibleEntity = false,
                     const Ogre::String & modelname = "");
         virtual ~EventObject();
@@ -128,6 +129,23 @@ namespace Sonetto{
         /// Return a pointer to this object's scene manager.
         virtual const Ogre::SceneManager * getSceneManager(void) const;
 
+        // Start of Script/Event function Section
+        /// Completely erase the entire event list for this event.
+        //virtual void clearEventList();
+        /** Creates a walk list.
+
+            A Walk list is a set of points this event will walk to.
+            After creating you must imediatelly add walk points to the list,
+            and then close it using "endWalkList()".
+        */
+        /*
+        virtual void startWalkList();
+        /// Ends an already created walklist.
+        virtual void endWalkList();
+        virtual void addWalkPoint();*/
+
+        size_t triangle;
+
     protected:
         /// This Event State
         EventState mEventState;
@@ -147,20 +165,13 @@ namespace Sonetto{
         Ogre::SceneNode * mParent;
         /// The SceneManager used to create and manage this object's objects.
         Ogre::SceneManager * mSceneManager;
+        /// The CollisionManager.
+        CollisionManager * mCollisionManager;
         /// The desired position relative to current, reset at every frame.
         Ogre::Vector3 mTargetPosition;
+
+        Ogre::Vector3 mEllipseRadius;
     };
-/*
-    class SONETTO_EXPORT HeroObject : public EventObject
-    {
-        HeroObject( const Ogre::String & name,
-                    Ogre::SceneNode * parent,
-                    Ogre::SceneManager * manager,
-                    bool noVisibleEntity = false,
-                    const Ogre::String & modelname = "");
-        virtual ~HeroObject();
-    };
-*/
 }; // namespace
 
 

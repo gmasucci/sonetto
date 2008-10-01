@@ -33,13 +33,15 @@ http://www.gnu.org/copyleft/lesser.txt
 #   endif
 #endif
 
-namespace Sonetto{
+namespace Sonetto
+{
     class MODULE_EXPORT HeroObject : public EventObject
     {
     public:
         HeroObject( const Ogre::String & name,
                     Ogre::SceneNode * parent,
                     Ogre::SceneManager * manager,
+                    CollisionManager * colmanager,
                     bool noVisibleEntity = false,
                     const Ogre::String & modelname = "");
         virtual ~HeroObject();
@@ -80,6 +82,7 @@ namespace Sonetto{
     private:
         /// Hero Base Movement Speed.
         float mHeroSpeed;
+        float mOldInputMag;
         /// Character Movement Input. (From Player)
         Ogre::Vector2 mMovementInput;
         /// Base Movement Front Vector.
@@ -88,6 +91,8 @@ namespace Sonetto{
         Ogre::Vector3 mBaseRight;
         /// Movement Direction Vector.
         Ogre::Vector3 mDirection;
+
+
     };
 }; // namespace
 

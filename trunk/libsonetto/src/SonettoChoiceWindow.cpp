@@ -70,13 +70,14 @@ namespace Sonetto {
         mWindowWidth = width;
         mWindowHeight = height;
     }
-    void ChoiceWindow::setupChoices(size_t numChoices, size_t cancelID)
+    void ChoiceWindow::setupChoices(size_t numChoices, size_t cancelID, size_t initialChoice)
     {
         if(mStatus != WOS_NOTREADY)
             return;
         mNumChoices = numChoices;
         mCancelID = cancelID;
         mChoiceMessageID.resize(numChoices, 0);
+        mChoice = initialChoice;
     }
     void ChoiceWindow::setChoice(size_t choiceID, size_t messageID)
     {
@@ -219,7 +220,7 @@ namespace Sonetto {
                         mCursor->show();
                         mCursorLine->show();
                         Ogre::Real curLeft = static_cast<TextElement*>(mChoiceList[0])->_getLeft();
-                        Ogre::Real curTop = static_cast<TextElement*>(mChoiceList[0])->_getTop();
+                        Ogre::Real curTop = static_cast<TextElement*>(mChoiceList[mChoice])->_getTop();
                         mCursor->setPosition(curLeft-mTextSize,curTop);
                         mCursorPosX = curLeft-mTextSize;
                         mCursorPosY = curTop;
@@ -408,6 +409,8 @@ namespace Sonetto {
                     {
                         static_cast<TextElement*>(mChoiceList[start])->setAlpha(mAnimPos);
                     }
+                    static_cast<Plane*>(mCursor)->setAlpha(mAnimPos);
+                     static_cast<Plane*>(mCursorLine)->setAlpha(mAnimPos);
                     mWindowAlpha = mAnimPos;
                     mTextAlpha = mAnimPos;
                     mAnimPos -= mCloseAnimSpeed * deltatime;

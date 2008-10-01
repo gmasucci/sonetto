@@ -74,7 +74,7 @@ namespace Sonetto {
         { mpModule = 0; }
         void setPosition(Ogre::Real posX, Ogre::Real posY);
         void setDimensions(Ogre::Real width, Ogre::Real height);
-        void setupChoices(size_t numChoices, size_t cancelID);
+        void setupChoices(size_t numChoices, size_t cancelID, size_t initialChoice = 0);
         void setChoice(size_t choiceID, size_t messageID);
 
         void show();

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
 This source file is part of Sonetto RPG Engine.
 
-Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Prá Vieira
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme PrÃ¡ Vieira
 
 
 Sonetto RPG Engine is free software: you can redistribute it and/or modify
@@ -22,11 +22,12 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoEventObject.h"
 
 namespace Sonetto {
-    EventObject::EventObject   (const Ogre::String & name,
-                                Ogre::SceneNode * parent,
-                                Ogre::SceneManager * manager,
+    EventObject::EventObject   (const Ogre::String &name,
+                                Ogre::SceneNode *parent,
+                                Ogre::SceneManager *manager,
+                                CollisionManager *colmanager,
                                 bool noVisibleEntity,
-                                const Ogre::String & modelname ) :
+                                const Ogre::String &modelname) :
                                 mEventState(ES_NORMAL),
                                 mIgnoreCollisions(false),
                                 mName(name),
@@ -35,7 +36,9 @@ namespace Sonetto {
                                 mSceneManager(manager),
                                 mInvisible(noVisibleEntity),
                                 mEntity(NULL),
-                                mTargetPosition(Ogre::Vector3(0.0f,0.0f,0.0f))
+                                mCollisionManager(colmanager),
+                                mTargetPosition(Ogre::Vector3(0.0f,0.0f,0.0f)),
+                                triangle(0)
     {
         mNode = mParent->createChildSceneNode(mName + "_node");
         if(!mInvisible)
@@ -43,6 +46,7 @@ namespace Sonetto {
             mEntity = mSceneManager->createEntity(mName + "_entity", mModelName);
             mNode->attachObject(mEntity);
         }
+        mEllipseRadius= Ogre::Vector3(0.5f,1.0f,0.5f);
     }
     EventObject::~EventObject()
     {
@@ -56,9 +60,8 @@ namespace Sonetto {
     }
     void EventObject::update(float deltatime)
     {
-        mNode->translate(mTargetPosition * deltatime);
-        // Reset the movement offset.
-        mTargetPosition = Ogre::Vector3::ZERO;
+        mNode->setPosition(mCollisionManager->setNextPos(this,
+                mTargetPosition*deltatime));
     }
     const Ogre::String & EventObject::getName(void) const
     {
@@ -145,17 +148,4 @@ namespace Sonetto {
     {
         return mSceneManager;
     }
-/*
-    HeroObject::HeroObject( const Ogre::String & name,
-                            Ogre::SceneNode * parent,
-                            Ogre::SceneManager * manager,
-                            bool noVisibleEntity,
-                            const Ogre::String & modelname ) :
-                            EventObject(name, parent, manager, noVisibleEntity, modelname )
-    {
-    }
-    HeroObject::~HeroObject()
-    {
-    }
-*/
 }; // namespace

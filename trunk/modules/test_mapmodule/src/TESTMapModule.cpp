@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
 This source file is part of Sonetto RPG Engine.
 
-Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Prá Vieira
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme PrÃ¡ Vieira
 
 
 Sonetto RPG Engine is free software: you can redistribute it and/or modify
@@ -38,6 +38,8 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     void TestMapModule::enter()
     {
+        mCollisionMan = new CollisionManager();
+
         mKernel->mMapFileManager = new MapFileManager();
         mBackgroundColor = Ogre::ColourValue(0.8f,0.8f,0.8f,1.0f);
         // Call the Module base function.
@@ -45,16 +47,35 @@ namespace Sonetto {
 
         mKernel->mResourceMan->addResourceLocation("hero/dummy_hero.zip", "Zip", "DUMMYHERO");
         mKernel->mResourceMan->initialiseResourceGroup("DUMMYHERO");
+
+        mKernel->mResourceMan->addResourceLocation("debug/debug_data.zip", "Zip", "DEBUGDATA");
+        mKernel->mResourceMan->initialiseResourceGroup("DEBUGDATA");
+
+        Ogre::Entity * worldmesh = mSceneMan->createEntity("CollisionMesh", "walkmesh.mesh");
+        mSceneMan->getRootSceneNode()->attachObject(worldmesh);
+
+        mCollisionMan->createWalkmesh(worldmesh);
+
+        mSphere = new EventObject("Sphere",
+                                    mSceneMan->getRootSceneNode(),
+                                    mSceneMan,
+                                    mCollisionMan,
+                                    false,
+                                    "dummy_hero.mesh");
+        mSphere->setPosition(10.0f,0.0f,0.0f);
+
         mDummyHero = new HeroObject("DummyHero",
                                     mSceneMan->getRootSceneNode(),
                                     mSceneMan,
+                                    mCollisionMan,
                                     false,
                                     "dummy_hero.mesh");
-        mDummyHero->setPosition(0.0f,0.0f,0.0f);
-        mDummyHero->setHeroSpeed(1.5f);
+        mDummyHero->setPosition(7.20862f,3.36544f,31.1969f-1.0f);
+        mDummyHero->setHeroSpeed(4.5f);
         mCamera->setPosition(30.0f,30.0f,-30.0f);
         mCamera->lookAt(0.0f,0.0f,0.0f);
-        mCamera->setNearClipDistance(0.1f);
+        mCamera->setNearClipDistance(1.0f);
+        mCamera->setFarClipDistance(1000.0f);
         mCamera->setFOVy(Ogre::Radian(Ogre::Degree(13.5f)));
 
         MapIndexData mapdata;
@@ -75,7 +96,6 @@ namespace Sonetto {
     	changeMap();
 
         mState = 0;
-        mFrameNumber = 0.0f;
         mAngle = Ogre::Degree(360);
 
         mDummyHero->setOrientation(Ogre::Quaternion(Degree(0),Ogre::Vector3::UNIT_Y));
@@ -84,16 +104,40 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     void TestMapModule::update(Ogre::Real deltatime) // This one will be a pain...
     {
-        if(!mKernel->getRenderWindow()->isFullScreen())
-        {
-            mFrameNumber += (1.0f/2.0f) * deltatime;
-            if(mFrameNumber >= 1.0f)
-            {
-            const Ogre::RenderTarget::FrameStats& stats = mKernel->getRenderWindow()->getStatistics();
-            mKernel->setWindowCaption("Sonetto - Current FPS: "+Ogre::StringConverter::toString(stats.lastFPS)+" Frame Time: "+Ogre::StringConverter::toString(mKernel->mFrameTime));
-            mFrameNumber -= 1.0f;
-            }
-        }
+#ifdef DEBUG_BUILD
+        // Debug function used to change the Scene Polygon mode from Solid to Wireframe or Points
+        Module::setPolygonMode(deltatime);
+#endif
+        PlayerInput * player = mKernel->getInputMan()->getPlayer(0);
+
+        Ogre::Vector2 mov,rot;
+
+        mov = player->getAxisValue(AX_LEFT);
+        rot = player->getAxisValue(AX_RIGHT);
+
+
+        /*if(mov.x < 0.3f && mov.x > -0.3f)
+            mov.x = 0.0f;
+
+        if(mov.y < 0.3f && mov.y > -0.3f)
+            mov.y = 0.0f;*/
+
+        if(rot.x < 0.3f && rot.x > -0.3f)
+            rot.x = 0.0f;
+
+        if(rot.y < 0.3f && rot.y > -0.3f)
+            rot.y = 0.0f;
+
+        mDummyHero->setBaseDirection(mCamera->getDirection());
+        mDummyHero->setMovementInput(mov);
+        mDummyHero->update(deltatime);
+
+        mAngle += Ogre::Radian(rot.x * deltatime);
+
+        Ogre::Vector3 dpos = mDummyHero->getPosition();
+        mCamera->setPosition(dpos.x+(Math::Sin(Ogre::Radian(mAngle)))*30.f,dpos.y + 32.f,dpos.z + (Math::Cos(Ogre::Radian(mAngle))*30.0f));
+        mCamera->lookAt(dpos.x, dpos.y + 2.0f,dpos.z);
+
         switch(mState)
         {
             case 0:
@@ -117,36 +161,6 @@ namespace Sonetto {
             }
             break;
             case 2:
-            PlayerInput * player = mKernel->getInputMan()->getPlayer(0);
-
-            Ogre::Vector2 mov,rot;
-
-            mov = player->getAxisValue(AX_LEFT);
-            rot = player->getAxisValue(AX_RIGHT);
-
-
-            /*if(mov.x < 0.3f && mov.x > -0.3f)
-                mov.x = 0.0f;
-
-            if(mov.y < 0.3f && mov.y > -0.3f)
-                mov.y = 0.0f;*/
-
-            if(rot.x < 0.3f && rot.x > -0.3f)
-                rot.x = 0.0f;
-
-            if(rot.y < 0.3f && rot.y > -0.3f)
-                rot.y = 0.0f;
-
-            mDummyHero->setBaseDirection(mCamera->getDirection());
-            mDummyHero->setMovementInput(mov);
-            mDummyHero->update(deltatime);
-
-            mAngle += Ogre::Radian(rot.x * deltatime);
-
-            Ogre::Vector3 dpos = mDummyHero->getPosition();
-            mCamera->setPosition(dpos.x+(Math::Sin(Ogre::Radian(mAngle)))*30.f,dpos.y + 32.f,dpos.z + (Math::Cos(Ogre::Radian(mAngle))*30.0f));
-            mCamera->lookAt(dpos.x, dpos.y + 2.0f,dpos.z);
-
             if(player->getBtnState(BTN_CROSS) == KS_PRESS)
                 mState = 3;
 
@@ -167,7 +181,9 @@ namespace Sonetto {
         mKernel->mMapFileManager = 0;
 
         delete mDummyHero;
+        delete mSphere;
 
+        delete mCollisionMan;
         // Call the Module base function.
         Module::exit();
     }
@@ -299,8 +315,8 @@ namespace Sonetto {
             mSceneMan->setFog(Ogre::FOG_NONE,mapFile->mFogColor,mapFile->mFogExpDensity,mapFile->mFogStart,mapFile->mFogEnd);
 
             // Here we would set the Hero's initial position, so let's set the dummy in their place instead
-            mDummyHero->setPosition(mKernel->mDatabase->mPlayerPosX,mKernel->mDatabase->mPlayerPosY,mKernel->mDatabase->mPlayerPosZ);
-            mDummyHero->setOrientation(mKernel->mDatabase->mPlayerRotW,mKernel->mDatabase->mPlayerRotX,mKernel->mDatabase->mPlayerRotY,mKernel->mDatabase->mPlayerRotZ);
+            //mDummyHero->setPosition(mKernel->mDatabase->mPlayerPosX,mKernel->mDatabase->mPlayerPosY,mKernel->mDatabase->mPlayerPosZ);
+            //mDummyHero->setOrientation(mKernel->mDatabase->mPlayerRotW,mKernel->mDatabase->mPlayerRotX,mKernel->mDatabase->mPlayerRotY,mKernel->mDatabase->mPlayerRotZ);
         }
 
     }

@@ -92,4 +92,21 @@ namespace Sonetto {
         if(mKernel->getViewport())
             mKernel->getViewport()->setBackgroundColour(mBackgroundColor);
     }*/
+#ifdef DEBUG_BUILD
+    void Module::setPolygonMode(float deltatime)
+    {
+        if(SDL_GetKeyState(NULL)[SDLK_F5] && mTimeUntilNextToggle <=0)
+		{
+			mCameraPolygonMode = (mCameraPolygonMode+1)%3 ;
+			switch(mCameraPolygonMode) {
+				case 0 : mCamera->setPolygonMode(PM_SOLID); break;
+				case 1 : mCamera->setPolygonMode(PM_WIREFRAME); break;
+				case 2 : mCamera->setPolygonMode(PM_POINTS); break;
+			}
+			mTimeUntilNextToggle = 0.5;
+		}
+		if (mTimeUntilNextToggle >= 0)
+				mTimeUntilNextToggle -= deltatime;
+    }
+#endif
 };

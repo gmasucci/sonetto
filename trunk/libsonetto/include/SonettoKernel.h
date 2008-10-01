@@ -30,7 +30,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <Ogre.h>
 #include <OgreVector2.h>
 
-//#include "SonettoAudioManager.h"
+#include "SonettoAudioManager.h"
 #include "SonettoDatabase.h"
 #include "SonettoInputManager.h"
 #include "SonettoModule.h"
@@ -65,6 +65,32 @@ namespace Sonetto
         FS_FADE_ACTIVE_OUT
     };
 
+    class SONETTO_EXPORT ModuleFactory
+    {
+    public:
+        enum ModuleID{
+            MI_NONE,
+            MI_BOOT,
+            MI_TITLE,
+            MI_MAP,
+            MI_MENU,
+            MI_BATTLE,
+            MI_WORLD_MAP,
+            MI_EXTRA_A,
+            MI_EXTRA_B,
+            MI_EXTRA_C,
+        };
+        virtual Module * createBootModule() = 0;
+        virtual Module * createTitleModule() = 0;
+        virtual Module * createMapModule() = 0;
+        virtual Module * createMenuModule() = 0;
+        virtual Module * createBattleModule() = 0;
+        virtual Module * createWorldMapModule() = 0;
+        virtual Module * createExtraModuleA() = 0;
+        virtual Module * createExtraModuleB() = 0;
+        virtual Module * createExtraModuleC() = 0;
+    };
+
     class SONETTO_EXPORT Kernel
     {
     public:
@@ -85,6 +111,48 @@ namespace Sonetto
 
         /// @brief Deinitialise everything initialised before by initialise().
         static bool destroy();
+
+        void registerModuleFactory(ModuleFactory * modfactory)
+        {
+            mModuleFactory = modfactory;
+        }
+
+        Module * createModule(ModuleFactory::ModuleID modid)
+        {
+            switch(modid)
+            {
+                default:
+                    return NULL;
+                break;
+                case ModuleFactory::MI_BOOT:
+                    return mModuleFactory->createBootModule();
+                break;
+                case ModuleFactory::MI_TITLE:
+                    return mModuleFactory->createTitleModule();
+                break;
+                case ModuleFactory::MI_MAP:
+                    return mModuleFactory->createMapModule();
+                break;
+                case ModuleFactory::MI_MENU:
+                    return mModuleFactory->createMenuModule();
+                break;
+                case ModuleFactory::MI_BATTLE:
+                    return mModuleFactory->createBattleModule();
+                break;
+                case ModuleFactory::MI_WORLD_MAP:
+                    return mModuleFactory->createWorldMapModule();
+                break;
+                case ModuleFactory::MI_EXTRA_A:
+                    return mModuleFactory->createExtraModuleA();
+                break;
+                case ModuleFactory::MI_EXTRA_B:
+                    return mModuleFactory->createExtraModuleB();
+                break;
+                case ModuleFactory::MI_EXTRA_C:
+                    return mModuleFactory->createExtraModuleC();
+                break;
+            };
+        }
 
         /// @brief Start the game's Main Loop
         int run();
@@ -121,7 +189,7 @@ namespace Sonetto
         void setWindowCaption(const Ogre::String& capt);
 
         InputManager *getInputMan();
-//        AudioManager *getAudioMan();
+        AudioManager *getAudioMan() { return mAudioMan; }
 
         /// @brief Load and parse the configuration file.
         std::map<std::string,std::string> loadConfig(const char *fname);
@@ -132,6 +200,10 @@ namespace Sonetto
         /// @brief Destructor.
         ~Kernel();
     public:
+
+        /// Pointer to a user created Module Factory.
+        ModuleFactory * mModuleFactory;
+
         /// @brief Flag indicating the program will be closed.
         bool mShutdown;
 
@@ -159,8 +231,20 @@ namespace Sonetto
         Ogre::Overlay                *mDebugOverlay; // Sonetto Debug Overlay.
         #endif
 
+
+        #ifdef DEBUG_BUILD
+        // Show Frame Status on Window Header (Debug Build Only)
+        float mFrameNumber;
+
+        int mGameSpeedUpSwitch;
+        int mGameNormalSpeedSwitch;
+        int mGameSpeedDownSwitch;
+        Ogre::Real mGameSpeed;
+        Ogre::Real mGameSpeedScaleValue;
+        #endif
+
         // Sonetto Pointers.
-//        AudioManager                 *mAudioMan; // Sonetto Audio Manager.
+        AudioManager                 *mAudioMan; // Sonetto Audio Manager.
         InputManager                 *mInputMan; // Sonetto Input Manager.
 
         // Sonetto Resources and Objects.
@@ -180,6 +264,8 @@ namespace Sonetto
         Database                    *mDatabase;
 
         Ogre::Real                   mFrameTime;
+
+        int mFullScreenSwitchLock;
 
         // Sonetto Screen Fade effect data
         Ogre::Overlay               *mFadeOverlay;
@@ -358,11 +444,13 @@ namespace Sonetto
             STRData *strdata = static_cast<STRData *>(resource);
             Ogre::String msg0 = "Sonetto Module Test";
             Ogre::String msg1 = "Press \\C0002[O]\\C0000 to select the desired Module.\nWhile insde the module,\npress \\C0002[Esc]\\C0000 on the keyboard\nto return to the \\C0002main menu\\C0000.";
-            Ogre::String msg2 = "Map Module";
-            Ogre::String msg3 = "Battle Module";
-            Ogre::String msg4 = "Menu Module";
-            Ogre::String msg5 = "Field Module";
-            Ogre::String msg6 = "Cancel";
+            Ogre::String msg2 = "Boot Module";
+            Ogre::String msg3 = "Title Module";
+            Ogre::String msg4 = "Map Module";
+            Ogre::String msg5 = "Battle Module";
+            Ogre::String msg6 = "Menu Module";
+            Ogre::String msg7 = "World Map Module";
+            Ogre::String msg8 = "Cancel";
             strdata->insertMessage(msg0);
             strdata->insertMessage(msg1);
             strdata->insertMessage(msg2);
@@ -370,6 +458,8 @@ namespace Sonetto
             strdata->insertMessage(msg4);
             strdata->insertMessage(msg5);
             strdata->insertMessage(msg6);
+            strdata->insertMessage(msg7);
+            strdata->insertMessage(msg8);
         }
     };
 
@@ -483,7 +573,7 @@ namespace Sonetto
             MapFile * map = static_cast<MapFile *>(resource);
             map->mMapName = "Test Map";
             map->mAmbientColor = Ogre::ColourValue(0.5f,0.5f,0.5f,1.0f);
-            map->mBackgroundColor = Ogre::ColourValue(0.0f,1.0f,0.0f,1.0f);
+            map->mBackgroundColor = Ogre::ColourValue(0.0f,0.0f,0.0f,1.0f);
             map->mUseLight0 = true;
             map->mUseLight1 = false;
             map->mLightDirection0 = Ogre::Vector3(0.0f,0.0f,0.0f);

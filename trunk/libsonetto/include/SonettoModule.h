@@ -29,94 +29,106 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoKernel.h"
 
 namespace Sonetto {
-    class Kernel; // Forward declaration
-}
+
+        class Kernel; // Forward declaration
+    }
 
 namespace Sonetto {
-    /** @brief Game Module interface
+        /** @brief Game Module interface
 
-        This class is used as an interface to abstract different modules
-        for the Kernel, in such a way that a Map Module can be treated the
-        same way as a Battle Module. Also, there can be additional modules
-        created by you that, of course, are unknown at the point of compiling
-        libSonetto. Such modules must inherit from Sonetto::Module and implement
-        at least the pure virtual method Sonetto::Module::update(). The other
-        methods have useful code that are common to any Module (like creating
-        an Ogre::SceneManager and Ogre::Camera to them). If you happen to make a
-        base call to any of these methods, make sure you do so to ALL of them, as
-        each one expects each other's deeds in the class.
-    @see
-        http://code.google.com/p/sonetto/source/browse/trunk/libsonetto/src/SonettoModule.cpp
-    */
-    class SONETTO_EXPORT Module {
-    public:
-        Module();
-        virtual ~Module() {}
-
-        /** @brief Module initialization
-
-            This function gets called by Kernel when it's time to initialise the
-            module.
+            This class is used as an interface to abstract different modules
+            for the Kernel, in such a way that a Map Module can be treated the
+            same way as a Battle Module. Also, there can be additional modules
+            created by you that, of course, are unknown at the point of compiling
+            libSonetto. Such modules must inherit from Sonetto::Module and implement
+            at least the pure virtual method Sonetto::Module::update(). The other
+            methods have useful code that are common to any Module (like creating
+            an Ogre::SceneManager and Ogre::Camera to them). If you happen to make a
+            base call to any of these methods, make sure you do so to ALL of them, as
+            each one expects each other's deeds in the class.
+        @see
+            http://code.google.com/p/sonetto/source/browse/trunk/libsonetto/src/SonettoModule.cpp
         */
-        virtual void enter();
 
-        /** @brief Module update
+        class SONETTO_EXPORT Module {
 
-            Gets called by Kernel on each frame update.
-        @param
-            deltatime Time since last frame.
-        */
-        virtual void update(Ogre::Real deltatime) = 0;
+                public:
+                    Module();
+                    virtual ~Module() {}
 
-        /** @brief Module cleanup
+                    /** @brief Module initialization
 
-            Gets called by Kernel prior to a deletion. Should delete it's
-            Entities, stop sounds/BGM, etc.
-        */
-        virtual void exit();
+                        This function gets called by Kernel when it's time to initialise the
+                        module.
+                    */
+                    virtual void enter();
 
-        /** @brief Module halt
+                    /** @brief Module update
 
-            Gets called by Kernel when another Module has taken the top of the
-            module stack.
-        */
-        virtual void halt();
+                        Gets called by Kernel on each frame update.
+                    @param
+                        deltatime Time since last frame.
+                    */
+                    virtual void update ( Ogre::Real deltatime ) = 0;
 
-        /** @brief Module wakeup
+                    /** @brief Module cleanup
 
-            Is called by Kernel when the top Module has been popped and this
-            module will start receiving update()'s again.
-        */
-        virtual void wakeup();
+                        Gets called by Kernel prior to a deletion. Should delete it's
+                        Entities, stop sounds/BGM, etc.
+                    */
+                    virtual void exit();
 
-        /** Set the Module Background Color
+                    /** @brief Module halt
 
-            Change and update the Module Viewport background color,
-            the background color is the shapped color that appear at the
-            back of the screen when there is no polygons.
-            It's usually black on most games.
-        */
-        /*virtual void setBackgroundColor(Ogre::ColourValue col);*/
+                        Gets called by Kernel when another Module has taken the top of the
+                        module stack.
+                    */
+                    virtual void halt();
 
-    public:
-        /// @brief Use this in place of Kernel::get() for the sake of simplicity
-        Kernel *mKernel;
+                    /** @brief Module wakeup
 
-        /// @brief Module Scene Manager
-        Ogre::SceneManager *mSceneMan;
+                        Is called by Kernel when the top Module has been popped and this
+                        module will start receiving update()'s again.
+                    */
+                    virtual void wakeup();
 
-        /// @brief Module Overlay
-        Ogre::Overlay *mOverlay;
+                    /** Set the Module Background Color
 
-        /// @brief Module Camera
-        Ogre::Camera *mCamera;
+                        Change and update the Module Viewport background color,
+                        the background color is the shapped color that appear at the
+                        back of the screen when there is no polygons.
+                        It's usually black on most games.
+                    */
+                    /*virtual void setBackgroundColor(Ogre::ColourValue col);*/
+#ifdef DEBUG_BUILD
+                    // Debug function used to change the Scene Polygon mode from Solid to Wireframe or Points
+                    void setPolygonMode(float deltatime);
+#endif
+                public:
+                    /// @brief Use this in place of Kernel::get() for the sake of simplicity
+                    Kernel *mKernel;
 
-        /// Each Module must have it's own Overlay Name.
-        Ogre::String mModuleOverlayName;
+                    /// @brief Module Scene Manager
+                    Ogre::SceneManager *mSceneMan;
 
-        /// Viewport Background Color.
-        Ogre::ColourValue mBackgroundColor;
-    };
-}; // namespace
+                    /// @brief Module Overlay
+                    Ogre::Overlay *mOverlay;
+
+                    /// @brief Module Camera
+                    Ogre::Camera *mCamera;
+
+                    /// Each Module must have it's own Overlay Name.
+                    Ogre::String mModuleOverlayName;
+
+                    /// Viewport Background Color.
+                    Ogre::ColourValue mBackgroundColor;
+
+#ifdef DEBUG_BUILD
+                    // Simple Hacky way to toggle camera mode
+                    int mCameraPolygonMode;
+                    Ogre::Real mTimeUntilNextToggle;
+#endif
+            };
+    }; // namespace
 
 #endif

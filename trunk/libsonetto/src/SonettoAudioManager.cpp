@@ -21,6 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
 #include <sstream>
+#include <OgreStringConverter.h>
 #include <AL/al.h>
 #include "SonettoException.h"
 #include "SonettoAudioManager.h"
@@ -155,10 +156,6 @@ namespace Sonetto
         // Clears error string
         alGetError();
 
-        // <todo> Load music list from somewhere
-        mMusics.push_back(Music("Field.ogg",0));
-        mMusics.push_back(Music("Field.ogg.KAT",0));
-
         // Now that OpenAL is initialised, we can initialise the music stream
         mMusicStream = new MusicStream(this);
 
@@ -187,7 +184,130 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     void AudioManager::_update(float deltatime)
     {
+        // Updates music stream
         mMusicStream->_update(deltatime);
+
+        // Gets rid of non-playing, unreferenced sound sources
+        for (size_t i = 0;i < mSoundSources.size();++i)
+        {
+            if (mSoundSources[i].unique())
+            {
+                if (mSoundSources[i]->getState() != SSS_PLAYING)
+                {
+                    mSoundSources.erase(mSoundSources.begin()+i);
+                    --i;
+                }
+            }
+        }
+    }
+    //-----------------------------------------------------------------------------
+    void AudioManager::loadSound(size_t id)
+    {
+        // Bounds checking
+        if (id >= mSoundDefs.size())
+        {
+            SONETTO_THROW("Unknown sound ID");
+        }
+
+        // Throw exception if the sound was already loaded
+        if (mSounds.find(id) != mSounds.end())
+        {
+            SONETTO_THROW("Trying to load an already loaded sound");
+        }
+
+        int errCode;
+        int bitstream;
+        ALenum format;
+        size_t soundLen;
+        size_t offset = 0;
+        size_t buffer;
+        std::string path = SoundDef::FOLDER+mSoundDefs[id].filename;
+        char *constlessStr = new char[path.length()+1];
+        char *tmpBuffer;
+        OggVorbis_File file;
+
+        // We use this `constlessStr' here because ov_fopen() needs a char *
+        // argument as filename, but std::string::c_str() returns a const char *,
+        // and I don't like const-casts
+        strcpy(constlessStr,path.c_str());
+
+        // Opens file and checks for errors
+        errCode = ov_fopen(constlessStr,&file);
+        if (errCode != 0)
+        {
+            SONETTO_THROW("Failed opening OGG/Vorbis file ("+
+                    Ogre::StringConverter::toString(errCode)+")");
+        }
+
+        // Not needed anymore
+        delete constlessStr;
+
+        // Gets sound length to create audio buffer
+        soundLen = static_cast<size_t>(ov_pcm_total(&file,-1))*2;
+        if ((int)soundLen == OV_EINVAL)
+        {
+            SONETTO_THROW("Failed telling OGG/Vorbis sound length ("+
+                    Ogre::StringConverter::toString((int)soundLen)+")");
+        }
+
+        // Creates OpenAL buffer
+        alGenBuffers(1,&buffer);
+        _alErrorCheck("AudioManager::loadSound()","Failed to generate an OpenAL "
+                "audio buffer");
+
+        // Creates temporary audio buffer
+        tmpBuffer = new char[soundLen];
+
+        // While we haven't loaded the sound, read more data from OGG stream
+        while (offset < soundLen)
+        {
+            int read;
+
+            if (soundLen-offset <= 1024) {
+                char chunk[1024];
+                read = ov_read(&file,chunk,1024,0,2,1,&bitstream);
+
+                if (read > 0)
+                {
+                    // Copy part of data read to `data' buffer
+                    read = soundLen-offset;
+                    memcpy(tmpBuffer+offset,chunk,read);
+                }
+            } else {
+                read = ov_read(&file,tmpBuffer+offset,soundLen-offset,0,2,1,
+                               &bitstream);
+            }
+
+            if (read > 0) { // There were bytes read
+                offset += read;
+            } else
+            if (read == 0) { // No bytes were read
+                break;
+            } else { // Error while reading from file
+                SONETTO_THROW("Failed reading from OGG/Vorbis file ("+
+                    Ogre::StringConverter::toString(read)+")");
+            }
+        }
+
+        // Gets information about the stream and figures
+        // whether the format is mono or stereo
+        if (file.vi->channels == 1) {
+            format = AL_FORMAT_MONO16;
+        } else {
+            format = AL_FORMAT_STEREO16;
+        }
+
+        // Fills an OpenAL audio data buffer with our
+        // just decompressed audio data
+        alBufferData(buffer,format,tmpBuffer,offset,file.vi->rate);
+        _alErrorCheck("AudioManager::loadSound()","Could not fill OpenAL audio buffer");
+
+        // Closes OGG/Vorbis file and deletes temporary buffer
+        ov_clear(&file);
+        delete tmpBuffer;
+
+        // Inserts our buffer as a loaded sound in mSounds
+        mSounds.insert(std::pair<size_t,Sound>(id,Sound(buffer)));
     }
     //-----------------------------------------------------------------------------
     void AudioManager::_streamEnded()
@@ -223,6 +343,31 @@ namespace Sonetto
 
             default: break;
         }
+    }
+    //-----------------------------------------------------------------------------
+    SoundSourcePtr AudioManager::createSound(size_t id)
+    {
+        // Checks whether it's loaded or not
+        if (mSounds.find(id) == mSounds.end())
+        {
+            SONETTO_THROW("Trying to play an sound which is not loaded");
+        }
+
+        SoundSourcePtr snd;
+
+        // Creates a new SoundSource and encapsulates it into an Ogre::SharedPtr
+        snd.bind(new SoundSource(id));
+
+        // Adds to list of SoundSources to be deleted when not needed anymore
+        mSoundSources.push_back(snd);
+
+        return snd;
+    }
+    //-----------------------------------------------------------------------------
+    void AudioManager::playSound(size_t id)
+    {
+        // Creates sound and plays it
+        createSound(id)->play();
     }
     //-----------------------------------------------------------------------------
     void AudioManager::_alErrorCheck(const char *location,const char *desc)

@@ -49,8 +49,17 @@ namespace Sonetto {
     , mFadeStatus(FS_IDLE_IN)
     , mFadeSpeed(60.0f)
     , mFadeAlpha(0.0f)
+    , mFullScreenSwitchLock(0)
 
     {
+        #ifdef DEBUG_BUILD
+        mFrameNumber = 0.0f;
+        mGameSpeedUpSwitch = 0;
+        mGameNormalSpeedSwitch = 0;
+        mGameSpeedDownSwitch = 0;
+        mGameSpeed = 1.0f;
+        mGameSpeedScaleValue = 1.0f/2.0f;
+        #endif
         NameValuePairList  wndParamList; // Needed for Ogre to use SDL rendering window
         SDL_SysWMinfo      wmInfo;       // Structure holding SDL window information
 
@@ -78,6 +87,10 @@ namespace Sonetto {
         // Get window info to attach Ogre at it
         SDL_VERSION(&wmInfo.version);
         SDL_GetWMInfo(&wmInfo);
+
+         wndParamList["vsync"] = "false";
+         wndParamList["displayFrequency"] = "60";
+         wndParamList["colourDepth"] = "32";
 
         #ifdef _WINDOWS
             // Under Windows we just need to pass the window handle(HWND) as a string to
@@ -119,12 +132,11 @@ namespace Sonetto {
         mResourceMan = ResourceGroupManager::getSingletonPtr();
         mMaterialMan = MaterialManager::getSingletonPtr();
 
-        // Create Audio Manager
-//        mAudioMan = new AudioManager();
-//        mAudioMan->initialise();
-
         // Create Input Manager
         mInputMan = new InputManager(4);
+
+        // Create Audio Manager
+        mAudioMan = new AudioManager();
 
         // Register Sonetto Resources and Objects
         mStrManager = new STRManager();
@@ -201,12 +213,10 @@ namespace Sonetto {
         }
 
         // Deinitialise AudioManager
-/*        if (mAudioMan) {
-            mAudioMan->deinitialise();
-
+        if (mAudioMan) {
             delete mAudioMan;
             mAudioMan = NULL;
-        }*/
+        }
 
         // At last, delete the Ogre::Root
         if (mRoot) {
@@ -252,6 +262,47 @@ namespace Sonetto {
             Ogre::ControllerValueRealPtr tmpFTV = Ogre::ControllerManager::getSingleton().getFrameTimeSource();
             mFrameTime = tmpFTV->getValue();
             SDL_Event evt;
+            #ifdef DEBUG_BUILD
+
+            if (SDL_GetKeyState(NULL)[SDLK_F8])
+            {
+                if(mGameSpeedUpSwitch == 0)
+                {
+                    mGameSpeed /= mGameSpeedScaleValue;
+                }
+                ++mGameSpeedUpSwitch;
+            } else {
+                mGameSpeedUpSwitch = 0;
+            }
+
+            if (SDL_GetKeyState(NULL)[SDLK_F6])
+            {
+                if(mGameSpeedDownSwitch == 0)
+                {
+                    mGameSpeed *= mGameSpeedScaleValue;
+                }
+                ++mGameSpeedDownSwitch;
+            } else {
+                mGameSpeedDownSwitch = 0;
+            }
+
+            if (SDL_GetKeyState(NULL)[SDLK_F7])
+            {
+                if(mGameNormalSpeedSwitch == 0)
+                {
+                    mGameSpeed = 1.0f;
+                }
+                ++mGameNormalSpeedSwitch;
+            } else {
+                mGameNormalSpeedSwitch = 0;
+            }
+
+            mFrameTime *= mGameSpeed;
+            #endif
+
+            // Limit the minimum FPS to 15 (disable frameskip)
+            if(mFrameTime > 0.06f)
+                mFrameTime = 0.06f;
 
             // Small error check
             // A game cannot run without modules
@@ -266,13 +317,29 @@ namespace Sonetto {
 
             if (SDL_GetKeyState(NULL)[SDLK_LALT] && SDL_GetKeyState(NULL)[SDLK_RETURN])
             {
-                if(mWindow->isFullScreen())
+                if(mWindow->isFullScreen() && (mFullScreenSwitchLock == 0))
                 {
                     mWindow->setFullscreen(false, 640, 480);
-                } else {
+                } else if(mFullScreenSwitchLock == 0) {
                     mWindow->setFullscreen(true, 1024, 768);
                 }
+                ++mFullScreenSwitchLock;
+            } else {
+                mFullScreenSwitchLock = 0;
             }
+
+#ifdef DEBUG_BUILD
+            // Show Frame Status on Window Header (Debug Build Only)
+            if(!mWindow->isFullScreen())
+            {
+                mFrameNumber += (1.0f/2.0f) * mFrameTime;
+                if(mFrameNumber >= 1.0f)
+                {
+                setWindowCaption("Sonetto - Current FPS: "+Ogre::StringConverter::toString(mWindow->getLastFPS())+" | Frame Time: "+Ogre::StringConverter::toString(mFrameTime));
+                mFrameNumber -= 1.0f;
+                }
+            }
+#endif
 
                         // Pump events
             while (SDL_PollEvent(&evt))
@@ -317,11 +384,12 @@ namespace Sonetto {
             mModuleList.top()->update(mFrameTime);
 
             // Update audio manager
-/*            if (mAudioMan)
-                mAudioMan->update();
-*/
+            if (mAudioMan)
+                mAudioMan->_update(mFrameTime);
+
             // Render !
             mRoot->renderOneFrame();
+
         }
 
         return 0;

@@ -56,12 +56,14 @@
 			<Add option="-D_STFU_VORBIS" />
 			<Add option="-DWIN32" />
 			<Add option="-D_WINDOWS" />
+			<Add option="-DDEBUG_BUILD" />
 			<Add directory="..\include" />
 			<Add directory="..\..\libsonetto\include" />
 			<Add directory="..\..\dependencies\include" />
 			<Add directory="$(OGRE_HOME)\include" />
 			<Add directory="..\..\modules\test_mapmodule\include" />
 			<Add directory="..\..\dependencies\include\zlib" />
+			<Add directory="..\..\dependencies\include\opcode" />
 		</Compiler>
 		<Linker>
 			<Add directory="..\..\lib" />

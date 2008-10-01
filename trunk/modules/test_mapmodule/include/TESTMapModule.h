@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
 This source file is part of Sonetto RPG Engine.
 
-Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr· Vieira
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr√° Vieira
 
 
 Sonetto RPG Engine is free software: you can redistribute it and/or modify
@@ -110,7 +110,9 @@ namespace Sonetto {
         // Map Module internal functions.
         void changeMap();
     protected:
-        float mFrameNumber;
+
+        CollisionManager * mCollisionMan;
+
         Ogre::Radian mAngle;
         bool mResourceGroupCreated;
         size_t mCurrentMapID;
@@ -125,6 +127,7 @@ namespace Sonetto {
 
         // Temporary Dummy Hero
         HeroObject * mDummyHero;
+        EventObject * mSphere;
 
         size_t mState;
     };

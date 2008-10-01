@@ -38,10 +38,14 @@ namespace Sonetto
     /// Vector of SoundDef structures
     typedef std::vector<SoundDef> SoundDefVector;
 
+    /// Map of Sound structures
+    typedef std::map<size_t,Sound> SoundMap;
+
+    /// Shared pointer to a SoundSource class
     typedef Ogre::SharedPtr<SoundSource> SoundSourcePtr;
 
-    /// Map of SoundSourcePtrs
-    typedef std::map<size_t,SoundSourcePtr> SoundSourceMap;
+    /// Vector of SoundSourcePtrs
+    typedef std::vector<SoundSourcePtr> SoundSourceVector;
 
     /** AudioManager class
 
@@ -70,6 +74,9 @@ namespace Sonetto
 
         /// Returns the list of musics
         inline const MusicVector &_getMusics() const { return mMusics; }
+
+        /// Returns the map of loaded sounds
+        inline const Sound &_getSound(size_t id) const { return mSounds.find(id)->second; }
 
         /** Plays a background music
 
@@ -184,6 +191,21 @@ namespace Sonetto
         */
         void _fadeEnded(MusicFading fade);
 
+        /** Loads a sound into memory
+
+            This method will get the sound information on mSoundDefs[id] and
+            load it into mSounds[id]. After that, you can play the sound with
+            the desired methods, either by creating it with createSound() or by
+            playing it with playSound().
+        @param
+            id An index inside mSoundDefs to be loaded.
+        */
+        void loadSound(size_t id);
+
+        SoundSourcePtr createSound(size_t id);
+
+        void playSound(size_t id /*,Ogre::SceneNode*/);
+
         /** Throws an exception if OpenAL reports an error
 
             This method will throw an Exception with information about
@@ -215,7 +237,6 @@ namespace Sonetto
         ALCdevice *mDevice;
 
         // Music
-
         /// Class responsible for streaming music for the AudioManager
         MusicStream *mMusicStream;
 
@@ -244,13 +265,14 @@ namespace Sonetto
         /** Vector of SoundDef structures
 
             This is a vector of SoundDef structures. The indexes of the SoundDefs
-            inside this vector represent them in methods like createSound() and playSound().
+            inside this vector represent them in methods like loadSound, createSound()
+            and playSound().
         @see
             SoundDef
         */
         SoundDefVector mSoundDefs;
 
-        /** Map of SoundSource classes
+        /** Map of Sound structures
 
             This is the map of currently loaded sounds. Their indexes match with mSoundDefs,
             but not always all mSoundDefs indexes exist in this map. Sounds are kept loaded
@@ -260,7 +282,15 @@ namespace Sonetto
         @see
             SoundSource
         */
-        SoundSourceMap mSoundSources;
+        SoundMap mSounds;
+
+        /** Vector of SoundSource classes
+
+            The contained SoundSources are reference counted, and are deallocated
+            automatically when there are no external references to the SoundSource
+            and the SoundSource is not playing.
+        */
+        SoundSourceVector mSoundSources;
     };
 } // namespace
 

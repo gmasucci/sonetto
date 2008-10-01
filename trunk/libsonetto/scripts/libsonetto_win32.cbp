@@ -64,6 +64,7 @@
 			<Add option="-DWIN32" />
 			<Add option="-D_WINDOWS" />
 			<Add option="-DSONETTO_DLL_BUILD" />
+			<Add option="-DDEBUG_BUILD" />
 			<Add directory="..\include" />
 			<Add directory="..\..\dependencies\include" />
 			<Add directory="$(OGRE_HOME)\include" />
@@ -121,10 +122,10 @@
 		<Unit filename="..\include\SonettoSTRSerializer.h" />
 		<Unit filename="..\include\SonettoSaveMap.h" />
 		<Unit filename="..\include\SonettoSlimWindow.h" />
+		<Unit filename="..\include\SonettoSoundSource.h" />
 		<Unit filename="..\include\SonettoTailedWindow.h" />
 		<Unit filename="..\include\SonettoTextElement.h" />
 		<Unit filename="..\include\SonettoTextFactory.h" />
-		<Unit filename="..\include\SonettoVirtualFile.h" />
 		<Unit filename="..\include\SonettoWindow.h" />
 		<Unit filename="..\include\SonettoWindowFactory.h" />
 		<Unit filename="..\include\SonettoWindowSkin.h" />
@@ -158,9 +159,9 @@
 		<Unit filename="..\src\SonettoSTRSerializer.cpp" />
 		<Unit filename="..\src\SonettoSaveMap.cpp" />
 		<Unit filename="..\src\SonettoSlimWindow.cpp" />
+		<Unit filename="..\src\SonettoSoundSource.cpp" />
 		<Unit filename="..\src\SonettoTailedWindow.cpp" />
 		<Unit filename="..\src\SonettoTextElement.cpp" />
-		<Unit filename="..\src\SonettoVirtualFile.cpp" />
 		<Unit filename="..\src\SonettoWindow.cpp" />
 		<Unit filename="..\src\SonettoWindowSkin.cpp" />
 		<Unit filename="..\src\SonettoWindowSkinManager.cpp" />
