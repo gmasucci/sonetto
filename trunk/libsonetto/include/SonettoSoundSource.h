@@ -77,6 +77,18 @@ namespace Sonetto
         /// An OpenAL audio source handle
         size_t alSource;
     };
+
+    /// Vector of SoundDef structures
+    typedef std::vector<SoundDef> SoundDefVector;
+
+    /// Map of Sound structures
+    typedef std::map<size_t,Sound> SoundMap;
+
+    /// Shared pointer to a SoundSource class
+    typedef Ogre::SharedPtr<SoundSource> SoundSourcePtr;
+
+    /// Vector of SoundSourcePtrs
+    typedef std::vector<SoundSourcePtr> SoundSourceVector;
 } // namespace
 
 #endif

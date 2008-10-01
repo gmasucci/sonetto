@@ -28,6 +28,8 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoSTRManager.h"
 #include "SonettoFontManager.h"
 #include "SonettoSaveMap.h"
+#include "SonettoMusicStream.h"
+#include "SonettoSoundSource.h"
 
 namespace Sonetto {
 
@@ -125,6 +127,26 @@ namespace Sonetto {
 
     	// Temporary map list.
     	std::map<size_t, MapIndexData> mMapList;
+
+    	/** Vector of Music structures
+
+            This is a vector of Music structures. The indexes of the Musics
+            inside this vector represent them in AudioManager::playBGM() and
+            AudioManager::playME().
+        @see
+            Music
+        */
+        MusicVector mMusicList;
+
+    	/** Vector of SoundDef structures
+
+            This is a vector of SoundDef structures. The indexes of the SoundDefs
+            inside this vector represent them in methods like AudioManager::loadSound(),
+            AudioManager::createSound(), AudioManager::playSound(), etc.
+        @see
+            SoundDef
+        */
+        SoundDefVector mSoundDefList;
     };
 } // namespace
 

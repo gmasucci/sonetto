@@ -23,6 +23,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <sstream>
 #include <OgreStringConverter.h>
 #include <AL/al.h>
+#include "SonettoKernel.h"
 #include "SonettoException.h"
 #include "SonettoAudioManager.h"
 
@@ -204,7 +205,7 @@ namespace Sonetto
     void AudioManager::loadSound(size_t id)
     {
         // Bounds checking
-        if (id >= mSoundDefs.size())
+        if (id >= Kernel::get()->mDatabase->mSoundDefList.size())
         {
             SONETTO_THROW("Unknown sound ID");
         }
@@ -221,7 +222,8 @@ namespace Sonetto
         size_t soundLen;
         size_t offset = 0;
         size_t buffer;
-        std::string path = SoundDef::FOLDER+mSoundDefs[id].filename;
+        std::string path = SoundDef::FOLDER+Kernel::get()->mDatabase->
+                mSoundDefList[id].filename;
         char *constlessStr = new char[path.length()+1];
         char *tmpBuffer;
         OggVorbis_File file;

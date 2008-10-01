@@ -57,8 +57,6 @@ namespace Sonetto
         alDeleteSources(1,&alSource);
         mAudioMan->_alErrorCheck("SoundSource::~SoundSource()","Failed deleting "
                 "OpenAL audio source");
-
-        std::cout << "Source deleted\n";
     }
     //-----------------------------------------------------------------------------
     SoundSourceState SoundSource::getState() const

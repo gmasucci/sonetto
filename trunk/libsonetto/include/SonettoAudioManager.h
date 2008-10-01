@@ -32,21 +32,6 @@ http://www.gnu.org/copyleft/lesser.txt
 
 namespace Sonetto
 {
-    /// Vector of Music structures
-    typedef std::vector<Music> MusicVector;
-
-    /// Vector of SoundDef structures
-    typedef std::vector<SoundDef> SoundDefVector;
-
-    /// Map of Sound structures
-    typedef std::map<size_t,Sound> SoundMap;
-
-    /// Shared pointer to a SoundSource class
-    typedef Ogre::SharedPtr<SoundSource> SoundSourcePtr;
-
-    /// Vector of SoundSourcePtrs
-    typedef std::vector<SoundSourcePtr> SoundSourceVector;
-
     /** AudioManager class
 
         This class is resposible for maintaining audio libraries and
@@ -71,9 +56,6 @@ namespace Sonetto
         // <todo> Remember to protect MusicStream (copy constructor, etc)
         /// Returns a reference to the music stream
         inline MusicStream *getMusicStream() { return mMusicStream; }
-
-        /// Returns the list of musics
-        inline const MusicVector &_getMusics() const { return mMusics; }
 
         /// Returns the map of loaded sounds
         inline const Sound &_getSound(size_t id) const { return mSounds.find(id)->second; }
@@ -193,12 +175,12 @@ namespace Sonetto
 
         /** Loads a sound into memory
 
-            This method will get the sound information on mSoundDefs[id] and
-            load it into mSounds[id]. After that, you can play the sound with
+            This method will get the sound information on Database::mSoundDefList[id]
+            and load it into mSounds[id]. After that, you can play the sound with
             the desired methods, either by creating it with createSound() or by
             playing it with playSound().
         @param
-            id An index inside mSoundDefs to be loaded.
+            id An index inside Database::mSoundDefList to be loaded.
         */
         void loadSound(size_t id);
 
@@ -252,33 +234,14 @@ namespace Sonetto
         /// AudioManager::NONE or the index of the next ME to be played when the current BGM stops fading out
         size_t mNextME;
 
-        /** Vector of Music structures
-
-            This is a vector of Music structures. The indexes of the Musics
-            inside this vector represent them in playBGM() and playME().
-        @see
-            Music
-        */
-        MusicVector mMusics;
-
         // Sounds
-        /** Vector of SoundDef structures
-
-            This is a vector of SoundDef structures. The indexes of the SoundDefs
-            inside this vector represent them in methods like loadSound, createSound()
-            and playSound().
-        @see
-            SoundDef
-        */
-        SoundDefVector mSoundDefs;
-
         /** Map of Sound structures
 
-            This is the map of currently loaded sounds. Their indexes match with mSoundDefs,
-            but not always all mSoundDefs indexes exist in this map. Sounds are kept loaded
-            into memory, and are generally only loaded or discarded on game map or module
-            changes. The indexes not present in this map mean the corresponding sound in
-            mSoundDefs is not loaded.
+            This is the map of currently loaded sounds. Their indexes match with
+            Database::mSoundDefList, but not always all Database::mSoundDefList indexes
+            exist in this map. Sounds are kept loaded into memory, and are generally
+            only loaded or discarded on game map or module changes. The indexes not present
+            in this map mean the corresponding sound in Database::mSoundDefList is not loaded.
         @see
             SoundSource
         */

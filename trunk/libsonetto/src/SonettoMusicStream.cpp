@@ -177,14 +177,15 @@ namespace Sonetto
     void MusicStream::_play(size_t id,size_t pos,float fadeIn,bool loop)
     {
         // Checks bounds
-        if (id >= mAudioMan->_getMusics().size())
+        if (id >= Kernel::get()->mDatabase->mMusicList.size())
         {
             SONETTO_THROW("Unknown music ID");
         }
 
         int errCode;
         char fill;
-        std::string path = Music::FOLDER+mAudioMan->_getMusics()[id].filename;
+        std::string path = Music::FOLDER+Kernel::get()->mDatabase->
+                mMusicList[id].filename;
         char *constlessStr = new char[path.length()+1];
 
         // We use this `constlessStr' here because ov_fopen() needs a char *
@@ -410,7 +411,8 @@ namespace Sonetto
         {
             int alPos,buffers;
             size_t streamPos     = static_cast<size_t>(ov_pcm_tell(&mFile));
-            size_t loopPoint     = mAudioMan->_getMusics()[mMusic].loopPoint;
+            size_t loopPoint     = Kernel::get()->mDatabase->
+                                   mMusicList[mMusic].loopPoint;
             size_t sizeInSamples = BUFFER_SIZE/2;
             size_t offset        = 666666666;
 
@@ -491,8 +493,8 @@ namespace Sonetto
             if (read == 0) { // No bytes were read
                 if (mLoop) {
                     // Seeks stream to loop point
-                    int errCode = ov_pcm_seek(&mFile,mAudioMan->
-                            mMusics[mMusic].loopPoint);
+                    int errCode = ov_pcm_seek(&mFile,Kernel::get()->mDatabase->
+                            mMusicList[mMusic].loopPoint);
 
                     if (errCode != 0)
                     {
