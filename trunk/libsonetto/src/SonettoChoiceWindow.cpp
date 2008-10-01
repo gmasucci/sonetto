@@ -289,6 +289,7 @@ namespace Sonetto {
                             break;
                             case CUR_MOVE_UP_START:
                             {
+                                Kernel::get()->getAudioMan()->playSound(Kernel::get()->mDatabase->mSystemHeader.mCursorMove);
                                 --mChoice;
                                 mCurState = CUR_MOVE_UP_WAIT;
                                 mCurTimer = mCurHoldTime;
@@ -306,6 +307,7 @@ namespace Sonetto {
                             break;
                             case CUR_MOVE_UP:
                             {
+                                Kernel::get()->getAudioMan()->playSound(Kernel::get()->mDatabase->mSystemHeader.mCursorMove);
                                 --mChoice;
                                 mCurState = CUR_MOVE_UP_HOLD;
                             }
@@ -322,6 +324,7 @@ namespace Sonetto {
                             break;
                             case CUR_MOVE_DOWN_START:
                             {
+                                Kernel::get()->getAudioMan()->playSound(Kernel::get()->mDatabase->mSystemHeader.mCursorMove);
                                 ++mChoice;
                                 mCurState = CUR_MOVE_DOWN_WAIT;
                                 mCurTimer = mCurHoldTime;
@@ -339,6 +342,7 @@ namespace Sonetto {
                             break;
                             case CUR_MOVE_DOWN:
                             {
+                                Kernel::get()->getAudioMan()->playSound(Kernel::get()->mDatabase->mSystemHeader.mCursorMove);
                                 ++mChoice;
                                 mCurState = CUR_MOVE_DOWN_HOLD;
                             }
@@ -364,10 +368,14 @@ namespace Sonetto {
                     }
 
                     if(player->getBtnState(Sonetto::BTN_CIRCLE) == Sonetto::KS_PRESS)
+                    {
+                        Kernel::get()->getAudioMan()->playSound(Kernel::get()->mDatabase->mSystemHeader.mCursorOk);
                         mStatus = WOS_CLOSING;
+                    }
 
                     if(player->getBtnState(Sonetto::BTN_CROSS) == Sonetto::KS_PRESS)
                     {
+                        Kernel::get()->getAudioMan()->playSound(Kernel::get()->mDatabase->mSystemHeader.mCursorCancel);
                         mChoice = mCancelID - 1;
                         mStatus = WOS_CLOSING;
                     }

@@ -88,6 +88,7 @@ int main(int argc, char **argv)
             cout << "Sonetto Kernel could not be created.\n";
             return -1;
         }
+        Kernel::get()->initialise();
         TestModuleFactory * moduleFactory = new TestModuleFactory();
         Kernel::get()->registerModuleFactory(moduleFactory);
         Kernel::get()->pushModule(new BasicModule());

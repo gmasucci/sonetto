@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
 1219266222 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource.rc
 
-1221186131 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\basicmodule.cpp
+1222884905 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\basicmodule.cpp
 	<Ogre.h>
 	"SonettoInputManager.h"
 	"BasicModule.h"
@@ -1172,7 +1172,7 @@
 
 1202562610 c:\workspace\projects\sonetto\trunk\dependencies\include\ogg\config_types.h
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoexception.h
+1222793486 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoexception.h
 	"SonettoMain.h"
 	<string>
 	<exception>
@@ -1357,23 +1357,24 @@
 	"begin_code.h"
 	"close_code.h"
 
-1220038759 c:\workspace\projects\sonetto\trunk\sonettoruntime\include\basicmodule.h
+1222868625 c:\workspace\projects\sonetto\trunk\sonettoruntime\include\basicmodule.h
 	<cstdio>
 	"SonettoChoiceWindow.h"
 	"SonettoModule.h"
 	"SonettoInputManager.h"
 
-1219735879 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomodule.h
+1222868627 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomodule.h
 	"SonettoMain.h"
 	<Ogre.h>
 	"SonettoKernel.h"
 
-1221181058 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettokernel.h
+1222888494 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettokernel.h
 	"SonettoMain.h"
 	<fstream>
 	<stack>
 	<Ogre.h>
 	<OgreVector2.h>
+	"SonettoAudioManager.h"
 	"SonettoDatabase.h"
 	"SonettoInputManager.h"
 	"SonettoModule.h"
@@ -1392,16 +1393,13 @@
 	"TESTMapFileManager.h"
 	<SDL/SDL_video.h>
 
-1214692021 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoaudiomanager.h
-	"SonettoMain.h"
+1222884241 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoaudiomanager.h
 	<vector>
-	<queue>
-	<Ogre.h>
-	<AL/al.h>
+	<string>
 	<AL/alc.h>
-	<AL/efx.h>
-	<vorbis/vorbisfile.h>
-	"SonettoVirtualFile.h"
+	<OgreSharedPtr.h>
+	"SonettoMusicStream.h"
+	"SonettoSoundSource.h"
 
 1176487368 c:\workspace\projects\sonetto\trunk\dependencies\include\al\alc.h
 
@@ -1550,15 +1548,16 @@
 	<OgreOverlayElementFactory.h>
 	"SonettoMain.h"
 
-1220798170 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\main.cpp
+1222888860 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\main.cpp
 	<cstdio>
 	"windows.h"
 	<Ogre.h>
 	"Sonetto.h"
 	"BasicModule.h"
 	"TESTMapFileManager.h"
+	"TESTMapModule.h"
 
-1221436563 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonetto.h
+1222793486 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonetto.h
 	"SonettoPrerequisites.h"
 	"SonettoMain.h"
 	"TESTMapFile.h"
@@ -1572,6 +1571,7 @@
 	"SonettoFontSerializer.h"
 	"SonettoGauge.h"
 	"SonettoInputManager.h"
+	"SonettoAudioManager.h"
 	"SonettoKernel.h"
 	"SonettoModule.h"
 	"SonettoPlane.h"
@@ -1607,12 +1607,14 @@
 	"SonettoMain.h"
 	<OgreSerializer.h>
 
-1220736504 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettodatabase.h
+1222885478 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettodatabase.h
 	"SonettoMain.h"
 	"SonettoWindowSkinManager.h"
 	"SonettoSTRManager.h"
 	"SonettoFontManager.h"
 	"SonettoSaveMap.h"
+	"SonettoMusicStream.h"
+	"SonettoSoundSource.h"
 
 1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettosavemap.h
 	"SonettoMain.h"
@@ -1647,7 +1649,7 @@
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1221190392 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettochoicewindow.h
+1222868629 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettochoicewindow.h
 	"SonettoModule.h"
 	"SonettoWindow.h"
 	"SonettoTextElement.h"
@@ -1670,10 +1672,29 @@
 	"TESTMapFile.h"
 	<OgreSerializer.h>
 
-1221503566 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoeventobject.h
+1222868629 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoeventobject.h
 	<Ogre.h>
+	"SonettoCollisionManager.h"
 	"Sonetto.h"
 
-1221508704 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testheroobject.h
+1222868633 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testheroobject.h
 	"SonettoEventObject.h"
+
+1222805674 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettocollisionmanager.h
+	<vector>
+	<Ogre.h>
+	"SonettoMain.h"
+
+1222886311 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomusicstream.h
+	<cstdlib>
+	<vorbis/vorbisfile.h>
+	"SonettoMain.h"
+
+1222884241 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettosoundsource.h
+	<string>
+
+1221879522 c:\workspace\projects\sonetto\trunk\libsonetto\include\testmapmodule.h
+	"SonettoModule.h"
+	"TESTMapFileManager.h"
+	"TESTHeroObject.h"
 

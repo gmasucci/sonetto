@@ -29,6 +29,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 namespace Sonetto
 {
+
     /// Describes a  music fade state
     enum MusicFading
     {
@@ -234,6 +235,9 @@ namespace Sonetto
         /// Total length of OGG/Vorbis stream (in PCM samples)
         size_t mStreamLen;
     };
+
+    /// Vector of Music structures
+    typedef std::vector<Music> MusicVector;
 } // namespace
 
 #endif  // SONETTO_MUSICSTREAM_H

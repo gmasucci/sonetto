@@ -60,6 +60,7 @@ namespace Sonetto {
         mGameSpeed = 1.0f;
         mGameSpeedScaleValue = 1.0f/2.0f;
         #endif
+
         NameValuePairList  wndParamList; // Needed for Ogre to use SDL rendering window
         SDL_SysWMinfo      wmInfo;       // Structure holding SDL window information
 
@@ -132,6 +133,18 @@ namespace Sonetto {
         mResourceMan = ResourceGroupManager::getSingletonPtr();
         mMaterialMan = MaterialManager::getSingletonPtr();
 
+        // Create the Database
+        mDatabase = new Database();
+        mDatabase->mKernel = this;
+        mDatabase->load("testdatabase.dat");
+        mDatabase->mSystemHeader.mCursorCancel = 0;
+        mDatabase->mSystemHeader.mCursorMove = 1;
+        mDatabase->mSystemHeader.mCursorOk = 2;
+        mDatabase->mSoundList.push_back(SoundDef("cursor_cancel.ogg"));
+        mDatabase->mSoundList.push_back(SoundDef("cursor_move.ogg"));
+        mDatabase->mSoundList.push_back(SoundDef("cursor_ok.ogg"));
+        mDatabase->initialise();
+
         // Create Input Manager
         mInputMan = new InputManager(4);
 
@@ -156,11 +169,6 @@ namespace Sonetto {
         mOverlayMan->addOverlayElementFactory(mWindowFactory);
         mOverlayMan->addOverlayElementFactory(mTailedWindowFactory);
         mOverlayMan->addOverlayElementFactory(mSlimWindowFactory);
-        // Create the Database
-        mDatabase = new Database();
-        mDatabase->mKernel = this;
-        mDatabase->load("testdatabase.dat");
-        mDatabase->initialise();
 
         mResourceMan->createResourceGroup("TEMP");
 
@@ -225,6 +233,13 @@ namespace Sonetto {
         }
 
         SDL_Quit();
+    }
+
+    void Kernel::initialise()
+    {
+        mAudioMan->loadSound(mDatabase->mSystemHeader.mCursorCancel);
+        mAudioMan->loadSound(mDatabase->mSystemHeader.mCursorMove);
+        mAudioMan->loadSound(mDatabase->mSystemHeader.mCursorOk);
     }
 
     //-----------------------------------------------------------------------------

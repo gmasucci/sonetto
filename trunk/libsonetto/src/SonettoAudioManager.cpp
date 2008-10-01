@@ -205,11 +205,10 @@ namespace Sonetto
     void AudioManager::loadSound(size_t id)
     {
         // Bounds checking
-        if (id >= Kernel::get()->mDatabase->mSoundDefList.size())
+        if (id >= Kernel::get()->mDatabase->mSoundList.size())
         {
             SONETTO_THROW("Unknown sound ID");
         }
-
         // Throw exception if the sound was already loaded
         if (mSounds.find(id) != mSounds.end())
         {
@@ -223,7 +222,7 @@ namespace Sonetto
         size_t offset = 0;
         size_t buffer;
         std::string path = SoundDef::FOLDER+Kernel::get()->mDatabase->
-                mSoundDefList[id].filename;
+                mSoundList[id].filename;
         char *constlessStr = new char[path.length()+1];
         char *tmpBuffer;
         OggVorbis_File file;

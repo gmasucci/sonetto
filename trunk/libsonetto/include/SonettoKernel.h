@@ -97,6 +97,8 @@ namespace Sonetto
         friend class InputManager;
         friend class AudioManager;
 
+        void initialise();
+
         /// @brief Return the singleton pointer to this class.
         inline static Kernel *get() { return mSingleton; }
 

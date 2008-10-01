@@ -146,7 +146,7 @@ namespace Sonetto {
         @see
             SoundDef
         */
-        SoundDefVector mSoundDefList;
+        SoundDefVector mSoundList;
     };
 } // namespace
 
