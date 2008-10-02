@@ -141,6 +141,7 @@ namespace Sonetto {
         switch(mState)
         {
             case 0:
+                mKernel->getAudioMan()->playBGM(1, 0.0f, 0.0f);
                 mKernel->setFadeSpeed(1.0f/0.2f);
                 mKernel->startFade(false);
                 mState = 1;
@@ -150,6 +151,7 @@ namespace Sonetto {
                 mState = 2;
             break;
             case 3:
+                mKernel->getAudioMan()->stopMusic(1.0f/0.5f);
                 mKernel->setFadeSpeed(1.0f/0.5f);
                 mKernel->startFade(true);
                 mState = 4;

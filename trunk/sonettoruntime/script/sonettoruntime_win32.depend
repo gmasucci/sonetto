@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
 1219266222 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource.rc
 
-1222884905 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\basicmodule.cpp
+1222967121 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\basicmodule.cpp
 	<Ogre.h>
 	"SonettoInputManager.h"
 	"BasicModule.h"
@@ -1357,7 +1357,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1222868625 c:\workspace\projects\sonetto\trunk\sonettoruntime\include\basicmodule.h
+1222970090 c:\workspace\projects\sonetto\trunk\sonettoruntime\include\basicmodule.h
 	<cstdio>
 	"SonettoChoiceWindow.h"
 	"SonettoModule.h"

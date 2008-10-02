@@ -78,6 +78,7 @@ class BootModule : public Sonetto::Module
         switch (mStatus)
         {
             case BOS_LOGO_A_IN_START:
+                mKernel->getViewport()->setBackgroundColour(Ogre::ColourValue(0.0f,0.0f,0.0f,1.0f));
                 mCurrentWaitTime = mWaitTime;
                 mOverlayContainer->setPosition(128.0f/768.0f,320.0f/768.0f);
                 mOverlayContainer->setDimensions(512.0f/768.0f,128.0f/768.0f);
@@ -114,6 +115,7 @@ class BootModule : public Sonetto::Module
                     mStatus = BOS_LOGO_B_IN_START;
             break;
             case BOS_LOGO_B_IN_START:
+                mKernel->getViewport()->setBackgroundColour(Ogre::ColourValue(1.0f,1.0f,1.0f,1.0f));
                 mOverlayContainer->setPosition(128.0f/768.0f,256.0f/768.0f);
                 mOverlayContainer->setDimensions(512.0f/768.0f,256.0f/768.0f);
                 mOverlayContainer->setMaterialName("BOOT_01");
@@ -186,7 +188,11 @@ class BasicModule : public Sonetto::Module
             BMS_UPDATE
         };
 
-        BasicModule() : Module()
+        BasicModule() : Module(),
+        mStatus(BMS_FADEIN_START),
+        mChoiceWindow(NULL),
+        mChoiceState(0),
+        mChoiceHasShown(false)
         {
             mModuleOverlayName = "BASIC_OVERLAY";
             mCaptureFileName = "ScreenOut";

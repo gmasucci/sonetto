@@ -89,7 +89,7 @@ namespace Sonetto {
         SDL_VERSION(&wmInfo.version);
         SDL_GetWMInfo(&wmInfo);
 
-         wndParamList["vsync"] = "false";
+         wndParamList["vsync"] = "true";
          wndParamList["displayFrequency"] = "60";
          wndParamList["colourDepth"] = "32";
 
@@ -143,6 +143,8 @@ namespace Sonetto {
         mDatabase->mSoundList.push_back(SoundDef("cursor_cancel.ogg"));
         mDatabase->mSoundList.push_back(SoundDef("cursor_move.ogg"));
         mDatabase->mSoundList.push_back(SoundDef("cursor_ok.ogg"));
+        mDatabase->mMusicList.push_back(Music("music_title.ogg",(44100*(7+(17/1000)))));
+        mDatabase->mMusicList.push_back(Music("music_map.ogg",(44100*(54+(696/1000)))));
         mDatabase->initialise();
 
         // Create Input Manager

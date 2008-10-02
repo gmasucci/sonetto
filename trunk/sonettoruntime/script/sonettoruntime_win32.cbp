@@ -14,7 +14,6 @@
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
 				<Compiler>
-					<Add option="-march=athlon-xp" />
 					<Add option="-fexpensive-optimizations" />
 					<Add option="-O3" />
 					<Add option="-DNDEBUG" />

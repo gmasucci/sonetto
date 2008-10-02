@@ -38,7 +38,7 @@ void BasicModule::enter()
     Module::enter();
     // And setup the first controller
     player = mKernel->getInputMan()->getPlayer(0);
-
+/*
     player->setJoystick(mKernel->getInputMan()->getJoystick(1));
     player->configAxis(Sonetto::AX_LEFT,Sonetto::InputSource(true,Sonetto::InputSource::IST_AXIS,Sonetto::AX_LEFT));
     player->configAxis(Sonetto::AX_RIGHT,Sonetto::InputSource(true,Sonetto::InputSource::IST_AXIS,Sonetto::AX_RIGHT,Sonetto::InputSource::INV_ORDER));
@@ -48,8 +48,8 @@ void BasicModule::enter()
     player->configBtn(Sonetto::BTN_CIRCLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,1));
     player->configBtn(Sonetto::BTN_TRIANGLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,4));
     player->configBtn(Sonetto::BTN_SQUARE,Sonetto::InputSource(true,Sonetto::InputSource::IST_BUTTON,3));
-
-/*
+*/
+/* */
     player->configAxis(Sonetto::AXE_LEFT_UP, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_UP));
     player->configAxis(Sonetto::AXE_LEFT_DOWN, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_DOWN));
     player->configAxis(Sonetto::AXE_LEFT_LEFT, Sonetto::InputSource(true, Sonetto::InputSource::IST_KEY, SDLK_LEFT));
@@ -64,7 +64,7 @@ void BasicModule::enter()
     player->configBtn(Sonetto::BTN_CIRCLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_x));
     player->configBtn(Sonetto::BTN_TRIANGLE,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_s));
     player->configBtn(Sonetto::BTN_SQUARE,Sonetto::InputSource(true,Sonetto::InputSource::IST_KEY,SDLK_a));
-*/
+/* */
     player->setEnabled(true);
 
     mOverlayContainer = static_cast<OverlayContainer*>(mKernel->mOverlayMan->createOverlayElement("Window","text_01_01"));
@@ -118,6 +118,7 @@ void BasicModule::update(Ogre::Real deltatime)
     switch(mStatus)
     {
         case BMS_FADEIN_START:
+            mKernel->getAudioMan()->playBGM(0, 0.0f, 0.0f);
             mKernel->setFadeSpeed(1.0f/0.5f);
             mKernel->startFade(false);
             mStatus = BMS_FADEIN;
@@ -127,6 +128,7 @@ void BasicModule::update(Ogre::Real deltatime)
                 mStatus = BMS_UPDATE;
         break;
         case BMS_FADEOUT_START:
+            mKernel->getAudioMan()->stopMusic(1.0f/0.5f);
             mKernel->setFadeSpeed(1.0f/0.5f);
             mKernel->startFade(true);
             mStatus = BMS_FADEOUT;
@@ -182,7 +184,7 @@ void BasicModule::update(Ogre::Real deltatime)
             //std::cout << player->getAxisValue(AX_LEFT) << " / " << player->getAxisValue(AX_RIGHT) << "\n";
             if((!mChoiceWindow) && (!mChoiceHasShown))
             {
-                mChoiceWindow = new ChoiceWindow("test_choicewindow",static_cast<Module*>(this));
+                mChoiceWindow = new ChoiceWindow("test_choicewindow",(Module*)this);
                 mChoiceWindow->setPosition(65.0f/480.0f,91.0f/480.0f);
                 mChoiceWindow->setDimensions(350.0f/480.0f,230.0f/480.0f);
                 mChoiceWindow->setupChoices(7,7,mChoiceState);
