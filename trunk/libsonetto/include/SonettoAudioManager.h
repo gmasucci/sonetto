@@ -53,6 +53,23 @@ namespace Sonetto
         /// @see mInitialised
         inline bool isInitialised() const { return mInitialised; }
 
+        /** Sets listener node
+
+            The audio listener will inherit its coordinates from this Ogre::Node.
+            The most proper node to attach the listener to is the Hero, or the
+            object the player is currently controlling. It can also be set to NULL
+            to use the current module's camera coordinates.
+        @param
+            node Node to attach listener to, or NULL to attach it to camera.
+        */
+        inline void setListenerNode(const Ogre::Node *node) { mListenerNode = node; }
+
+        /// Gets listener node
+        inline const Ogre::Node *getListenerNode() const { return mListenerNode; }
+
+        /// Returns listener node world position
+        Ogre::Vector3 _getListenerPos();
+
         // <todo> Remember to protect MusicStream (copy constructor, etc)
         /// Returns a reference to the music stream
         inline MusicStream *getMusicStream() { return mMusicStream; }
@@ -175,18 +192,60 @@ namespace Sonetto
 
         /** Loads a sound into memory
 
-            This method will get the sound information on Database::mSoundDefList[id]
+            This method will get the sound information on Database::mSoundDefList[id-1]
             and load it into mSounds[id]. After that, you can play the sound with
             the desired methods, either by creating it with createSound() or by
-            playing it with playSound().
+            playing it with playSound(). A loaded sound can be unloaded with unloadSound().
+            Sounds that remain in memory when the AudioManager is destroyed are destroyed
+            too.
         @param
-            id An index inside Database::mSoundDefList to be loaded.
+            id An index inside Database::mSoundDefList to be loaded (0 is invalid).
         */
         void loadSound(size_t id);
 
-        SoundSourcePtr createSound(size_t id);
+        /** Unloads a sound from memory
 
-        void playSound(size_t id /*,Ogre::SceneNode*/);
+            This method will delete the mSounds[id] sound entry. Any sound sources using
+            this sound will be invalidated.
+        @param
+            id Index of a loaded sound in mSounds to be unloaded (0 is invalid).
+        */
+        void unloadSound(size_t id);
+
+        /** Creates a new sound source
+
+            This method creates a sound source and attaches it to the given
+            Ogre::Node. If `node' is set to NULL, the sound source will use
+            AudioManager's listener position. It returns a reference counted
+            SoundSource pointer, so when you don't need it anymore you can
+            simply discard it. Sound sources with no more external references
+            and that are not playing (either paused or stopped) are destroyed
+            automatically.
+        @param
+            id Sound ID to be created (0 is invalid).
+        @param
+            node Node to which attach the sound source. NULL for it to follow
+            AudioManager's listener node.
+        @return
+            Reference counted sound source pointer. Discard when not anymore
+            needed.
+        */
+        SoundSourcePtr createSound(size_t id,Ogre::Node *node = NULL);
+
+        /** Plays a sound
+
+            This method creates a sound the same way you would using createSound(),
+            but it automatically plays the sound source, and returns no reference to
+            it, so that it will be played once and then deleted.
+        @see
+            createSound()
+        @param
+            id Sound ID to be created (0 is invalid).
+        @param
+            node Node to which attach the sound source. NULL for it to follow
+            AudioManager's listener node.
+        */
+        void playSound(size_t id,Ogre::Node *node = NULL);
 
         /** Throws an exception if OpenAL reports an error
 
@@ -254,6 +313,12 @@ namespace Sonetto
             and the SoundSource is not playing.
         */
         SoundSourceVector mSoundSources;
+
+        /** Node from which the audio listener will inherit its coordinates
+
+            If set to NULL, the audio listener will use Kernel's top module camera position.
+        */
+        const Ogre::Node *mListenerNode;
     };
 } // namespace
 

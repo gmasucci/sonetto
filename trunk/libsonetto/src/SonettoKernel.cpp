@@ -137,9 +137,9 @@ namespace Sonetto {
         mDatabase = new Database();
         mDatabase->mKernel = this;
         mDatabase->load("testdatabase.dat");
-        mDatabase->mSystemHeader.mCursorCancel = 0;
-        mDatabase->mSystemHeader.mCursorMove = 1;
-        mDatabase->mSystemHeader.mCursorOk = 2;
+        mDatabase->mSystemHeader.mCursorCancel = 1;
+        mDatabase->mSystemHeader.mCursorMove = 2;
+        mDatabase->mSystemHeader.mCursorOk = 3;
         mDatabase->mSoundList.push_back(SoundDef("cursor_cancel.ogg"));
         mDatabase->mSoundList.push_back(SoundDef("cursor_move.ogg"));
         mDatabase->mSoundList.push_back(SoundDef("cursor_ok.ogg"));
@@ -239,9 +239,21 @@ namespace Sonetto {
 
     void Kernel::initialise()
     {
-        mAudioMan->loadSound(mDatabase->mSystemHeader.mCursorCancel);
-        mAudioMan->loadSound(mDatabase->mSystemHeader.mCursorMove);
-        mAudioMan->loadSound(mDatabase->mSystemHeader.mCursorOk);
+        // Loads system sounds
+        if (mDatabase->mSystemHeader.mCursorCancel != 0)
+        {
+            mAudioMan->loadSound(mDatabase->mSystemHeader.mCursorCancel);
+        }
+
+        if (mDatabase->mSystemHeader.mCursorMove != 0)
+        {
+            mAudioMan->loadSound(mDatabase->mSystemHeader.mCursorMove);
+        }
+
+        if (mDatabase->mSystemHeader.mCursorOk != 0)
+        {
+            mAudioMan->loadSound(mDatabase->mSystemHeader.mCursorOk);
+        }
     }
 
     //-----------------------------------------------------------------------------

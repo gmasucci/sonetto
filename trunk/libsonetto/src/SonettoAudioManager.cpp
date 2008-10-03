@@ -128,7 +128,8 @@ namespace Sonetto
     }
     //-----------------------------------------------------------------------------
     AudioManager::AudioManager(const char *device)
-            : mInitialised(false), mNextBGM(NONE), mNextBGMPos(0), mNextME(NONE)
+            : mInitialised(false), mNextBGM(NONE), mNextBGMPos(0), mNextME(NONE),
+                mListenerNode(NULL)
     {
         ALCcontext *context;
 
@@ -157,6 +158,12 @@ namespace Sonetto
         // Clears error string
         alGetError();
 
+        // Sets the distance model
+        // <todo> Use a real distance model and try to understand how they work
+        alDistanceModel(AL_NONE);
+        _alErrorCheck("AudioManager::AudioManager()","Failed setting OpenAL "
+                "distance model");
+
         // Now that OpenAL is initialised, we can initialise the music stream
         mMusicStream = new MusicStream(this);
 
@@ -169,6 +176,31 @@ namespace Sonetto
         if (mInitialised)
         {
             ALCcontext *context;
+
+            // Deletes sound sources
+            while (!mSoundSources.empty())
+            {
+                // Throw an exception if there are still references
+                // to this sound source
+                if (!mSoundSources.back().unique())
+                {
+                    SONETTO_THROW("Destroying AudioManager whilst still referencing "
+                            "sound sources");
+                }
+
+                // Pop sound source
+                // The Ogre::SharedPtr will destroy the pointer automatically to us
+                mSoundSources.pop_back();
+            }
+
+            // Deletes sound buffers
+            for (SoundMap::iterator i = mSounds.begin();i != mSounds.end();++i)
+            {
+                alDeleteBuffers(1,&i->second.buffer);
+            }
+
+            _alErrorCheck("AudioManager::~AudioManager()","Failed deleting "
+                        "OpenAL audio buffers");
 
             // Deletes music stream
             delete mMusicStream;
@@ -185,19 +217,32 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     void AudioManager::_update(float deltatime)
     {
+        Ogre::Vector3 listenerPos;
+
+        // Updates OpenAL's audio listener position
+        listenerPos = _getListenerPos();
+        alListener3f(AL_POSITION,listenerPos.x,listenerPos.y,listenerPos.z);
+        _alErrorCheck("AudioManager::_update()","Failed setting OpenAL listener "
+                "position");
+
         // Updates music stream
         mMusicStream->_update(deltatime);
 
-        // Gets rid of non-playing, unreferenced sound sources
+        // Updates sound sources
         for (size_t i = 0;i < mSoundSources.size();++i)
         {
-            if (mSoundSources[i].unique())
-            {
-                if (mSoundSources[i]->getState() != SSS_PLAYING)
-                {
+            if (mSoundSources[i].unique()) {
+                // Gets rid of non-playing, unreferenced sound sources
+                if (mSoundSources[i]->getState() != SSS_PLAYING) {
                     mSoundSources.erase(mSoundSources.begin()+i);
                     --i;
+                } else {
+                    // Updates sound source
+                    mSoundSources[i]->_update();
                 }
+            } else {
+                // Updates sound source
+                mSoundSources[i]->_update();
             }
         }
     }
@@ -205,10 +250,11 @@ namespace Sonetto
     void AudioManager::loadSound(size_t id)
     {
         // Bounds checking
-        if (id >= Kernel::get()->mDatabase->mSoundList.size())
+        if (id == 0 || id >= Kernel::get()->mDatabase->mSoundList.size()+1)
         {
             SONETTO_THROW("Unknown sound ID");
         }
+
         // Throw exception if the sound was already loaded
         if (mSounds.find(id) != mSounds.end())
         {
@@ -222,7 +268,7 @@ namespace Sonetto
         size_t offset = 0;
         size_t buffer;
         std::string path = SoundDef::FOLDER+Kernel::get()->mDatabase->
-                mSoundList[id].filename;
+                mSoundList[id-1].filename;
         char *constlessStr = new char[path.length()+1];
         char *tmpBuffer;
         OggVorbis_File file;
@@ -311,6 +357,35 @@ namespace Sonetto
         mSounds.insert(std::pair<size_t,Sound>(id,Sound(buffer)));
     }
     //-----------------------------------------------------------------------------
+    void AudioManager::unloadSound(size_t id)
+    {
+        // Throw exception if the sound is not loaded yet
+        if (mSounds.find(id) == mSounds.end())
+        {
+            SONETTO_THROW("Trying to unload a not loaded sound");
+        }
+
+        // Removes this buffer from sound sources using it
+        for (size_t i = 0;i < mSoundSources.size();++i)
+        {
+            SoundSourcePtr snd = mSoundSources[i];
+
+            // If the IDs are the same, invalidate it
+            if (snd->getSoundID() == id)
+            {
+                // Invalidating a sound source will deattach the buffer from it,
+                // so that we can successfully delete the buffer
+                snd->_invalidate();
+            }
+        }
+
+        alDeleteBuffers(1,&mSounds.find(id)->second.buffer);
+        _alErrorCheck("AudioManager::unloadSound()","Failed deleting OpenAL "
+                "audio buffers");
+
+        mSounds.erase(mSounds.find(id));
+    }
+    //-----------------------------------------------------------------------------
     void AudioManager::_streamEnded()
     {
         if (mNextBGM != NONE)
@@ -346,18 +421,16 @@ namespace Sonetto
         }
     }
     //-----------------------------------------------------------------------------
-    SoundSourcePtr AudioManager::createSound(size_t id)
+    SoundSourcePtr AudioManager::createSound(size_t id,Ogre::Node *node)
     {
         // Checks whether it's loaded or not
         if (mSounds.find(id) == mSounds.end())
         {
-            SONETTO_THROW("Trying to play an sound which is not loaded");
+            SONETTO_THROW("Trying to play a sound which is not loaded");
         }
 
-        SoundSourcePtr snd;
-
         // Creates a new SoundSource and encapsulates it into an Ogre::SharedPtr
-        snd.bind(new SoundSource(id));
+        SoundSourcePtr snd(new SoundSource(id,node));
 
         // Adds to list of SoundSources to be deleted when not needed anymore
         mSoundSources.push_back(snd);
@@ -365,10 +438,10 @@ namespace Sonetto
         return snd;
     }
     //-----------------------------------------------------------------------------
-    void AudioManager::playSound(size_t id)
+    void AudioManager::playSound(size_t id,Ogre::Node *node)
     {
         // Creates sound and plays it
-        createSound(id)->play();
+        createSound(id,node)->play();
     }
     //-----------------------------------------------------------------------------
     void AudioManager::_alErrorCheck(const char *location,const char *desc)
@@ -397,5 +470,18 @@ namespace Sonetto
 
             SONETTO_THROW(msg);
         }
+    }
+    //-----------------------------------------------------------------------------
+    Ogre::Vector3 AudioManager::_getListenerPos()
+    {
+        Ogre::Vector3 pos;
+
+        if (mListenerNode) {
+            pos = mListenerNode->_getDerivedPosition();
+        } else {
+            pos = Kernel::get()->mModuleList.top()->mCamera->getDerivedPosition();
+        }
+
+        return pos;
     }
 } // namespace

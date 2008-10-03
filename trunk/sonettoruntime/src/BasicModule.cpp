@@ -182,7 +182,7 @@ void BasicModule::update(Ogre::Real deltatime)
 
             // Axes test
             //std::cout << player->getAxisValue(AX_LEFT) << " / " << player->getAxisValue(AX_RIGHT) << "\n";
-            if((!mChoiceWindow) && (!mChoiceHasShown))
+            if((!mChoiceWindow) || (!mChoiceHasShown))
             {
                 mChoiceWindow = new ChoiceWindow("test_choicewindow",(Module*)this);
                 mChoiceWindow->setPosition(65.0f/480.0f,91.0f/480.0f);

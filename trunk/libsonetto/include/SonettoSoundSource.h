@@ -56,12 +56,18 @@ namespace Sonetto
     class SoundSource
     {
     public:
-        SoundSource(size_t id /*,Ogre::SceneNode*/);
+        SoundSource(size_t id,Ogre::Node *node);
         ~SoundSource();
 
         SoundSourceState getState() const;
 
-        size_t getSoundID() const { return mSoundID; }
+        inline size_t getSoundID() const { return mSoundID; }
+
+        inline bool isValid() const { return (mSoundID > 0); }
+
+        void _invalidate();
+
+        void _update();
 
         void play();
         void pause();
@@ -75,7 +81,10 @@ namespace Sonetto
         size_t mSoundID;
 
         /// An OpenAL audio source handle
-        size_t alSource;
+        size_t mALSource;
+
+        /// The Ogre::Node onto which this sound source is attached
+        Ogre::Node *mNode;
     };
 
     /// Vector of SoundDef structures
