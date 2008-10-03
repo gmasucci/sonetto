@@ -83,9 +83,6 @@ namespace Sonetto
     {
         friend class AudioManager;
     public:
-        /// Used in mMusic to represent there is no music to be played
-        static const size_t NONE = static_cast<size_t>(-1);
-
         /// Size of each OpenAL audio buffer
         static const size_t BUFFER_SIZE;
 
@@ -106,8 +103,7 @@ namespace Sonetto
         /** Gets current music ID
 
         @return
-            Music ID (index inside AudioManager::mMusics) or MusicStream::NONE
-            when no music is set to stream.
+            Music ID or 0 when no music is set to stream.
         */
         inline size_t getCurrentMusic() const { return mMusic; }
 
@@ -132,7 +128,7 @@ namespace Sonetto
             Plays the music fading it in. If `fadeIn' is 0.0f, the music
             is played at its maximum volume as soon it starts playing.
         @param
-            id The music index inside AudioManager::mMusics to be played.
+            id The music ID to be played (0 is invalid).
         @param
             pos Seek music stream to here before playing (value in PCM samples)
         @param
@@ -195,7 +191,7 @@ namespace Sonetto
         /// AudioManager singleton pointer (for ease of use)
         AudioManager *mAudioMan;
 
-        /// Music index inside AudioManager::mMusics
+        /// Music ID
         size_t mMusic;
 
         /** OpenAL's audio buffers

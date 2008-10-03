@@ -118,7 +118,7 @@ void BasicModule::update(Ogre::Real deltatime)
     switch(mStatus)
     {
         case BMS_FADEIN_START:
-            mKernel->getAudioMan()->playBGM(0, 0.0f, 0.0f);
+            mKernel->getAudioMan()->playBGM(1, 0.0f, 0.0f);
             mKernel->setFadeSpeed(1.0f/0.5f);
             mKernel->startFade(false);
             mStatus = BMS_FADEIN;

@@ -74,7 +74,7 @@ namespace Sonetto
         /// Returns a reference to the music stream
         inline MusicStream *getMusicStream() { return mMusicStream; }
 
-        /// Returns the map of loaded sounds
+        /// Returns a sound reference from the loaded sounds map
         inline const Sound &_getSound(size_t id) const { return mSounds.find(id)->second; }
 
         /** Plays a background music

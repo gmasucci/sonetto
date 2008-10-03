@@ -36,7 +36,7 @@ namespace Sonetto
     const size_t MusicStream::BUFFER_SIZE = 163840;
     //-----------------------------------------------------------------------------
     MusicStream::MusicStream(AudioManager *audioMan)
-            : mAudioMan(audioMan), mMusic(NONE), mMaxVolume(1.0f), mLoop(true),
+            : mAudioMan(audioMan), mMusic(0), mMaxVolume(1.0f), mLoop(true),
                 mFade(MF_NO_FADE), mState(MSS_IDLE)
     {
         // Creates OpenAL audio buffers
@@ -53,7 +53,7 @@ namespace Sonetto
     MusicStream::~MusicStream()
     {
         // Destroys OGG file handle
-        if (mMusic != NONE)
+        if (mMusic != 0)
         {
             ov_clear(&mFile);
         }
@@ -71,7 +71,7 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     void MusicStream::_update(float deltatime)
     {
-        if (mMusic != NONE)
+        if (mMusic != 0)
         {
             ALenum srcState;
             int    processed;
@@ -177,7 +177,7 @@ namespace Sonetto
     void MusicStream::_play(size_t id,size_t pos,float fadeIn,bool loop)
     {
         // Checks bounds
-        if (id >= Kernel::get()->mDatabase->mMusicList.size())
+        if (id == 0 || id >= Kernel::get()->mDatabase->mMusicList.size()+1)
         {
             SONETTO_THROW("Unknown music ID");
         }
@@ -185,7 +185,7 @@ namespace Sonetto
         int errCode;
         char fill;
         std::string path = Music::FOLDER+Kernel::get()->mDatabase->
-                mMusicList[id].filename;
+                mMusicList[id-1].filename;
         char *constlessStr = new char[path.length()+1];
 
         // We use this `constlessStr' here because ov_fopen() needs a char *
@@ -276,7 +276,7 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     void MusicStream::_stop(float fadeOut)
     {
-        if (mMusic != NONE)
+        if (mMusic != 0)
         {
             if (fadeOut == 0.0f) {
                 int buffers;
@@ -296,7 +296,7 @@ namespace Sonetto
                 mAudioMan->_alErrorCheck("MusicStream::_stop()",
                                         "Couldn't unqueue buffers");
 
-                mMusic = NONE;
+                mMusic = 0;
             } else {
                 mState   = MSS_STOPPING;
                 mFadeSpd = fadeOut;
@@ -307,7 +307,7 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     void MusicStream::_resume(float fadeIn)
     {
-        if (mMusic != NONE)
+        if (mMusic != 0)
         {
             ALenum srcState;
 
@@ -341,7 +341,7 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     void MusicStream::_pause(float fadeOut)
     {
-        if (mMusic != NONE)
+        if (mMusic != 0)
         {
             ALenum srcState;
 
@@ -367,7 +367,7 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     bool MusicStream::isPaused()
     {
-        if (mMusic != NONE)
+        if (mMusic != 0)
         {
             ALenum srcState;
 
@@ -386,7 +386,7 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     bool MusicStream::isStopped()
     {
-        if (mMusic != NONE)
+        if (mMusic != 0)
         {
             ALenum srcState;
 
@@ -407,12 +407,12 @@ namespace Sonetto
     {
         // <todo> This method is not working with OGG files smaller than
         // BUFFER_SIZE (fix it)
-        if (mMusic != NONE)
+        if (mMusic != 0)
         {
             int alPos,buffers;
             size_t streamPos     = static_cast<size_t>(ov_pcm_tell(&mFile));
             size_t loopPoint     = Kernel::get()->mDatabase->
-                                   mMusicList[mMusic].loopPoint;
+                                   mMusicList[mMusic-1].loopPoint;
             size_t sizeInSamples = BUFFER_SIZE/2;
             size_t offset        = 666666666;
 
@@ -494,7 +494,7 @@ namespace Sonetto
                 if (mLoop) {
                     // Seeks stream to loop point
                     int errCode = ov_pcm_seek(&mFile,Kernel::get()->mDatabase->
-                            mMusicList[mMusic].loopPoint);
+                            mMusicList[mMusic-1].loopPoint);
 
                     if (errCode != 0)
                     {
