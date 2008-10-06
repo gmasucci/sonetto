@@ -19,20 +19,33 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
+
 #ifndef SONETTO_EVENTOBJECT_H
 #define SONETTO_EVENTOBJECT_H
+
+#include <vector>
+
+// Forward declarations
+namespace Sonetto
+{
+    class EventObject;
+
+    /// A vector of EventObject pointers
+    typedef std::vector<EventObject *> EventVector;
+}
 
 #include <Ogre.h>
 #include "SonettoCollisionManager.h"
 #include "Sonetto.h"
 
-namespace Sonetto{
-
+namespace Sonetto
+{
     enum EventState {
         ES_NORMAL,
         ES_LOCKED,
         ES_SCRIPT
     };
+
     /** Represents a Event Object inside the game.
 
         Usually is used in maps to represent the Player, NPCs and other objects
@@ -47,6 +60,8 @@ namespace Sonetto{
                     Ogre::SceneNode * parent,
                     Ogre::SceneManager * manager,
                     CollisionManager * colmanager,
+                    float height,float actRadius,
+                    float colRadius,
                     bool noVisibleEntity = false,
                     const Ogre::String & modelname = "");
         virtual ~EventObject();
@@ -56,7 +71,7 @@ namespace Sonetto{
         @param
             deltatime This is the value of 1.0f/FPS used for framerate-independent movement.
         */
-        virtual void update(float deltatime);
+        virtual void update(float deltatime,const EventVector &events);
 
         virtual const Ogre::String & getName(void) const;
 
@@ -79,6 +94,16 @@ namespace Sonetto{
         virtual void setOrientation(float w, float x, float y, float z);
 
         virtual const Ogre::Quaternion & getOrientation(void) const;
+
+        virtual inline int getTriangle() const { return mTriangle; }
+
+        virtual inline void setTriangle(int tri) { mTriangle = tri; }
+
+        virtual inline float getHeight() const { return mHeight; }
+
+        virtual inline float getActRadius() const { return mActRadius; }
+
+        virtual inline float getColRadius() const { return mColRadius; }
 
         /** Set the position to move this Object in the next frame.
 
@@ -144,8 +169,6 @@ namespace Sonetto{
         virtual void endWalkList();
         virtual void addWalkPoint();*/
 
-        size_t triangle;
-
     protected:
         /// This Event State
         EventState mEventState;
@@ -170,7 +193,10 @@ namespace Sonetto{
         /// The desired position relative to current, reset at every frame.
         Ogre::Vector3 mTargetPosition;
 
-        Ogre::Vector3 mEllipseRadius;
+        int   mTriangle;
+        float mHeight;
+        float mActRadius;
+        float mColRadius;
     };
 }; // namespace
 

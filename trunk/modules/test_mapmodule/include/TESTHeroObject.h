@@ -42,12 +42,14 @@ namespace Sonetto
                     Ogre::SceneNode * parent,
                     Ogre::SceneManager * manager,
                     CollisionManager * colmanager,
+                    float height,float actRadius,
+                    float colRadius,
                     bool noVisibleEntity = false,
                     const Ogre::String & modelname = "");
         virtual ~HeroObject();
 
         /// @see EventObject::update()
-        virtual void update(float deltatime);
+        virtual void update(float deltatime,const EventVector &events);
 
         /// Set the Hero's base movement speed.
         virtual void setHeroSpeed(float speed);

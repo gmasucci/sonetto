@@ -26,19 +26,25 @@ namespace Sonetto {
                                 Ogre::SceneNode *parent,
                                 Ogre::SceneManager *manager,
                                 CollisionManager *colmanager,
+                                float height,
+                                float actRadius,
+                                float colRadius,
                                 bool noVisibleEntity,
                                 const Ogre::String &modelname) :
                                 mEventState(ES_NORMAL),
                                 mIgnoreCollisions(false),
                                 mName(name),
                                 mModelName(modelname),
-                                mParent(parent),
-                                mSceneManager(manager),
                                 mInvisible(noVisibleEntity),
                                 mEntity(NULL),
+                                mParent(parent),
+                                mSceneManager(manager),
                                 mCollisionManager(colmanager),
                                 mTargetPosition(Ogre::Vector3(0.0f,0.0f,0.0f)),
-                                triangle(0)
+                                mTriangle(0),
+                                mHeight(height),
+                                mActRadius(actRadius),
+                                mColRadius(colRadius)
     {
         mNode = mParent->createChildSceneNode(mName + "_node");
         if(!mInvisible)
@@ -46,7 +52,6 @@ namespace Sonetto {
             mEntity = mSceneManager->createEntity(mName + "_entity", mModelName);
             mNode->attachObject(mEntity);
         }
-        mEllipseRadius= Ogre::Vector3(0.5f,1.0f,0.5f);
     }
     EventObject::~EventObject()
     {
@@ -58,10 +63,10 @@ namespace Sonetto {
         }
         mSceneManager->destroySceneNode(mNode->getName());
     }
-    void EventObject::update(float deltatime)
+    void EventObject::update(float deltatime,const EventVector &events)
     {
-        mNode->setPosition(mCollisionManager->setNextPos(this,
-                mTargetPosition*deltatime));
+        mCollisionManager->setNextPos(this,events,
+                mTargetPosition * deltatime);
     }
     const Ogre::String & EventObject::getName(void) const
     {

@@ -25,9 +25,13 @@ namespace Sonetto {
                             Ogre::SceneNode * parent,
                             Ogre::SceneManager * manager,
                             CollisionManager * colmanager,
+                            float height,float actRadius,
+                            float colRadius,
                             bool noVisibleEntity,
                             const Ogre::String & modelname ) :
-                            EventObject(name, parent, manager, colmanager, noVisibleEntity, modelname ),
+                            EventObject(name, parent, manager, colmanager,
+                                height, actRadius, colRadius, noVisibleEntity,
+                                modelname),
                             mHeroSpeed(0.0f),
                             mMovementInput(Ogre::Vector2::ZERO),
                             mBaseFront(Ogre::Vector3::ZERO),
@@ -39,7 +43,7 @@ namespace Sonetto {
     HeroObject::~HeroObject()
     {
     }
-    void HeroObject::update(float deltatime)
+    void HeroObject::update(float deltatime,const EventVector &events)
     {
         Ogre::Vector3 directionFinal, sourceDirection;
 
@@ -87,7 +91,7 @@ namespace Sonetto {
 
         moveObject(directionFinal * (mHeroSpeed * inputMagnitude));
 
-        EventObject::update(deltatime);
+        EventObject::update(deltatime,events);
         mMovementInput = Ogre::Vector2::ZERO;
     }
     void HeroObject::setHeroSpeed(float speed)

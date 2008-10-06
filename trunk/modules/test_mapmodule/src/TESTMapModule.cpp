@@ -38,6 +38,7 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     void TestMapModule::enter()
     {
+        EventObject *dummyEvent;
         mCollisionMan = new CollisionManager();
 
         mKernel->mMapFileManager = new MapFileManager();
@@ -56,18 +57,20 @@ namespace Sonetto {
 
         mCollisionMan->createWalkmesh(worldmesh);
 
-        mSphere = new EventObject("Sphere",
+        dummyEvent = new EventObject("Sphere",
                                     mSceneMan->getRootSceneNode(),
                                     mSceneMan,
                                     mCollisionMan,
+                                    2.0f,1.0f,0.5f,
                                     false,
                                     "dummy_hero.mesh");
-        mSphere->setPosition(10.0f,0.0f,0.0f);
+        dummyEvent->setPosition(7.20862f-3.0f,3.56544f,31.1969f-3.0f);
 
         mDummyHero = new HeroObject("DummyHero",
                                     mSceneMan->getRootSceneNode(),
                                     mSceneMan,
                                     mCollisionMan,
+                                    2.0f,1.0f,0.5f,
                                     false,
                                     "dummy_hero.mesh");
         mDummyHero->setPosition(7.20862f,3.36544f,31.1969f-1.0f);
@@ -77,6 +80,9 @@ namespace Sonetto {
         mCamera->setNearClipDistance(1.0f);
         mCamera->setFarClipDistance(1000.0f);
         mCamera->setFOVy(Ogre::Radian(Ogre::Degree(13.5f)));
+
+        mEvents.push_back(mDummyHero);
+        mEvents.push_back(dummyEvent);
 
         MapIndexData mapdata;
 
@@ -129,8 +135,14 @@ namespace Sonetto {
             rot.y = 0.0f;
 
         mDummyHero->setBaseDirection(mCamera->getDirection());
+        //mDummyHero->setBaseDirection(Ogre::Vector3(0.0f,0.0f,-1.0f));
         mDummyHero->setMovementInput(mov);
-        mDummyHero->update(deltatime);
+
+        /*for (size_t i = 0;i < mEvents.size();++i)
+        {
+            mEvents[i]->update(deltatime,mEvents);
+        }*/
+        mDummyHero->update(deltatime,mEvents);
 
         mAngle += Ogre::Radian(rot.x * deltatime);
 
@@ -182,8 +194,10 @@ namespace Sonetto {
         mKernel->mResourceMan->_unregisterResourceManager("MapFile");
         mKernel->mMapFileManager = 0;
 
-        delete mDummyHero;
-        delete mSphere;
+        for (size_t i = 0;i < mEvents.size();++i)
+        {
+            delete mEvents[i];
+        }
 
         delete mCollisionMan;
         // Call the Module base function.
