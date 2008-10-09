@@ -35,7 +35,7 @@ namespace Sonetto
     // Sonetto::SoundSource implementation.
     //-----------------------------------------------------------------------------
     SoundSource::SoundSource(size_t id,Ogre::Node *node)
-            : mSoundID(id), mNode(node)
+            : mSoundID(id), mMaxVolume(1.0f), mNode(node)
     {
         Ogre::Vector3 pos;
 
@@ -73,6 +73,18 @@ namespace Sonetto
             alDeleteSources(1,&mALSource);
             mAudioMan->_alErrorCheck("SoundSource::~SoundSource()","Failed deleting "
                     "OpenAL audio source");
+        }
+    }
+    //-----------------------------------------------------------------------------
+    void SoundSource::setMaxVolume(float maxVolume)
+    {
+        if (isValid())
+        {
+            mMaxVolume = maxVolume;
+            alSourcef(mALSource,AL_GAIN,maxVolume *
+                    mAudioMan->getMasterSoundVolume());
+            mAudioMan->_alErrorCheck("SoundSource::setMaxVolume()","Failed setting "
+                    "OpenAL audio source gain");
         }
     }
     //-----------------------------------------------------------------------------
@@ -137,6 +149,13 @@ namespace Sonetto
             alSource3f(mALSource,AL_POSITION,pos.x,pos.y,pos.z);
             mAudioMan->_alErrorCheck("SoundSource::SoundSource()","Failed positioning "
                     "OpenAL audio source");
+
+            // Sets sound source gain based on its local maximum volume and
+            // AudioManager's master sound volume
+            alSourcef(mALSource,AL_GAIN,mMaxVolume *
+                    mAudioMan->getMasterSoundVolume());
+            mAudioMan->_alErrorCheck("SoundSource::_update()","Failed setting "
+                    "OpenAL audio source gain");
         }
     }
     //-----------------------------------------------------------------------------

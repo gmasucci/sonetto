@@ -126,7 +126,8 @@ namespace Sonetto
             }
 
             // Sets source volume
-            alSourcef(mMusicSrc,AL_GAIN,mFadeVolume*mMaxVolume);
+            alSourcef(mMusicSrc,AL_GAIN,mFadeVolume * mMaxVolume *
+                    mAudioMan->getMasterMusicVolume());
             mAudioMan->_alErrorCheck("MusicStream::_update()",
                                     "Failed setting music source volume");
 

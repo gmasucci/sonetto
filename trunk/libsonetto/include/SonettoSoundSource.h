@@ -59,6 +59,9 @@ namespace Sonetto
         SoundSource(size_t id,Ogre::Node *node);
         ~SoundSource();
 
+        void setMaxVolume(float maxVolume);
+        inline float getMaxVolume() const { return mMaxVolume; }
+
         SoundSourceState getState() const;
 
         inline size_t getSoundID() const { return mSoundID; }
@@ -83,6 +86,9 @@ namespace Sonetto
         /// An OpenAL audio source handle
         size_t mALSource;
 
+        /// The maximum volume this source will reach
+        float mMaxVolume;
+
         /// The Ogre::Node onto which this sound source is attached
         Ogre::Node *mNode;
     };
@@ -100,4 +106,4 @@ namespace Sonetto
     typedef std::vector<SoundSourcePtr> SoundSourceVector;
 } // namespace
 
-#endif
+#endif // SONETTO_SOUNDSOURCE_H

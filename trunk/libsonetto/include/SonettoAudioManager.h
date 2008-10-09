@@ -44,14 +44,47 @@ namespace Sonetto
         friend class Kernel;
         friend class MusicStream;
     public:
-        /// Used in mNextBGM and mNextME to represent there is no music to be played
-        static const size_t NONE = static_cast<size_t>(-1);
-
         /// Updates
         void _update(float deltatime);
 
         /// @see mInitialised
         inline bool isInitialised() const { return mInitialised; }
+
+        /** Sets the AudioManager Master Music Volume
+
+            The Master Music Volume will ensure no musics are going to be
+            louder than it. It should be user-defined, usually set by the
+            configuration utility.
+        @param
+            volume Master Music Volume (clamped between 0.0f and 1.0f).
+        */
+        inline void setMasterMusicVolume(float volume)
+                { mMasterMusicVolume = volume; }
+
+        /** Gets the AudioManager Master Music Volume
+
+        @see
+            setMasterMusicVolume()
+        */
+        inline float getMasterMusicVolume() const { return mMasterMusicVolume; }
+
+        /** Sets the AudioManager Master Sound Volume
+
+            The Master Sound Volume will ensure no sound sources are going to be
+            louder than it. It should be user-defined, usually set by the
+            configuration utility.
+        @param
+            volume Master Sound Volume (clamped between 0.0f and 1.0f).
+        */
+        inline void setMasterSoundVolume(float volume)
+                { mMasterSoundVolume = volume; }
+
+        /** Gets the AudioManager Master Sound Volume
+
+        @see
+            setMasterSoundVolume()
+        */
+        inline float getMasterSoundVolume() const { return mMasterSoundVolume; }
 
         /** Sets listener node
 
@@ -155,8 +188,8 @@ namespace Sonetto
 
             This method only gets called when an ME is playing, as BGMs loop forever
             and thus never stop streaming. When this method gets called, it looks for
-            a music index in mNextBGM. If such variable has a value different from
-            AudioManager::NONE, then there is a BGM to be played, and this method plays
+            a music index in mNextBGM. If such variable has a value different than
+            zero, then there is a BGM to be played, and this method plays
             it from the position described in mNextBGMPos, and with a fade in speed of
             mNextBGMFade.
         */
@@ -176,9 +209,9 @@ namespace Sonetto
             and the stream state is set to StreamState::MSS_STOPPING, it means a music
             has finished its fade out cycle and the queued ones have to be played.
             First the method checks whether there is a queued ME (that is, if
-            mNextME != AudioManager::NONE). If there is, it saves the current BGM
-            state in the mNextBGM* variables and starts playing the ME. If not, the method
-            then checks whether mNextBGM != AudioManager::NONE, what would mean there is a
+            mNextME != 0). If there is, it saves the current BGM
+            state in the "mNextBGM*" variables and starts playing the ME. If not, the method
+            then checks whether mNextBGM != 0, what would mean there is a
             BGM waiting to be played. If there is such a queued BGM, this method plays it
             with a fade in speed of mNextBGMFade. In this case, mNextBGMPos is ignored,
             since it is only used when a BGM is interrupted by an ME and has to restart
@@ -242,10 +275,13 @@ namespace Sonetto
         @param
             id Sound ID to be created (0 is invalid).
         @param
+            maxVolume The maximum volume the sound source will reach (i.e. when near
+            to the AudioManager listener).
+        @param
             node Node to which attach the sound source. NULL for it to follow
             AudioManager's listener node.
         */
-        void playSound(size_t id,Ogre::Node *node = NULL);
+        void playSound(size_t id,float maxVolume = 1.0f,Ogre::Node *node = NULL);
 
         /** Throws an exception if OpenAL reports an error
 
@@ -278,22 +314,28 @@ namespace Sonetto
         ALCdevice *mDevice;
 
         // Music
+        /// Master Music Volume
+        float mMasterMusicVolume;
+
         /// Class responsible for streaming music for the AudioManager
         MusicStream *mMusicStream;
 
-        /// AudioManager::NONE or the index of the next BGM to be played when the current one stops fading out
+        /// Zero or the index of the next BGM to be played when the current one stops fading out
         size_t mNextBGM;
 
-        /// Fade speed used to fade in the next BGM when needed, if mNextBGM != AudioManager::NONE
+        /// Fade speed used to fade in the next BGM when needed, if mNextBGM != 0
         float mNextBGMFade;
 
         /// Position from which the next BGM will start from
         size_t mNextBGMPos;
 
-        /// AudioManager::NONE or the index of the next ME to be played when the current BGM stops fading out
+        /// Zero or the index of the next ME to be played when the current BGM stops fading out
         size_t mNextME;
 
         // Sounds
+        /// Master Sound Volume
+        float mMasterSoundVolume;
+
         /** Map of Sound structures
 
             This is the map of currently loaded sounds. Their indexes match with

@@ -35,7 +35,7 @@ namespace Sonetto
     void AudioManager::playBGM(size_t id,float fadeOut,float fadeIn)
     {
         // If there is nothing being played, start playing new BGM
-        if (mMusicStream->getCurrentMusic() == NONE ||
+        if (mMusicStream->getCurrentMusic() == 0    ||
             mMusicStream->isStopped()       == true ||
             mMusicStream->isPaused()        == true )
         {
@@ -73,7 +73,7 @@ namespace Sonetto
     void AudioManager::playME(size_t id,float fadeOut,float fadeIn)
     {
         // If there is nothing being played, start playing new ME
-        if (mMusicStream->getCurrentMusic() == NONE ||
+        if (mMusicStream->getCurrentMusic() == 0    ||
             mMusicStream->isStopped()       == true ||
             mMusicStream->isPaused()        == true )
         {
@@ -106,8 +106,8 @@ namespace Sonetto
     {
         // Clears next BGM and ME values to make sure AudioManager::fadeEnded()
         // won't start the queued music when the fade out ends
-        mNextBGM = NONE;
-        mNextME  = NONE;
+        mNextBGM = 0;
+        mNextME  = 0;
 
         // Stops the music
         if (mMusicStream->_getLoop() == true) { // BGM
@@ -128,7 +128,8 @@ namespace Sonetto
     }
     //-----------------------------------------------------------------------------
     AudioManager::AudioManager(const char *device)
-            : mInitialised(false), mNextBGM(NONE), mNextBGMPos(0), mNextME(NONE),
+            : mInitialised(false), mMasterMusicVolume(1.0f), mNextBGM(0),
+                mNextBGMPos(0), mNextME(0), mMasterSoundVolume(1.0f),
                 mListenerNode(NULL)
     {
         ALCcontext *context;
@@ -388,10 +389,10 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     void AudioManager::_streamEnded()
     {
-        if (mNextBGM != NONE)
+        if (mNextBGM != 0)
         {
             mMusicStream->_play(mNextBGM,mNextBGMPos,mNextBGMFade,true);
-            mNextBGM = NONE;
+            mNextBGM = 0;
         }
     }
     //-----------------------------------------------------------------------------
@@ -404,15 +405,15 @@ namespace Sonetto
             case MF_FADE_OUT:
                 if (mMusicStream->_getState() == MSS_STOPPING)
                 {
-                    if (mNextME != NONE) {
+                    if (mNextME != 0) {
                         mNextBGM    = mMusicStream->getCurrentMusic();
                         mNextBGMPos = mMusicStream->_getCurrentPos();
                         mMusicStream->_play(mNextME,0,0.0f,false);
-                        mNextME = NONE;
+                        mNextME = 0;
                     } else
-                    if (mNextBGM != NONE) {
+                    if (mNextBGM != 0) {
                         mMusicStream->_play(mNextBGM,0,mNextBGMFade,true);
-                        mNextBGM = NONE;
+                        mNextBGM = 0;
                     }
                 }
             break;
@@ -438,10 +439,12 @@ namespace Sonetto
         return snd;
     }
     //-----------------------------------------------------------------------------
-    void AudioManager::playSound(size_t id,Ogre::Node *node)
+    void AudioManager::playSound(size_t id,float maxVolume,Ogre::Node *node)
     {
-        // Creates sound and plays it
-        createSound(id,node)->play();
+        // Creates sound, sets its maximum volume, and plays it
+        SoundSourcePtr snd = createSound(id,node);
+        snd->setMaxVolume(maxVolume);
+        snd->play();
     }
     //-----------------------------------------------------------------------------
     void AudioManager::_alErrorCheck(const char *location,const char *desc)

@@ -160,7 +160,7 @@ namespace Sonetto
             */
             InputSource(bool aEnabled = false,TYPE aType = IST_KEY,
                     unsigned short aValue = 0,char aInvert = 0x00)
-                    : enabled(aEnabled), type(aType), value(aValue), invert(aInvert) {}
+                    : enabled(aEnabled), type(aType), invert(aInvert), value(aValue) {}
 
             /// @brief Whether this source is enabled or not
             bool enabled : 1;
