@@ -21,6 +21,7 @@ http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
 #include "SonettoPlane.h"
+#include "SonettoKernel.h"
 #include <OgrePrerequisites.h>
 #include <OgreHardwareBufferManager.h>
 #include <OgreRoot.h>
@@ -206,6 +207,8 @@ namespace Sonetto {
     {
         Ogre::OverlayContainer::_update();
 
+        updatePositionGeometry();
+
         if(mColorUpdate && mInitialised)
         {
             updateColour();
@@ -223,10 +226,7 @@ namespace Sonetto {
         Ogre::Real aRatio = 1.0f;
         if(mScrMetricsMode == SMM_RELATIVE_ASPECT_ADJUSTED)
         {
-            Ogre::Real vpWidth, vpHeight;
-            vpWidth = (Ogre::Real) (Ogre::OverlayManager::getSingleton().getViewportWidth());
-            vpHeight = (Ogre::Real) (Ogre::OverlayManager::getSingleton().getViewportHeight());
-            aRatio = vpHeight/vpWidth;
+            aRatio = Kernel::get()->mAspectRatio;
         }
         /*
 			0-----2
@@ -244,8 +244,10 @@ namespace Sonetto {
 			coordinates, we have to flip the v-axis (ie. subtract the value from
 			1.0 to get the actual correct value).
 		*/
-		left = _getDerivedLeft() * (aRatio * 2) - aRatio;
-		right = left + (mWidth * (aRatio * 2));
+		//left = _getDerivedLeft() * (aRatio * 2) - aRatio;
+		//right = left + (mWidth * (aRatio * 2));
+		left = ((_getDerivedLeft() * 2) - 1)/aRatio;
+		right = left + ((mWidth * 2)/aRatio);
 		top = -((_getDerivedTop() * 2) - 1);
 		bottom =  top -  (mHeight * 2);
 

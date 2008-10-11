@@ -31,6 +31,7 @@ using namespace Ogre;
 
 namespace Sonetto
 {
+
     PlayerInput::PlayerInput(bool enabled,bool rumbleEnabled,SDL_Joystick *joy)
             : mEnabled(enabled), mRumbleEnabled(rumbleEnabled), mJoy(joy)
     {

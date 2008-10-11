@@ -110,6 +110,7 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     void TestMapModule::update(Ogre::Real deltatime) // This one will be a pain...
     {
+        Module::update(deltatime);
 #ifdef DEBUG_BUILD
         // Debug function used to change the Scene Polygon mode from Solid to Wireframe or Points
         Module::setPolygonMode(deltatime);

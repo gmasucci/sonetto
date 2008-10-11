@@ -56,6 +56,14 @@ namespace Sonetto {
 
 namespace Sonetto
 {
+    #define ASPECT_RATIO_4_3 640.0f/480.0f
+    #define ASPECT_RATIO_16_10 1280.0f/800.0f
+    #define ASPECT_RATIO_16_9 1920.0f/1080.0f
+    //#define ASPECT_RATIO_16_9 1920.0f/1080.0f
+    #define MINIMUM_FPS 1.0f/60.0f
+
+    #define INPUT_KEYBOARD_KEY "KEY_"
+    #define INPUT_JOYSTICK_KEY "JOY_"
 
     enum FadeStatus
     {
@@ -96,6 +104,12 @@ namespace Sonetto
     public:
         friend class InputManager;
         friend class AudioManager;
+
+        // Screen Ratio / Aspect Ratio:
+        //  4:3      (Standard CRT and TV Aspect Ratio - 640x480)
+        //  16:10    (Common Widescreen Laptop Resolution - 1280x800)
+        //  16:9     (Standard High-Definition Television Aspect Ratio - 1920×1080)
+        float mAspectRatio;
 
         void initialise();
 
@@ -194,7 +208,8 @@ namespace Sonetto
         AudioManager *getAudioMan() { return mAudioMan; }
 
         /// @brief Load and parse the configuration file.
-        std::map<std::string,std::string> loadConfig(const char *fname);
+        bool loadConfig(const Ogre::String& fname, Ogre::NameValuePairList &wndParamList);
+        void getKeyConfig(const Ogre::String & key, InputSource::TYPE &type, size_t &keyid);
     private:
         /// @brief Constructor.
         Kernel();
@@ -243,6 +258,9 @@ namespace Sonetto
         int mGameSpeedDownSwitch;
         Ogre::Real mGameSpeed;
         Ogre::Real mGameSpeedScaleValue;
+
+        int mAspectRatioMode;
+        int mAspectRatioSwitch;
         #endif
 
         // Sonetto Pointers.
@@ -268,6 +286,9 @@ namespace Sonetto
         Ogre::Real                   mFrameTime;
 
         int mFullScreenSwitchLock;
+        size_t mScreenWidth;
+        size_t mScreenHeight;
+        bool mIsFullScreen;
 
         // Sonetto Screen Fade effect data
         Ogre::Overlay               *mFadeOverlay;

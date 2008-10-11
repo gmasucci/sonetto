@@ -41,7 +41,6 @@
 					<Add option="-DBUILD_DLL" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
 					<Add library="user32" />
 					<Add library="libsonetto" />
 					<Add library="OgreMain" />

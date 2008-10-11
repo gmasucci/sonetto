@@ -22,6 +22,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include <OgreStableHeaders.h>
 #include "SonettoTextElement.h"
+#include "SonettoKernel.h"
 #include <OgreRoot.h>
 #include <OgreRenderSystem.h>
 #include <OgreLogManager.h>
@@ -219,19 +220,16 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     void TextElement::_update(void)
     {
-        Ogre::ControllerValueRealPtr tmpFTV = Ogre::ControllerManager::getSingleton().getFrameTimeSource();
-        mTimeSinceLastFrame = tmpFTV->getValue();
-        Ogre::Real vpWidth, vpHeight;
-        vpWidth = (Ogre::Real) (Ogre::OverlayManager::getSingleton().getViewportWidth());
-        vpHeight = (Ogre::Real) (Ogre::OverlayManager::getSingleton().getViewportHeight());
-        Ogre::Real tmpVPAspectCoef = vpHeight/vpWidth;
+        mTimeSinceLastFrame = Kernel::get()->mFrameTime;
 
-        mViewportAspectCoef = tmpVPAspectCoef;
+        mViewportAspectCoef = Kernel::get()->mAspectRatio;
 
         if (mIsAnimated)
             animate();
 
         OverlayElement::_update();
+
+        updatePositionGeometry();
     }
     //-----------------------------------------------------------------------------
     Ogre::Real TextElement::getLineLenght(const char * line)
@@ -268,7 +266,7 @@ namespace Sonetto
                             ret += glyphData.x_offset * mTextSize;
                         break;
                         case SMM_RELATIVE_ASPECT_ADJUSTED:
-                            ret += (glyphData.x_offset * mViewportAspectCoef) * mTextSize;
+                            ret += (glyphData.x_offset / mViewportAspectCoef) * mTextSize;
                         break;
                     }
                     ++cur;
@@ -616,7 +614,8 @@ namespace Sonetto
         o_txtPosY = -( (_getDerivedTop() * 2.0f ) - 1.0f );
         break;
         case SMM_RELATIVE_ASPECT_ADJUSTED:
-        o_txtPosX = _getDerivedLeft() * (2.0 * view_ratio) - view_ratio;
+        //o_txtPosX = _getDerivedLeft() * (2.0 * view_ratio) - view_ratio;
+        o_txtPosX = ((_getDerivedLeft() * 2.0) - 1.0f)/view_ratio;
         o_txtPosY = -( (_getDerivedTop() * 2.0 ) - 1.0f );
         break;
         }
@@ -632,13 +631,13 @@ namespace Sonetto
         square[0] = 0.0f;
         square[1] = 0.0f;
         // Top Right
-        square[2] = ((2.0f *  view_ratio) * mTextSize);
+        square[2] = ((2.0f /  view_ratio) * mTextSize);
         square[3] = 0.0f;
         // Bottom Left
         square[4] = 0.0f;
         square[5] = (2.0f * mTextSize);
         // Bottom Right
-        square[6] = ((2.0f *  view_ratio) * mTextSize);
+        square[6] = ((2.0f /  view_ratio) * mTextSize);
         square[7] = (2.0f * mTextSize);
         } else {
         square[0] = 0.0f;
@@ -794,7 +793,8 @@ namespace Sonetto
                     txtPosX += (glyphData.x_offset * 2.0f) * mTextSize;
                 break;
                 case SMM_RELATIVE_ASPECT_ADJUSTED:
-                    txtPosX += ((glyphData.x_offset * view_ratio) * 2.0f) * mTextSize;
+                    //txtPosX += ((glyphData.x_offset * view_ratio) * 2.0f) * mTextSize;
+                    txtPosX += ((glyphData.x_offset * 2.0f)/view_ratio) * mTextSize;
                 break;
             }
 

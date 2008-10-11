@@ -20,6 +20,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
 
+#include "SonettoKernel.h"
 #include <OgreHardwareBufferManager.h>
 #include <OgreMaterial.h>
 #include <OgreMaterialManager.h>
@@ -272,10 +273,7 @@ namespace Sonetto {
     void Window::_update(void)
     {
         // Calculate the aspect ratio
-        Ogre::Real vpWidth, vpHeight;
-        vpWidth = (Ogre::Real) (Ogre::OverlayManager::getSingleton().getViewportWidth());
-        vpHeight = (Ogre::Real) (Ogre::OverlayManager::getSingleton().getViewportHeight());
-        Ogre::Real tmpAspectRatio = vpHeight/vpWidth;
+        Ogre::Real tmpAspectRatio = Kernel::get()->mAspectRatio;
 
         // Set up the flags to warn ogre we need an update.
         if((tmpAspectRatio != mAspectRatio)) {
@@ -319,7 +317,8 @@ namespace Sonetto {
         // Set the position values to each vertex
         for (size_t i = 0; i < mWindowRenderOp.vertexData->vertexCount; ++i)
         {
-            *pPos++ = ((mPosCoord[i].x * (mAspect * 2)) - mAspect);
+            //*pPos++ = ((mPosCoord[i].x * (mAspect * 2)) - mAspect);
+            *pPos++ = (((mPosCoord[i].x * 2) - 1)/mAspect);
             *pPos++ = -(mPosCoord[i].y * 2) + 1;
             *pPos++ = zValue;
         }
@@ -334,7 +333,8 @@ namespace Sonetto {
         // Set the position to each vertex
         for (size_t i = 0; i < mBorderRenderOp.vertexData->vertexCount; ++i)
         {
-            *pBorderPos++ = ((mPosCoord[i].x * (mAspect * 2)) - mAspect);
+            //*pBorderPos++ = ((mPosCoord[i].x * (mAspect * 2)) - mAspect);
+            *pBorderPos++ = (((mPosCoord[i].x * 2) - 1)/mAspect);
             *pBorderPos++ = -(mPosCoord[i].y * 2) + 1;
             *pBorderPos++ = zValue;
         }

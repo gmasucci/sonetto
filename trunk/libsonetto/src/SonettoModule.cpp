@@ -47,11 +47,15 @@ namespace Sonetto {
 
         mKernel->setViewport(mKernel->getRenderWindow()->addViewport(mCamera));
         mKernel->getViewport()->setBackgroundColour(mBackgroundColor);
-        mCamera->setAspectRatio(Ogre::Real(mKernel->getViewport()->getActualWidth()) /
-                                Ogre::Real(mKernel->getViewport()->getActualHeight()));
+        mCamera->setAspectRatio(Kernel::get()->mAspectRatio);
 
         mOverlay = mKernel->mOverlayMan->create(mModuleOverlayName);
         mOverlay->show();
+    }
+    //-----------------------------------------------------------------------------
+    void Module::update ( Ogre::Real deltatime )
+    {
+        mCamera->setAspectRatio(Kernel::get()->mAspectRatio);
     }
     //-----------------------------------------------------------------------------
     void Module::exit()
@@ -81,8 +85,7 @@ namespace Sonetto {
             mKernel->getRenderWindow()->removeAllViewports();
         mKernel->setViewport(mKernel->getRenderWindow()->addViewport(mCamera));
         mKernel->getViewport()->setBackgroundColour(mBackgroundColor);
-        mCamera->setAspectRatio(Ogre::Real(mKernel->getViewport()->getActualWidth()) /
-                                Ogre::Real(mKernel->getViewport()->getActualHeight()));
+        mCamera->setAspectRatio(Kernel::get()->mAspectRatio);
         mOverlay->show();
     }
     //-----------------------------------------------------------------------------

@@ -69,7 +69,7 @@ namespace Sonetto {
                     @param
                         deltatime Time since last frame.
                     */
-                    virtual void update ( Ogre::Real deltatime ) = 0;
+                    virtual void update ( Ogre::Real deltatime );
 
                     /** @brief Module cleanup
 

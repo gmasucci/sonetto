@@ -24,8 +24,6 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <SDL/SDL.h>
 #include <SDL/SDL_syswm.h>
 #include "TESTMapFileSerializer.h"
-using namespace std;
-using namespace Ogre;
 
 // Forward declarations
 namespace Sonetto {
@@ -38,13 +36,16 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     Kernel *Kernel::mSingleton = NULL;
     //-----------------------------------------------------------------------------
-    Kernel::Kernel() : mShutdown(false), mScreen(NULL),
+    Kernel::Kernel() : mAspectRatio(ASPECT_RATIO_4_3), mShutdown(false), mScreen(NULL),
     mRoot(NULL), mWindow(NULL), mViewport(NULL), mLogMan(NULL),
     mOverlayMan(NULL), mResourceMan(NULL),mResMan(NULL)
     #ifdef _DEBUG
     , mDebugOverlay(NULL)
     #endif
     , mFrameTime(0.0f)
+    , mScreenWidth(640)
+    , mScreenHeight(480)
+    , mIsFullScreen(false)
     , mFadeOverlay(NULL)
     , mFadeStatus(FS_IDLE_IN)
     , mFadeSpeed(60.0f)
@@ -59,6 +60,8 @@ namespace Sonetto {
         mGameSpeedDownSwitch = 0;
         mGameSpeed = 1.0f;
         mGameSpeedScaleValue = 1.0f/2.0f;
+        mAspectRatioMode = 0;
+        mAspectRatioSwitch = 0;
         #endif
 
         NameValuePairList  wndParamList; // Needed for Ogre to use SDL rendering window
@@ -89,43 +92,40 @@ namespace Sonetto {
         SDL_VERSION(&wmInfo.version);
         SDL_GetWMInfo(&wmInfo);
 
-         wndParamList["vsync"] = "true";
-         wndParamList["displayFrequency"] = "60";
-         wndParamList["colourDepth"] = "32";
+        // Creates and configures Ogre root object, based on configuration
+        // took from the configuration file
+        mRoot = new Ogre::Root("","","devlab.log");
 
         #ifdef _WINDOWS
             // Under Windows we just need to pass the window handle(HWND) as a string to
             // Ogre::Root::createRenderWindow() for Ogre to use such window for its drawings
-            wndParamList["externalWindowHandle"] = StringConverter::toString((unsigned long)wmInfo.window);
+            wndParamList["externalWindowHandle"] = Ogre::StringConverter::toString((unsigned long)wmInfo.window);
         #else
             // Under *nixes, Ogre uses GLX for rendering. The syntax of
             // externalWindowHandle in this case is a bit different, but it
             // does essentially the same thing.
-            string         wndHandleStr;
-            string         dsp(&(DisplayString(wmInfo.info.x11.display)[1]));
-            vector<String> tokens = StringUtil::split(dsp,".");
+            std::string         wndHandleStr;
+            std::string         dsp(&(DisplayString(wmInfo.info.x11.display)[1]));
+            vector<Ogre::String> tokens = StringUtil::split(dsp,".");
 
-            wndHandleStr = StringConverter::toString((long)wmInfo.info.x11.display)+
+            wndHandleStr = Ogre::StringConverter::toString((long)wmInfo.info.x11.display)+
                         ":"+tokens[1]+":"+
-                        StringConverter::toString((long)wmInfo.info.x11.window);
+                        Ogre::StringConverter::toString((long)wmInfo.info.x11.window);
 
             wndParamList["externalWindowHandle"] = wndHandleStr;
         #endif
 
-        // Creates and configures Ogre root object, based on configuration
-        // took from the configuration file
-        mRoot = new Root("plugins.dlc","devlab.dlc","devlab.log");
-        if (mRoot->showConfigDialog()) {
-            // If returned true, the user clicked OK, so initialise
-            mRoot->initialise(false);
-            mWindow = mRoot->createRenderWindow("",640,480,false,&wndParamList);
-        } else {
-            delete mRoot;
-            mRoot     = NULL;
-            mShutdown = true;
+        // Create Input Manager
+        mInputMan = new InputManager(4);
 
-            return;
-        }
+        // Create Audio Manager
+        mAudioMan = new AudioManager();
+
+        loadConfig("config.ini",wndParamList);
+
+        // Initialise Ogre
+        mRoot->initialise(false);
+        mWindow = mRoot->createRenderWindow("", mScreenWidth, mScreenHeight ,mIsFullScreen,&wndParamList);
 
         // Get Ogre singletons for easier use
         mLogMan      = LogManager::getSingletonPtr();
@@ -146,12 +146,6 @@ namespace Sonetto {
         mDatabase->mMusicList.push_back(Music("music_title.ogg",0));
         mDatabase->mMusicList.push_back(Music("music_map.ogg",0));
         mDatabase->initialise();
-
-        // Create Input Manager
-        mInputMan = new InputManager(4);
-
-        // Create Audio Manager
-        mAudioMan = new AudioManager();
 
         // Register Sonetto Resources and Objects
         mStrManager = new STRManager();
@@ -326,12 +320,37 @@ namespace Sonetto {
                 mGameNormalSpeedSwitch = 0;
             }
 
+            if (SDL_GetKeyState(NULL)[SDLK_F9])
+            {
+                if(mAspectRatioSwitch == 0)
+                {
+                    switch(mAspectRatioMode)
+                    {
+                        case 0:
+                            mAspectRatio = ASPECT_RATIO_16_10;
+                            mAspectRatioMode = 1;
+                        break;
+                        case 1:
+                            mAspectRatio = ASPECT_RATIO_16_9;
+                            mAspectRatioMode = 2;
+                        break;
+                        case 2:
+                            mAspectRatio = ASPECT_RATIO_4_3;
+                            mAspectRatioMode = 0;
+                        break;
+                    }
+                }
+                ++mAspectRatioSwitch;
+            } else {
+                mAspectRatioSwitch = 0;
+            }
+
             mFrameTime *= mGameSpeed;
             #endif
 
             // Limit the minimum FPS to 15 (disable frameskip)
-            if(mFrameTime > 0.06f)
-                mFrameTime = 0.06f;
+            if(mFrameTime > MINIMUM_FPS)
+                mFrameTime = MINIMUM_FPS;
 
             // Small error check
             // A game cannot run without modules
@@ -348,9 +367,11 @@ namespace Sonetto {
             {
                 if(mWindow->isFullScreen() && (mFullScreenSwitchLock == 0))
                 {
-                    mWindow->setFullscreen(false, 640, 480);
+                    mWindow->setFullscreen(false, mScreenWidth, mScreenHeight);
+                    mIsFullScreen = false;
                 } else if(mFullScreenSwitchLock == 0) {
-                    mWindow->setFullscreen(true, 1024, 768);
+                    mWindow->setFullscreen(true, mScreenWidth, mScreenHeight);
+                    mIsFullScreen = true;
                 }
                 ++mFullScreenSwitchLock;
             } else {
@@ -456,58 +477,277 @@ namespace Sonetto {
         }
     }
     //-----------------------------------------------------------------------------
-    std::map<std::string,std::string> Kernel::loadConfig(const char *fname)
+    bool Kernel::loadConfig(const Ogre::String& fname,Ogre::NameValuePairList &wndParamList)
     {
-        std::ifstream           file;
-        std::map<std::string,std::string> entries;
+        Ogre::ConfigFile config;
+        //config.loadDirect(fname, "\t:=", false);
+        config.load(fname);
 
-        // Tries to open specified file
-        file.open(fname,std::ios::binary);
-        if (!file.is_open())
-            return std::map<std::string,std::string>();
+        // Video Configuration Section
+        Ogre::String videoSectName = "video";
+        mRoot->loadPlugin(config.getSetting("renderSystemPlugin",videoSectName));
+        Ogre::RenderSystem* rs = mRoot->getRenderSystemByName(config.getSetting("renderSystem",videoSectName));
 
-        // Reads the file line by line
-        while (!file.eof())
+        Ogre::String aspectRatio = config.getSetting("aspectRatio",videoSectName);
+
+        Ogre::String resolution = config.getSetting("screenResolution",videoSectName);
+
+        size_t divpos = resolution.find_first_of('x');
+
+        std::vector< String > res = Ogre::StringUtil::split(resolution, "x", 1);
+
+        mScreenWidth = Ogre::StringConverter::parseUnsignedInt(res[0]);
+        mScreenHeight = Ogre::StringConverter::parseUnsignedInt(res[1]);
+
+        Ogre::String fullscreen = config.getSetting("fullScreen",videoSectName);
+
+        if(fullscreen == "true")
         {
-            size_t separator;
-            std::string line,entry,value;
-
-            // Reads a line
-            getline(file,line);
-
-            // Removes eventual carriedge returns inserted by Windows text editors
-            while (line.find('\r') != std::string::npos)
-                line.replace(line.find('\r'),1,"");
-
-            // Skips empty lines
-            if (line.length() == 0)
-                continue;
-
-            // Skips first tabs and spaces
-            line = line.substr(line.find_first_not_of(" \t"));
-
-            // Skips comment lines
-            if (line[0] == '#')
-                continue;
-
-            // Each entry line should follow the syntax: Entry=Value
-            separator = line.find("=");
-            if (count(line.begin(),line.end(),'=') != 1)
-                return std::map<std::string,std::string>();
-
-            entry = line.substr(0,separator);
-            value = line.substr(separator+1);
-
-            // Aborts if the entry already exists
-            if (entries.find(entry) != entries.end())
-                return std::map<std::string,std::string>();
-
-            // Adds to entry map
-            entries[entry] = value;
+            mIsFullScreen = true;
+        }
+        if(fullscreen == "false")
+        {
+            mIsFullScreen = false;
         }
 
-        file.close();
-        return entries;
+        wndParamList["vsync"] = config.getSetting("vsync",videoSectName);
+        wndParamList["displayFrequency"] = config.getSetting("displayFrequency",videoSectName);
+        wndParamList["colourDepth"] = config.getSetting("colourDepth",videoSectName);
+        wndParamList["FSAA"] = config.getSetting("FSAA",videoSectName);
+
+        aspectRatio = config.getSetting("aspectRatio",videoSectName);
+
+        if(aspectRatio == "4_3")
+        {
+            mAspectRatio = ASPECT_RATIO_4_3;
+            mAspectRatioMode = 0;
+        }
+        if(aspectRatio == "16_10")
+        {
+            mAspectRatio = ASPECT_RATIO_16_10;
+            mAspectRatioMode = 1;
+        }
+        if(aspectRatio == "16_9")
+        {
+            mAspectRatio = ASPECT_RATIO_16_9;
+            mAspectRatioMode = 2;
+        }
+
+        mScreen = SDL_SetVideoMode(mScreenWidth,mScreenHeight,Ogre::StringConverter::parseUnsignedInt(config.getSetting("colourDepth")),0);
+        if (!rs)
+        {
+            // Unrecognised render system
+            return false;
+        }
+
+        mRoot->setRenderSystem(rs);
+
+        // Input Configuration Section
+        Ogre::String inputSectName = "input";
+
+        Ogre::String inputJoyAxisLeft = "JOY_AXIS_LEFT";
+        Ogre::String inputJoyAxisRight = "JOY_AXIS_RIGHT";
+        int numPlayers = Ogre::StringConverter::parseInt(config.getSetting("numPlayers",inputSectName));
+
+        Ogre::String inputPlayerCnfName = "input player";
+        for(int i = 0; i!= numPlayers; ++i)
+        {
+            PlayerInput *player = mInputMan->getPlayer(i);
+
+            Ogre::String inputPCN_ID = inputPlayerCnfName + Ogre::StringConverter::toString(i+1);
+
+            int useJoyID = Ogre::StringConverter::parseInt(config.getSetting("useJoystickID",inputPCN_ID));
+            if(useJoyID != 0)
+            {
+                player->setJoystick(mInputMan->getJoystick(useJoyID));
+            }
+            if(Ogre::StringConverter::parseBool(config.getSetting("useAnalogAxisLeft",inputPCN_ID)))
+            {
+                bool invertOrder = Ogre::StringConverter::parseBool(config.getSetting("invertAnalogLeftAxisOrder",inputPCN_ID));
+                bool invertX = Ogre::StringConverter::parseBool(config.getSetting("invertAnalogLeftAxisXPolarity",inputPCN_ID));
+                bool invertY = Ogre::StringConverter::parseBool(config.getSetting("invertAnalogLeftAxisYPolarity",inputPCN_ID));
+                Ogre::String analogLeftAxis      = config.getSetting("analogLeftAxis",inputPCN_ID);
+                AXIS leftAxis;
+                char inputInvert = 0;
+
+                if(invertOrder)
+                    inputInvert |= InputSource::INV_ORDER;
+
+                if(invertX)
+                    inputInvert |= InputSource::INV_X_POLARITY;
+
+                if(invertY)
+                    inputInvert |= InputSource::INV_Y_POLARITY;
+
+                if(analogLeftAxis == inputJoyAxisLeft)
+                {
+                    leftAxis = AX_LEFT;
+                }
+                if(analogLeftAxis == inputJoyAxisRight)
+                {
+                    leftAxis = AX_RIGHT;
+                }
+
+                player->configAxis(Sonetto::AX_LEFT,Sonetto::InputSource(true,InputSource::IST_AXIS,leftAxis, inputInvert));
+
+            } else {
+                Ogre::String digitalLeftAxisUp      = config.getSetting("digitalLeftAxisUp",inputPCN_ID);
+                Ogre::String digitalLeftAxisRight   = config.getSetting("digitalLeftAxisRight",inputPCN_ID);
+                Ogre::String digitalLeftAxisDown    = config.getSetting("digitalLeftAxisDown",inputPCN_ID);
+                Ogre::String digitalLeftAxisLeft    = config.getSetting("digitalLeftAxisLeft",inputPCN_ID);
+
+                InputSource::TYPE digitalKeyType;
+                size_t digitalKeyId;
+                getKeyConfig(digitalLeftAxisUp,digitalKeyType,digitalKeyId);
+                player->configAxis(Sonetto::AXE_LEFT_UP, Sonetto::InputSource(true, digitalKeyType, digitalKeyId));
+                getKeyConfig(digitalLeftAxisRight,digitalKeyType,digitalKeyId);
+                player->configAxis(Sonetto::AXE_LEFT_RIGHT, Sonetto::InputSource(true, digitalKeyType, digitalKeyId));
+                getKeyConfig(digitalLeftAxisDown,digitalKeyType,digitalKeyId);
+                player->configAxis(Sonetto::AXE_LEFT_DOWN, Sonetto::InputSource(true, digitalKeyType, digitalKeyId));
+                getKeyConfig(digitalLeftAxisLeft,digitalKeyType,digitalKeyId);
+                player->configAxis(Sonetto::AXE_LEFT_LEFT, Sonetto::InputSource(true, digitalKeyType, digitalKeyId));
+            }
+
+            if(Ogre::StringConverter::parseBool(config.getSetting("useAnalogAxisRight",inputPCN_ID)))
+            {
+                bool invertOrder = Ogre::StringConverter::parseBool(config.getSetting("invertAnalogRightAxisOrder",inputPCN_ID));
+                bool invertX = Ogre::StringConverter::parseBool(config.getSetting("invertAnalogRightAxisXPolarity",inputPCN_ID));
+                bool invertY = Ogre::StringConverter::parseBool(config.getSetting("invertAnalogRightAxisYPolarity",inputPCN_ID));
+                Ogre::String analogRightAxis      = config.getSetting("analogRightAxis",inputPCN_ID);
+                AXIS rightAxis;
+                char inputInvert = 0;
+
+                if(invertOrder)
+                    inputInvert |= InputSource::INV_ORDER;
+
+                if(invertX)
+                    inputInvert |= InputSource::INV_X_POLARITY;
+
+                if(invertY)
+                    inputInvert |= InputSource::INV_Y_POLARITY;
+
+                if(analogRightAxis == inputJoyAxisLeft)
+                {
+                    rightAxis = AX_LEFT;
+                }
+                if(analogRightAxis == inputJoyAxisRight)
+                {
+                    rightAxis = AX_RIGHT;
+                }
+
+                player->configAxis(Sonetto::AX_RIGHT,Sonetto::InputSource(true,InputSource::IST_AXIS, rightAxis, inputInvert));
+
+            } else {
+                Ogre::String digitalRightAxisUp      = config.getSetting("digitalRightAxisUp",inputPCN_ID);
+                Ogre::String digitalRightAxisRight   = config.getSetting("digitalRightAxisRight",inputPCN_ID);
+                Ogre::String digitalRightAxisDown    = config.getSetting("digitalRightAxisDown",inputPCN_ID);
+                Ogre::String digitalRightAxisLeft    = config.getSetting("digitalRightAxisLeft",inputPCN_ID);
+
+                InputSource::TYPE digitalKeyType;
+                size_t digitalKeyId;
+                getKeyConfig(digitalRightAxisUp,digitalKeyType,digitalKeyId);
+                player->configAxis(Sonetto::AXE_RIGHT_UP, Sonetto::InputSource(true, digitalKeyType, digitalKeyId));
+                getKeyConfig(digitalRightAxisRight,digitalKeyType,digitalKeyId);
+                player->configAxis(Sonetto::AXE_RIGHT_RIGHT, Sonetto::InputSource(true, digitalKeyType, digitalKeyId));
+                getKeyConfig(digitalRightAxisDown,digitalKeyType,digitalKeyId);
+                player->configAxis(Sonetto::AXE_RIGHT_DOWN, Sonetto::InputSource(true, digitalKeyType, digitalKeyId));
+                getKeyConfig(digitalRightAxisLeft,digitalKeyType,digitalKeyId);
+                player->configAxis(Sonetto::AXE_RIGHT_LEFT, Sonetto::InputSource(true, digitalKeyType, digitalKeyId));
+            }
+            InputSource::TYPE controlKeyType;
+            size_t controlKeyId;
+
+            getKeyConfig(config.getSetting("buttonTriangle",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_TRIANGLE,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("buttonCircle",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_CIRCLE,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("buttonCross",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_CROSS,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("buttonSquare",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_SQUARE,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("buttonL2",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_L2,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("buttonR2",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_R2,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("buttonL1",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_L1,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("buttonR1",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_R1,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("buttonStart",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_START,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("buttonSelect",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_SELECT,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("buttonL3",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_L3,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("buttonR3",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_R3,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("digitalPadUp",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_DPAD_UP,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("digitalPadRight",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_DPAD_RIGHT,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("digitalPadDown",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_DPAD_DOWN,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            getKeyConfig(config.getSetting("digitalPadLeft",inputPCN_ID),controlKeyType,controlKeyId);
+            player->configBtn(Sonetto::BTN_DPAD_LEFT,Sonetto::InputSource(true,controlKeyType,controlKeyId));
+
+            player->setEnabled(true);
+        }
+
+        // Audio Configuration
+        Ogre::String audioSectName = "audio";
+        Ogre::Real musicMasterVolume = Ogre::StringConverter::parseReal(config.getSetting("musicVolume",audioSectName));
+        Ogre::Real soundMasterVolume = Ogre::StringConverter::parseReal(config.getSetting("soundVolume",audioSectName));
+        mAudioMan->setMasterMusicVolume(musicMasterVolume);
+        mAudioMan->setMasterSoundVolume(soundMasterVolume);
+
+        return true;
+    }
+    void Kernel::getKeyConfig(const Ogre::String &key, InputSource::TYPE &type, size_t &keyid)
+    {
+        bool isKeyboard = Ogre::StringUtil::startsWith(key, INPUT_KEYBOARD_KEY, false);
+        bool isJoystick = Ogre::StringUtil::startsWith(key, INPUT_JOYSTICK_KEY, false);
+
+        if(!isKeyboard && !isJoystick)
+        {
+            type = InputSource::IST_KEY;
+            keyid = 0;
+            return;
+        }
+
+        Ogre::String keyTypeString;
+        if(isKeyboard)
+        {
+            keyTypeString = INPUT_KEYBOARD_KEY;
+            type = InputSource::IST_KEY;
+        }
+
+        if(isJoystick)
+        {
+            keyTypeString = INPUT_JOYSTICK_KEY;
+            type = InputSource::IST_BUTTON;
+        }
+
+        Ogre::String keyvalue = key;
+
+        keyvalue.erase(0, keyTypeString.size());
+
+        keyid = Ogre::StringConverter::parseUnsignedInt(keyvalue);
+
     }
     //-----------------------------------------------------------------------------
     Viewport *Kernel::getViewport()

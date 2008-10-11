@@ -12,14 +12,10 @@
 				<Option object_output="..\obj\release\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option use_console_runner="0" />
 				<Compiler>
-					<Add option="-fexpensive-optimizations" />
-					<Add option="-O3" />
 					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
 					<Add library="libsonetto" />
 					<Add library="OgreMain" />
 					<Add library="default_map" />
