@@ -213,62 +213,52 @@ namespace Sonetto
     }
     //-------------------------------------------------------------------------
     bool WalkmeshManager::walkmeshBorderCross(EventObject *evt,
-            Ogre::Vector3 &position,const Ogre::Vector2 &move_vector)
+            Ogre::Vector3 &position)
     {
-        int current_triangle = mEventInfo.find(evt)->second.triangle;
-        if (current_triangle == -1)
+        int curTri = mEventInfo.find(evt)->second.triangle;
+
+        while (true)
         {
-            return true;
-        }
+            int nextTri = -1;
 
-        Ogre::Vector2 pos = Ogre::Vector2(position.x, position.z);
+            // Gets current triangle's vertex coordinates
+            Ogre::Vector3 vA = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,0)];
+            Ogre::Vector3 vB = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,1)];
+            Ogre::Vector3 vC = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,2)];
 
-        for (;;)
-        {
-            Ogre::Vector3 A3 = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(current_triangle,0)];
-            Ogre::Vector3 B3 = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(current_triangle,1)];
-            Ogre::Vector3 C3 = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(current_triangle,2)];
+            // <todo> Unknown variables - What the hell are they?
+            // We can only guess that they will be lesser than 0.0f when
+            // the line was crossed, but how it works I simply cannot understand
+            float sign1 = Math::sideOfVector(position,vB,vA);
+            float sign2 = Math::sideOfVector(position,vC,vB);
+            float sign3 = Math::sideOfVector(position,vA,vC);
 
-            Ogre::Vector2 A(A3.x, A3.z);
-            Ogre::Vector2 B(B3.x, B3.z);
-            Ogre::Vector2 C(C3.x, C3.z);
+            if (sign1 < 0) {
+                nextTri = mWalkmesh.getBorderLink(curTri,0);
+            } else
+            if (sign2 < 0) {
+                nextTri = mWalkmesh.getBorderLink(curTri,1);
+            } else
+            if (sign3 < 0) {
+                nextTri = mWalkmesh.getBorderLink(curTri,2);
+            } else { // Not crossing any borders
+                // Gets destination elevation and saves current
+                // triangle into event info map
+                position.y = Math::pointElevation(position,vA,vB,vC);
+                mEventInfo.find(evt)->second.triangle = curTri;
 
-            float sign1 = Math::side_of_vector(pos, B, A);
-            float sign2 = Math::side_of_vector(pos, C, B);
-            float sign3 = Math::side_of_vector(pos, A, C);
-
-            int next_triangle = -1;
-
-            if (sign1 < 0)
-            {
-                next_triangle = mWalkmesh.getBorderLink(current_triangle,0);
-            }
-            else if (sign2 < 0)
-            {
-                next_triangle = mWalkmesh.getBorderLink(current_triangle,1);
-            }
-            else if (sign3 < 0)
-            {
-                next_triangle = mWalkmesh.getBorderLink(current_triangle,2);
-            }
-            else
-            {
-                //log->logMessage("In triangle.");
-                position.y = Math::pointElevation(Ogre::Vector3(pos.x,0.0f,pos.y),A3,B3,C3);
-                //log->logMessage("Stop CheckTriangles with 0 and triangle " + Ogre::StringConverter::toString(current_triangle) + ".");
-                mEventInfo.find(evt)->second.triangle = current_triangle;
+                // No borders were crossed, so we return false
                 return false;
             }
 
-            if (next_triangle >= 0)
+            if (nextTri >= 0)
             {
-                current_triangle = next_triangle;
+                curTri = nextTri;
                 continue;
             }
 
-            position.y = Math::pointElevation(Ogre::Vector3(pos.x,0.0f,pos.y),A3,B3,C3);
-            //log->logMessage("Stop CheckTriangles with 1 and triangle " + Ogre::StringConverter::toString(current_triangle) + ".");
-            mEventInfo.find(evt)->second.triangle = current_triangle;
+            position.y = Math::pointElevation(position,vA,vB,vC);
+            mEventInfo.find(evt)->second.triangle = curTri;
             return true;
         }
     }
@@ -276,43 +266,58 @@ namespace Sonetto
     bool WalkmeshManager::checkCollisions(EventObject *evt,
             Ogre::Vector3 &position)
     {
+        // If we have our ignore collisions flag set, we should return false
         if (evt->getIgnoreCollision() == true)
         {
             return false;
         }
 
+        // Loops through all registered events inside this walkmesh manager
         for (WalkmeshEventInfoMap::iterator i = mEventInfo.begin();
                 i != mEventInfo.end();++i)
         {
             const EventObject *evt2 = i->first;
 
-            if (evt2->getIgnoreCollision() == true)
+            // Skips if this event (`evt2') is the same as inputed (`evt')
+            // or if its ignore collisions flag is set
+            if (evt2 == evt || evt2->getIgnoreCollision() == true)
             {
                 continue;
             }
 
-            if (evt2 == evt)
-            {
-                continue;
+            // Gets event's position and collision radius
+            Ogre::Vector3 pos2 = evt2->getPosition();
+            float colRadius = evt2->getColRadius();
+
+            // The height we need to check depends on which event is below which
+            float height;
+            if (pos2.y >= position.y) {
+                height = evt->getHeight();
+            } else {
+                height = evt2->getHeight();
             }
 
-            Ogre::Vector3 pos1 = evt2->getPosition();
-            int solid_range = 2.0f; // m_Models[i]->GetSolidRange();
-
-            int height = (pos1.y < position.y) ? evt2->getHeight() : evt->getHeight();
-
-            if (((pos1.y - position.y + height) < (height * 2)) && ((pos1.y - position.y + height) >= 0))
+            // Check if the two events potentially intersect given their distance
+            // on the Y axis and the height chosen up there
+            if (( pos2.y - position.y + height <  height * 2 ) &&
+                ( pos2.y - position.y + height >= 0          ) )
             {
-                solid_range = solid_range * solid_range;
-                float distance = (pos1.x - position.x) * (pos1.x - position.x) + (pos1.z - position.z) * (pos1.z - position.z);
+                // Squares colRadius to avoid needing to square root the distance
+                colRadius *= colRadius;
+                float distance = ( (pos2.x - position.x) * (pos2.x - position.x) ) +
+                                 ( (pos2.z - position.z) * (pos2.z - position.z) );
 
-                if (distance < solid_range)
+                // If the squared distance is smaller than the squared radius, then
+                // the cylinders intersect, in which case we return true
+                if (distance < colRadius)
                 {
                     return true;
                 }
             }
         }
 
+        // Returns false if our event's cylinder didn't intersect with any
+        // other events
         return false;
     }
     //-------------------------------------------------------------------------
@@ -344,24 +349,40 @@ namespace Sonetto
     }
     //-------------------------------------------------------------------------
     void WalkmeshManager::moveEvent(EventObject *evt,
-            const Ogre::Vector3 &moveVector)
+            const Ogre::Vector3 &xzMoveVector)
     {
         WalkmeshEventInfoMap::iterator iter = mEventInfo.find(evt);
 
         // Checks whether the event is registered or not
         if (iter == mEventInfo.end())
         {
-            SONETTO_THROW("Trying to move an event object that is not registered");
+            SONETTO_THROW("Trying to move an event object that is not "
+                    "registered");
         }
 
+        // Gets this event object's current triangle
         int curTri = iter->second.triangle;
-        Ogre::Vector3 start_point(evt->getPosition());
-        Ogre::Vector2 direction(moveVector.x,moveVector.z);
 
-        Ogre::Vector3 rotation(0.0f, 0.0f, 0.0f);
-        Ogre::Quaternion q1 (0.0f, 0.0f, 0.0f, 1.0f);
-        Ogre::Vector3 end_point(0.0f, 0.0f, 0.0f);
-        Ogre::Vector3 end_point2(0.0f, 0.0f, 0.0f);
+        // Checks whether the EventInfo for this EventObject
+        // is initialised or not
+        if (curTri == -1)
+        {
+            SONETTO_THROW("Trying to use a registered but not initialised "
+                    "event object");
+        }
+
+        // Gets this event object's current position
+        Ogre::Vector3 startPoint(evt->getPosition());
+
+        // This `direction' vector will be modified later
+        // That's why it is copied to a local variable instead of being used
+        // directly by accessing `xzMoveVector'
+        Ogre::Vector3 direction(xzMoveVector);
+
+        Ogre::Quaternion q1(0.0f, 0.0f, 0.0f, 1.0f); // Used to rotate vectors
+        Ogre::Vector3 endPoint(0.0f, 0.0f, 0.0f);    // Destination point
+
+        // Collision check flags
         bool first_triangle_check  = false;
         bool second_triangle_check = false;
         bool third_triangle_check  = false;
@@ -370,153 +391,160 @@ namespace Sonetto
         bool second_entity_check   = false;
         bool third_entity_check    = false;
 
-        // shorten move vector by triangle angle
-        end_point.x = start_point.x + direction.x;
-        end_point.z = start_point.z + direction.y;
-        Ogre::Vector3 A3 = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,0)];
-        Ogre::Vector3 B3 = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,1)];
-        Ogre::Vector3 C3 = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,2)];
-        end_point.y = Math::pointElevation(end_point,A3,B3,C3);
-        Ogre::Vector3 temp = end_point - start_point;
-        temp.normalise();
-        temp = temp * direction.length();
-        direction.x = temp.x;
-        direction.y = temp.z;
+        // <todo> Move the event freely when evt->getIgnoreCollisions() is set
+        // We will need a better name to `xzMoveVector' when we implement that
+        // Calculates final desired destination on the XZ plane
+        endPoint = startPoint + xzMoveVector;
+
+        // Gets current triangle's vertex coordinates
+        Ogre::Vector3 vA =
+                mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,0)];
+        Ogre::Vector3 vB =
+                mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,1)];
+        Ogre::Vector3 vC =
+                mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,2)];
+
+        // Gets the Y elevation based on the destination
+        // coordinates on the XZ plane
+        endPoint.y = Math::pointElevation(endPoint,vA,vB,vC);
+
+        // Gets a vector that begins on the start point and ends on
+        // the end point, taking into account the Y-axis elevation difference
+        // between them, and normalises it
+        Ogre::Vector3 xyzMoveVector = endPoint - startPoint;
+        xyzMoveVector.normalise();
+
+        // Scales the XYZ move vector to the length of the XZ move vector
+        // This will make the XYZ move vector have the same length as the
+        // inputed xzMoveVector, resulting in the same move velocity
+        xyzMoveVector *= direction.length();
+
+        // Gets final direction back from the xyzMoveVector
+        // They are changed now, since xyzMoveVector cares about elevation
+        direction.x = xyzMoveVector.x;
+        direction.z = xyzMoveVector.z;
 
         for (int i = 0; i < 17; ++i)
         {
-            // multiply move_vector by speed
-            ////////////////////////////////////////
-            Ogre::Vector2 speed = direction;
+            Ogre::Vector3 rotatedDirection(0.0f, 0.0f, 0.0f);
+            Ogre::Vector3 rotatedEndPoint(0.0f,0.0f,0.0f);
 
-            ////////////////////////////////////////
-            //LOGGER->Log(LOGGER_WARNING, "Move vector with speed: %f %f.", direction.x, direction.y);
-            // get ending point
-            end_point = Ogre::Vector3(start_point.x + speed.x,start_point.y,start_point.z + speed.y);
-            //LOGGER->Log(LOGGER_WARNING, "End point: %f %f %f.", end_point.x, end_point.y, end_point.z);
-
-
+            // <todo> Should we implement an EventObject::getSpeed()
+            // and apply it here?
+            endPoint = startPoint + (direction /* * evt->getSpeed() */);
 
             // 1st check
-            // rotate move_vector +45
-            q1.FromAngleAxis(Ogre::Radian(Ogre::Degree(45)), Ogre::Vector3::UNIT_Y);
-            rotation.x = direction.x;
-            rotation.y = 0.0f;
-            rotation.z = direction.y;
-            rotation = q1 * rotation;
+            // Rotates direction by +45 degrees on the Y axis
+            q1.FromAngleAxis(Ogre::Radian(Ogre::Degree(45.0f)),
+                    Ogre::Vector3::UNIT_Y);
+            rotatedDirection = q1 * direction;
 
-            // multiply move_vector by solid range
-            rotation = rotation * 20.0f;
-            end_point2.x = end_point.x + rotation.x;
-            end_point2.z = end_point.z + rotation.z;
+            // rotatedDirection is an unit vector
+            // Multiplying it by the collision radius will make it length
+            // the same as the radius
+            rotatedDirection *= evt->getColRadius();
 
-            // check_triangle
-            first_triangle_check = walkmeshBorderCross(evt,end_point2,direction);
+            // Calculates rotated end point
+            rotatedEndPoint = endPoint + rotatedDirection;
+
+            // Checks rotated end point against the walkmesh and restores
+            // current triangle event information (it is changed by
+            // walkmeshBorderCross())
+            first_triangle_check = walkmeshBorderCross(evt,rotatedEndPoint);
             mEventInfo.find(evt)->second.triangle = curTri;
 
-            // model_check
-            first_entity_check = checkCollisions(evt, end_point2);
-
-
-
+            // Checks rotated end point against other events
+            first_entity_check = checkCollisions(evt,rotatedEndPoint);
 
             // 2nd check
-            // rotate move_vector +45
-            q1.FromAngleAxis(Ogre::Radian(Ogre::Degree(-45)), Ogre::Vector3::UNIT_Y);
-            rotation.x = direction.x;
-            rotation.y = 0.0f;
-            rotation.z = direction.y;
-            rotation = q1 * rotation;
+            // Rotates direction by -45 degrees on the Y axis
+            q1.FromAngleAxis(Ogre::Radian(Ogre::Degree(-45.0f)),
+                    Ogre::Vector3::UNIT_Y);
+            rotatedDirection = q1 * direction;
 
-            // multiply move_vector by solid range
-            rotation = rotation * 20.0f;
-            end_point2.x = end_point.x + rotation.x;
-            end_point2.z = end_point.z + rotation.z;
+            // rotatedDirection is an unit vector
+            // Multiplying it by the collision radius will make it length
+            // the same as the radius
+            rotatedDirection *= evt->getColRadius();
 
-            // check triangle
-            second_triangle_check = walkmeshBorderCross(evt,end_point2,direction);
+            // Calculates rotated end point
+            rotatedEndPoint = endPoint + rotatedDirection;
+
+            // Checks rotated end point against the walkmesh and restores
+            // current triangle event information (it is changed by
+            // walkmeshBorderCross())
+            second_triangle_check = walkmeshBorderCross(evt,rotatedEndPoint);
             mEventInfo.find(evt)->second.triangle = curTri;
 
-            // model_check
-            second_entity_check = checkCollisions(evt, end_point2);
+            // Checks rotated end point against other events
+            second_entity_check = checkCollisions(evt,rotatedEndPoint);
 
 
 
             // 3rd check
-            // multiply move_vector by solid range
-            //rotation *= m_Models[model_id]->GetSolidRange();
-            rotation.x = direction.x;
-            rotation.y = 0.0f;
-            rotation.z = direction.y;
-            rotation = rotation * 20.0f;
-            end_point2.x = end_point.x + rotation.x;
-            end_point2.z = end_point.z + rotation.z;
+            // The third check doesn't rotate the direction vector
+            // It is the check responsible for checking whether there is a
+            // collision directly to the front of our move vector
+            rotatedDirection = direction;
+            rotatedEndPoint = endPoint + rotatedDirection;
 
-            // check triangle
-            third_triangle_check = walkmeshBorderCross(evt,end_point2,direction);
+            // Checks end point against the walkmesh and restores
+            // current triangle event information (it is changed by
+            // walkmeshBorderCross())
+            third_triangle_check = walkmeshBorderCross(evt,rotatedEndPoint);
             mEventInfo.find(evt)->second.triangle = curTri;
 
-            // model_check
-            third_entity_check = checkCollisions(evt, end_point2);
+            // Checks end point against other events
+            third_entity_check = checkCollisions(evt,rotatedEndPoint);
 
-            // check condition and modify move_vector
-            if (first_triangle_check  != false || second_triangle_check != false || third_triangle_check  != false ||
-                first_entity_check    != false || second_entity_check   != false || third_entity_check    != false)
+            // Checks collision flags and modify `direction' vector accordingly,
+            // and then rechecking
+            // <todo> Do we really need to check whether no event collision is
+            // happening? It doesn't make sense!
+            if (first_triangle_check  == true ||
+                second_triangle_check == true ||
+                third_triangle_check  == true )
             {
+                // <todo> From here on I can't make heads or tails of this code
+                // if not both left and right check was fail
+                if (first_triangle_check == false || second_triangle_check == false)
                 {
-                    if (first_entity_check  == false &&
-                        second_entity_check == false &&
-                        third_entity_check  == false)
+                    if ( (first_triangle_check == false && first_entity_check == true    ) ||
+                         (first_triangle_check == true  && second_triangle_check == false) )
                     {
-                        // if not both left and right check was fail
-                        if (first_triangle_check == false || second_triangle_check == false)
-                        {
-                            if ((first_triangle_check == false && first_entity_check != false) ||
-                                (first_triangle_check != false && second_triangle_check == false))
-                            {
-                                q1.FromAngleAxis(Ogre::Radian(Ogre::Degree(-11.25f)), Ogre::Vector3::UNIT_Y);
-                                rotation.x = direction.x;
-                                rotation.z = direction.y;
-                                rotation = q1 * rotation;
-                                direction.x = rotation.x;
-                                direction.y = rotation.z;
-                            }
-
-                            if (first_triangle_check == false &&
-                                first_entity_check == false &&
-                                (second_triangle_check != false || second_entity_check != false))
-                            {
-                                q1.FromAngleAxis(Ogre::Radian(Ogre::Degree(11.25f)), Ogre::Vector3::UNIT_Y);
-                                rotation.x = direction.x;
-                                rotation.z = direction.y;
-                                rotation = q1 * rotation;
-                                direction.x = rotation.x;
-                                direction.y = rotation.z;
-                            }
-
-                            continue;
-                        }
-
-                        break;
+                        q1.FromAngleAxis(Ogre::Radian(Ogre::Degree(-11.25f)), Ogre::Vector3::UNIT_Y);
+                        direction = q1 * direction;
                     }
+
+                    if ( first_triangle_check  == false &&
+                         first_entity_check    == false &&
+                        (second_triangle_check == true || second_entity_check == true) )
+                    {
+                        q1.FromAngleAxis(Ogre::Radian(Ogre::Degree(11.25f)), Ogre::Vector3::UNIT_Y);
+                        direction = q1 * direction;
+                    }
+
+                    continue;
                 }
+
+                break;
             }
         }
 
-        // set new X, Y and Z
-        last_triangle_check = walkmeshBorderCross(evt,end_point,direction);
+        // Checks whether our final position is free
+        last_triangle_check = walkmeshBorderCross(evt,endPoint);
 
-        if (first_triangle_check  != false ||
-            second_triangle_check != false ||
-            third_triangle_check  != false ||
-            last_triangle_check   != false ||
-            first_entity_check    != false ||
-            second_entity_check   != false ||
-            third_entity_check    != false)
+        // Only sets final event position if no collide flags are
+        // still set to true
+        if (first_triangle_check  == false &&
+            second_triangle_check == false &&
+            third_triangle_check  == false &&
+            last_triangle_check   == false &&
+            first_entity_check    == false &&
+            second_entity_check   == false &&
+            third_entity_check    == false )
         {
-            return;
+            evt->setPosition(endPoint);
         }
-
-        evt->setPosition(end_point);
     }
 } // namespace
