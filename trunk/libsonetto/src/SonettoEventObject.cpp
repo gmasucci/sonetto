@@ -29,6 +29,7 @@ namespace Sonetto {
                                 float height,
                                 float actRadius,
                                 float colRadius,
+                                float speed,
                                 bool noVisibleEntity,
                                 const Ogre::String &modelname) :
                                 mEventState(ES_NORMAL),
@@ -42,7 +43,8 @@ namespace Sonetto {
                                 mTargetPosition(Ogre::Vector3(0.0f,0.0f,0.0f)),
                                 mHeight(height),
                                 mActRadius(actRadius),
-                                mColRadius(colRadius)
+                                mColRadius(colRadius),
+                                mSpeed(speed)
     {
         mNode = mParent->createChildSceneNode(mName + "_node");
         if(!mInvisible)

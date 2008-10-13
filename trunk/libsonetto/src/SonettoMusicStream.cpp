@@ -220,8 +220,8 @@ namespace Sonetto
         mMusic = id;
 
         // Sets fade state and speed
-        mFadeSpd = fadeIn;
-        if (fadeIn == 0.0f) {
+        mFadeSpd = Math::clamp(fadeIn,0.0f,1.0f);
+        if (mFadeSpd == 0.0f) {
             mFadeVolume = 1.0f;
             mFade = MF_NO_FADE;
         } else {
@@ -275,10 +275,11 @@ namespace Sonetto
                                 "Failed playing music source");
     }
     //-----------------------------------------------------------------------------
-    void MusicStream::_stop(float fadeOut)
+    void MusicStream::_stop(float aFadeOut)
     {
         if (mMusic != 0)
         {
+            float fadeOut = Math::clamp(aFadeOut,0.0f,1.0f);
             if (fadeOut == 0.0f) {
                 int buffers;
                 size_t unqueue[2];
@@ -306,7 +307,7 @@ namespace Sonetto
         }
     }
     //-----------------------------------------------------------------------------
-    void MusicStream::_resume(float fadeIn)
+    void MusicStream::_resume(float aFadeIn)
     {
         if (mMusic != 0)
         {
@@ -319,6 +320,7 @@ namespace Sonetto
 
             if (srcState == AL_PAUSED)
             {
+                float fadeIn = Math::clamp(aFadeIn,0.0f,1.0f);
                 // Starts playing music
                 alSourcePlay(mMusicSrc);
                 mAudioMan->_alErrorCheck("MusicStream::_resume()",
@@ -340,7 +342,7 @@ namespace Sonetto
         }
     }
     //-----------------------------------------------------------------------------
-    void MusicStream::_pause(float fadeOut)
+    void MusicStream::_pause(float aFadeOut)
     {
         if (mMusic != 0)
         {
@@ -353,6 +355,7 @@ namespace Sonetto
 
             if (srcState == AL_PLAYING)
             {
+                float fadeOut = Math::clamp(aFadeOut,0.0f,1.0f);
                 if (fadeOut == 0.0f) {
                     alSourcePause(mMusicSrc);
                     mAudioMan->_alErrorCheck("MusicStream::_pause()",

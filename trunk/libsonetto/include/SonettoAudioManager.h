@@ -59,7 +59,7 @@ namespace Sonetto
             volume Master Music Volume (clamped between 0.0f and 1.0f).
         */
         inline void setMasterMusicVolume(float volume)
-                { mMasterMusicVolume = volume; }
+                { mMasterMusicVolume = Math::clamp(volume,0.0f,1.0f); }
 
         /** Gets the AudioManager Master Music Volume
 
@@ -77,7 +77,7 @@ namespace Sonetto
             volume Master Sound Volume (clamped between 0.0f and 1.0f).
         */
         inline void setMasterSoundVolume(float volume)
-                { mMasterSoundVolume = volume; }
+                { mMasterSoundVolume = Math::clamp(volume,0.0f,1.0f); }
 
         /** Gets the AudioManager Master Sound Volume
 
@@ -116,46 +116,47 @@ namespace Sonetto
             is no music playing at all. In this case, it will start playing the
             desired music as soon as the method gets called. If there is already
             a BGM playing, it will be set to fade out at the desired speed
-            (`fadeOut'), and only after that it will play this music (see fadeEnded()).
+            (`aFadeOut'), and only after that it will play this music (see fadeEnded()).
             If there is an ME currently playing, this method silently overwrites
             the saved data of the old BGM queued to play after the ME with this new
             music's information. This way, this music will only play when the ME ends
             streaming (see streamEnded()). In any case, when this music finally starts
-            to be played, it will start at its maximum volume if `fadeIn' is set to 0.0f,
+            to be played, it will start at its maximum volume if `aFadeIn' is set to 0.0f,
             or it will start from mute and fade in at the desired speed, until it reaches
             its maximum volume if not. Fade values must never be negative.
         @param
             id The music index inside mMusics to be played as a BGM.
         @param
-            fadeOut The fade value in which the current BGM will fade out before starting
-            the new BGM.
+            aFadeOut The fade value in which the current BGM will fade out before starting
+            the new BGM (clamped between 0.0f and 1.0f).
         @param
-            fadeIn The fade value in which this new BGM will fade in.
+            aFadeIn The fade value in which this new BGM will fade in (clamped between 0.0f
+            and 1.0f).
         */
-        void playBGM(size_t id,float fadeOut,float fadeIn);
+        void playBGM(size_t id,float aFadeOut,float aFadeIn);
 
         /** Plays a music effect
 
             The MEs can have three case scenarios. The first one is when no music is playing
             at all, in which case it just streams the music until its end and stop. In this
-            case, there is no BGM to faded in or out, so the `fadeOut' and `fadeIn' variables
+            case, there is no BGM to faded in or out, so the `aFadeOut' and `aFadeIn' variables
             are unused. The second case happens when there is a BGM currently playing. In this
-            case, the BGM fades out (`fadeOut'), the ME is played once, and the old BGM is
-            recovered from the position it stopped and fades in (`fadeIn'). If `fadeOut' is set
+            case, the BGM fades out (`aFadeOut'), the ME is played once, and the old BGM is
+            recovered from the position it stopped and fades in (`aFadeIn'). If `aFadeOut' is set
             to 0.0f, this method starts playing the ME as soon as it gets called. The third
             case scenario occurs when there already is an ME playing, in which case this method
-            will replace the old ME without any fading at all. The supplied `fadeIn' argument
+            will replace the old ME without any fading at all. The supplied `aFadeIn' argument
             will overwrite the old one too, and the old BGM will be recovered with the fade in
             speed given to this method.
         @param
             id The music index inside mMusics to be played as an ME.
         @param
-            fadeOut The fade speed in which the current BGM will fade out before starting
+            aFadeOut The fade speed in which the current BGM will fade out before starting
             this ME.
         @param
-            fadeIn The fade speed in which the old BGM will fade in when this ME ends.
+            aFadeIn The fade speed in which the old BGM will fade in when this ME ends.
         */
-        void playME(size_t id,float fadeOut,float fadeIn);
+        void playME(size_t id,float aFadeOut,float aFadeIn);
 
         /** Stops current music being played
 
@@ -270,18 +271,21 @@ namespace Sonetto
             This method creates a sound the same way you would using createSound(),
             but it automatically plays the sound source, and returns no reference to
             it, so that it will be played once and then deleted.
+        @note
+            This method will not created any sound if aMaxVolume is set to 0.0f (it
+            would never be heard, anyway).
         @see
             createSound()
         @param
             id Sound ID to be created (0 is invalid).
         @param
-            maxVolume The maximum volume the sound source will reach (i.e. when near
-            to the AudioManager listener).
+            aMaxVolume The maximum volume the sound source will reach (i.e. when near
+            to the AudioManager listener - clamped between 0.0f and 1.0f).
         @param
             node Node to which attach the sound source. NULL for it to follow
             AudioManager's listener node.
         */
-        void playSound(size_t id,float maxVolume = 1.0f,Ogre::Node *node = NULL);
+        void playSound(size_t id,float aMaxVolume = 1.0f,Ogre::Node *node = NULL);
 
         /** Throws an exception if OpenAL reports an error
 

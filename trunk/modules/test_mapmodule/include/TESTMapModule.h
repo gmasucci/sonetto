@@ -131,7 +131,7 @@ namespace Sonetto {
         Ogre::Light * mMainLight1;
 
         // Temporary Dummy Hero
-        HeroObject  *mDummyHero;
+        EventObject *mDummyHero;
 
         EventVector  mEvents;
 

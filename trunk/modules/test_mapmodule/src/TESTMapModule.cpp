@@ -62,19 +62,18 @@ namespace Sonetto {
         dummyEvent = new EventObject("Sphere",
                                     mSceneMan->getRootSceneNode(),
                                     mSceneMan,
-                                    2.0f,1.0f,2.0f,
+                                    2.0f,1.0f,2.0f,5.0f,
                                     false,
                                     "dummy_hero.mesh");
         dummyEvent->setPosition(7.20862f-3.0f,3.56544f,31.1969f-3.0f);
 
-        mDummyHero = new HeroObject("DummyHero",
+        mDummyHero = new EventObject("DummyHero",
                                     mSceneMan->getRootSceneNode(),
                                     mSceneMan,
-                                    2.0f,1.0f,2.0f,
+                                    2.0f,1.0f,2.0f,5.0f,
                                     false,
                                     "dummy_hero.mesh");
         mDummyHero->setPosition(7.20862f,3.36544f,31.1969f-1.0f);
-        mDummyHero->setHeroSpeed(4.5f);
         mWalkmeshMan->registerEvent(dummyEvent);
         mWalkmeshMan->registerEvent(mDummyHero);
         mCamera->setPosition(30.0f,30.0f,-30.0f);
@@ -158,8 +157,9 @@ namespace Sonetto {
             mDummyHero->setOrientation(finalOrientation *
                     mDummyHero->getOrientation());
 
+            // <todo> Get speed from EventObject
             mWalkmeshMan->moveEvent(mDummyHero,final *
-                    (mDummyHero->getHeroSpeed() * movMagnitude) * deltatime);
+                    movMagnitude * deltatime);
         }
 
         for (size_t i = 0;i < mEvents.size();++i)
@@ -170,7 +170,8 @@ namespace Sonetto {
         mAngle += Ogre::Radian(rot.x * deltatime);
 
         Ogre::Vector3 dpos = mDummyHero->getPosition();
-        mCamera->setPosition(dpos.x+(Math::Sin(Ogre::Radian(mAngle)))*30.f,dpos.y + 32.f,dpos.z + (Math::Cos(Ogre::Radian(mAngle))*30.0f));
+        mCamera->setPosition(dpos.x + (Ogre::Math::Sin(Ogre::Radian(mAngle))) * 30.f,
+                dpos.y + 32.f,dpos.z + (Ogre::Math::Cos(Ogre::Radian(mAngle)) * 30.0f));
         mCamera->lookAt(dpos.x, dpos.y + 2.0f,dpos.z);
 
         switch(mState)

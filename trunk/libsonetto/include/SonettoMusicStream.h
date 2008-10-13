@@ -25,7 +25,8 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include <cstdlib>
 #include <vorbis/vorbisfile.h>
-#include "SonettoMain.h"
+// #include "SonettoMain.h"
+#include "SonettoMath.h"
 
 namespace Sonetto
 {
@@ -86,13 +87,12 @@ namespace Sonetto
         /// Size of each OpenAL audio buffer
         static const size_t BUFFER_SIZE;
 
-        // <todo> Should we clamp this value?
         /** Sets the maximum volume
 
         @see
             mMaxVolume
         */
-        inline void setMaxVolume(float vol) { mMaxVolume = vol; }
+        inline void setMaxVolume(float vol) { mMaxVolume = Math::clamp(vol,0.0f,1.0f); }
 
         /// Checks whether this music is paused or not
         bool isPaused();
@@ -141,33 +141,33 @@ namespace Sonetto
 
         /** Stops the music
 
-            Fades out the music and then stops it. If `fadeOut' is 0.0f,
+            Fades out the music and then stops it. If `aFadeOut' is 0.0f,
             the music is stopped without fading.
         @param
-            fadeOut Fade speed in which the music will fade out before being
+            aFadeOut Fade speed in which the music will fade out before being
             stopped.
         */
-        void _stop(float fadeOut);
+        void _stop(float aFadeOut);
 
         /** Resumes the music
 
-            Unpauses the music and fades it in. If `fadeIn' is 0.0f, the music
+            Unpauses the music and fades it in. If `aFadeIn' is 0.0f, the music
             is played at its maximum volume as soon it starts playing.
         @param
-            fadeIn Fade speed in which the music will fade in before reaching
+            aFadeIn Fade speed in which the music will fade in before reaching
             its maximum volume.
         */
-        void _resume(float fadeIn);
+        void _resume(float aFadeIn);
 
         /** Pauses the music
 
-            Fades out the music and then pauses it. If `fadeOut' is 0.0f,
+            Fades out the music and then pauses it. If `aFadeOut' is 0.0f,
             the music is paused without fading.
         @param
-            fadeOut Fade speed in which the music will fade out before being
+            aFadeOut Fade speed in which the music will fade out before being
             paused.
         */
-        void _pause(float fadeOut);
+        void _pause(float aFadeOut);
 
     private:
         /** Protected constructor, only used by the AudioManager

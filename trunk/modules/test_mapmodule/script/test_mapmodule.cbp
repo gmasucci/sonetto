@@ -85,11 +85,9 @@
 			<Add directory="..\..\..\dependencies\lib\zlib" />
 			<Add directory="..\..\..\lib" />
 		</Linker>
-		<Unit filename="..\include\TESTHeroObject.h" />
 		<Unit filename="..\include\TESTMapModule.h">
 			<Option weight="0" />
 		</Unit>
-		<Unit filename="..\src\TESTHeroObject.cpp" />
 		<Unit filename="..\src\TESTMapModule.cpp" />
 		<Extensions>
 			<code_completion />

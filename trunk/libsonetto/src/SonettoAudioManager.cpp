@@ -32,8 +32,11 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     // Sonetto::AudioManager implementation.
     //-----------------------------------------------------------------------------
-    void AudioManager::playBGM(size_t id,float fadeOut,float fadeIn)
+    void AudioManager::playBGM(size_t id,float aFadeOut,float aFadeIn)
     {
+        float fadeOut = Math::clamp(aFadeOut,0.0f,1.0f);
+        float fadeIn  = Math::clamp(aFadeIn,0.0f,1.0f);
+
         // If there is nothing being played, start playing new BGM
         if (mMusicStream->getCurrentMusic() == 0    ||
             mMusicStream->isStopped()       == true ||
@@ -70,7 +73,7 @@ namespace Sonetto
         }
     }
     //-----------------------------------------------------------------------------
-    void AudioManager::playME(size_t id,float fadeOut,float fadeIn)
+    void AudioManager::playME(size_t id,float aFadeOut,float aFadeIn)
     {
         // If there is nothing being played, start playing new ME
         if (mMusicStream->getCurrentMusic() == 0    ||
@@ -81,6 +84,8 @@ namespace Sonetto
             return;
         }
 
+        float fadeOut = Math::clamp(aFadeOut,0.0f,1.0f);
+        float fadeIn  = Math::clamp(aFadeIn,0.0f,1.0f);
         if (fadeOut > 0.0f) {
             if (mMusicStream->_getLoop() == true) { // BGM playing
                 mNextME      = id;
@@ -111,7 +116,7 @@ namespace Sonetto
 
         // Stops the music
         if (mMusicStream->_getLoop() == true) { // BGM
-            mMusicStream->_stop(fadeOut);
+            mMusicStream->_stop(Math::clamp(fadeOut,0.0f,1.0f));
         } else { // ME (Music Effects don't fade)
             mMusicStream->_stop(0.0f);
         }
@@ -119,12 +124,12 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     void AudioManager::resumeMusic(float fadeIn)
     {
-        mMusicStream->_resume(fadeIn);
+        mMusicStream->_resume(Math::clamp(fadeIn,0.0f,1.0f));
     }
     //-----------------------------------------------------------------------------
     void AudioManager::pauseMusic(float fadeOut)
     {
-        mMusicStream->_pause(fadeOut);
+        mMusicStream->_pause(Math::clamp(fadeOut,0.0f,1.0f));
     }
     //-----------------------------------------------------------------------------
     AudioManager::AudioManager(const char *device)
@@ -439,12 +444,18 @@ namespace Sonetto
         return snd;
     }
     //-----------------------------------------------------------------------------
-    void AudioManager::playSound(size_t id,float maxVolume,Ogre::Node *node)
+    void AudioManager::playSound(size_t id,float aMaxVolume,Ogre::Node *node)
     {
-        // Creates sound, sets its maximum volume, and plays it
-        SoundSourcePtr snd = createSound(id,node);
-        snd->setMaxVolume(maxVolume);
-        snd->play();
+        float maxVolume = Math::clamp(aMaxVolume,0.0f,1.0f);
+
+        // Do not play if the maximum volume is 0.0f
+        if (maxVolume > 0.0f)
+        {
+            // Creates sound, sets its maximum volume, and plays it
+            SoundSourcePtr snd = createSound(id,node);
+            snd->setMaxVolume(maxVolume);
+            snd->play();
+        }
     }
     //-----------------------------------------------------------------------------
     void AudioManager::_alErrorCheck(const char *location,const char *desc)

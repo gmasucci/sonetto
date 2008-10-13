@@ -60,6 +60,18 @@ namespace Sonetto
         static float sideOfVector(const Ogre::Vector3 &point,
             const Ogre::Vector3 &p1,const Ogre::Vector3 &p2);
 
+        static float clamp(float value,float min,float max)
+        {
+            if (value < 0.0f) {
+                return 0.0f;
+            } else
+            if (value > 1.0f) {
+                return 1.0f;
+            }
+
+            return value;
+        }
+
     private:
         Math() {}
         ~Math() {}

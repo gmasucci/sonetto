@@ -80,7 +80,7 @@ namespace Sonetto
     {
         if (isValid())
         {
-            mMaxVolume = maxVolume;
+            mMaxVolume = Math::clamp(maxVolume,0.0f,1.0f);
             alSourcef(mALSource,AL_GAIN,maxVolume *
                     mAudioMan->getMasterSoundVolume());
             mAudioMan->_alErrorCheck("SoundSource::setMaxVolume()","Failed setting "

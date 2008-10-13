@@ -59,7 +59,7 @@ namespace Sonetto
                     Ogre::SceneNode * parent,
                     Ogre::SceneManager * manager,
                     float height,float actRadius,
-                    float colRadius,
+                    float colRadius,float speed,
                     bool noVisibleEntity = false,
                     const Ogre::String & modelname = "");
         virtual ~EventObject();
@@ -93,11 +93,21 @@ namespace Sonetto
 
         virtual const Ogre::Quaternion & getOrientation(void) const;
 
+        virtual inline void setHeight(float height) { mHeight = height; }
+
+        virtual inline void setActRadius(float radius) { mActRadius = radius; }
+
+        virtual inline void setColRadius(float radius) { mColRadius = radius; }
+
+        virtual inline void setSpeed(float speed) { mSpeed = speed; }
+
         virtual inline float getHeight() const { return mHeight; }
 
         virtual inline float getActRadius() const { return mActRadius; }
 
         virtual inline float getColRadius() const { return mColRadius; }
+
+        virtual inline float getSpeed() const { return mSpeed; }
 
         /// Set the state for this event.
         virtual void setState(EventState state);
@@ -174,6 +184,7 @@ namespace Sonetto
         float mHeight;
         float mActRadius;
         float mColRadius;
+        float mSpeed;
     };
 }; // namespace
 

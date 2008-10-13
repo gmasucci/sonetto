@@ -351,6 +351,9 @@ namespace Sonetto
     void WalkmeshManager::moveEvent(EventObject *evt,
             const Ogre::Vector3 &xzMoveVector)
     {
+        // <todo> Move the event freely when evt->getIgnoreCollisions() is set
+        // We will need a better name to `xzMoveVector' when we implement that
+
         WalkmeshEventInfoMap::iterator iter = mEventInfo.find(evt);
 
         // Checks whether the event is registered or not
@@ -379,8 +382,11 @@ namespace Sonetto
         // directly by accessing `xzMoveVector'
         Ogre::Vector3 direction(xzMoveVector);
 
-        Ogre::Quaternion q1(0.0f, 0.0f, 0.0f, 1.0f); // Used to rotate vectors
-        Ogre::Vector3 endPoint(0.0f, 0.0f, 0.0f);    // Destination point
+        // Used to rotate vectors
+        Ogre::Quaternion q1(0.0f, 0.0f, 0.0f, 1.0f);
+
+        // Calculates final desired destination on the XZ plane
+        Ogre::Vector3 endPoint(startPoint + ( direction * evt->getSpeed() ));
 
         // Collision check flags
         bool first_triangle_check  = false;
@@ -390,11 +396,6 @@ namespace Sonetto
         bool first_entity_check    = false;
         bool second_entity_check   = false;
         bool third_entity_check    = false;
-
-        // <todo> Move the event freely when evt->getIgnoreCollisions() is set
-        // We will need a better name to `xzMoveVector' when we implement that
-        // Calculates final desired destination on the XZ plane
-        endPoint = startPoint + xzMoveVector;
 
         // Gets current triangle's vertex coordinates
         Ogre::Vector3 vA =
@@ -429,9 +430,8 @@ namespace Sonetto
             Ogre::Vector3 rotatedDirection(0.0f, 0.0f, 0.0f);
             Ogre::Vector3 rotatedEndPoint(0.0f,0.0f,0.0f);
 
-            // <todo> Should we implement an EventObject::getSpeed()
-            // and apply it here?
-            endPoint = startPoint + (direction /* * evt->getSpeed() */);
+            // Sets new end point based on `direction'
+            endPoint = startPoint + (direction * evt->getSpeed());
 
             // 1st check
             // Rotates direction by +45 degrees on the Y axis
