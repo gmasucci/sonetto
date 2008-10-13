@@ -19,6 +19,7 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
+
 #include "TESTMapModule.h"
 
 namespace Sonetto {
@@ -39,10 +40,11 @@ namespace Sonetto {
     void TestMapModule::enter()
     {
         EventObject *dummyEvent;
-        mCollisionMan = new CollisionManager();
 
+        mWalkmeshMan = new WalkmeshManager();
         mKernel->mMapFileManager = new MapFileManager();
         mBackgroundColor = Ogre::ColourValue(0.8f,0.8f,0.8f,1.0f);
+
         // Call the Module base function.
         Module::enter();
 
@@ -55,12 +57,11 @@ namespace Sonetto {
         Ogre::Entity * worldmesh = mSceneMan->createEntity("CollisionMesh", "walkmesh.mesh");
         mSceneMan->getRootSceneNode()->attachObject(worldmesh);
 
-        mCollisionMan->createWalkmesh(worldmesh);
+        mWalkmeshMan->createWalkmesh(worldmesh);
 
         dummyEvent = new EventObject("Sphere",
                                     mSceneMan->getRootSceneNode(),
                                     mSceneMan,
-                                    mCollisionMan,
                                     2.0f,1.0f,0.5f,
                                     false,
                                     "dummy_hero.mesh");
@@ -69,12 +70,13 @@ namespace Sonetto {
         mDummyHero = new HeroObject("DummyHero",
                                     mSceneMan->getRootSceneNode(),
                                     mSceneMan,
-                                    mCollisionMan,
                                     2.0f,1.0f,0.5f,
                                     false,
                                     "dummy_hero.mesh");
         mDummyHero->setPosition(7.20862f,3.36544f,31.1969f-1.0f);
         mDummyHero->setHeroSpeed(4.5f);
+        mWalkmeshMan->registerEvent(dummyEvent);
+        mWalkmeshMan->registerEvent(mDummyHero);
         mCamera->setPosition(30.0f,30.0f,-30.0f);
         mCamera->lookAt(0.0f,0.0f,0.0f);
         mCamera->setNearClipDistance(1.0f);
@@ -119,6 +121,7 @@ namespace Sonetto {
 
         Ogre::Vector2 mov,rot;
 
+        float movMagnitude;
         mov = player->getAxisValue(AX_LEFT);
         rot = player->getAxisValue(AX_RIGHT);
 
@@ -135,15 +138,34 @@ namespace Sonetto {
         if(rot.y < 0.3f && rot.y > -0.3f)
             rot.y = 0.0f;
 
-        mDummyHero->setBaseDirection(mCamera->getDirection());
+        //mDummyHero->setBaseDirection(mCamera->getDirection());
         //mDummyHero->setBaseDirection(Ogre::Vector3(0.0f,0.0f,-1.0f));
-        mDummyHero->setMovementInput(mov);
+        //mDummyHero->setMovementInput(mov);
+        movMagnitude = mov.length();
+        if (movMagnitude > 0.3f)
+        {
+            Ogre::Vector3 mov3(mov.x,0.0f,mov.y),interpolate;
+            Ogre::Vector3 final,source = mDummyHero->getOrientation() *
+                    Ogre::Vector3::UNIT_X;
+            Ogre::Quaternion finalOrientation;
 
-        /*for (size_t i = 0;i < mEvents.size();++i)
+            final = applyPerspective(mov3,mCamera->getDirection());
+
+            interpolate = (source * (1.0f - (deltatime * 25.0f))) +
+                    (final * (deltatime * 25.0f));
+
+            finalOrientation = source.getRotationTo(interpolate);
+            mDummyHero->setOrientation(finalOrientation *
+                    mDummyHero->getOrientation());
+
+            mWalkmeshMan->moveEvent(mDummyHero,final *
+                    (mDummyHero->getHeroSpeed() * movMagnitude) * deltatime);
+        }
+
+        for (size_t i = 0;i < mEvents.size();++i)
         {
             mEvents[i]->update(deltatime,mEvents);
-        }*/
-        mDummyHero->update(deltatime,mEvents);
+        }
 
         mAngle += Ogre::Radian(rot.x * deltatime);
 
@@ -200,7 +222,7 @@ namespace Sonetto {
             delete mEvents[i];
         }
 
-        delete mCollisionMan;
+        delete mWalkmeshMan;
         // Call the Module base function.
         Module::exit();
     }
@@ -337,5 +359,29 @@ namespace Sonetto {
         }
 
     }
+    //-----------------------------------------------------------------------------
+    Ogre::Vector3 TestMapModule::applyPerspective(const Ogre::Vector3 &aVector,
+                const Ogre::Vector3 &perspective)
+    {
+        Ogre::Vector3 vector(aVector);
+        Ogre::Vector3 perspectiveFront(perspective),perspectiveRight,
+                directionFinal;
 
+        vector.normalise();
+
+        perspectiveRight.x = perspectiveFront.z;
+        perspectiveRight.y = perspectiveFront.y;
+        perspectiveRight.z = -perspectiveFront.x;
+
+        directionFinal.x = ((-vector.x) * perspectiveRight.x) + ((-vector.z) *
+                perspectiveFront.x);
+        directionFinal.y = 0.0f;
+        directionFinal.z = ((-vector.x) * perspectiveRight.z) + ((-vector.z) *
+                perspectiveFront.z);
+
+        // Normalise vector
+        directionFinal.normalise();
+
+        return directionFinal;
+    }
 }; // namespace Sonetto

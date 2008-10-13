@@ -19,6 +19,7 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
+
 #ifndef TEST_HEROOBJECT_H
 #define TEST_HEROOBJECT_H
 
@@ -41,7 +42,6 @@ namespace Sonetto
         HeroObject( const Ogre::String & name,
                     Ogre::SceneNode * parent,
                     Ogre::SceneManager * manager,
-                    CollisionManager * colmanager,
                     float height,float actRadius,
                     float colRadius,
                     bool noVisibleEntity = false,
@@ -77,24 +77,9 @@ namespace Sonetto
         /// Return the current base direction right vector.
         virtual const Ogre::Vector3 & getBaseDirectionRight(void) const;
 
-        virtual void setMovementInput(const Ogre::Vector2 &mov);
-
-        virtual const Ogre::Vector2 & getMovementInput(void) const;
-
     private:
         /// Hero Base Movement Speed.
         float mHeroSpeed;
-        float mOldInputMag;
-        /// Character Movement Input. (From Player)
-        Ogre::Vector2 mMovementInput;
-        /// Base Movement Front Vector.
-        Ogre::Vector3 mBaseFront;
-        /// Base Movement Right Vector.
-        Ogre::Vector3 mBaseRight;
-        /// Movement Direction Vector.
-        Ogre::Vector3 mDirection;
-
-
     };
 }; // namespace
 

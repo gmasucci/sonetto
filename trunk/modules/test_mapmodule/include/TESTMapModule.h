@@ -19,6 +19,7 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
+
 #ifndef TEST_MAPMODULE_H
 #define TEST_MAPMODULE_H
 
@@ -32,6 +33,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #endif
 
 #include "SonettoModule.h"
+#include "SonettoWalkmeshManager.h"
 #include "TESTMapFileManager.h"
 #include "TESTHeroObject.h"
 
@@ -109,9 +111,12 @@ namespace Sonetto {
         protected:
         // Map Module internal functions.
         void changeMap();
-    protected:
 
-        CollisionManager * mCollisionMan;
+    protected:
+        Ogre::Vector3 applyPerspective(const Ogre::Vector3 &aVector,
+                const Ogre::Vector3 &perspective);
+
+        WalkmeshManager *mWalkmeshMan;
 
         Ogre::Radian mAngle;
         bool mResourceGroupCreated;

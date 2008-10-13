@@ -19,25 +19,22 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
+
 #include "TESTHeroObject.h"
-namespace Sonetto {
+
+namespace Sonetto
+{
     HeroObject::HeroObject( const Ogre::String & name,
                             Ogre::SceneNode * parent,
                             Ogre::SceneManager * manager,
-                            CollisionManager * colmanager,
                             float height,float actRadius,
                             float colRadius,
                             bool noVisibleEntity,
                             const Ogre::String & modelname ) :
-                            EventObject(name, parent, manager, colmanager,
-                                height, actRadius, colRadius, noVisibleEntity,
+                            EventObject(name, parent, manager, height,
+                                actRadius, colRadius, noVisibleEntity,
                                 modelname),
-                            mHeroSpeed(0.0f),
-                            mMovementInput(Ogre::Vector2::ZERO),
-                            mBaseFront(Ogre::Vector3::ZERO),
-                            mBaseRight(Ogre::Vector3::ZERO),
-                            mDirection(Ogre::Vector3::ZERO),
-                            mOldInputMag(0.0f)
+                            mHeroSpeed(0.0f)
     {
     }
     HeroObject::~HeroObject()
@@ -45,7 +42,7 @@ namespace Sonetto {
     }
     void HeroObject::update(float deltatime,const EventVector &events)
     {
-        Ogre::Vector3 directionFinal, sourceDirection;
+        /*Ogre::Vector3 directionFinal, sourceDirection;
 
         // this will represent how many the player has pressed the Analog Stick, and we use this to move the hero.
         float inputMagnitude = mMovementInput.normalise();
@@ -72,7 +69,7 @@ namespace Sonetto {
         Ogre::Vector3 interpFDir;
         if(inputMagnitude > 0.3f)
         {
-            /*interpFDir = (sourceDirection * (0.025f - deltatime)) + (directionFinal * deltatime);*/
+            // interpFDir = (sourceDirection * (0.025f - deltatime)) + (directionFinal * deltatime);
             interpFDir = (sourceDirection * (1.0f - (deltatime*25.0f))) + (directionFinal * (deltatime*25.0f));
         } else {
             interpFDir = sourceDirection;
@@ -82,17 +79,10 @@ namespace Sonetto {
         // Set the new orientation relative to current one.
         setOrientation(finalOrientation * getOrientation());
 
-        /*std::cout<<"inputMagnitude: "<<inputMagnitude<<"\n";
-
-        if (directionFinal.x != 0.0f || directionFinal.z != 0.0f)
-        {
-            directionFinal = calculateSlide(directionFinal,Ogre::Vector3(1.0f,0.0f,1.0f));
-        }*/
-
-        moveObject(directionFinal * (mHeroSpeed * inputMagnitude));
+        moveObject(directionFinal * (mHeroSpeed * inputMagnitude));*/
 
         EventObject::update(deltatime,events);
-        mMovementInput = Ogre::Vector2::ZERO;
+        // mMovementInput = Ogre::Vector2::ZERO;
     }
     void HeroObject::setHeroSpeed(float speed)
     {
@@ -104,34 +94,14 @@ namespace Sonetto {
     }
     void HeroObject::setBaseDirection(const Ogre::Vector3 &dir)
     {
-        mBaseFront = dir;
-        // Convert the Front Vector into the Right vector
-        mBaseRight.x = mBaseFront.z;
-        mBaseRight.y = mBaseFront.y;
-        mBaseRight.z = -mBaseFront.x;
     }
     void HeroObject::setBaseDirection(float x, float y, float z)
     {
-        mBaseFront = Ogre::Vector3(x,y,z);
-        // Convert the Front Vector into the Right vector
-        mBaseRight.x = mBaseFront.z;
-        mBaseRight.y = mBaseFront.y;
-        mBaseRight.z = -mBaseFront.x;
     }
     const Ogre::Vector3 & HeroObject::getBaseDirection(void) const
     {
-        return mBaseFront;
     }
     const Ogre::Vector3 & HeroObject::getBaseDirectionRight(void) const
     {
-        return mBaseRight;
-    }
-    void HeroObject::setMovementInput(const Ogre::Vector2 &mov)
-    {
-        mMovementInput = mov;
-    }
-    const Ogre::Vector2 & HeroObject::getMovementInput(void) const
-    {
-        return mMovementInput;
     }
 }; // namespace

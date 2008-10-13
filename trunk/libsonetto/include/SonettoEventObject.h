@@ -35,8 +35,7 @@ namespace Sonetto
 }
 
 #include <Ogre.h>
-#include "SonettoCollisionManager.h"
-#include "Sonetto.h"
+#include "SonettoMain.h"
 
 namespace Sonetto
 {
@@ -59,7 +58,6 @@ namespace Sonetto
         EventObject(const Ogre::String & name,
                     Ogre::SceneNode * parent,
                     Ogre::SceneManager * manager,
-                    CollisionManager * colmanager,
                     float height,float actRadius,
                     float colRadius,
                     bool noVisibleEntity = false,
@@ -85,7 +83,7 @@ namespace Sonetto
 
         virtual void setPosition(const Ogre::Vector3 &pos);
 
-        virtual void setPosition(float x = 0.0f, float y = 0.0f, float z = 0.0f);
+        virtual void setPosition(float x, float y, float z);
 
         virtual const Ogre::Vector3 & getPosition(void) const;
 
@@ -95,29 +93,11 @@ namespace Sonetto
 
         virtual const Ogre::Quaternion & getOrientation(void) const;
 
-        virtual inline int getTriangle() const { return mTriangle; }
-
-        virtual inline void setTriangle(int tri) { mTriangle = tri; }
-
         virtual inline float getHeight() const { return mHeight; }
 
         virtual inline float getActRadius() const { return mActRadius; }
 
         virtual inline float getColRadius() const { return mColRadius; }
-
-        /** Set the position to move this Object in the next frame.
-
-            This functions move the object translating it from it's current location
-            note that it does not move the object directly, it will be updated at the
-            update function, the final position may not be the same as inputed in this
-            function, as it will first pass through a collision test,
-            also note that the movement value will reset at every frame.
-
-        @param
-            mov This it the desired position the character will move, translating from its
-            current position, and will take collisions in consideration.
-        */
-        virtual void moveObject(const Ogre::Vector3 & mov);
 
         /// Set the state for this event.
         virtual void setState(EventState state);
@@ -129,7 +109,7 @@ namespace Sonetto
 
             When true, the event will move freely through the map,
             withouth taking collisions in consideration, this is used
-            by the Script to create flying objects withouth interference of the map.
+            by the Script to create flying objects without interference of the map.
         */
         virtual void setIgnoreCollision(bool mode);
 
@@ -188,12 +168,9 @@ namespace Sonetto
         Ogre::SceneNode * mParent;
         /// The SceneManager used to create and manage this object's objects.
         Ogre::SceneManager * mSceneManager;
-        /// The CollisionManager.
-        CollisionManager * mCollisionManager;
         /// The desired position relative to current, reset at every frame.
         Ogre::Vector3 mTargetPosition;
 
-        int   mTriangle;
         float mHeight;
         float mActRadius;
         float mColRadius;

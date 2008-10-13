@@ -19,13 +19,13 @@ along with this library; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA or go to
 http://www.gnu.org/copyleft/lesser.txt
 -----------------------------------------------------------------------------*/
+
 #include "SonettoEventObject.h"
 
 namespace Sonetto {
     EventObject::EventObject   (const Ogre::String &name,
                                 Ogre::SceneNode *parent,
                                 Ogre::SceneManager *manager,
-                                CollisionManager *colmanager,
                                 float height,
                                 float actRadius,
                                 float colRadius,
@@ -39,9 +39,7 @@ namespace Sonetto {
                                 mEntity(NULL),
                                 mParent(parent),
                                 mSceneManager(manager),
-                                mCollisionManager(colmanager),
                                 mTargetPosition(Ogre::Vector3(0.0f,0.0f,0.0f)),
-                                mTriangle(0),
                                 mHeight(height),
                                 mActRadius(actRadius),
                                 mColRadius(colRadius)
@@ -65,8 +63,8 @@ namespace Sonetto {
     }
     void EventObject::update(float deltatime,const EventVector &events)
     {
-        mCollisionManager->setNextPos(this,events,
-                mTargetPosition * deltatime);
+        //mCollisionManager->setNextPos(this,events,
+        //        mTargetPosition * deltatime);
     }
     const Ogre::String & EventObject::getName(void) const
     {
@@ -106,10 +104,6 @@ namespace Sonetto {
     const Ogre::Quaternion & EventObject::getOrientation(void) const
     {
         return mNode->getOrientation();
-    }
-    void EventObject::moveObject(const Ogre::Vector3 & mov)
-    {
-        mTargetPosition = mov;
     }
     void EventObject::setState(EventState state)
     {
