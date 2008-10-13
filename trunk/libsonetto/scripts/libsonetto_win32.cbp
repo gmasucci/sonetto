@@ -16,7 +16,8 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-fexpensive-optimizations" />
-					<Add option="-O3" />
+					<Add option="-Os" />
+					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
@@ -99,7 +100,6 @@
 		</Unit>
 		<Unit filename="..\include\SonettoAudioManager.h" />
 		<Unit filename="..\include\SonettoChoiceWindow.h" />
-		<Unit filename="..\include\SonettoCollisionManager.h" />
 		<Unit filename="..\include\SonettoCounter.h" />
 		<Unit filename="..\include\SonettoDatabase.h" />
 		<Unit filename="..\include\SonettoEventObject.h" />
@@ -111,6 +111,7 @@
 		<Unit filename="..\include\SonettoInputManager.h" />
 		<Unit filename="..\include\SonettoKernel.h" />
 		<Unit filename="..\include\SonettoMain.h" />
+		<Unit filename="..\include\SonettoMath.h" />
 		<Unit filename="..\include\SonettoModule.h" />
 		<Unit filename="..\include\SonettoMusicStream.h" />
 		<Unit filename="..\include\SonettoPlane.h" />
@@ -126,6 +127,7 @@
 		<Unit filename="..\include\SonettoTailedWindow.h" />
 		<Unit filename="..\include\SonettoTextElement.h" />
 		<Unit filename="..\include\SonettoTextFactory.h" />
+		<Unit filename="..\include\SonettoWalkmeshManager.h" />
 		<Unit filename="..\include\SonettoWindow.h" />
 		<Unit filename="..\include\SonettoWindowFactory.h" />
 		<Unit filename="..\include\SonettoWindowSkin.h" />
@@ -139,7 +141,6 @@
 		</Unit>
 		<Unit filename="..\src\SonettoAudioManager.cpp" />
 		<Unit filename="..\src\SonettoChoiceWindow.cpp" />
-		<Unit filename="..\src\SonettoCollisionManager.cpp" />
 		<Unit filename="..\src\SonettoCounter.cpp" />
 		<Unit filename="..\src\SonettoDatabase.cpp" />
 		<Unit filename="..\src\SonettoEventObject.cpp" />
@@ -150,6 +151,7 @@
 		<Unit filename="..\src\SonettoGauge.cpp" />
 		<Unit filename="..\src\SonettoInputManager.cpp" />
 		<Unit filename="..\src\SonettoKernel.cpp" />
+		<Unit filename="..\src\SonettoMath.cpp" />
 		<Unit filename="..\src\SonettoModule.cpp" />
 		<Unit filename="..\src\SonettoMusicStream.cpp" />
 		<Unit filename="..\src\SonettoPlane.cpp" />
@@ -162,6 +164,7 @@
 		<Unit filename="..\src\SonettoSoundSource.cpp" />
 		<Unit filename="..\src\SonettoTailedWindow.cpp" />
 		<Unit filename="..\src\SonettoTextElement.cpp" />
+		<Unit filename="..\src\SonettoWalkmeshManager.cpp" />
 		<Unit filename="..\src\SonettoWindow.cpp" />
 		<Unit filename="..\src\SonettoWindowSkin.cpp" />
 		<Unit filename="..\src\SonettoWindowSkinManager.cpp" />
