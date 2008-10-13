@@ -69,7 +69,7 @@ namespace Sonetto
         @param
             deltatime This is the value of 1.0f/FPS used for framerate-independent movement.
         */
-        virtual void update(float deltatime,const EventVector &events);
+        virtual void update(float deltatime);
 
         virtual const Ogre::String & getName(void) const;
 

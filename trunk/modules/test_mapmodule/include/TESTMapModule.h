@@ -35,7 +35,6 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoModule.h"
 #include "SonettoWalkmeshManager.h"
 #include "TESTMapFileManager.h"
-#include "TESTHeroObject.h"
 
 namespace Sonetto {
 

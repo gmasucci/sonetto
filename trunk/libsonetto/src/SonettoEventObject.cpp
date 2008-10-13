@@ -63,10 +63,8 @@ namespace Sonetto {
         }
         mSceneManager->destroySceneNode(mNode->getName());
     }
-    void EventObject::update(float deltatime,const EventVector &events)
+    void EventObject::update(float deltatime)
     {
-        //mCollisionManager->setNextPos(this,events,
-        //        mTargetPosition * deltatime);
     }
     const Ogre::String & EventObject::getName(void) const
     {

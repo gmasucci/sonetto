@@ -164,7 +164,7 @@ namespace Sonetto {
 
         for (size_t i = 0;i < mEvents.size();++i)
         {
-            mEvents[i]->update(deltatime,mEvents);
+            mEvents[i]->update(deltatime);
         }
 
         mAngle += Ogre::Radian(rot.x * deltatime);
