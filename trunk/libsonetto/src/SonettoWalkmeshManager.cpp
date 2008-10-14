@@ -382,6 +382,15 @@ namespace Sonetto
         // directly by accessing `xzMoveVector'
         Ogre::Vector3 direction(xzMoveVector);
 
+        // Do not move if the move vector has a length of 0.0f
+        if (direction.x == 0.0f && direction.z == 0.0f)
+        {
+            return;
+        }
+
+        // Gets event collision radius
+        float colRadius = evt->getColRadius();
+
         // Used to rotate vectors
         Ogre::Quaternion q1(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -427,6 +436,7 @@ namespace Sonetto
 
         for (int i = 0; i < 17; ++i)
         {
+            float scaleDirection;
             Ogre::Vector3 rotatedDirection(0.0f, 0.0f, 0.0f);
             Ogre::Vector3 rotatedEndPoint(0.0f,0.0f,0.0f);
 
@@ -439,10 +449,10 @@ namespace Sonetto
                     Ogre::Vector3::UNIT_Y);
             rotatedDirection = q1 * direction;
 
-            // rotatedDirection is an unit vector
-            // Multiplying it by the collision radius will make it length
-            // the same as the radius
-            rotatedDirection *= evt->getColRadius();
+            // Scale the rotated direction so that it lengths the same as before
+            // plus the collision radius of this event
+            scaleDirection = rotatedDirection.normalise() + colRadius;
+            rotatedDirection *= scaleDirection;
 
             // Calculates rotated end point
             rotatedEndPoint = endPoint + rotatedDirection;
@@ -462,10 +472,10 @@ namespace Sonetto
                     Ogre::Vector3::UNIT_Y);
             rotatedDirection = q1 * direction;
 
-            // rotatedDirection is an unit vector
-            // Multiplying it by the collision radius will make it length
-            // the same as the radius
-            rotatedDirection *= evt->getColRadius();
+            // Scale the rotated direction so that it lengths the same as before
+            // plus the collision radius of this event
+            scaleDirection = rotatedDirection.normalise() + colRadius;
+            rotatedDirection *= scaleDirection;
 
             // Calculates rotated end point
             rotatedEndPoint = endPoint + rotatedDirection;
@@ -487,6 +497,12 @@ namespace Sonetto
             // collision directly to the front of our move vector
             rotatedDirection = direction;
             rotatedEndPoint = endPoint + rotatedDirection;
+
+            // Scale the rotated direction so that it lengths the same as before
+            // plus the collision radius of this event
+            rotatedDirection = direction;
+            scaleDirection = rotatedDirection.normalise() + colRadius;
+            rotatedDirection *= scaleDirection;
 
             // Checks end point against the walkmesh and restores
             // current triangle event information (it is changed by

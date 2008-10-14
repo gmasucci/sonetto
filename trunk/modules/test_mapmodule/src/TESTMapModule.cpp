@@ -62,7 +62,7 @@ namespace Sonetto {
         dummyEvent = new EventObject("Sphere",
                                     mSceneMan->getRootSceneNode(),
                                     mSceneMan,
-                                    2.0f,1.0f,2.0f,5.0f,
+                                    2.0f,1.0f,0.5f,5.0f,
                                     false,
                                     "dummy_hero.mesh");
         dummyEvent->setPosition(7.20862f-3.0f,3.56544f,31.1969f-3.0f);
@@ -70,7 +70,7 @@ namespace Sonetto {
         mDummyHero = new EventObject("DummyHero",
                                     mSceneMan->getRootSceneNode(),
                                     mSceneMan,
-                                    2.0f,1.0f,2.0f,5.0f,
+                                    2.0f,1.0f,0.5f,5.0f,
                                     false,
                                     "dummy_hero.mesh");
         mDummyHero->setPosition(7.20862f,3.36544f,31.1969f-1.0f);
