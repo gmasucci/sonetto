@@ -213,18 +213,20 @@ namespace Sonetto
     }
     //-------------------------------------------------------------------------
     bool WalkmeshManager::walkmeshBorderCross(EventObject *evt,
-            Ogre::Vector3 &position)
+            Ogre::Vector3 &position,float *slideFactor)
     {
         int curTri = mEventInfo.find(evt)->second.triangle;
+        Ogre::Vector3 direction = position - evt->getPosition();
+        direction.normalise();
 
         while (true)
         {
             int nextTri = -1;
 
             // Gets current triangle's vertex coordinates
-            Ogre::Vector3 vA = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,0)];
-            Ogre::Vector3 vB = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,1)];
-            Ogre::Vector3 vC = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,2)];
+            const Ogre::Vector3 &vA = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,0)];
+            const Ogre::Vector3 &vB = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,1)];
+            const Ogre::Vector3 &vC = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,2)];
 
             // <todo> Unknown variables - What the hell are they?
             // We can only guess that they will be lesser than 0.0f when
@@ -235,19 +237,55 @@ namespace Sonetto
 
             if (sign1 < 0) {
                 nextTri = mWalkmesh.getBorderLink(curTri,0);
+                if (slideFactor)
+                {
+                    float angle;
+                    Ogre::Vector3 border = vB - vA;
+
+                    border.normalise();
+                    angle = Ogre::Math::ACos(border.dotProduct(direction)).valueDegrees();
+
+                    *slideFactor = Math::clamp(angle / 90.0f,0.0f,1.0f);
+                }
             } else
             if (sign2 < 0) {
                 nextTri = mWalkmesh.getBorderLink(curTri,1);
+                if (slideFactor)
+                {
+                    float angle;
+                    Ogre::Vector3 border = vC - vB;
+
+                    border.normalise();
+                    angle = Ogre::Math::ACos(border.dotProduct(direction)).valueDegrees();
+
+                    *slideFactor = Math::clamp(angle / 90.0f,0.0f,1.0f);
+                }
             } else
             if (sign3 < 0) {
                 nextTri = mWalkmesh.getBorderLink(curTri,2);
+                if (slideFactor)
+                {
+                    float angle;
+                    Ogre::Vector3 border = vC - vA;
+
+                    border.normalise();
+                    angle = Ogre::Math::ACos(border.dotProduct(direction)).valueDegrees();
+
+                    *slideFactor = Math::clamp(angle / 90.0f,0.0f,1.0f);
+                }
             } else { // Not crossing any borders
                 // Gets destination elevation and saves current
                 // triangle into event info map
                 position.y = Math::pointElevation(position,vA,vB,vC);
                 mEventInfo.find(evt)->second.triangle = curTri;
 
-                // No borders were crossed, so we return false
+                // No borders were crossed, so our slide factor is 1.0f
+                /*if (slideFactor)
+                {
+                    *slideFactor = 1.0f;
+                }*/
+
+                // false == No borders crossed
                 return false;
             }
 
@@ -436,7 +474,8 @@ namespace Sonetto
 
         for (int i = 0; i < 17; ++i)
         {
-            float scaleDirection;
+            int frontTriangle;
+            float scaleDirection,slideFactor = 1.0f,finalSlideFactor = 1.0f;
             Ogre::Vector3 rotatedDirection(0.0f, 0.0f, 0.0f);
             Ogre::Vector3 rotatedEndPoint(0.0f,0.0f,0.0f);
 
@@ -460,8 +499,13 @@ namespace Sonetto
             // Checks rotated end point against the walkmesh and restores
             // current triangle event information (it is changed by
             // walkmeshBorderCross())
-            first_triangle_check = walkmeshBorderCross(evt,rotatedEndPoint);
+            first_triangle_check = walkmeshBorderCross(evt,rotatedEndPoint,&slideFactor);
             mEventInfo.find(evt)->second.triangle = curTri;
+
+            if (first_triangle_check)
+            {
+                finalSlideFactor = slideFactor;
+            }
 
             // Checks rotated end point against other events
             first_entity_check = checkCollisions(evt,rotatedEndPoint);
@@ -483,8 +527,13 @@ namespace Sonetto
             // Checks rotated end point against the walkmesh and restores
             // current triangle event information (it is changed by
             // walkmeshBorderCross())
-            second_triangle_check = walkmeshBorderCross(evt,rotatedEndPoint);
+            second_triangle_check = walkmeshBorderCross(evt,rotatedEndPoint,&slideFactor);
             mEventInfo.find(evt)->second.triangle = curTri;
+
+            if (second_triangle_check && slideFactor < finalSlideFactor)
+            {
+                finalSlideFactor = slideFactor;
+            }
 
             // Checks rotated end point against other events
             second_entity_check = checkCollisions(evt,rotatedEndPoint);
@@ -507,11 +556,19 @@ namespace Sonetto
             // Checks end point against the walkmesh and restores
             // current triangle event information (it is changed by
             // walkmeshBorderCross())
-            third_triangle_check = walkmeshBorderCross(evt,rotatedEndPoint);
+            third_triangle_check = walkmeshBorderCross(evt,rotatedEndPoint,&slideFactor);
             mEventInfo.find(evt)->second.triangle = curTri;
+
+            if (third_triangle_check && slideFactor < finalSlideFactor)
+            {
+                finalSlideFactor = slideFactor;
+            }
 
             // Checks end point against other events
             third_entity_check = checkCollisions(evt,rotatedEndPoint);
+
+            // Apply slide factor
+            direction *= finalSlideFactor;
 
             // Checks collision flags and modify `direction' vector accordingly,
             // and then rechecking

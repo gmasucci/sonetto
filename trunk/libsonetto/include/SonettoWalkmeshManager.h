@@ -95,7 +95,7 @@ namespace Sonetto
         void convertMeshData(Ogre::Entity *entity,std::vector<Ogre::Vector3> *vertexBuf,
                 std::vector<int> *faceBuf);
 
-        bool walkmeshBorderCross(EventObject *evt,Ogre::Vector3 &position);
+        bool walkmeshBorderCross(EventObject *evt,Ogre::Vector3 &position,float *slideFactor = NULL);
 
         bool checkCollisions(EventObject *evt,Ogre::Vector3 &position);
 
