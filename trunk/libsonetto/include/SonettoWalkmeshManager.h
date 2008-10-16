@@ -90,6 +90,7 @@ namespace Sonetto
         */
         void moveEvent(EventObject *evt,const Ogre::Vector3 &moveVector);
         // bool setEventPosition(EventObject *evt,const Ogre::Vector3 &pos);
+        bool setEventPosition(EventObject *evt,const Ogre::Vector3 &pos);
 
     private:
         void convertMeshData(Ogre::Entity *entity,std::vector<Ogre::Vector3> *vertexBuf,

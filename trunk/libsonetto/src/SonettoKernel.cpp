@@ -346,6 +346,7 @@ namespace Sonetto {
             }
 
             mFrameTime *= mGameSpeed;
+            //mFrameTime = 1.0f/85.0f; // Only to put the game to run on 85fps.
             #endif
 
             // Limit the minimum FPS to 15 (disable frameskip)

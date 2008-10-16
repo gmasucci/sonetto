@@ -73,9 +73,11 @@ namespace Sonetto {
                                     2.0f,1.0f,0.6f,5.0f,
                                     false,
                                     "dummy_hero.mesh");
-        mDummyHero->setPosition(7.20862f,3.36544f,31.1969f-1.0f);
+        //mDummyHero->setPosition(7.20862f,3.36544f,31.1969f-1.0f);
         mWalkmeshMan->registerEvent(dummyEvent);
         mWalkmeshMan->registerEvent(mDummyHero);
+        mWalkmeshMan->setEventPosition(mDummyHero,Ogre::Vector3(0.0f,-4.0f,4.0f));
+        mWalkmeshMan->setEventPosition(dummyEvent,Ogre::Vector3(0.0f,20.0f,-4.0f));
         mCamera->setPosition(30.0f,30.0f,-30.0f);
         mCamera->lookAt(0.0f,0.0f,0.0f);
         mCamera->setNearClipDistance(1.0f);
@@ -141,7 +143,11 @@ namespace Sonetto {
         //mDummyHero->setBaseDirection(Ogre::Vector3(0.0f,0.0f,-1.0f));
         //mDummyHero->setMovementInput(mov);
         movMagnitude = mov.length();
-        if (movMagnitude > 0.3f)
+
+        // Clamp the Magnitude values to 0.3f to 1.0f
+        Math::clamp(movMagnitude,0.3f,1.0f);
+
+        if (movMagnitude >= 0.3f)
         {
             Ogre::Vector3 mov3(mov.x,0.0f,mov.y),interpolate;
             Ogre::Vector3 final,source = mDummyHero->getOrientation() *
@@ -166,6 +172,8 @@ namespace Sonetto {
         {
             mEvents[i]->update(deltatime);
         }
+        Ogre::Vector3 heropos(mDummyHero->getPosition());
+        std::cout<<"HeroPos: "<<heropos.x<<"\t"<<heropos.y<<"\t"<<heropos.z<<"\n";
 
         mAngle += Ogre::Radian(rot.x * deltatime);
 

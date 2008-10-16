@@ -23,6 +23,11 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoMath.h"
 #include "SonettoWalkmeshManager.h"
 
+// ----------------------------------------------------------------------------
+// WARNING! WARNING! WARNING!
+// Protect your sanity. Avert your gaze from this code. You won't understand.
+// I've made it, and I myself don't. So <Go away now!>
+// ----------------------------------------------------------------------------
 namespace Sonetto
 {
     //-------------------------------------------------------------------------
@@ -228,9 +233,7 @@ namespace Sonetto
             const Ogre::Vector3 &vB = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,1)];
             const Ogre::Vector3 &vC = mWalkmesh.vertex[mWalkmesh.getTriangleVertex(curTri,2)];
 
-            // <todo> Unknown variables - What the hell are they?
-            // We can only guess that they will be lesser than 0.0f when
-            // the line was crossed, but how it works I simply cannot understand
+            // Figures whether the given `position' is inside this triangle or not
             float sign1 = Math::sideOfVector(position,vB,vA);
             float sign2 = Math::sideOfVector(position,vC,vB);
             float sign3 = Math::sideOfVector(position,vA,vC);
@@ -239,39 +242,48 @@ namespace Sonetto
                 nextTri = mWalkmesh.getBorderLink(curTri,0);
                 if (slideFactor)
                 {
-                    float angle;
                     Ogre::Vector3 border = vB - vA;
+                    float angle;
 
                     border.normalise();
+                    Ogre::Quaternion quat;
+                    quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(90.0f)),Ogre::Vector3::UNIT_Y);
+                    border = quat * border;
                     angle = Ogre::Math::ACos(border.dotProduct(direction)).valueDegrees();
 
-                    *slideFactor = Math::clamp(angle / 90.0f,0.0f,1.0f);
+                    *slideFactor = Math::clamp(angle / 180.0f,0.0f,1.0f);
                 }
             } else
             if (sign2 < 0) {
                 nextTri = mWalkmesh.getBorderLink(curTri,1);
                 if (slideFactor)
                 {
-                    float angle;
                     Ogre::Vector3 border = vC - vB;
+                    float angle;
 
                     border.normalise();
+                    Ogre::Quaternion quat;
+                    quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(90.0f)),Ogre::Vector3::UNIT_Y);
+                    border = quat * border;
                     angle = Ogre::Math::ACos(border.dotProduct(direction)).valueDegrees();
 
-                    *slideFactor = Math::clamp(angle / 90.0f,0.0f,1.0f);
+                    *slideFactor = Math::clamp(angle / 180.0f,0.0f,1.0f);
                 }
             } else
             if (sign3 < 0) {
                 nextTri = mWalkmesh.getBorderLink(curTri,2);
                 if (slideFactor)
                 {
+                    Ogre::Vector3 border = vA - vC;
                     float angle;
-                    Ogre::Vector3 border = vC - vA;
 
                     border.normalise();
+                    Ogre::Quaternion quat;
+                    quat.FromAngleAxis(Ogre::Radian(Ogre::Degree(90.0f)),Ogre::Vector3::UNIT_Y);
+                    border = quat * border;
                     angle = Ogre::Math::ACos(border.dotProduct(direction)).valueDegrees();
 
-                    *slideFactor = Math::clamp(angle / 90.0f,0.0f,1.0f);
+                    *slideFactor = Math::clamp(angle / 180.0f,0.0f,1.0f);
                 }
             } else { // Not crossing any borders
                 // Gets destination elevation and saves current
@@ -474,7 +486,6 @@ namespace Sonetto
 
         for (int i = 0; i < 17; ++i)
         {
-            int frontTriangle;
             float scaleDirection,slideFactor = 1.0f,finalSlideFactor = 1.0f;
             Ogre::Vector3 rotatedDirection(0.0f, 0.0f, 0.0f);
             Ogre::Vector3 rotatedEndPoint(0.0f,0.0f,0.0f);
@@ -619,5 +630,94 @@ namespace Sonetto
         {
             evt->setPosition(endPoint);
         }
+    }
+    //-------------------------------------------------------------------------
+    bool WalkmeshManager::setEventPosition(EventObject *evt,
+            const Ogre::Vector3 &pos)
+    {
+        WalkmeshEventInfoMap::iterator iter = mEventInfo.find(evt);
+
+        // Checks whether the event is registered or not
+        if (iter == mEventInfo.end())
+        {
+            SONETTO_THROW("Trying to set the position of an event object that "
+                    "is not registered");
+        }
+
+        int   tri = -1;          // Current nearest triangle found
+        bool  firstFound = true; // Flagged false when the first triangle is found
+        float yNearest;          // Y coordinate of the nearest triangle found
+        Ogre::Vector3 vA,vB,vC;  // Current nearest triangle vertices
+
+        // Loops through each triangle in the walkmesh searching for the nearest
+        // triangle from the given pos.y
+        for (size_t i = 0;i < mWalkmesh.triangle.size();++i)
+        {
+            // Gets the iterated triangle vertex coordinates
+            const Ogre::Vector3 &vAtmp = mWalkmesh.
+                    vertex[mWalkmesh.getTriangleVertex(i,0)];
+            const Ogre::Vector3 &vBtmp = mWalkmesh.
+                    vertex[mWalkmesh.getTriangleVertex(i,1)];
+            const Ogre::Vector3 &vCtmp = mWalkmesh.
+                    vertex[mWalkmesh.getTriangleVertex(i,2)];
+
+            // If the given position `pos' is inside the iterated triangle,
+            // we procceed with our tests
+            if (Math::sideOfVector(pos,vBtmp,vAtmp) > 0.0f &&
+                Math::sideOfVector(pos,vCtmp,vBtmp) > 0.0f &&
+                Math::sideOfVector(pos,vAtmp,vCtmp) > 0.0f )
+            {
+                // Gets the medium Y coordinate of this triangle
+                float yCenter = (vAtmp.y + vBtmp.y + vCtmp.y) / 3;
+
+                // If this is the first triangle found, we just set the
+                // variables to describe it
+                // Elsewise we need to check whether this new triangle is more
+                // near to the event than the last one found
+                if (firstFound) {
+                    yNearest = yCenter;
+                    vA = vAtmp;
+                    vB = vBtmp;
+                    vC = vCtmp;
+                    tri = i;
+                    firstFound = false;
+                } else {
+                    // Gets distances between the event Y position and the iterated
+                    // triangle, and between the event Y position and the last triangle
+                    // position that was deemed to be the nearest to the event position
+                    float yDistance = pos.y - yCenter;
+                    float yOldDistance = pos.y - yNearest;
+
+                    // If this iterated triangle is more near to the event position than
+                    // the last one, we pick it to check against others
+                    if (fabs(yDistance) < fabs(yOldDistance)) {
+                        yNearest = yCenter;
+                        vA = vAtmp;
+                        vB = vBtmp;
+                        vC = vCtmp;
+                        tri = i;
+                    }
+                }
+            }
+        }
+
+        // If we have found a triangle (i.e. the event is effectively over the
+        // walkmesh), we need to get the Y elevation on the desired XZ plane and
+        // set the event position to these new coordinates
+        if (tri != -1)
+        {
+            Ogre::Vector3 finalPos(pos);
+
+            finalPos.y = Math::pointElevation(pos,vA,vB,vC);
+            evt->setPosition(finalPos);
+            iter->second.triangle = tri;
+
+            // Returns true: Yes, the new position is set
+            return true;
+        }
+
+        // Otherwise, returns false: Could not set position because the desired
+        // position on the XZ plane was outside the walkmesh
+        return false;
     }
 } // namespace

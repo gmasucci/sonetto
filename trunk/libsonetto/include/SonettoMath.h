@@ -60,16 +60,11 @@ namespace Sonetto
         static float sideOfVector(const Ogre::Vector3 &point,
             const Ogre::Vector3 &p1,const Ogre::Vector3 &p2);
 
-        static float clamp(float value,float min,float max)
+        template <typename T>
+        static inline T clamp(T val, T minval, T maxval)
         {
-            if (value < 0.0f) {
-                return 0.0f;
-            } else
-            if (value > 1.0f) {
-                return 1.0f;
-            }
-
-            return value;
+            assert (minval < maxval && "Invalid clamp range");
+            return std::max(std::min(val, maxval), minval);
         }
 
     private:
