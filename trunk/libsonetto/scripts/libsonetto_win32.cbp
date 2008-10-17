@@ -114,6 +114,7 @@
 		<Unit filename="..\include\SonettoMath.h" />
 		<Unit filename="..\include\SonettoModule.h" />
 		<Unit filename="..\include\SonettoMusicStream.h" />
+		<Unit filename="..\include\SonettoOpcode.h" />
 		<Unit filename="..\include\SonettoPlane.h" />
 		<Unit filename="..\include\SonettoPlaneFactory.h" />
 		<Unit filename="..\include\SonettoPrerequisites.h" />
@@ -122,6 +123,11 @@
 		<Unit filename="..\include\SonettoSTRManager.h" />
 		<Unit filename="..\include\SonettoSTRSerializer.h" />
 		<Unit filename="..\include\SonettoSaveMap.h" />
+		<Unit filename="..\include\SonettoScript.h" />
+		<Unit filename="..\include\SonettoScriptFile.h" />
+		<Unit filename="..\include\SonettoScriptFileSerializer.h" />
+		<Unit filename="..\include\SonettoScriptFlowHandler.h" />
+		<Unit filename="..\include\SonettoScriptManager.h" />
 		<Unit filename="..\include\SonettoSlimWindow.h" />
 		<Unit filename="..\include\SonettoSoundSource.h" />
 		<Unit filename="..\include\SonettoTailedWindow.h" />
@@ -160,6 +166,11 @@
 		<Unit filename="..\src\SonettoSTRManager.cpp" />
 		<Unit filename="..\src\SonettoSTRSerializer.cpp" />
 		<Unit filename="..\src\SonettoSaveMap.cpp" />
+		<Unit filename="..\src\SonettoScript.cpp" />
+		<Unit filename="..\src\SonettoScriptFile.cpp" />
+		<Unit filename="..\src\SonettoScriptFileSerializer.cpp" />
+		<Unit filename="..\src\SonettoScriptFlowHandler.cpp" />
+		<Unit filename="..\src\SonettoScriptManager.cpp" />
 		<Unit filename="..\src\SonettoSlimWindow.cpp" />
 		<Unit filename="..\src\SonettoSoundSource.cpp" />
 		<Unit filename="..\src\SonettoTailedWindow.cpp" />

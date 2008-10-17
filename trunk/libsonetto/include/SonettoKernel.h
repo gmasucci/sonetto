@@ -27,12 +27,14 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include <fstream>
 #include <stack>
+#include <SDL/SDL_video.h>
 #include <Ogre.h>
 #include <OgreVector2.h>
 
-#include "SonettoAudioManager.h"
 #include "SonettoDatabase.h"
 #include "SonettoInputManager.h"
+#include "SonettoAudioManager.h"
+#include "SonettoScriptManager.h"
 #include "SonettoModule.h"
 #include "SonettoPlaneFactory.h"
 #include "SonettoRARC.h"
@@ -48,18 +50,20 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "TESTMapFile.h"
 #include "TESTMapFileManager.h"
 
-#include <SDL/SDL_video.h>
-
 namespace Sonetto {
     class Module; // Forward declaration
-}
 
-namespace Sonetto
-{
+    /*const float ASPECT_RATIO_4_3   = 640.0f /480.0f
+    const float ASPECT_RATIO_16_10 = 1280.0f/800.0f
+    const float ASPECT_RATIO_16_9  = 1920.0f/1080.0f
+    const float MINIMUM_FPS = 1.0f/60.0f
+
+    const std::string INPUT_KEYBOARD_KEY = "KEY_"
+    const std::string INPUT_JOYSTICK_KEY = "JOY_"*/
+
     #define ASPECT_RATIO_4_3 640.0f/480.0f
     #define ASPECT_RATIO_16_10 1280.0f/800.0f
     #define ASPECT_RATIO_16_9 1920.0f/1080.0f
-    //#define ASPECT_RATIO_16_9 1920.0f/1080.0f
     #define MINIMUM_FPS 1.0f/60.0f
 
     #define INPUT_KEYBOARD_KEY "KEY_"
@@ -108,7 +112,7 @@ namespace Sonetto
         // Screen Ratio / Aspect Ratio:
         //  4:3      (Standard CRT and TV Aspect Ratio - 640x480)
         //  16:10    (Common Widescreen Laptop Resolution - 1280x800)
-        //  16:9     (Standard High-Definition Television Aspect Ratio - 1920×1080)
+        //  16:9     (Standard High-Definition Television Aspect Ratio - 1920x1080)
         float mAspectRatio;
 
         void initialise();
@@ -191,6 +195,8 @@ namespace Sonetto
         /// @brief Remove a module from the top of the stack.
         void popModule();
 
+        Module *getActiveModule() { return mModuleList.top(); }
+
         /// @brief Shutdown / Close the game.
         void shutdown() { mShutdown = true; }
 
@@ -206,6 +212,7 @@ namespace Sonetto
 
         InputManager *getInputMan();
         AudioManager *getAudioMan() { return mAudioMan; }
+        ScriptManager *getScriptMan() { return mScriptMan; }
 
         /// @brief Load and parse the configuration file.
         bool loadConfig(const Ogre::String& fname, Ogre::NameValuePairList &wndParamList);
@@ -264,8 +271,9 @@ namespace Sonetto
         #endif
 
         // Sonetto Pointers.
-        AudioManager                 *mAudioMan; // Sonetto Audio Manager.
-        InputManager                 *mInputMan; // Sonetto Input Manager.
+        AudioManager  *mAudioMan;  // Sonetto Audio Manager.
+        InputManager  *mInputMan;  // Sonetto Input Manager.
+        ScriptManager *mScriptMan; // Sonetto Script Manager.
 
         // Sonetto Resources and Objects.
         STRManager                  *mStrManager;

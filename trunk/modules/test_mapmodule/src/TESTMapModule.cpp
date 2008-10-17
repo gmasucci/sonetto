@@ -168,6 +168,8 @@ namespace Sonetto {
                     movMagnitude * deltatime);
         }
 
+        mKernel->getScriptMan()->updateScript(mTestScript);
+
         for (size_t i = 0;i < mEvents.size();++i)
         {
             mEvents[i]->update(deltatime);
@@ -248,6 +250,17 @@ namespace Sonetto {
         Module::wakeup();
     }
     //-----------------------------------------------------------------------------
+    int TestMapModule::handleOpcode(Script *script,size_t id,
+            OpcodeArguments *aArgs)
+    {
+        switch (id)
+        {
+            default:
+                SONETTO_THROW("Unrecognized opcode sent to map module handler");
+            break;
+        }
+    }
+    //-----------------------------------------------------------------------------
     void TestMapModule::changeMap()
     {
         std::cout<<"changeMap()\n";
@@ -268,12 +281,15 @@ namespace Sonetto {
             mKernel->mResourceMan->createResourceGroup(mResGroupName);
             mResourceGroupCreated = true;
             mKernel->mResourceMan->addResourceLocation("map/"+mapName, mapType, mResGroupName);
+            mKernel->mResourceMan->addResourceLocation("scripts/" + mapName,
+                    "FileSystem",mResGroupName);
 
             //mKernel->mResourceMan->declareResource("map.material", "Material", mResGroupName);
             mKernel->mResourceMan->initialiseResourceGroup(mResGroupName);
             mKernel->mResourceMan->loadResourceGroup(mResGroupName);
 
             MapFilePtr mapFile = mKernel->mMapFileManager->load("mapdata.dat", mResGroupName);
+            mTestScript = mKernel->getScriptMan()->createScript("main.script",mResGroupName);
 
             mCurrentMapName = mapFile->mMapName;
             mSceneMan->setAmbientLight(mapFile->mAmbientColor);

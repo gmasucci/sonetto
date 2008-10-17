@@ -94,7 +94,11 @@ namespace Sonetto {
 
         // Creates and configures Ogre root object, based on configuration
         // took from the configuration file
+        #ifdef _DEBUG
         mRoot = new Ogre::Root("","","devlab.log");
+        #else
+        mRoot = new Ogre::Root("","",""); // Release version should not create logs.
+       	#endif
 
         #ifdef _WINDOWS
             // Under Windows we just need to pass the window handle(HWND) as a string to
@@ -120,6 +124,9 @@ namespace Sonetto {
 
         // Create Audio Manager
         mAudioMan = new AudioManager();
+
+        // Create Script Manager
+        mScriptMan = new ScriptManager();
 
         loadConfig("config.ini",wndParamList);
 
@@ -210,6 +217,13 @@ namespace Sonetto {
             delete mDatabase;
             mDatabase = NULL;
         }
+
+        // Deinitialise ScriptManager
+        if (mScriptMan) {
+            delete mScriptMan;
+            mScriptMan = NULL;
+        }
+
         // Deinitialise InputManager
         if (mInputMan) {
             delete mInputMan;

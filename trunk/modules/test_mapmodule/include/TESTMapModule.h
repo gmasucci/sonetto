@@ -34,6 +34,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoModule.h"
 #include "SonettoWalkmeshManager.h"
+#include "SonettoScript.h"
 #include "TESTMapFileManager.h"
 
 namespace Sonetto {
@@ -89,7 +90,7 @@ namespace Sonetto {
 
     /** Description coming soon...
     */
-    class MODULE_EXPORT TestMapModule : public Module
+    class MODULE_EXPORT TestMapModule : public Module, public OpcodeHandler
     {
     public:
         /// Default Constructor.
@@ -106,6 +107,8 @@ namespace Sonetto {
         void halt();
 
         void wakeup();
+
+        int handleOpcode(Script *script,size_t id,OpcodeArguments *args);
 
         protected:
         // Map Module internal functions.
@@ -133,6 +136,8 @@ namespace Sonetto {
         EventObject *mDummyHero;
 
         EventVector  mEvents;
+
+        Script *mTestScript;
 
         size_t mState;
     };
