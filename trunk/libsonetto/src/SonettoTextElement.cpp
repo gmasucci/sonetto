@@ -311,7 +311,6 @@ namespace Sonetto
                 {
                     if(c_line_size > l_line_size)
                     {
-                        std::cout<<"c_line_size: "<<c_line_size<<"\n";
                         ++cur;
                         l_line_ptr = cur;
                         l_line_size = c_line_size;

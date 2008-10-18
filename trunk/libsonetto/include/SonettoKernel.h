@@ -711,8 +711,6 @@ namespace Sonetto {
             map->mMapLayer.push_back(layer6);
 
             map->mNumMapLayers = map->mMapLayer.size();
-            std::cout<<"Writing, num map: "<<map->mMapLayer.size()<<"\nMap: "<<map->mNumMapLayers<<"\n";
-
 
         }
     };

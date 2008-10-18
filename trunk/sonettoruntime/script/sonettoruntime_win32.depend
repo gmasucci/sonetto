@@ -1172,7 +1172,7 @@
 
 1202562610 c:\workspace\projects\sonetto\trunk\dependencies\include\ogg\config_types.h
 
-1222793486 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoexception.h
+1224284384 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoexception.h
 	"SonettoMain.h"
 	<string>
 	<exception>
@@ -1368,15 +1368,17 @@
 	<Ogre.h>
 	"SonettoKernel.h"
 
-1223572683 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettokernel.h
+1224284514 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettokernel.h
 	"SonettoMain.h"
 	<fstream>
 	<stack>
+	<SDL/SDL_video.h>
 	<Ogre.h>
 	<OgreVector2.h>
-	"SonettoAudioManager.h"
 	"SonettoDatabase.h"
 	"SonettoInputManager.h"
+	"SonettoAudioManager.h"
+	"SonettoScriptManager.h"
 	"SonettoModule.h"
 	"SonettoPlaneFactory.h"
 	"SonettoRARC.h"
@@ -1391,7 +1393,6 @@
 	"SonettoCounter.h"
 	"TESTMapFile.h"
 	"TESTMapFileManager.h"
-	<SDL/SDL_video.h>
 
 1223936981 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoaudiomanager.h
 	<vector>
@@ -1548,11 +1549,12 @@
 	<OgreOverlayElementFactory.h>
 	"SonettoMain.h"
 
-1222888860 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\main.cpp
+1224293266 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\main.cpp
 	<cstdio>
 	"windows.h"
 	<Ogre.h>
 	"Sonetto.h"
+	"SonettoException.h"
 	"BasicModule.h"
 	"TESTMapFileManager.h"
 	"TESTMapModule.h"
@@ -1633,9 +1635,10 @@
 
 1219266222 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource_d.rc
 
-1223937836 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testmapmodule.h
+1224288194 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testmapmodule.h
 	"SonettoModule.h"
 	"SonettoWalkmeshManager.h"
+	"SonettoScript.h"
 	"TESTMapFileManager.h"
 
 1219697300 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoplanefactory.h
@@ -1706,4 +1709,28 @@
 	<memory>
 	<OgreVector3.h>
 	"SonettoEventObject.h"
+
+1224284509 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoscriptmanager.h
+	<OgreResourceManager.h>
+	<OgreSingleton.h>
+	"SonettoScript.h"
+	"SonettoScriptFile.h"
+	"SonettoOpcode.h"
+	"SonettoScriptFlowHandler.h"
+
+1224284510 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoscript.h
+	<vector>
+	"SonettoMain.h"
+	"SonettoScriptFile.h"
+
+1224284511 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoscriptfile.h
+	<OgreSharedPtr.h>
+	<OgreResourceManager.h>
+	"SonettoMain.h"
+
+1224284512 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoopcode.h
+
+1224284514 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoscriptflowhandler.h
+	"SonettoOpcode.h"
+	"SonettoScriptManager.h"
 

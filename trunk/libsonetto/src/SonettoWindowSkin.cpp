@@ -84,8 +84,7 @@ namespace Sonetto {
 
         if(mWindowMaterial.isNull() || mBorderMaterial.isNull())
         {
-            std::cout<<"SHIT HAS HAPPENED AT createMaterial() line 78!";
-            return false;
+            SONETTO_THROW("Error creating window skin");
         }
 
 

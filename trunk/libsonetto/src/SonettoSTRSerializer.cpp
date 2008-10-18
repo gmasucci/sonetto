@@ -60,7 +60,7 @@ namespace Sonetto
 		writeInts(&totalnstrings,1);
 
         // Now write every string to the file.
-		for (size_t i = 0; i < pSTR->mMessageList.size()-1; ++i)
+		for (size_t i = 0; i < pSTR->mMessageList.size(); ++i)
         {
             writeStr(pSTR->mMessageList[i]);
         }
@@ -72,7 +72,6 @@ namespace Sonetto
     void STRSerializer::importSTR(Ogre::DataStreamPtr &stream, STRData *pDest)
     {
         // Determine endianness (must be the first thing we do!)
-        std::cout<<"STREAM TELL(): "<<stream->tell()<<"\nEntering on determineEndianness(stream);\n";
 		determineEndianness(stream);
 
 		// Check header

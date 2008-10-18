@@ -58,9 +58,12 @@ namespace Sonetto {
             for (skip = strlen(__FILE__);skip > 0 && __FILE__[skip-1] != '\\' && __FILE__[skip-1] != '/';--skip);
 
             // Parse exception
-            str << "Sonetto Exception\n"
+            /*str << "Sonetto Exception\n"
                    "  In: " << (const char *)(mSrc+skip) << " at line " << mLine << "\n\n"
-                   "  " << mDesc << ".";
+                   "  " << mDesc << ".";*/
+            str << "An Exception has been\nthrown in "
+                << (const char *)(mSrc+skip) << ", at line "
+                << mLine << ".\n\n" << mDesc << ".";
 
             // Saves parsed exception string into class
             mParsed = str.str();

@@ -480,10 +480,6 @@ namespace Sonetto {
             Ogre::RGBA* pDest = static_cast<Ogre::RGBA*>(
                                     vbuf->lock(Ogre::HardwareBuffer::HBL_DISCARD) );
 
-            std::cout<<"R: "<<mLeftColor.r<<" G: "<<mLeftColor.g<<" B: "<<mLeftColor.b<<" A: "<<mLeftColor.a<<"\n";
-            std::cout<<"R: "<<mRightColor.r<<" G: "<<mRightColor.g<<" B: "<<mRightColor.b<<" A: "<<mRightColor.a<<"\n";
-            std::cout<<"R: "<<mBgColor.r<<" G: "<<mBgColor.g<<" B: "<<mBgColor.b<<" A: "<<mBgColor.a<<"\n";
-
             *pDest++ = backColor;
             *pDest++ = backColor;
             *pDest++ = backColor;

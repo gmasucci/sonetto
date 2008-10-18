@@ -114,8 +114,6 @@ namespace Sonetto
 
         pFont->font_texture_name = readString(stream);
 
-        std::cout<<"Texture: "<<pFont->font_texture_name.c_str()<<"\n";
-
         readShorts(stream, &pFont->font_blend_mode,1);
 
         readShorts(stream, &pFont->font_alpha_reject_settings,1);

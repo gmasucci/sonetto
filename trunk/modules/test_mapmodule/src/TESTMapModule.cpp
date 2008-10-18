@@ -289,7 +289,7 @@ namespace Sonetto {
             mKernel->mResourceMan->loadResourceGroup(mResGroupName);
 
             MapFilePtr mapFile = mKernel->mMapFileManager->load("mapdata.dat", mResGroupName);
-            mTestScript = mKernel->getScriptMan()->createScript("main.script",mResGroupName);
+            mTestScript = mKernel->getScriptMan()->createScript("event_00.evt",mResGroupName);
 
             mCurrentMapName = mapFile->mMapName;
             mSceneMan->setAmbientLight(mapFile->mAmbientColor);

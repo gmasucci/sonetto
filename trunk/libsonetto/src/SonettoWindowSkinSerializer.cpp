@@ -55,6 +55,8 @@ namespace Sonetto {
 		writeString(pWindowSkin->mWindowMaskTextureName);
 		writeString(pWindowSkin->mWindowBgTextureName);
 		writeString(pWindowSkin->mBorderTextureName);
+		writeString(pWindowSkin->mCursorTextureName);
+		writeString(pWindowSkin->mCursorLineTextureName);
 
 		writeTexCoords(pWindowSkin->mWinTexCoord);
 		writeVector2(pWindowSkin->mBorderDimensions);
@@ -80,6 +82,7 @@ namespace Sonetto {
 		writeColorValue(pWindowSkin->mMenuBgBottomLeft);
 		writeColorValue(pWindowSkin->mMenuBgBottomRight);
 
+		writeColorValue(pWindowSkin->mCursorColor);
 		writeColorValue(pWindowSkin->mCursorLineColor);
 
 		fclose(mpfFile);
@@ -96,6 +99,8 @@ namespace Sonetto {
         pDest->mWindowMaskTextureName = readString(stream);
 		pDest->mWindowBgTextureName = readString(stream);
 		pDest->mBorderTextureName = readString(stream);
+		pDest->mCursorTextureName = readString(stream);
+		pDest->mCursorLineTextureName = readString(stream);
 
 		readTexCoords(stream, pDest->mWinTexCoord);
 		readVector2(stream, pDest->mBorderDimensions);
@@ -121,6 +126,7 @@ namespace Sonetto {
 		readColorValue(stream, pDest->mMenuBgBottomLeft);
 		readColorValue(stream, pDest->mMenuBgBottomRight);
 
+        readColorValue(stream, pDest->mCursorColor);
 		readColorValue(stream, pDest->mCursorLineColor);
     }
     //-----------------------------------------------------------------------------
@@ -195,6 +201,16 @@ namespace Sonetto {
         writeFloats(&vec.tail_down.right, 1);
         writeFloats(&vec.tail_down.top, 1);
         writeFloats(&vec.tail_down.bottom, 1);
+
+        writeFloats(&vec.cursor.left, 1);
+        writeFloats(&vec.cursor.right, 1);
+        writeFloats(&vec.cursor.top, 1);
+        writeFloats(&vec.cursor.bottom, 1);
+
+        writeFloats(&vec.cursor_line.left, 1);
+        writeFloats(&vec.cursor_line.right, 1);
+        writeFloats(&vec.cursor_line.top, 1);
+        writeFloats(&vec.cursor_line.bottom, 1);
     }
     //-----------------------------------------------------------------------------
     void WindowSkinSerializer::writeVector2(const Ogre::Vector2& vec)
@@ -278,6 +294,16 @@ namespace Sonetto {
         readFloats(stream, &vec.tail_down.right, 1);
         readFloats(stream, &vec.tail_down.top, 1);
         readFloats(stream, &vec.tail_down.bottom, 1);
+
+        readFloats(stream, &vec.cursor.left, 1);
+        readFloats(stream, &vec.cursor.right, 1);
+        readFloats(stream, &vec.cursor.top, 1);
+        readFloats(stream, &vec.cursor.bottom, 1);
+
+        readFloats(stream, &vec.cursor_line.left, 1);
+        readFloats(stream, &vec.cursor_line.right, 1);
+        readFloats(stream, &vec.cursor_line.top, 1);
+        readFloats(stream, &vec.cursor_line.bottom, 1);
     }
     //-----------------------------------------------------------------------------
     void WindowSkinSerializer::readVector2(Ogre::DataStreamPtr &stream, Ogre::Vector2 &pDest)

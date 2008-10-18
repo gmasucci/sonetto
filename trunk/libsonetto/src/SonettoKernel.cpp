@@ -176,12 +176,13 @@ namespace Sonetto {
         mResourceMan->createResourceGroup("TEMP");
 
         ManualFontLoader * defaultFont = new ManualFontLoader();
-        mResourceMan->declareResource("dfont.bin", "Font", "TEMP", defaultFont);
+        mResourceMan->declareResource("dfont.bin", "Font", "TEMP"/*, defaultFont*/);
         mResourceMan->addResourceLocation("font/","FileSystem","TEMP");
-        mResourceMan->declareResource("dfont_texture_512.dds", "Texture", "TEMP");
+        mResourceMan->declareResource("dfont.dds", "Texture", "TEMP");
 
         ManualSTRLoader * defaultSTR = new ManualSTRLoader();
-        mResourceMan->declareResource("system.str", "STR", "TEMP", defaultSTR);
+        mResourceMan->addResourceLocation("system/","FileSystem","TEMP");
+        mResourceMan->declareResource("system.str", "STR", "TEMP"/*, defaultSTR*/);
 
         /*ManualMapFileLoader * defaultMap = new ManualMapFileLoader();
         mResourceMan->declareResource("system.map", "MapFile", "TEMP", defaultMap);*/
@@ -192,7 +193,7 @@ namespace Sonetto {
         mResourceMan->declareResource("windowskin_00_00.dds", "Texture", "TEMP");
         mResourceMan->declareResource("windowskin_00_01.dds", "Texture", "TEMP");
         mResourceMan->declareResource("windowskin_00_02.dds", "Texture", "TEMP");
-        mResourceMan->declareResource("windowskin_00.bin", "WindowSkin", "TEMP", defaultWndSkin);
+        mResourceMan->declareResource("windowskin_00.bin", "WindowSkin", "TEMP"/*, defaultWndSkin*/);
 
         mResourceMan->initialiseResourceGroup("TEMP");
 
@@ -462,6 +463,9 @@ namespace Sonetto {
     //-----------------------------------------------------------------------------
     void Kernel::pushModule(Module *module,bool haltMode)
     {
+        if(!module)
+            SONETTO_THROW("The module pointer cannot be NULL");
+
         if (!mModuleList.empty()) {
             if (haltMode) {
                 mModuleList.top()->halt(); // Put the current module to sleep

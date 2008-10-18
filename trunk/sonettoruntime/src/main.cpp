@@ -28,6 +28,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include <Ogre.h>
 #include "Sonetto.h"
+#include "SonettoException.h"
 #include "BasicModule.h"
 #include "TESTMapFileManager.h"
 #include "TESTMapModule.h"
@@ -85,8 +86,7 @@ int main(int argc, char **argv)
         // Create Kernel Singleton
         if (!Kernel::create())
         {
-            cout << "Sonetto Kernel could not be created.\n";
-            return -1;
+            SONETTO_THROW("The Kernel could not be created");
         }
         Kernel::get()->initialise();
         TestModuleFactory * moduleFactory = new TestModuleFactory();
@@ -101,32 +101,46 @@ int main(int argc, char **argv)
 
         if (!what)
         {
-            what = "Sonetto Exception\n"
-                   "  In: <unknown>\n\n"
-                   "  An exception was thrown during Sonetto exception message formatting.";
+            what =  "An unknown error has happened,\n"
+                    "It was not possible to identify the error.";
         }
 
+    #ifdef _WINDOWS
+        MessageBox(NULL,what,"Game Runtime Error",
+                MB_OK|MB_ICONERROR|MB_TASKMODAL);
+    #else
+        cerr << "[!] Game Runtime Error\n" << what << "\n";
+    #endif
+    } catch(Ogre::FileNotFoundException &e) {
+        std::string whaterror = "A game file was not found.\n" + e.getDescription();
         #ifdef _WINDOWS
-            MessageBox(NULL,what,"A Sonetto exception has occurred!",
+        MessageBox(NULL,whaterror.c_str(),"Game Runtime Error",
+                    MB_OK|MB_ICONERROR|MB_TASKMODAL);
+    #else
+        cerr << "[!] Game Runtime Error\n" << e.what() << "\n";
+    #endif
+    } catch(std::exception &e) {
+    #ifdef _WINDOWS
+        MessageBox(NULL,e.what(),"Game Runtime Error",
+                    MB_OK|MB_ICONERROR|MB_TASKMODAL);
+    #else
+        cerr << "[!] Game Runtime Error\n" << e.what() << "\n";
+    #endif
+    }/* catch(Ogre::Exception &e) {
+        #ifdef _WINDOWS
+            MessageBox(NULL,e.getFullDescription().c_str(),"Game Runtime Error",
                     MB_OK|MB_ICONERROR|MB_TASKMODAL);
         #else
-            cerr << "A Sonetto exception has occurred!\n" << what << "\n";
-        #endif
-    } catch(Ogre::Exception &e) {
-        #ifdef _WINDOWS
-            MessageBox(NULL,e.getFullDescription().c_str(),"An Ogre exception has occurred!",
-                    MB_OK|MB_ICONERROR|MB_TASKMODAL);
-        #else
-            cerr << "An Ogre exception has occurred!\n" << e.getFullDescription().c_str() << "\n";
+            cerr << "[!] Game Runtime Error\n" << e.getFullDescription().c_str() << "\n";
         #endif
     } catch(std::exception &e) {
         #ifdef _WINDOWS
-            MessageBox(NULL,e.what(),"A standard exception has occurred!",
+            MessageBox(NULL,e.what(),"Game Runtime Error",
                     MB_OK|MB_ICONERROR|MB_TASKMODAL);
         #else
-            cerr << "A standard exception has occurred!\n" << e.what() << "\n";
+            cerr << "[!] Game Runtime Error\n" << e.what() << "\n";
         #endif
-    }
+    }*/
 
     return 0;
 }
