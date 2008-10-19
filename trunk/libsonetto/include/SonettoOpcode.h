@@ -24,32 +24,43 @@ http://www.gnu.org/copyleft/lesser.txt
 #define SONETTO_OPCODE_H
 
 namespace Sonetto {
-    // Forward declaration
+    // Forward declarations
     class Script;
+    class OpcodeHandler;
 
-    struct SONETTO_EXPORT OpcodeArguments
+    struct OpcodeArgument
     {
-        virtual size_t           getSize() const = 0;
-        virtual OpcodeArguments *create()  const = 0;
+        OpcodeArgument(size_t aSize,void *aArg)
+                : size(aSize), arg(aArg) {}
+
+        size_t size;
+        void *arg;
     };
 
-    class SONETTO_EXPORT OpcodeHandler
+    typedef std::vector<OpcodeArgument> ArgumentVector;
+
+    class SONETTO_EXPORT Opcode
     {
     public:
-        virtual int handleOpcode(Script *script,size_t id,
-                OpcodeArguments *args) = 0;
+        Opcode(OpcodeHandler *aHandler)
+                : handler(aHandler) {}
+
+        virtual ~Opcode() {}
+
+        virtual Opcode *create() const = 0;
+
+        OpcodeHandler *handler;
+        ArgumentVector arguments;
     };
 
-    struct SONETTO_EXPORT Opcode
+    class OpcodeHandler
     {
-        Opcode(OpcodeHandler *aHandler,OpcodeArguments *aArgs)
-                : handler(aHandler), arguments(aArgs) {}
-
-        OpcodeHandler   *handler;
-        OpcodeArguments *arguments;
+    public:
+        virtual int handleOpcode(Script *script,
+            size_t id,Opcode *opcode) = 0;
     };
 
-    typedef std::map<size_t,Opcode> OpcodeTable;
+    typedef std::map<size_t,const Opcode *> OpcodeTable;
 } // namespace Sonetto
 
 #endif

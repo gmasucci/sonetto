@@ -29,26 +29,27 @@ namespace Sonetto {
     //--------------------------------------------------------------------------
     void ScriptFlowHandler::registerOpcodes(ScriptManager *scriptMan)
     {
-        scriptMan->_registerOpcode(OP_STOP,Opcode(this,new OpFlowStop));
-        scriptMan->_registerOpcode(OP_GOTO,Opcode(this,new OpFlowGoto));
-        scriptMan->_registerOpcode(OP_CGOTO,Opcode(this,new OpFlowCGoto));
+        // Registers opcodes that should be handled by ScriptFlowHandler
+        scriptMan->_registerOpcode(OP_STOP,new OpFlowStop(this));
+        scriptMan->_registerOpcode(OP_JMP,new OpFlowJmp(this));
+        scriptMan->_registerOpcode(OP_CJMP,new OpFlowCJmp(this));
     }
     //--------------------------------------------------------------------------
-    int ScriptFlowHandler::handleOpcode(Script *script,size_t id,
-            OpcodeArguments *args)
+    int ScriptFlowHandler::handleOpcode(Script *script,size_t id,Opcode *opcode)
     {
+        // Calls opcode handler methods
         switch (id)
         {
             case OP_STOP:
                 return SCRIPT_STOP;
             break;
 
-            case OP_GOTO:
-                return goto_(script,dynamic_cast<OpFlowGoto *>(args));
+            case OP_JMP:
+                return jmp(dynamic_cast<OpFlowJmp *>(opcode));
             break;
 
-            case OP_CGOTO:
-                return cgoto(script,dynamic_cast<OpFlowCGoto *>(args));
+            case OP_CJMP:
+                return cjmp(script,dynamic_cast<OpFlowCJmp *>(opcode));
             break;
 
             default:
@@ -57,95 +58,181 @@ namespace Sonetto {
         }
     }
     //--------------------------------------------------------------------------
-    int ScriptFlowHandler::goto_(Script *script,OpFlowGoto *args)
+    int ScriptFlowHandler::jmp(OpFlowJmp *opcode)
     {
-        const LabelVector &labels = script->_getScriptFile()->_getLabels();
-
-        if (args->labelID >= labels.size())
+        // The jump address is based on the beginning of the script,
+        // so it cannot be lesser than zero
+        if (opcode->address < 0)
         {
-            SONETTO_THROW("Script flow error: Missing a goto label");
+            SONETTO_THROW("Script flow error: Invalid jump address");
         }
 
-        return labels[args->labelID];
+        // Simply jump to the desired address
+        return opcode->address;
     }
     //--------------------------------------------------------------------------
-    int ScriptFlowHandler::cgoto(Script *script,OpFlowCGoto *args)
+    int ScriptFlowHandler::cjmp(Script *script,OpFlowCJmp *opcode)
     {
-        /*int labelValue;
-        const LabelVector &labels = script->_getScriptFile()->_getLabels();
-        OpFlowCGoto::Comparator cmp = args->comparator;
+        Variable variable(0); // Unexistent variables default to zero
         int retn = SCRIPT_CONTINUE;
 
-        if (args->labelID >= labels.size())
+        // The jump address is based on the beginning of the script,
+        // so it cannot be lesser than zero
+        if (opcode->address < 0)
         {
-            SONETTO_THROW("Script flow error: Missing a goto label");
+            SONETTO_THROW("Script flow error: Invalid jump address");
         }
 
-        labelValue = labels[args->labelID];
-
-        switch (args->type)
+        // Gets variable desired to do the checking
+        switch (opcode->scope)
         {
-            case OpFlowCGoto::TYP_SWITCH:
+            // The variable can be local, in which case it is taken from
+            // the script's local variable map
+            case OpFlowCJmp::CJS_LOCAL:
+                // <todo> Add check for local variables
+            break;
+
+            // And the variable can be global, in which case it is taken from
+            // the database's savemap
+            case OpFlowCJmp::CJS_GLOBAL:
             {
-                bool value = true; // Temporary
-                bool cmpValue = args->boolValue;
+                VariableMap::iterator iter;
+                VariableMap &variables = Kernel::get()->getDatabase()->
+                        mSaveMap->getVariables();
 
-                switch (cmp)
+                // If it exists, we replace the default value by it
+                iter = variables.find(opcode->cmpIndex);
+                if (iter != variables.end())
                 {
-                    case OpFlowCGoto::CMP_EQUAL_TO:
-                        if (cmpValue == value)
-                        {
-                            retn = labelValue;
-                        }
-                    break;
-
-                    case OpFlowCGoto::CMP_NOT_EQUAL_TO:
-                        if (cmpValue != value)
-                        {
-                            retn = labelValue;
-                        }
-                    break;
-
-                    default:
-                        SONETTO_THROW("Script flow error: Invalid "
-                                "comparator used in switch comparison");
-                    break;
+                    variable = iter->second;
                 }
             }
             break;
 
-            case OpFlowCGoto::TYP_VARIABLE:
-            {
-                float value = 69.0f; // Temporary
-                float cmpValue = args->floatValue;
+            // Or it might also be a terrible corruption problem :-)
+            default:
+                SONETTO_THROW("Script flow error: Unregonized conditional "
+                            "jump scope");
+            break;
+        }
 
-                switch (cmp)
+        // Checks condition
+        switch (opcode->varType)
+        {
+            // Checks with integers
+            case Variable::VTP_INT:
+                switch (opcode->comparator)
                 {
-                    case OpFlowCGoto::CMP_EQUAL_TO:
-                        if (cmpValue == value)
+                    case OpFlowCJmp::CMP_EQUAL_TO:
+                        if (opcode->cmpInt == variable.iValue)
                         {
-                            retn = labelValue;
+                            retn = opcode->address;
                         }
                     break;
 
-                    case OpFlowCGoto::CMP_NOT_EQUAL_TO:
-                        if (cmpValue != value)
+                    case OpFlowCJmp::CMP_NOT_EQUAL_TO:
+                        if (opcode->cmpInt != variable.iValue)
                         {
-                            retn = labelValue;
+                            retn = opcode->address;
+                        }
+                    break;
+
+                    case OpFlowCJmp::CMP_GREATER_THAN:
+                        if (opcode->cmpInt > variable.iValue)
+                        {
+                            retn = opcode->address;
+                        }
+                    break;
+
+                    case OpFlowCJmp::CMP_GREATER_THAN_OR_EQUAL_TO:
+                        if (opcode->cmpInt >= variable.iValue)
+                        {
+                            retn = opcode->address;
+                        }
+                    break;
+
+                    case OpFlowCJmp::CMP_LESSER_THAN:
+                        if (opcode->cmpInt < variable.iValue)
+                        {
+                            retn = opcode->address;
+                        }
+                    break;
+
+                    case OpFlowCJmp::CMP_LESSER_THAN_OR_EQUAL_TO:
+                        if (opcode->cmpInt <= variable.iValue)
+                        {
+                            retn = opcode->address;
                         }
                     break;
 
                     default:
-                        SONETTO_THROW("Script flow error: Comparison not "
-                                "implemented");
+                        SONETTO_THROW("Script flow error: Unregonized "
+                                "comparator");
                     break;
                 }
-            }
+            break;
+
+            // Checks with floats
+            case Variable::VTP_FLOAT:
+                switch (opcode->comparator)
+                {
+                    case OpFlowCJmp::CMP_EQUAL_TO:
+                        if (opcode->cmpFloat == variable.fValue)
+                        {
+                            retn = opcode->address;
+                        }
+                    break;
+
+                    case OpFlowCJmp::CMP_NOT_EQUAL_TO:
+                        if (opcode->cmpFloat != variable.fValue)
+                        {
+                            retn = opcode->address;
+                        }
+                    break;
+
+                    case OpFlowCJmp::CMP_GREATER_THAN:
+                        if (opcode->cmpFloat > variable.fValue)
+                        {
+                            retn = opcode->address;
+                        }
+                    break;
+
+                    case OpFlowCJmp::CMP_GREATER_THAN_OR_EQUAL_TO:
+                        if (opcode->cmpFloat >= variable.fValue)
+                        {
+                            retn = opcode->address;
+                        }
+                    break;
+
+                    case OpFlowCJmp::CMP_LESSER_THAN:
+                        if (opcode->cmpFloat < variable.fValue)
+                        {
+                            retn = opcode->address;
+                        }
+                    break;
+
+                    case OpFlowCJmp::CMP_LESSER_THAN_OR_EQUAL_TO:
+                        if (opcode->cmpFloat <= variable.fValue)
+                        {
+                            retn = opcode->address;
+                        }
+                    break;
+
+                    default:
+                        SONETTO_THROW("Script flow error: Unregonized "
+                                "comparator");
+                    break;
+                }
+            break;
+
+            default:
+                SONETTO_THROW("Script flow error: Unregonized variable type");
             break;
         }
 
-        return retn;*/
-        return SCRIPT_CONTINUE;
+        // If the variable wasn't found, `retn' will have a value of
+        // SCRIPT_CONTINUE, so the jump will not be taken
+        return retn;
     }
     //--------------------------------------------------------------------------
 } // namespace Sonetto

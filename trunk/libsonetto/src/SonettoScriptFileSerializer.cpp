@@ -39,20 +39,12 @@ namespace Sonetto {
     void ScriptFileSerializer::importScriptFile(Ogre::DataStreamPtr &stream,
             ScriptFile *pDest)
     {
-        unsigned short labelCount;
-        size_t codeSize;
-        LabelVector &labels = pDest->_getLabels();        // Gets script labels
+        size_t size = stream->size();                     // Gets stream size
         ScriptData &scriptData = pDest->_getScriptData(); // Gets script data
 
-        // Reads labels
-        readShorts(stream,&labelCount,1);
-        labels.resize(labelCount);
-        readInts(stream,&labels[0],labelCount);
-
         // Reads opcodes
-        readInts(stream,&codeSize,1);
-        scriptData.resize(codeSize);
-        stream->read(&scriptData[0],codeSize);
+        scriptData.resize(size);
+        stream->read(&scriptData[0],size);
     }
     //--------------------------------------------------------------------------
 } // namespace

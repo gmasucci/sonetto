@@ -108,7 +108,7 @@ namespace Sonetto {
 
         void wakeup();
 
-        int handleOpcode(Script *script,size_t id,OpcodeArguments *args);
+        int handleOpcode(Script *script,size_t id,Opcode *opcode);
 
         protected:
         // Map Module internal functions.

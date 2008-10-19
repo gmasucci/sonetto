@@ -250,13 +250,12 @@ namespace Sonetto {
         Module::wakeup();
     }
     //-----------------------------------------------------------------------------
-    int TestMapModule::handleOpcode(Script *script,size_t id,
-            OpcodeArguments *aArgs)
+    int TestMapModule::handleOpcode(Script *script,size_t id,Opcode *opcode)
     {
         switch (id)
         {
             default:
-                SONETTO_THROW("Unrecognized opcode sent to map module handler");
+                SONETTO_THROW("Map script handler error: Unrecognized opcode");
             break;
         }
     }

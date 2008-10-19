@@ -23,30 +23,44 @@ http://www.gnu.org/copyleft/lesser.txt
 #ifndef SONETTO_SCRIPTFLOWHANDLER_H
 #define SONETTO_SCRIPTFLOWHANDLER_H
 
+#include "SonettoSaveMap.h"
 #include "SonettoOpcode.h"
 #include "SonettoScriptManager.h"
 
 namespace Sonetto {
-    struct OpFlowStop : public OpcodeArguments
+    class OpFlowStop : public Opcode
     {
-        size_t getSize() const { return sizeof(OpFlowStop) - 4; }
-        OpFlowStop *create() const { return new OpFlowStop; }
+    public:
+        OpFlowStop(OpcodeHandler *aHandler)
+                : Opcode(aHandler) {}
+
+        OpFlowStop *create() const { return new OpFlowStop(handler); }
     };
 
-    struct OpFlowGoto : public OpcodeArguments
+    class OpFlowJmp : public Opcode
     {
-        size_t getSize() const { return sizeof(OpFlowGoto) - 4; }
-        OpFlowGoto *create() const { return new OpFlowGoto; }
+    public:
+        OpFlowJmp(OpcodeHandler *aHandler)
+                : Opcode(aHandler) {}
 
-        size_t labelID;
+        OpFlowJmp *create() const {
+            OpFlowJmp *opcode = new OpFlowJmp(handler);
+            opcode->arguments.push_back(
+                    OpcodeArgument(sizeof(address),&opcode->address));
+
+            return opcode;
+        }
+
+        size_t address;
     };
 
-    struct OpFlowCGoto : public OpcodeArguments
+    class OpFlowCJmp : public Opcode
     {
-        enum Type
+    public:
+        enum Scope
         {
-            TYP_SWITCH,
-            TYP_VARIABLE
+            CJS_LOCAL,
+            CJS_GLOBAL
         };
 
         enum Comparator
@@ -59,20 +73,45 @@ namespace Sonetto {
             CMP_LESSER_THAN_OR_EQUAL_TO
         };
 
-        size_t getSize() const { return sizeof(OpFlowCGoto) - 4; }
-        OpFlowCGoto *create() const { return new OpFlowCGoto; }
+        OpFlowCJmp(OpcodeHandler *aHandler)
+                : Opcode(aHandler) {}
 
-        Type       type;
-        size_t     cmpIndex;
-        Comparator comparator;
+        OpFlowCJmp *create() const
+        {
+            OpFlowCJmp *opcode = new OpFlowCJmp(handler);
 
+            opcode->arguments.push_back(
+                    OpcodeArgument(sizeof(scope),&opcode->scope));
+            opcode->arguments.push_back(
+                    OpcodeArgument(sizeof(cmpIndex),&opcode->cmpIndex));
+            opcode->arguments.push_back(
+                    OpcodeArgument(sizeof(comparator),&opcode->comparator));
+            opcode->arguments.push_back(
+                    OpcodeArgument(sizeof(varType),&opcode->varType));
+
+            // We only put reference to one of the largest members of an union
+            // It will cover all the union memory region
+            opcode->arguments.push_back(
+                    OpcodeArgument(sizeof(cmpInt),&opcode->cmpInt));
+
+            opcode->arguments.push_back(
+                    OpcodeArgument(sizeof(address),&opcode->address));
+
+            return opcode;
+        }
+
+        char   scope;
+        size_t cmpIndex;
+        char   comparator;
+
+        char varType;
         union
         {
-            bool  boolValue;
-            float floatValue;
+            int   cmpInt;
+            float cmpFloat;
         };
 
-        size_t labelID;
+        int address;
     };
 
     class ScriptFlowHandler : public OpcodeHandler
@@ -82,20 +121,19 @@ namespace Sonetto {
         {
             OP_FLOW_BASE = 1000,
             OP_STOP = OP_FLOW_BASE,
-            OP_GOTO,
-            OP_CGOTO
+            OP_JMP,
+            OP_CJMP
         };
 
         ScriptFlowHandler() {}
         virtual ~ScriptFlowHandler() {}
 
         void registerOpcodes(ScriptManager *scriptMan);
-        int handleOpcode(Script *script,size_t id,
-                OpcodeArguments *args);
+        int handleOpcode(Script *script,size_t id,Opcode *opcode);
 
     private:
-        int goto_(Script *script,OpFlowGoto *args);
-        int cgoto(Script *script,OpFlowCGoto *args);
+        int jmp(OpFlowJmp *opcode);
+        int cjmp(Script *script,OpFlowCJmp *opcode);
     };
 } // namespace Sonetto
 

@@ -1,7 +1,7 @@
 /*-----------------------------------------------------------------------------
 This source file is part of Sonetto RPG Engine.
 
-Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr√° Vieira
+Copyright (C) 2007,2008 Arthur Carvalho de Souza Lima, Guilherme Pr· Vieira
 
 
 Sonetto RPG Engine is free software: you can redistribute it and/or modify
@@ -98,25 +98,49 @@ namespace Sonetto
         {
             size_t opID,oplength;
             int opmove;
-            OpcodeHandler   *handler;
-            OpcodeArguments *args;
+            Opcode *opcode;
+            ArgumentVector *args;
 
             // Reads opcode from script file
-            oplength = readOpcode(script,opID,&handler,&args);
+            opcode = readOpcode(script,opID,oplength);
 
             std::cout << "readOpcode (id: " << opID << ", length: "
                     << oplength << ")\n";
 
-            std::cout << "Arguments dump:\n-----\n";
-            for (size_t i = 0;i < args->getSize();++i)
+            args = &opcode->arguments;
+            std::cout << "Arguments dump (" << args->size() << "):\n-----\n";
+            for (size_t i = 0;i < args->size();++i)
             {
-                std::cout << (size_t)(*( (char *)(args) + 4 + i )) << "  ";
+                OpcodeArgument &arg = (*args)[i];
+
+                std::cout << i + 1 << ": ";
+                switch (arg.size)
+                {
+                    case 1:
+                        std::cout << "(char) " << (int)(*(char *)(arg.arg));
+                    break;
+
+                    case 2:
+                        std::cout << "(short) " << *(short *)(arg.arg);
+                    break;
+
+                    case 4:
+                        std::cout << "(int) " << *(int *)(arg.arg) <<
+                                " or (float) " << *(float *)(arg.arg);
+                    break;
+
+                    default:
+                        std::cout << "(string) " << (char *)(arg.arg);
+                    break;
+                }
+
+                std::cout << std::endl;
             }
-            std::cout << "\n-----\n";
+            std::cout << "-----\n";
 
             // Send opcode to its handler and deletes it
-            opmove = handler->handleOpcode(script,opID,args);
-            delete args;
+            opmove = opcode->handler->handleOpcode(script,opID,opcode);
+            delete opcode;
 
             std::cout << "handleOpcode (id: " << opID << ", move: "
                     << opmove << ")\n";
@@ -137,30 +161,31 @@ namespace Sonetto
             if (opmove == SCRIPT_SUSPEND) {
                 // Rewinds to the beginning of this opcode
                 script->_setOffset(script->_getOffset() - oplength);
-
                 break;
             } else
             if (opmove >= 0) {
                 // Sets opcode offset based on the handlers' answer
-                if (seekOpcode(script,opmove) == scriptSize)
-                {
-                    // If the script has ended, rewinds it to the beginning
-                    // and stops executing this script
-                    seekOpcode(script,0);
-                    break;
-                }
+                seekOpcode(script,opmove);
+            }
+
+            // If the script has ended, rewinds it to the beginning
+            // and stops executing it
+            if (script->_getOffset() == scriptSize)
+            {
+                seekOpcode(script,0);
+                break;
             }
         }
     }
     //--------------------------------------------------------------------------
-    void ScriptManager::_registerOpcode(size_t id,const Opcode &args)
+    void ScriptManager::_registerOpcode(size_t id,const Opcode *opcode)
     {
         if (mOpcodeTable.find(id) != mOpcodeTable.end())
         {
             SONETTO_THROW("Requested opcode is already registered");
         }
 
-        mOpcodeTable.insert(std::pair<size_t,Opcode>(id,args));
+        mOpcodeTable.insert(std::pair<size_t,const Opcode *>(id,opcode));
     }
     //--------------------------------------------------------------------------
     void ScriptManager::_unregisterOpcode(size_t id)
@@ -172,6 +197,8 @@ namespace Sonetto
             SONETTO_THROW("Requested opcode is not registered");
         }
 
+        // Deletes and removes opcode from opcode table
+        delete iter->second;
         mOpcodeTable.erase(iter);
     }
     //--------------------------------------------------------------------------
@@ -188,18 +215,16 @@ namespace Sonetto
         memcpy(dest,&data[offset],bytes);
     }
     //--------------------------------------------------------------------------
-    size_t ScriptManager::readOpcode(Script *script,size_t &id,
-                OpcodeHandler **handler,OpcodeArguments **args)
+    Opcode *ScriptManager::readOpcode(Script *script,size_t &id,
+            size_t &bytesRead)
     {
-        assert(handler && args);
-
-        OpcodeTable::iterator  iter;
-        const Opcode          *opcode;
-        char                  *superPtr;
+        OpcodeTable::iterator iter;
+        Opcode *opcode;
 
         // Reads ID and moves forward
         readScriptData(script,&id,sizeof(id));
         script->_setOffset(script->_getOffset() + sizeof(id));
+        bytesRead = sizeof(id);
 
         // Gets iterator to the corresponding mOpcodeTable entry for
         // the opcode ID read (`id')
@@ -211,42 +236,23 @@ namespace Sonetto
             SONETTO_THROW("Script error: Invalid opcode");
         }
 
-        // Gets pointer to opcode structure
-        opcode = &iter->second;
+        // Creates the desired opcode
+        opcode = iter->second->create();
 
-        // Gets opcode handler pointer
-        *handler = opcode->handler;
-
-        // Creates an instance of the desired OpcodeArguments structure
-        // and fills it with data read from the script (the '+4' on the
-        // second line skips the VPTR, a pointer to the vtable present
-        // in all classes using virtual inheritance)
-        *args = opcode->arguments->create();
-        superPtr = ((char *)(*args)) + 4;
-        readScriptData(script,superPtr,(*args)->getSize());
-
-        // Moves offset forward by amount of bytes read
-        script->_setOffset(script->_getOffset() + (*args)->getSize());
-
-        return ( sizeof(id) + (*args)->getSize() );
-    }
-    //--------------------------------------------------------------------------
-    size_t ScriptManager::tellOpcode(Script *script)
-    {
-        size_t offset = script->_getOffset();
-        size_t opnum;
-
-        script->_setOffset(0);
-        for (opnum = 0;script->_getOffset() < offset;++opnum)
+        // Reads opcode arguments into its pointers
+        for (size_t i = 0;i < opcode->arguments.size();++i)
         {
-            size_t           opID;
-            OpcodeHandler   *handler;
-            OpcodeArguments *args;
+            readScriptData(script,opcode->arguments[i].arg,
+                    opcode->arguments[i].size);
 
-            readOpcode(script,opID,&handler,&args);
+            // Moves offset forward by amount of bytes read
+            script->_setOffset(script->_getOffset() +
+                    opcode->arguments[i].size);
+            bytesRead += opcode->arguments[i].size;
         }
 
-        return opnum;
+        // Returns opcode read
+        return opcode;
     }
     //--------------------------------------------------------------------------
     size_t ScriptManager::seekOpcode(Script *script,size_t opIndex)
@@ -254,11 +260,12 @@ namespace Sonetto
         script->_setOffset(0);
         for (size_t opnum = 0;opnum < opIndex;++opnum)
         {
-            size_t           opID;
-            OpcodeHandler   *handler;
-            OpcodeArguments *args;
+            size_t opID,oplength;
+            Opcode *opcode;
 
-            readOpcode(script,opID,&handler,&args);
+            // Skips opcode
+            opcode = readOpcode(script,opID,oplength);
+            delete opcode;
         }
 
         return script->_getOffset();

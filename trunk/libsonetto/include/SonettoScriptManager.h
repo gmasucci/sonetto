@@ -66,7 +66,7 @@ namespace Sonetto {
 
         void updateScript(Script *script);
 
-        void _registerOpcode(size_t id,const Opcode &args);
+        void _registerOpcode(size_t id,const Opcode *opcode);
         void _unregisterOpcode(size_t id);
 
 
@@ -78,10 +78,9 @@ namespace Sonetto {
 
         void readScriptData(Script *script,void *dest,size_t bytes);
 
-        size_t readOpcode(Script *script,size_t &id,
-                OpcodeHandler **handler,OpcodeArguments **args);
+        Opcode *readOpcode(Script *script,size_t &id,
+                size_t &bytesRead);
 
-        size_t tellOpcode(Script *script);
         size_t seekOpcode(Script *script,size_t opIndex);
 
         OpcodeTable mOpcodeTable;

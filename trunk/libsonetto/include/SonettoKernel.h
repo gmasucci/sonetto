@@ -210,6 +210,7 @@ namespace Sonetto {
 
         void setWindowCaption(const Ogre::String& capt);
 
+        Database *getDatabase() { return mDatabase; }
         InputManager *getInputMan();
         AudioManager *getAudioMan() { return mAudioMan; }
         ScriptManager *getScriptMan() { return mScriptMan; }

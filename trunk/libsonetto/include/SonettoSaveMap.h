@@ -25,6 +25,25 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoMain.h"
 
 namespace Sonetto {
+    struct Variable
+    {
+        enum Type
+        {
+            VTP_INT,
+            VTP_FLOAT
+        };
+
+        Variable(float value) : fValue(value) {}
+        Variable(int value) : iValue(value) {}
+
+        union {
+            float fValue;
+            int   iValue;
+        };
+    };
+
+    typedef std::map<size_t,Variable> VariableMap;
+
     /** @brief MemoryFrame for use by the SaveMap,
         it stores each SaveMap object's pointer and size.
         (Note that it stores a local pointer)
@@ -97,6 +116,9 @@ namespace Sonetto {
         void overwriteToObject(void * ptr, size_t size, size_t objID);
         /// @brief Reset the specified object to zero.
         void SaveMap::resetObject(size_t objID);
+
+        VariableMap &getVariables() { return mVariables; }
+
     private:
         /// @brief Check if it's initialized.
         bool mInitialized;
@@ -112,6 +134,8 @@ namespace Sonetto {
         std::vector<MemoryFrame> mMemoryFrame;
         /// @brief Stores the actual SaveMap data.
         char * mMemoryData;
+
+        VariableMap mVariables;
     };
 
 }; // namespace Sonetto

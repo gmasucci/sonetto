@@ -35,8 +35,7 @@ namespace Sonetto {
 
 namespace Sonetto
 {
-    typedef std::vector<size_t> LabelVector;
-    typedef std::vector<char>   ScriptData;
+    typedef std::vector<char> ScriptData;
 
     class SONETTO_EXPORT ScriptFile : public Ogre::Resource
     {
@@ -47,8 +46,6 @@ namespace Sonetto
 
         virtual ~ScriptFile();
 
-        LabelVector &_getLabels() { return mLabels; }
-
         ScriptData &_getScriptData() { return mScriptData; }
 
         size_t calculateSize() const;
@@ -57,8 +54,6 @@ namespace Sonetto
         // Ogre::Resource interface implementation
         void loadImpl();
         void unloadImpl();
-
-        LabelVector mLabels;
 
         ScriptData mScriptData;
     };
