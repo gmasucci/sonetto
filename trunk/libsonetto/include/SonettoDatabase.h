@@ -30,6 +30,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include "SonettoSaveMap.h"
 #include "SonettoMusicStream.h"
 #include "SonettoSoundSource.h"
+#include "SonettoTextElement.h"
 
 namespace Sonetto {
 
@@ -110,6 +111,7 @@ namespace Sonetto {
     	std::vector<WindowSkinPtr> mWindowSkinList;
     	FontPtr mGameFont;
     	STRDataPtr mSystemMessage;
+    	IconSet mTextIconSet;
     	// Temporary "Map To Load" memory area.
     	// This area is set up by future scripts or commands
     	// used to change from one map to another.

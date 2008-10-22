@@ -48,6 +48,31 @@ namespace Sonetto {
         // Call the Module base function.
         Module::enter();
 
+#ifdef DEBUG_BUILD
+
+        Ogre::OverlayContainer * lOverlayContainer = static_cast<OverlayContainer*>(mKernel->mOverlayMan->createOverlayElement("Panel","DbgContainer"));
+        lOverlayContainer->setPosition(-(64/480.0f),(16/480.0f));
+        lOverlayContainer->setDimensions(1.0f,64/480.0f);
+
+
+
+        mDebugText = static_cast<Sonetto::TextElement*>(mKernel->mOverlayMan->createOverlayElement("Text", "DbgOverlay"));
+        mDebugText->setFont(mKernel->mDatabase->mGameFont);
+        mDebugText->setDimensions(1.0, 1.0);
+        mDebugText->setPosition(16/480.0f,16/480.0f);
+        mDebugText->setTextSize(Ogre::Vector2(0.03f,0.04f));
+        mDebugText->setAnimSettings(false, false, false, false, 0.0f, 0.0f, 0.0f);
+        mDebugText->setIconSet(&mKernel->mDatabase->mTextIconSet);
+        mDebugText->setScrMetricsMode(SMM_RELATIVE_ASPECT_ADJUSTED);
+        mDebugText->setMessage("Ready...");
+        mDebugText->showText();
+
+        mOverlay->add2D(lOverlayContainer);
+        lOverlayContainer->addChild(mDebugText);
+        lOverlayContainer->show();
+        mDebugText->show();
+#endif
+
         mKernel->mResourceMan->addResourceLocation("hero/dummy_hero.zip", "Zip", "DUMMYHERO");
         mKernel->mResourceMan->initialiseResourceGroup("DUMMYHERO");
 
@@ -117,6 +142,8 @@ namespace Sonetto {
 #ifdef DEBUG_BUILD
         // Debug function used to change the Scene Polygon mode from Solid to Wireframe or Points
         Module::setPolygonMode(deltatime);
+
+
 #endif
         PlayerInput * player = mKernel->getInputMan()->getPlayer(0);
 
@@ -168,14 +195,26 @@ namespace Sonetto {
                     movMagnitude * deltatime);
         }
 
-        mKernel->getScriptMan()->updateScript(mTestScript);
+        //mKernel->getScriptMan()->updateScript(mTestScript);
 
         for (size_t i = 0;i < mEvents.size();++i)
         {
             mEvents[i]->update(deltatime);
         }
         Ogre::Vector3 heropos(mDummyHero->getPosition());
-        std::cout<<"HeroPos: "<<heropos.x<<"\t"<<heropos.y<<"\t"<<heropos.z<<"\n";
+
+        #ifdef DEBUG_BUILD
+        mDebugText->setMessage( "Map Debug: Current FPS: "
+                                +Ogre::StringConverter::toString(mKernel->mWindow->getLastFPS())+
+                                "\nCurrent FrameTime:"
+                                +Ogre::StringConverter::toString(deltatime)+
+                                "\n"
+                                "Hero Position\n"
+                                "X: "+Ogre::StringConverter::toString(heropos.x)+"\n"
+                                "Y: "+Ogre::StringConverter::toString(heropos.y)+"\n"
+                                "Z: "+Ogre::StringConverter::toString(heropos.z));
+        #endif
+        //std::cout<<"HeroPos: "<<heropos.x<<"\t"<<heropos.y<<"\t"<<heropos.z<<"\n";
 
         mAngle += Ogre::Radian(rot.x * deltatime);
 
@@ -288,7 +327,7 @@ namespace Sonetto {
             mKernel->mResourceMan->loadResourceGroup(mResGroupName);
 
             MapFilePtr mapFile = mKernel->mMapFileManager->load("mapdata.dat", mResGroupName);
-            mTestScript = mKernel->getScriptMan()->createScript("event_00.evt",mResGroupName);
+            //mTestScript = mKernel->getScriptMan()->createScript("event_00.evt",mResGroupName);
 
             mCurrentMapName = mapFile->mMapName;
             mSceneMan->setAmbientLight(mapFile->mAmbientColor);

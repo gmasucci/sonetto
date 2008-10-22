@@ -1,13 +1,13 @@
 # depslib dependency file v1.0
-1219266222 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource.rc
+1219269822 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource.rc
 
-1223590601 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\basicmodule.cpp
+1224657731 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\basicmodule.cpp
 	<Ogre.h>
 	"SonettoInputManager.h"
 	"BasicModule.h"
 	"TESTMapModule.h"
 
-1165514534 c:\workspace\libraries\ogre\ogremain\include\ogre.h
+1165518134 c:\workspace\libraries\ogre\ogremain\include\ogre.h
 	"OgrePrerequisites.h"
 	"OgreAnimation.h"
 	"OgreAnimationState.h"
@@ -104,24 +104,24 @@
 	"OgreShadowCameraSetupLiSPSM.h"
 	"OgreShadowCameraSetupPlaneOptimal.h"
 
-1213626576 c:\workspace\libraries\ogre\ogremain\include\ogreprerequisites.h
+1213630176 c:\workspace\libraries\ogre\ogremain\include\ogreprerequisites.h
 	"OgrePlatform.h"
 	"OgreMemoryManager.h"
 
-1187373210 c:\workspace\libraries\ogre\ogremain\include\ogreplatform.h
+1187376810 c:\workspace\libraries\ogre\ogremain\include\ogreplatform.h
 	"OgreConfig.h"
 	<_mingw.h>
 	"config.h"
 
-1177360570 c:\workspace\libraries\ogre\ogremain\include\ogreconfig.h
+1177364170 c:\workspace\libraries\ogre\ogremain\include\ogreconfig.h
 	"config.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrememorymanager.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrememorymanager.h
 	"OgrePlatform.h"
 	"OgreStdHeaders.h"
 	"OgreMemoryMacros.h"
 
-1172518172 c:\workspace\libraries\ogre\ogremain\include\ogrestdheaders.h
+1172521772 c:\workspace\libraries\ogre\ogremain\include\ogrestdheaders.h
 	<cassert>
 	<cstdio>
 	<cstdlib>
@@ -158,23 +158,23 @@
 	<CoreFoundation/CoreFoundation.h>
 	<boost/thread/recursive_mutex.hpp>
 
-1174423824 c:\workspace\libraries\ogre\ogremain\include\ogrememorymacros.h
+1174427424 c:\workspace\libraries\ogre\ogremain\include\ogrememorymacros.h
 
-1171700924 c:\workspace\libraries\ogre\ogremain\include\ogreanimation.h
+1171704524 c:\workspace\libraries\ogre\ogremain\include\ogreanimation.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreIteratorWrappers.h"
 	"OgreAnimable.h"
 	"OgreAnimationTrack.h"
 
-1176238706 c:\workspace\libraries\ogre\ogremain\include\ogrestring.h
+1176242306 c:\workspace\libraries\ogre\ogremain\include\ogrestring.h
 	"OgrePrerequisites.h"
 	<ext/hash_map>
 
-1183752886 c:\workspace\libraries\ogre\ogremain\include\ogreiteratorwrappers.h
+1183756486 c:\workspace\libraries\ogre\ogremain\include\ogreiteratorwrappers.h
 	"OgrePrerequisites.h"
 
-1166471356 c:\workspace\libraries\ogre\ogremain\include\ogreanimable.h
+1166474956 c:\workspace\libraries\ogre\ogremain\include\ogreanimable.h
 	"OgrePrerequisites.h"
 	"OgreVector2.h"
 	"OgreVector3.h"
@@ -186,50 +186,50 @@
 	"OgreException.h"
 	"OgreAny.h"
 
-1166471356 c:\workspace\libraries\ogre\ogremain\include\ogrevector2.h
+1166474956 c:\workspace\libraries\ogre\ogremain\include\ogrevector2.h
 	"OgrePrerequisites.h"
 	"OgreMath.h"
 
-1168611078 c:\workspace\libraries\ogre\ogremain\include\ogremath.h
+1168614678 c:\workspace\libraries\ogre\ogremain\include\ogremath.h
 	"OgrePrerequisites.h"
 
-1178929062 c:\workspace\libraries\ogre\ogremain\include\ogrevector3.h
+1178932662 c:\workspace\libraries\ogre\ogremain\include\ogrevector3.h
 	"OgrePrerequisites.h"
 	"OgreMath.h"
 	"OgreQuaternion.h"
 
-1174413600 c:\workspace\libraries\ogre\ogremain\include\ogrequaternion.h
+1174417200 c:\workspace\libraries\ogre\ogremain\include\ogrequaternion.h
 	"OgrePrerequisites.h"
 	"OgreMath.h"
 
-1166471356 c:\workspace\libraries\ogre\ogremain\include\ogrevector4.h
+1166474956 c:\workspace\libraries\ogre\ogremain\include\ogrevector4.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 
-1171027424 c:\workspace\libraries\ogre\ogremain\include\ogrecolourvalue.h
+1171031024 c:\workspace\libraries\ogre\ogremain\include\ogrecolourvalue.h
 	"OgrePrerequisites.h"
 
-1196797924 c:\workspace\libraries\ogre\ogremain\include\ogresharedptr.h
+1196801524 c:\workspace\libraries\ogre\ogremain\include\ogresharedptr.h
 	"OgrePrerequisites.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrestringvector.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrestringvector.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreSharedPtr.h"
 
-1182781400 c:\workspace\libraries\ogre\ogremain\include\ogreexception.h
+1182785000 c:\workspace\libraries\ogre\ogremain\include\ogreexception.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	<exception>
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreany.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreany.h
 	"OgrePrerequisites.h"
 	"OgreException.h"
 	"OgreString.h"
 	<algorithm>
 	<typeinfo>
 
-1189092346 c:\workspace\libraries\ogre\ogremain\include\ogreanimationtrack.h
+1189095946 c:\workspace\libraries\ogre\ogremain\include\ogreanimationtrack.h
 	"OgrePrerequisites.h"
 	"OgreSimpleSpline.h"
 	"OgreRotationalSpline.h"
@@ -237,31 +237,31 @@
 	"OgreAnimable.h"
 	"OgrePose.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogresimplespline.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogresimplespline.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreMatrix4.h"
 
-1172400040 c:\workspace\libraries\ogre\ogremain\include\ogrematrix4.h
+1172403640 c:\workspace\libraries\ogre\ogremain\include\ogrematrix4.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreMatrix3.h"
 	"OgreVector4.h"
 	"OgrePlane.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrematrix3.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrematrix3.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 
-1183403830 c:\workspace\libraries\ogre\ogremain\include\ogreplane.h
+1183407430 c:\workspace\libraries\ogre\ogremain\include\ogreplane.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrerotationalspline.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrerotationalspline.h
 	"OgrePrerequisites.h"
 	"OgreQuaternion.h"
 
-1158546986 c:\workspace\libraries\ogre\ogremain\include\ogrekeyframe.h
+1158550586 c:\workspace\libraries\ogre\ogremain\include\ogrekeyframe.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreQuaternion.h"
@@ -269,51 +269,51 @@
 	"OgreHardwareVertexBuffer.h"
 	"OgreIteratorWrappers.h"
 
-1171132666 c:\workspace\libraries\ogre\ogremain\include\ogrehardwarevertexbuffer.h
+1171136266 c:\workspace\libraries\ogre\ogremain\include\ogrehardwarevertexbuffer.h
 	"OgrePrerequisites.h"
 	"OgreHardwareBuffer.h"
 	"OgreSharedPtr.h"
 	"OgreColourValue.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrehardwarebuffer.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrehardwarebuffer.h
 	"OgrePrerequisites.h"
 
-1173008324 c:\workspace\libraries\ogre\ogremain\include\ogrepose.h
+1173011924 c:\workspace\libraries\ogre\ogremain\include\ogrepose.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreHardwareVertexBuffer.h"
 	"OgreVector3.h"
 	"OgreIteratorWrappers.h"
 
-1174425192 c:\workspace\libraries\ogre\ogremain\include\ogreanimationstate.h
+1174428792 c:\workspace\libraries\ogre\ogremain\include\ogreanimationstate.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreController.h"
 	"OgreIteratorWrappers.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrecontroller.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrecontroller.h
 	"OgrePrerequisites.h"
 	"OgreSharedPtr.h"
 
-1168119608 c:\workspace\libraries\ogre\ogremain\include\ogrearchive.h
+1168123208 c:\workspace\libraries\ogre\ogremain\include\ogrearchive.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreDataStream.h"
 	"OgreSharedPtr.h"
 	"OgreStringVector.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogredatastream.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogredatastream.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreSharedPtr.h"
 	<istream>
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrearchivemanager.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrearchivemanager.h
 	"OgrePrerequisites.h"
 	"OgreResourceManager.h"
 	"OgreSingleton.h"
 
-1178128036 c:\workspace\libraries\ogre\ogremain\include\ogreresourcemanager.h
+1178131636 c:\workspace\libraries\ogre\ogremain\include\ogreresourcemanager.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreResourceGroupManager.h"
@@ -323,24 +323,24 @@
 	"OgreStringVector.h"
 	"OgreScriptLoader.h"
 
-1200604056 c:\workspace\libraries\ogre\ogremain\include\ogreresource.h
+1200607656 c:\workspace\libraries\ogre\ogremain\include\ogreresource.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreSharedPtr.h"
 	"OgreStringInterface.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrestringinterface.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrestringinterface.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreCommon.h"
 
-1172518172 c:\workspace\libraries\ogre\ogremain\include\ogrecommon.h
+1172521772 c:\workspace\libraries\ogre\ogremain\include\ogrecommon.h
 	"OgreString.h"
 	<utility>
 	<vector>
 	<map>
 
-1199664526 c:\workspace\libraries\ogre\ogremain\include\ogreresourcegroupmanager.h
+1199668126 c:\workspace\libraries\ogre\ogremain\include\ogreresourcegroupmanager.h
 	"OgrePrerequisites.h"
 	"OgreSingleton.h"
 	"OgreCommon.h"
@@ -349,25 +349,25 @@
 	"OgreArchive.h"
 	"OgreIteratorWrappers.h"
 
-1177788562 c:\workspace\libraries\ogre\ogremain\include\ogresingleton.h
+1177792162 c:\workspace\libraries\ogre\ogremain\include\ogresingleton.h
 	"OgrePrerequisites.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrescriptloader.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrescriptloader.h
 	"OgrePrerequisites.h"
 	"OgreDataStream.h"
 	"OgreStringVector.h"
 
-1187198398 c:\workspace\libraries\ogre\ogremain\include\ogreaxisalignedbox.h
+1187201998 c:\workspace\libraries\ogre\ogremain\include\ogreaxisalignedbox.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreMatrix4.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrebillboardchain.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrebillboardchain.h
 	"OgrePrerequisites.h"
 	"OgreMovableObject.h"
 	"OgreRenderable.h"
 
-1169641446 c:\workspace\libraries\ogre\ogremain\include\ogremovableobject.h
+1169645046 c:\workspace\libraries\ogre\ogremain\include\ogremovableobject.h
 	"OgrePrerequisites.h"
 	"OgreRenderQueue.h"
 	"OgreAxisAlignedBox.h"
@@ -378,19 +378,19 @@
 	"OgreAny.h"
 	"OgreUserDefinedObject.h"
 
-1183244990 c:\workspace\libraries\ogre\ogremain\include\ogrerenderqueue.h
+1183248590 c:\workspace\libraries\ogre\ogremain\include\ogrerenderqueue.h
 	"OgrePrerequisites.h"
 	"OgreIteratorWrappers.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogresphere.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogresphere.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 
-1169641446 c:\workspace\libraries\ogre\ogremain\include\ogreshadowcaster.h
+1169645046 c:\workspace\libraries\ogre\ogremain\include\ogreshadowcaster.h
 	"OgrePrerequisites.h"
 	"OgreRenderable.h"
 
-1172755640 c:\workspace\libraries\ogre\ogremain\include\ogrerenderable.h
+1172759240 c:\workspace\libraries\ogre\ogremain\include\ogrerenderable.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreRenderOperation.h"
@@ -401,21 +401,21 @@
 	"OgreVector4.h"
 	"OgreException.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrerenderoperation.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrerenderoperation.h
 	"OgrePrerequisites.h"
 	"OgreVertexIndexData.h"
 
-1171132666 c:\workspace\libraries\ogre\ogremain\include\ogrevertexindexdata.h
+1171136266 c:\workspace\libraries\ogre\ogremain\include\ogrevertexindexdata.h
 	"OgrePrerequisites.h"
 	"OgreHardwareVertexBuffer.h"
 	"OgreHardwareIndexBuffer.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrehardwareindexbuffer.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrehardwareindexbuffer.h
 	"OgrePrerequisites.h"
 	"OgreHardwareBuffer.h"
 	"OgreSharedPtr.h"
 
-1168713090 c:\workspace\libraries\ogre\ogremain\include\ogrematerial.h
+1168716690 c:\workspace\libraries\ogre\ogremain\include\ogrematerial.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreIteratorWrappers.h"
@@ -423,37 +423,37 @@
 	"OgreColourValue.h"
 	"OgreBlendMode.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreblendmode.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreblendmode.h
 	"OgrePrerequisites.h"
 	"OgreColourValue.h"
 
-1173768130 c:\workspace\libraries\ogre\ogremain\include\ogregpuprogram.h
+1173771730 c:\workspace\libraries\ogre\ogremain\include\ogregpuprogram.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreSharedPtr.h"
 	"OgreIteratorWrappers.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrefactoryobj.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrefactoryobj.h
 	"OgrePrerequisites.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreuserdefinedobject.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreuserdefinedobject.h
 	"OgrePrerequisites.h"
 
-1174084358 c:\workspace\libraries\ogre\ogremain\include\ogrebillboardset.h
+1174087958 c:\workspace\libraries\ogre\ogremain\include\ogrebillboardset.h
 	"OgrePrerequisites.h"
 	"OgreMovableObject.h"
 	"OgreRenderable.h"
 	"OgreRadixSort.h"
 	"OgreCommon.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreradixsort.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreradixsort.h
 	"OgrePrerequisites.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrebone.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrebone.h
 	"OgrePrerequisites.h"
 	"OgreNode.h"
 
-1182781400 c:\workspace\libraries\ogre\ogremain\include\ogrenode.h
+1182785000 c:\workspace\libraries\ogre\ogremain\include\ogrenode.h
 	"OgrePrerequisites.h"
 	"OgreMatrix3.h"
 	"OgreMatrix4.h"
@@ -462,7 +462,7 @@
 	"OgreRenderable.h"
 	"OgreIteratorWrappers.h"
 
-1173908146 c:\workspace\libraries\ogre\ogremain\include\ogrecamera.h
+1173911746 c:\workspace\libraries\ogre\ogremain\include\ogrecamera.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreMovableObject.h"
@@ -474,7 +474,7 @@
 	"OgreFrustum.h"
 	"OgreRay.h"
 
-1165682246 c:\workspace\libraries\ogre\ogremain\include\ogrefrustum.h
+1165685846 c:\workspace\libraries\ogre\ogremain\include\ogrefrustum.h
 	"OgrePrerequisites.h"
 	"OgreMovableObject.h"
 	"OgreRenderable.h"
@@ -482,31 +482,31 @@
 	"OgreVertexIndexData.h"
 	"OgreMovablePlane.h"
 
-1166471356 c:\workspace\libraries\ogre\ogremain\include\ogremovableplane.h
+1166474956 c:\workspace\libraries\ogre\ogremain\include\ogremovableplane.h
 	"OgrePrerequisites.h"
 	"OgrePlane.h"
 	"OgreMovableObject.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreray.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreray.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgrePlaneBoundedVolume.h"
 
-1171137280 c:\workspace\libraries\ogre\ogremain\include\ogreplaneboundedvolume.h
+1171140880 c:\workspace\libraries\ogre\ogremain\include\ogreplaneboundedvolume.h
 	"OgrePrerequisites.h"
 	"OgreAxisAlignedBox.h"
 	"OgreSphere.h"
 	"OgreMath.h"
 	"OgrePlane.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreconfigfile.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreconfigfile.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreStringVector.h"
 	"OgreIteratorWrappers.h"
 	"OgreDataStream.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrecontrollermanager.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrecontrollermanager.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreSingleton.h"
@@ -515,17 +515,17 @@
 	"OgreTextureUnitState.h"
 	"OgreSharedPtr.h"
 
-1174051348 c:\workspace\libraries\ogre\ogremain\include\ogrepredefinedcontrollers.h
+1174054948 c:\workspace\libraries\ogre\ogremain\include\ogrepredefinedcontrollers.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreController.h"
 	"OgreFrameListener.h"
 	"OgreGpuProgram.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreframelistener.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreframelistener.h
 	"OgrePrerequisites.h"
 
-1183751074 c:\workspace\libraries\ogre\ogremain\include\ogretextureunitstate.h
+1183754674 c:\workspace\libraries\ogre\ogremain\include\ogretextureunitstate.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreBlendMode.h"
@@ -534,23 +534,23 @@
 	"OgreString.h"
 	"OgreTexture.h"
 
-1179497760 c:\workspace\libraries\ogre\ogremain\include\ogretexture.h
+1179501360 c:\workspace\libraries\ogre\ogremain\include\ogretexture.h
 	"OgrePrerequisites.h"
 	"OgreHardwareBuffer.h"
 	"OgreResource.h"
 	"OgreImage.h"
 
-1157078874 c:\workspace\libraries\ogre\ogremain\include\ogreimage.h
+1157082474 c:\workspace\libraries\ogre\ogremain\include\ogreimage.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgrePixelFormat.h"
 	"OgreDataStream.h"
 
-1174248766 c:\workspace\libraries\ogre\ogremain\include\ogrepixelformat.h
+1174252366 c:\workspace\libraries\ogre\ogremain\include\ogrepixelformat.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 
-1172691454 c:\workspace\libraries\ogre\ogremain\include\ogreentity.h
+1172695054 c:\workspace\libraries\ogre\ogremain\include\ogreentity.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreString.h"
@@ -560,13 +560,13 @@
 	"OgreHardwareBufferManager.h"
 	"OgreMesh.h"
 
-1159153802 c:\workspace\libraries\ogre\ogremain\include\ogrehardwarebuffermanager.h
+1159157402 c:\workspace\libraries\ogre\ogremain\include\ogrehardwarebuffermanager.h
 	"OgrePrerequisites.h"
 	"OgreSingleton.h"
 	"OgreHardwareVertexBuffer.h"
 	"OgreHardwareIndexBuffer.h"
 
-1159045760 c:\workspace\libraries\ogre\ogremain\include\ogremesh.h
+1159049360 c:\workspace\libraries\ogre\ogremain\include\ogremesh.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreVertexIndexData.h"
@@ -579,17 +579,17 @@
 	"OgreAnimationTrack.h"
 	"OgrePose.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrevertexboneassignment.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrevertexboneassignment.h
 	"OgrePrerequisites.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreprogressivemesh.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreprogressivemesh.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreHardwareVertexBuffer.h"
 	"OgreHardwareIndexBuffer.h"
 	"OgreRenderOperation.h"
 
-1163785528 c:\workspace\libraries\ogre\ogremain\include\ogreskeleton.h
+1163789128 c:\workspace\libraries\ogre\ogremain\include\ogreskeleton.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreQuaternion.h"
@@ -597,35 +597,35 @@
 	"OgreIteratorWrappers.h"
 	"OgreStringVector.h"
 
-1160339646 c:\workspace\libraries\ogre\ogremain\include\ogregpuprogrammanager.h
+1160343246 c:\workspace\libraries\ogre\ogremain\include\ogregpuprogrammanager.h
 	"OgrePrerequisites.h"
 	"OgreResourceManager.h"
 	"OgreException.h"
 	"OgreGpuProgram.h"
 	"OgreSingleton.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrehardwarepixelbuffer.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrehardwarepixelbuffer.h
 	"OgrePrerequisites.h"
 	"OgreHardwareBuffer.h"
 	"OgreSharedPtr.h"
 	"OgrePixelFormat.h"
 	"OgreImage.h"
 
-1164564452 c:\workspace\libraries\ogre\ogremain\include\ogrehardwareocclusionquery.h
+1164568052 c:\workspace\libraries\ogre\ogremain\include\ogrehardwareocclusionquery.h
 	"OgrePrerequisites.h"
 
-1168541248 c:\workspace\libraries\ogre\ogremain\include\ogrehighlevelgpuprogram.h
+1168544848 c:\workspace\libraries\ogre\ogremain\include\ogrehighlevelgpuprogram.h
 	"OgrePrerequisites.h"
 	"OgreGpuProgram.h"
 
-1175627924 c:\workspace\libraries\ogre\ogremain\include\ogrehighlevelgpuprogrammanager.h
+1175631524 c:\workspace\libraries\ogre\ogremain\include\ogrehighlevelgpuprogrammanager.h
 	"OgrePrerequisites.h"
 	"OgreResourceManager.h"
 	"OgreSingleton.h"
 	"OgreException.h"
 	"OgreHighLevelGpuProgram.h"
 
-1199801548 c:\workspace\libraries\ogre\ogremain\include\ogrelight.h
+1199805148 c:\workspace\libraries\ogre\ogremain\include\ogrelight.h
 	"OgrePrerequisites.h"
 	"OgreColourValue.h"
 	"OgreVector3.h"
@@ -635,27 +635,27 @@
 	"OgrePlaneBoundedVolume.h"
 	"OgreShadowCameraSetup.h"
 
-1165533590 c:\workspace\libraries\ogre\ogremain\include\ogreshadowcamerasetup.h
+1165537190 c:\workspace\libraries\ogre\ogremain\include\ogreshadowcamerasetup.h
 	"OgrePrerequisites.h"
 	"OgreMovablePlane.h"
 	"OgreSharedPtr.h"
 
-1163450024 c:\workspace\libraries\ogre\ogremain\include\ogrelogmanager.h
+1163453624 c:\workspace\libraries\ogre\ogremain\include\ogrelogmanager.h
 	"OgrePrerequisites.h"
 	"OgreLog.h"
 	"OgreSingleton.h"
 	"OgreString.h"
 
-1197489662 c:\workspace\libraries\ogre\ogremain\include\ogrelog.h
+1197493262 c:\workspace\libraries\ogre\ogremain\include\ogrelog.h
 	"OgrePrerequisites.h"
 
-1174423998 c:\workspace\libraries\ogre\ogremain\include\ogremanualobject.h
+1174427598 c:\workspace\libraries\ogre\ogremain\include\ogremanualobject.h
 	"OgrePrerequisites.h"
 	"OgreMovableObject.h"
 	"OgreRenderable.h"
 	"OgreResourceGroupManager.h"
 
-1161133230 c:\workspace\libraries\ogre\ogremain\include\ogrematerialmanager.h
+1161136830 c:\workspace\libraries\ogre\ogremain\include\ogrematerialmanager.h
 	"OgrePrerequisites.h"
 	"OgreSingleton.h"
 	"OgreResourceManager.h"
@@ -666,7 +666,7 @@
 	<boost/thread/tss.hpp>
 	"OgreMemoryMacros.h"
 
-1168541248 c:\workspace\libraries\ogre\ogremain\include\ogrematerialserializer.h
+1168544848 c:\workspace\libraries\ogre\ogremain\include\ogrematerialserializer.h
 	"OgrePrerequisites.h"
 	"OgreMaterial.h"
 	"OgreBlendMode.h"
@@ -674,9 +674,9 @@
 	"OgreGpuProgram.h"
 	"OgreStringVector.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrenomemorymacros.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrenomemorymacros.h
 
-1167942512 c:\workspace\libraries\ogre\ogremain\include\ogremeshmanager.h
+1167946112 c:\workspace\libraries\ogre\ogremain\include\ogremeshmanager.h
 	"OgrePrerequisites.h"
 	"OgreResourceManager.h"
 	"OgreSingleton.h"
@@ -685,24 +685,24 @@
 	"OgreMesh.h"
 	"OgrePatchMesh.h"
 
-1159153802 c:\workspace\libraries\ogre\ogremain\include\ogrepatchmesh.h
+1159157402 c:\workspace\libraries\ogre\ogremain\include\ogrepatchmesh.h
 	"OgrePrerequisites.h"
 	"OgreMesh.h"
 	"OgrePatchSurface.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrepatchsurface.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrepatchsurface.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreString.h"
 	"OgreRenderOperation.h"
 	"OgreAxisAlignedBox.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogremeshserializer.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogremeshserializer.h
 	"OgrePrerequisites.h"
 	"OgreMeshSerializerImpl.h"
 	"OgreSerializer.h"
 
-1167855840 c:\workspace\libraries\ogre\ogremain\include\ogremeshserializerimpl.h
+1167859440 c:\workspace\libraries\ogre\ogremain\include\ogremeshserializerimpl.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreSerializer.h"
@@ -710,39 +710,39 @@
 	"OgreMesh.h"
 	"OgreEdgeListBuilder.h"
 
-1166471356 c:\workspace\libraries\ogre\ogremain\include\ogreserializer.h
+1166474956 c:\workspace\libraries\ogre\ogremain\include\ogreserializer.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreDataStream.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreedgelistbuilder.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreedgelistbuilder.h
 	"OgrePrerequisites.h"
 	"OgreVector4.h"
 	"OgreHardwareVertexBuffer.h"
 	"OgreRenderOperation.h"
 	"OgreAlignedAllocator.h"
 
-1158979450 c:\workspace\libraries\ogre\ogremain\include\ogrealignedallocator.h
+1158983050 c:\workspace\libraries\ogre\ogremain\include\ogrealignedallocator.h
 	"OgrePrerequisites.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreoverlay.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreoverlay.h
 	"OgrePrerequisites.h"
 	"OgreSceneNode.h"
 	"OgreIteratorWrappers.h"
 	"OgreMatrix4.h"
 
-1182781400 c:\workspace\libraries\ogre\ogremain\include\ogrescenenode.h
+1182785000 c:\workspace\libraries\ogre\ogremain\include\ogrescenenode.h
 	"OgrePrerequisites.h"
 	"OgreNode.h"
 	"OgreIteratorWrappers.h"
 	"OgreAxisAlignedBox.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreoverlaycontainer.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreoverlaycontainer.h
 	"OgrePrerequisites.h"
 	"OgreOverlayElement.h"
 	"OgreIteratorWrappers.h"
 
-1172189854 c:\workspace\libraries\ogre\ogremain\include\ogreoverlayelement.h
+1172193454 c:\workspace\libraries\ogre\ogremain\include\ogreoverlayelement.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreRenderable.h"
@@ -752,32 +752,32 @@
 	"OgreColourValue.h"
 	"OgreRectangle.h"
 
-1173431518 c:\workspace\libraries\ogre\ogremain\include\ogreutfstring.h
+1173435118 c:\workspace\libraries\ogre\ogremain\include\ogreutfstring.h
 	"OgrePrerequisites.h"
 	<iterator>
 	<string>
 	<stdexcept>
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreoverlayelementcommands.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreoverlayelementcommands.h
 	"OgrePrerequisites.h"
 	"OgreStringInterface.h"
 
-1164564452 c:\workspace\libraries\ogre\ogremain\include\ogrerectangle.h
+1164568052 c:\workspace\libraries\ogre\ogremain\include\ogrerectangle.h
 	"OgrePrerequisites.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreoverlaymanager.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreoverlaymanager.h
 	"OgrePrerequisites.h"
 	"OgreSingleton.h"
 	"OgreStringVector.h"
 	"OgreOverlay.h"
 	"OgreScriptLoader.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreparticleaffector.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreparticleaffector.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreStringInterface.h"
 
-1160882396 c:\workspace\libraries\ogre\ogremain\include\ogreparticleemitter.h
+1160885996 c:\workspace\libraries\ogre\ogremain\include\ogreparticleemitter.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreVector3.h"
@@ -786,21 +786,21 @@
 	"OgreParticleEmitterCommands.h"
 	"OgreParticle.h"
 
-1159482832 c:\workspace\libraries\ogre\ogremain\include\ogreparticleemittercommands.h
+1159486432 c:\workspace\libraries\ogre\ogremain\include\ogreparticleemittercommands.h
 	"OgrePrerequisites.h"
 	"OgreStringInterface.h"
 
-1160882396 c:\workspace\libraries\ogre\ogremain\include\ogreparticle.h
+1160885996 c:\workspace\libraries\ogre\ogremain\include\ogreparticle.h
 	"OgrePrerequisites.h"
 	"OgreBillboard.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrebillboard.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrebillboard.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreColourValue.h"
 	"OgreCommon.h"
 
-1168194860 c:\workspace\libraries\ogre\ogremain\include\ogreparticlesystemmanager.h
+1168198460 c:\workspace\libraries\ogre\ogremain\include\ogreparticlesystemmanager.h
 	"OgrePrerequisites.h"
 	"OgreParticleSystem.h"
 	"OgreFrameListener.h"
@@ -809,7 +809,7 @@
 	"OgreScriptLoader.h"
 	"OgreResourceGroupManager.h"
 
-1159482832 c:\workspace\libraries\ogre\ogremain\include\ogreparticlesystem.h
+1159486432 c:\workspace\libraries\ogre\ogremain\include\ogreparticlesystem.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 	"OgreString.h"
@@ -819,10 +819,10 @@
 	"OgreRadixSort.h"
 	"OgreController.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreparticleiterator.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreparticleiterator.h
 	"OgrePrerequisites.h"
 
-1173821400 c:\workspace\libraries\ogre\ogremain\include\ogrepass.h
+1173825000 c:\workspace\libraries\ogre\ogremain\include\ogrepass.h
 	"OgrePrerequisites.h"
 	"OgreGpuProgram.h"
 	"OgreColourValue.h"
@@ -831,18 +831,18 @@
 	"OgreLight.h"
 	"OgreTextureUnitState.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreprofiler.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreprofiler.h
 	"OgrePrerequisites.h"
 	"OgreSingleton.h"
 	"OgreString.h"
 	"OgreOverlay.h"
 
-1173008324 c:\workspace\libraries\ogre\ogremain\include\ogrerenderqueueinvocation.h
+1173011924 c:\workspace\libraries\ogre\ogremain\include\ogrerenderqueueinvocation.h
 	"OgrePrerequisites.h"
 	"OgreRenderQueueSortingGrouping.h"
 	"OgreIteratorWrappers.h"
 
-1188506942 c:\workspace\libraries\ogre\ogremain\include\ogrerenderqueuesortinggrouping.h
+1188510542 c:\workspace\libraries\ogre\ogremain\include\ogrerenderqueuesortinggrouping.h
 	"OgrePrerequisites.h"
 	"OgreIteratorWrappers.h"
 	"OgreMaterial.h"
@@ -850,18 +850,18 @@
 	"OgrePass.h"
 	"OgreRadixSort.h"
 
-1168713090 c:\workspace\libraries\ogre\ogremain\include\ogretechnique.h
+1168716690 c:\workspace\libraries\ogre\ogremain\include\ogretechnique.h
 	"OgrePrerequisites.h"
 	"OgreIteratorWrappers.h"
 	"OgreBlendMode.h"
 	"OgreCommon.h"
 	"OgrePass.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrerenderqueuelistener.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrerenderqueuelistener.h
 	"OgrePrerequisites.h"
 	"OgreRenderQueue.h"
 
-1182794176 c:\workspace\libraries\ogre\ogremain\include\ogrerendersystem.h
+1182797776 c:\workspace\libraries\ogre\ogremain\include\ogrerendersystem.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreTextureUnitState.h"
@@ -876,61 +876,61 @@
 	"OgrePlane.h"
 	"OgreIteratorWrappers.h"
 
-1180734148 c:\workspace\libraries\ogre\ogremain\include\ogrerendersystemcapabilities.h
+1180737748 c:\workspace\libraries\ogre\ogremain\include\ogrerendersystemcapabilities.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 
-1172505114 c:\workspace\libraries\ogre\ogremain\include\ogrerendertarget.h
+1172508714 c:\workspace\libraries\ogre\ogremain\include\ogrerendertarget.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreTextureManager.h"
 	"OgreViewport.h"
 	"OgreTimer.h"
 
-1179497760 c:\workspace\libraries\ogre\ogremain\include\ogretexturemanager.h
+1179501360 c:\workspace\libraries\ogre\ogremain\include\ogretexturemanager.h
 	"OgrePrerequisites.h"
 	"OgreResourceManager.h"
 	"OgreTexture.h"
 	"OgreSingleton.h"
 
-1172505114 c:\workspace\libraries\ogre\ogremain\include\ogreviewport.h
+1172508714 c:\workspace\libraries\ogre\ogremain\include\ogreviewport.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreColourValue.h"
 
-1164286334 c:\workspace\libraries\ogre\ogremain\include\ogretimer.h
+1164289934 c:\workspace\libraries\ogre\ogremain\include\ogretimer.h
 	"OgrePrerequisites.h"
 	"OgrePlatform.h"
 	"WIN32/OgreTimerImp.h"
 	"GLX/OgreTimerImp.h"
 	"OSX/OgreTimerImp.h"
 
-1203716684 c:\workspace\libraries\ogre\ogremain\include\win32\ogretimerimp.h
+1203720284 c:\workspace\libraries\ogre\ogremain\include\win32\ogretimerimp.h
 	"windows.h"
 
-1203716684 c:\workspace\libraries\ogre\ogremain\include\glx\ogretimerimp.h
+1203720284 c:\workspace\libraries\ogre\ogremain\include\glx\ogretimerimp.h
 	"OgrePrerequisites.h"
 
-1203716684 c:\workspace\libraries\ogre\ogremain\include\osx\ogretimerimp.h
+1203720284 c:\workspace\libraries\ogre\ogremain\include\osx\ogretimerimp.h
 	<Ogre/OgrePrerequisites.h>
 
-1181567496 c:\workspace\libraries\ogre\ogremain\include\ogrerendertexture.h
+1181571096 c:\workspace\libraries\ogre\ogremain\include\ogrerendertexture.h
 	"OgrePrerequisites.h"
 	"OgreRenderTarget.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreconfigoptionmap.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreconfigoptionmap.h
 	"OgrePrerequisites.h"
 	"OgreStringVector.h"
 	"OgreString.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrerendertargetlistener.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrerendertargetlistener.h
 	"OgrePrerequisites.h"
 
-1180128918 c:\workspace\libraries\ogre\ogremain\include\ogrerenderwindow.h
+1180132518 c:\workspace\libraries\ogre\ogremain\include\ogrerenderwindow.h
 	"OgrePrerequisites.h"
 	"OgreRenderTarget.h"
 
-1200604056 c:\workspace\libraries\ogre\ogremain\include\ogreresourcebackgroundqueue.h
+1200607656 c:\workspace\libraries\ogre\ogremain\include\ogreresourcebackgroundqueue.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreSingleton.h"
@@ -938,7 +938,7 @@
 	<boost/thread/thread.hpp>
 	<boost/thread/condition.hpp>
 
-1198437380 c:\workspace\libraries\ogre\ogremain\include\ogreribbontrail.h
+1198440980 c:\workspace\libraries\ogre\ogremain\include\ogreribbontrail.h
 	"OgrePrerequisites.h"
 	"OgreBillboardChain.h"
 	"OgreNode.h"
@@ -946,7 +946,7 @@
 	"OgreFrameListener.h"
 	"OgreControllerManager.h"
 
-1174538030 c:\workspace\libraries\ogre\ogremain\include\ogreroot.h
+1174541630 c:\workspace\libraries\ogre\ogremain\include\ogreroot.h
 	"OgrePrerequisites.h"
 	"OgreSingleton.h"
 	"OgreString.h"
@@ -954,13 +954,13 @@
 	"OgreResourceGroupManager.h"
 	<exception>
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrescenemanagerenumerator.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrescenemanagerenumerator.h
 	"OgrePrerequisites.h"
 	"OgreSceneManager.h"
 	"OgreSingleton.h"
 	"OgreIteratorWrappers.h"
 
-1192054252 c:\workspace\libraries\ogre\ogremain\include\ogrescenemanager.h
+1192057852 c:\workspace\libraries\ogre\ogremain\include\ogrescenemanager.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreSceneNode.h"
@@ -982,7 +982,7 @@
 	"OgreCamera.h"
 	"OgreInstancedGeometry.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrescenequery.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrescenequery.h
 	"OgrePrerequisites.h"
 	"OgreAxisAlignedBox.h"
 	"OgreSphere.h"
@@ -990,7 +990,7 @@
 	"OgreRenderOperation.h"
 	"OgrePlaneBoundedVolume.h"
 
-1170609806 c:\workspace\libraries\ogre\ogremain\include\ogreautoparamdatasource.h
+1170613406 c:\workspace\libraries\ogre\ogremain\include\ogreautoparamdatasource.h
 	"OgrePrerequisites.h"
 	"OgreCommon.h"
 	"OgreMatrix4.h"
@@ -998,25 +998,25 @@
 	"OgreLight.h"
 	"OgreColourValue.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrerectangle2d.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrerectangle2d.h
 	"OgrePrerequisites.h"
 	"OgreSimpleRenderable.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogresimplerenderable.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogresimplerenderable.h
 	"OgrePrerequisites.h"
 	"OgreMovableObject.h"
 	"OgreRenderable.h"
 	"OgreAxisAlignedBox.h"
 	"OgreMaterial.h"
 
-1168980574 c:\workspace\libraries\ogre\ogremain\include\ogreshadowtexturemanager.h
+1168984174 c:\workspace\libraries\ogre\ogremain\include\ogreshadowtexturemanager.h
 	"OgrePrerequisites.h"
 	"OgreSingleton.h"
 	"OgrePixelFormat.h"
 	"OgreTexture.h"
 	"OgreIteratorWrappers.h"
 
-1170379880 c:\workspace\libraries\ogre\ogremain\include\ogreinstancedgeometry.h
+1170383480 c:\workspace\libraries\ogre\ogremain\include\ogreinstancedgeometry.h
 	"OgrePrerequisites.h"
 	"OgreMovableObject.h"
 	"OgreSimpleRenderable.h"
@@ -1025,38 +1025,38 @@
 	"OgreAnimationTrack.h"
 	"OgreBone.h"
 
-1168019276 c:\workspace\libraries\ogre\ogremain\include\ogreskeletoninstance.h
+1168022876 c:\workspace\libraries\ogre\ogremain\include\ogreskeletoninstance.h
 	"OgrePrerequisites.h"
 	"OgreSkeleton.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreskeletonmanager.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreskeletonmanager.h
 	"OgrePrerequisites.h"
 	"OgreResourceManager.h"
 	"OgreSingleton.h"
 
-1220886114 c:\workspace\libraries\ogre\ogremain\include\ogreskeletonserializer.h
+1220889714 c:\workspace\libraries\ogre\ogremain\include\ogreskeletonserializer.h
 	"OgrePrerequisites.h"
 	"OgreSkeleton.h"
 	"OgreSerializer.h"
 
-1174538214 c:\workspace\libraries\ogre\ogremain\include\ogrestaticgeometry.h
+1174541814 c:\workspace\libraries\ogre\ogremain\include\ogrestaticgeometry.h
 	"OgrePrerequisites.h"
 	"OgreMovableObject.h"
 	"OgreRenderable.h"
 
-1173545692 c:\workspace\libraries\ogre\ogremain\include\ogrestringconverter.h
+1173549292 c:\workspace\libraries\ogre\ogremain\include\ogrestringconverter.h
 	"OgrePrerequisites.h"
 	"OgreMath.h"
 	"OgreString.h"
 	"OgreStringVector.h"
 
-1167855840 c:\workspace\libraries\ogre\ogremain\include\ogresubentity.h
+1167859440 c:\workspace\libraries\ogre\ogremain\include\ogresubentity.h
 	"OgrePrerequisites.h"
 	"OgreString.h"
 	"OgreRenderable.h"
 	"OgreHardwareBufferManager.h"
 
-1167855840 c:\workspace\libraries\ogre\ogremain\include\ogresubmesh.h
+1167859440 c:\workspace\libraries\ogre\ogremain\include\ogresubmesh.h
 	"OgrePrerequisites.h"
 	"OgreVertexIndexData.h"
 	"OgreMaterial.h"
@@ -1065,12 +1065,12 @@
 	"OgreProgressiveMesh.h"
 	"OgreAnimationTrack.h"
 
-1159153802 c:\workspace\libraries\ogre\ogremain\include\ogrecompositor.h
+1159157402 c:\workspace\libraries\ogre\ogremain\include\ogrecompositor.h
 	"OgrePrerequisites.h"
 	"OgreIteratorWrappers.h"
 	"OgreResource.h"
 
-1197835274 c:\workspace\libraries\ogre\ogremain\include\ogrecompositormanager.h
+1197838874 c:\workspace\libraries\ogre\ogremain\include\ogrecompositormanager.h
 	"OgrePrerequisites.h"
 	"OgreResourceManager.h"
 	"OgreCompositor.h"
@@ -1081,88 +1081,89 @@
 	<boost/thread/tss.hpp>
 	"OgreMemoryMacros.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrecompositorserializer.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrecompositorserializer.h
 	"OgrePrerequisites.h"
 	"OgreDataStream.h"
 
-1204221936 c:\workspace\libraries\ogre\ogremain\include\ogrecompositorchain.h
+1204225536 c:\workspace\libraries\ogre\ogremain\include\ogrecompositorchain.h
 	"OgrePrerequisites.h"
 	"OgreRenderTargetListener.h"
 	"OgreRenderQueueListener.h"
 	"OgreCompositorInstance.h"
 	"OgreCompositor.h"
 
-1204579802 c:\workspace\libraries\ogre\ogremain\include\ogrecompositorinstance.h
+1204583402 c:\workspace\libraries\ogre\ogremain\include\ogrecompositorinstance.h
 	"OgrePrerequisites.h"
 	"OgreMaterial.h"
 	"OgreTexture.h"
 	"OgreRenderQueue.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrecompositiontechnique.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrecompositiontechnique.h
 	"OgrePrerequisites.h"
 	"OgrePixelFormat.h"
 	"OgreIteratorWrappers.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrecompositionpass.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrecompositionpass.h
 	"OgrePrerequisites.h"
 	"OgreMaterial.h"
 	"OgreRenderSystem.h"
 	"OgreRenderQueue.h"
 
-1187295834 c:\workspace\libraries\ogre\ogremain\include\ogrecompositiontargetpass.h
+1187299434 c:\workspace\libraries\ogre\ogremain\include\ogrecompositiontargetpass.h
 	"OgrePrerequisites.h"
 	"OgreIteratorWrappers.h"
 
-1205931156 c:\workspace\libraries\ogre\ogremain\include\ogrewindoweventutilities.h
+1205934756 c:\workspace\libraries\ogre\ogremain\include\ogrewindoweventutilities.h
 	"OgrePrerequisites.h"
 	"OgrePlatform.h"
 	<windows.h>
 
-1166117200 c:\workspace\libraries\ogre\ogremain\include\ogreshadowcamerasetupfocused.h
+1166120800 c:\workspace\libraries\ogre\ogremain\include\ogreshadowcamerasetupfocused.h
 	"OgrePrerequisites.h"
 	"OgreShadowCameraSetup.h"
 	"OgrePolygon.h"
 	"OgreConvexBody.h"
 
-1173908146 c:\workspace\libraries\ogre\ogremain\include\ogrepolygon.h
+1173911746 c:\workspace\libraries\ogre\ogremain\include\ogrepolygon.h
 	"OgrePrerequisites.h"
 	"OgreVector3.h"
 
-1173908146 c:\workspace\libraries\ogre\ogremain\include\ogreconvexbody.h
+1173911746 c:\workspace\libraries\ogre\ogremain\include\ogreconvexbody.h
 	"OgrePrerequisites.h"
 	"OgrePolygon.h"
 
-1166021680 c:\workspace\libraries\ogre\ogremain\include\ogreshadowcamerasetuplispsm.h
+1166025280 c:\workspace\libraries\ogre\ogremain\include\ogreshadowcamerasetuplispsm.h
 	"OgrePrerequisites.h"
 	"OgreShadowCameraSetupFocused.h"
 
-1166187180 c:\workspace\libraries\ogre\ogremain\include\ogreshadowcamerasetupplaneoptimal.h
+1166190780 c:\workspace\libraries\ogre\ogremain\include\ogreshadowcamerasetupplaneoptimal.h
 	"OgrePrerequisites.h"
 	"OgreShadowCameraSetup.h"
 
-1223590413 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoinputmanager.h
+1223594013 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoinputmanager.h
 	<vector>
 	"SonettoMain.h"
 	<Ogre.h>
 	<SDL/SDL.h>
 
-1221497345 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomain.h
+1224635835 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomain.h
 	<OgreVector2.h>
+	<OgreMaterial.h>
 	"SonettoException.h"
 
 1165599058 c:\workspace\projects\sonetto\trunk\dependencies\include\al\al.h
 
-1214007972 c:\workspace\projects\sonetto\trunk\dependencies\include\vorbis\vorbisfile.h
+1214011572 c:\workspace\projects\sonetto\trunk\dependencies\include\vorbis\vorbisfile.h
 	<stdio.h>
 	"codec.h"
 
-1185235788 c:\workspace\projects\sonetto\trunk\dependencies\include\vorbis\codec.h
+1185239388 c:\workspace\projects\sonetto\trunk\dependencies\include\vorbis\codec.h
 	<ogg/ogg.h>
 
-1133148366 c:\workspace\projects\sonetto\trunk\dependencies\include\ogg\ogg.h
+1133151966 c:\workspace\projects\sonetto\trunk\dependencies\include\ogg\ogg.h
 	<ogg/os_types.h>
 
-1133148366 c:\workspace\projects\sonetto\trunk\dependencies\include\ogg\os_types.h
+1133151966 c:\workspace\projects\sonetto\trunk\dependencies\include\ogg\os_types.h
 	<_G_config.h>
 	<sys/types.h>
 	<sys/types.h>
@@ -1170,14 +1171,14 @@
 	<sys/types.h>
 	<ogg/config_types.h>
 
-1202562610 c:\workspace\projects\sonetto\trunk\dependencies\include\ogg\config_types.h
+1202566210 c:\workspace\projects\sonetto\trunk\dependencies\include\ogg\config_types.h
 
-1224284384 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoexception.h
+1224287984 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoexception.h
 	"SonettoMain.h"
 	<string>
 	<exception>
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl.h
 	"SDL_main.h"
 	"SDL_stdinc.h"
 	"SDL_audio.h"
@@ -1196,14 +1197,14 @@
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_main.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_main.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_stdinc.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_stdinc.h
 	"SDL_config.h"
 	<sys/types.h>
 	<stdio.h>
@@ -1229,17 +1230,17 @@
 	<stdlib.h>
 	"close_code.h"
 
-1214139614 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_config.h
+1214143214 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_config.h
 	"SDL_platform.h"
 	<stdarg.h>
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_platform.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_platform.h
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\begin_code.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\begin_code.h
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\close_code.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\close_code.h
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_audio.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_audio.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_endian.h"
@@ -1249,23 +1250,23 @@
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_error.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_error.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_endian.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_endian.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_mutex.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_mutex.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_thread.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_thread.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_mutex.h"
@@ -1273,24 +1274,24 @@
 	<process.h>
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_rwops.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_rwops.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_cdrom.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_cdrom.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_cpuinfo.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_cpuinfo.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_events.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_events.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_active.h"
@@ -1301,74 +1302,74 @@
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_active.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_active.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_keyboard.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_keyboard.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_keysym.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_keysym.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_keysym.h
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_mouse.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_mouse.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_video.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_video.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_video.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"SDL_rwops.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_joystick.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_joystick.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_quit.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_quit.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_loadso.h
-	"SDL_stdinc.h"
-	"SDL_error.h"
-	"begin_code.h"
-	"close_code.h"
-
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_timer.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_loadso.h
 	"SDL_stdinc.h"
 	"SDL_error.h"
 	"begin_code.h"
 	"close_code.h"
 
-1199072916 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_version.h
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1199076516 c:\workspace\projects\sonetto\trunk\dependencies\include\sdl\sdl_version.h
 	"SDL_stdinc.h"
 	"begin_code.h"
 	"close_code.h"
 
-1223427621 c:\workspace\projects\sonetto\trunk\sonettoruntime\include\basicmodule.h
+1224649327 c:\workspace\projects\sonetto\trunk\sonettoruntime\include\basicmodule.h
 	<cstdio>
 	"SonettoChoiceWindow.h"
 	"SonettoModule.h"
 	"SonettoInputManager.h"
 
-1223398839 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomodule.h
+1223402439 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomodule.h
 	"SonettoMain.h"
 	<Ogre.h>
 	"SonettoKernel.h"
 
-1224284514 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettokernel.h
+1224658547 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettokernel.h
 	"SonettoMain.h"
 	<fstream>
 	<stack>
@@ -1394,7 +1395,7 @@
 	"TESTMapFile.h"
 	"TESTMapFileManager.h"
 
-1223936981 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoaudiomanager.h
+1223940581 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoaudiomanager.h
 	<vector>
 	<string>
 	<AL/alc.h>
@@ -1402,7 +1403,7 @@
 	"SonettoMusicStream.h"
 	"SonettoSoundSource.h"
 
-1176487368 c:\workspace\projects\sonetto\trunk\dependencies\include\al\alc.h
+1176490968 c:\workspace\projects\sonetto\trunk\dependencies\include\al\alc.h
 
 1165599072 c:\workspace\projects\sonetto\trunk\dependencies\include\al\efx.h
 
@@ -1411,41 +1412,41 @@
 	<cstddef>
 	<vorbis/vorbisfile.h>
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettorarc.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettorarc.h
 	"SonettoMain.h"
 	<OgreArchive.h>
 	<OgreArchiveFactory.h>
 	"zlib.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrearchivefactory.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrearchivefactory.h
 	"OgrePrerequisites.h"
 	"OgreFactoryObj.h"
 
-1121671610 c:\workspace\projects\sonetto\trunk\dependencies\include\zlib\zlib.h
+1121675210 c:\workspace\projects\sonetto\trunk\dependencies\include\zlib\zlib.h
 	"zconf.h"
 
-1117280436 c:\workspace\projects\sonetto\trunk\dependencies\include\zlib\zconf.h
+1117284036 c:\workspace\projects\sonetto\trunk\dependencies\include\zlib\zconf.h
 	<windows.h>
 	<sys/types.h>
 	<unistd.h>
 	<unixio.h>
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettostr.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettostr.h
 	"SonettoMain.h"
 	<vector>
 	<OgrePrerequisites.h>
 	<OgreResourceManager.h>
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettofontserializer.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettofontserializer.h
 	<OgreSerializer.h>
 	"SonettoMain.h"
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettofontmanager.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettofontmanager.h
 	"SonettoMain.h"
 	<OgreResourceManager.h>
 	"SonettoFont.h"
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettofont.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettofont.h
 	"SonettoMain.h"
 	<OgreResourceManager.h>
 	<OgreMaterialManager.h>
@@ -1453,7 +1454,7 @@
 	<OgreTechnique.h>
 	"SonettoMain.h"
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettotextfactory.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettotextfactory.h
 	"SonettoMain.h"
 	<Ogre.h>
 	<OgrePrerequisites.h>
@@ -1461,43 +1462,40 @@
 	<OgreOverlayElementFactory.h>
 	"SonettoTextElement.h"
 
-1172519706 c:\workspace\libraries\ogre\ogremain\include\ogreoverlayelementfactory.h
+1172523306 c:\workspace\libraries\ogre\ogremain\include\ogreoverlayelementfactory.h
 	"OgrePrerequisites.h"
 	"OgreOverlayElement.h"
 	"OgrePanelOverlayElement.h"
 	"OgreBorderPanelOverlayElement.h"
 	"OgreTextAreaOverlayElement.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogrepaneloverlayelement.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogrepaneloverlayelement.h
 	"OgreOverlayContainer.h"
 
-1156335588 c:\workspace\libraries\ogre\ogremain\include\ogreborderpaneloverlayelement.h
+1156339188 c:\workspace\libraries\ogre\ogremain\include\ogreborderpaneloverlayelement.h
 	"OgrePanelOverlayElement.h"
 
-1172189854 c:\workspace\libraries\ogre\ogremain\include\ogretextareaoverlayelement.h
+1172193454 c:\workspace\libraries\ogre\ogremain\include\ogretextareaoverlayelement.h
 	"OgreOverlayElement.h"
 	"OgreFont.h"
 
-1172519706 c:\workspace\libraries\ogre\ogremain\include\ogrefont.h
+1172523306 c:\workspace\libraries\ogre\ogremain\include\ogrefont.h
 	"OgrePrerequisites.h"
 	"OgreResource.h"
 	"OgreTexture.h"
 	"OgreMaterial.h"
 	"OgreCommon.h"
 
-1220025628 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettotextelement.h
-	"SonettoMain.h"
+1224648504 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettotextelement.h
 	<OgreOverlayElement.h>
-	<OgreControllerManager.h>
-	"SonettoMain.h"
-	"SonettoFontManager.h"
+	"SonettoFont.h"
 
-1220741031 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowskinserializer.h
+1220744631 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowskinserializer.h
 	"SonettoMain.h"
 	<OgreSerializer.h>
 	"SonettoWindowSkin.h"
 
-1219949875 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowskin.h
+1219953475 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowskin.h
 	"SonettoMain.h"
 	<OgreResourceManager.h>
 	<OgreMaterialManager.h>
@@ -1505,51 +1503,51 @@
 	<OgreTechnique.h>
 	"SonettoMain.h"
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowskinmanager.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowskinmanager.h
 	"SonettoMain.h"
 	<OgreResourceManager.h>
 	"SonettoWindowSkin.h"
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowfactory.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindowfactory.h
 	"SonettoMain.h"
 	<OgreOverlayElementFactory.h>
 	"SonettoWindow.h"
 	"SonettoTailedWindow.h"
 	"SonettoSlimWindow.h"
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindow.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowindow.h
 	<OgreOverlayContainer.h>
 	<OgreVector2.h>
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettotailedwindow.h
-	"SonettoMain.h"
-	<OgreOverlayContainer.h>
-	<OgreVector2.h>
-	"SonettoMain.h"
-	"SonettoWindowSkin.h"
-
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoslimwindow.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettotailedwindow.h
 	"SonettoMain.h"
 	<OgreOverlayContainer.h>
 	<OgreVector2.h>
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettogauge.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoslimwindow.h
+	"SonettoMain.h"
+	<OgreOverlayContainer.h>
+	<OgreVector2.h>
+	"SonettoMain.h"
+	"SonettoWindowSkin.h"
+
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettogauge.h
 	"SonettoMain.h"
 	<OgreOverlayElement.h>
 	<OgreOverlayElementFactory.h>
 	<OgreOverlayManager.h>
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettocounter.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettocounter.h
 	"SonettoMain.h"
 	<OgreOverlayElement.h>
 	<OgreOverlayElementFactory.h>
 	"SonettoMain.h"
 
-1224293266 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\main.cpp
+1224296866 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\main.cpp
 	<cstdio>
 	"windows.h"
 	<Ogre.h>
@@ -1559,7 +1557,7 @@
 	"TESTMapFileManager.h"
 	"TESTMapModule.h"
 
-1222793486 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonetto.h
+1222797086 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonetto.h
 	"SonettoPrerequisites.h"
 	"SonettoMain.h"
 	"TESTMapFile.h"
@@ -1593,23 +1591,23 @@
 	"SonettoWindowSkinManager.h"
 	"SonettoWindowSkinSerializer.h"
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoprerequisites.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoprerequisites.h
 
-1220040889 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoplane.h
+1220044489 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoplane.h
 	"SonettoMain.h"
 	<OgreOverlayContainer.h>
 	"SonettoMain.h"
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettostrmanager.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettostrmanager.h
 	"SonettoMain.h"
 	<OgreResourceManager.h>
 	"SonettoSTR.h"
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettostrserializer.h
+1219269876 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettostrserializer.h
 	"SonettoMain.h"
 	<OgreSerializer.h>
 
-1222885478 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettodatabase.h
+1224634383 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettodatabase.h
 	"SonettoMain.h"
 	"SonettoWindowSkinManager.h"
 	"SonettoSTRManager.h"
@@ -1617,8 +1615,9 @@
 	"SonettoSaveMap.h"
 	"SonettoMusicStream.h"
 	"SonettoSoundSource.h"
+	"SonettoTextElement.h"
 
-1219266276 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettosavemap.h
+1224418446 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettosavemap.h
 	"SonettoMain.h"
 
 1219539181 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testmapfilemanager.h
@@ -1635,13 +1634,13 @@
 
 1219266222 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource_d.rc
 
-1224288194 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testmapmodule.h
+1224658634 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testmapmodule.h
 	"SonettoModule.h"
 	"SonettoWalkmeshManager.h"
 	"SonettoScript.h"
 	"TESTMapFileManager.h"
 
-1219697300 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoplanefactory.h
+1219700900 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoplanefactory.h
 	<OgreOverlayElementFactory.h>
 	"SonettoPlane.h"
 
@@ -1652,30 +1651,30 @@
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1222868629 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettochoicewindow.h
+1222872229 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettochoicewindow.h
 	"SonettoModule.h"
 	"SonettoWindow.h"
 	"SonettoTextElement.h"
 	"SonettoMain.h"
 	"SonettoWindowSkin.h"
 
-1220796296 c:\workspace\projects\sonetto\trunk\libsonetto\include\testmapfile.h
+1220799896 c:\workspace\projects\sonetto\trunk\libsonetto\include\testmapfile.h
 	<OgreResourceManager.h>
 	<OgreColourValue.h>
 	<OgreVector3.h>
 	<OgreVector4.h>
 
-1220748188 c:\workspace\projects\sonetto\trunk\libsonetto\include\testmapfilemanager.h
+1220751788 c:\workspace\projects\sonetto\trunk\libsonetto\include\testmapfilemanager.h
 	"TESTMapFile.h"
 	<OgreResourceManager.h>
 	<OgreSingleton.h>
 	<OgreString.h>
 
-1220799367 c:\workspace\projects\sonetto\trunk\libsonetto\include\testmapfileserializer.h
+1220802967 c:\workspace\projects\sonetto\trunk\libsonetto\include\testmapfileserializer.h
 	"TESTMapFile.h"
 	<OgreSerializer.h>
 
-1223936981 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoeventobject.h
+1223940581 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoeventobject.h
 	<vector>
 	<Ogre.h>
 	"SonettoMain.h"
@@ -1688,12 +1687,12 @@
 	<Ogre.h>
 	"SonettoMain.h"
 
-1223937831 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomusicstream.h
+1223941431 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomusicstream.h
 	<cstdlib>
 	<vorbis/vorbisfile.h>
 	"SonettoMath.h"
 
-1223590594 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettosoundsource.h
+1223594194 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettosoundsource.h
 	<string>
 
 1221879522 c:\workspace\projects\sonetto\trunk\libsonetto\include\testmapmodule.h
@@ -1701,16 +1700,16 @@
 	"TESTMapFileManager.h"
 	"TESTHeroObject.h"
 
-1224014405 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomath.h
+1224018005 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettomath.h
 	<OgreVector3.h>
 
-1224017689 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowalkmeshmanager.h
+1224021289 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettowalkmeshmanager.h
 	<vector>
 	<memory>
 	<OgreVector3.h>
 	"SonettoEventObject.h"
 
-1224284509 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoscriptmanager.h
+1224418445 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoscriptmanager.h
 	<OgreResourceManager.h>
 	<OgreSingleton.h>
 	"SonettoScript.h"
@@ -1718,19 +1717,20 @@
 	"SonettoOpcode.h"
 	"SonettoScriptFlowHandler.h"
 
-1224284510 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoscript.h
+1224288110 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoscript.h
 	<vector>
 	"SonettoMain.h"
 	"SonettoScriptFile.h"
 
-1224284511 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoscriptfile.h
+1224418446 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoscriptfile.h
 	<OgreSharedPtr.h>
 	<OgreResourceManager.h>
 	"SonettoMain.h"
 
-1224284512 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoopcode.h
+1224418446 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoopcode.h
 
-1224284514 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoscriptflowhandler.h
+1224418446 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoscriptflowhandler.h
+	"SonettoSaveMap.h"
 	"SonettoOpcode.h"
 	"SonettoScriptManager.h"
 

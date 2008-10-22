@@ -475,7 +475,7 @@ namespace Sonetto {
         {
             STRData *strdata = static_cast<STRData *>(resource);
             Ogre::String msg0 = "Sonetto Module Test";
-            Ogre::String msg1 = "Press \\C0002[O]\\C0000 to select the desired Module.\nWhile insde the module,\npress \\C0002[Esc]\\C0000 on the keyboard\nto return to the \\C0002main menu\\C0000.";
+            Ogre::String msg1 = "Press \\c[0002][O]\\c[0000] to select the desired Module.\nWhile insde the module,\npress \\c[0002][Esc]\\c[0000] on the keyboard\nto return to the \\c[0002]main menu\\c[0000].";
             Ogre::String msg2 = "Boot Module";
             Ogre::String msg3 = "Title Module";
             Ogre::String msg4 = "Map Module";
@@ -719,3 +719,21 @@ namespace Sonetto {
 }; // namespace Sonetto
 
 #endif // __SONETTO_Kernel__
+//--------------------------------------
+//Press [O] to select the desired Module.
+//While insde the module,
+//press [Esc] on the keyboard
+//to return to the main menu.
+//--------------------------------------
+//--------------------------------------
+//Press [X] to enter the Boot Module.
+//The boot module is the initial
+//game presentation, where your logos
+//are shown.
+//--------------------------------------
+//--------------------------------------
+//Press [X] to enter the Map Module.
+//The Map module is where almost
+//everything happens in your game.
+//This is a temporary \c[0002]test\c[0000] module.
+//--------------------------------------

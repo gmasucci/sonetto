@@ -212,6 +212,8 @@ class BasicModule : public Sonetto::Module
 
         Ogre::String mCaptureFileName;
 
+        Sonetto::TextElement* text1g;
+
         int mChoiceState;
 
         bool mChoiceHasShown;

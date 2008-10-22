@@ -38,6 +38,7 @@ http://www.gnu.org/copyleft/lesser.txt
 //#include <vorbis/vorbisfile.h>
 
 #include <OgreVector2.h>
+#include <OgreMaterial.h>
 
 #include "SonettoException.h"
 
@@ -174,6 +175,71 @@ namespace Sonetto {
         FT_POINT = 0x1111,
         FT_LINEAR = 0x2222,
         FT_ANISOTROPIC = 0x3333
+    };
+
+    /** Struct containing Icon Frame data.
+    @remarks
+        This struct is used to store the dimensions and
+        texture coordinates information for every frame of each icon.
+    @remarks
+        Usually you may want to keep the dimensions to 1.0f and keep the icons square.
+    @remarks
+        Note that this is only the dimensions, it will be scalled down depending
+        on where it beign used, for instance, on a TextElement it will be scaled down
+        to the text dimensions.
+        (Actually, scaled to the Y dimensions of the text, as the text is not square either.)
+    */
+    struct IconSetFrame
+    {
+        /// Icon Horizontal Dimension, usually 1.0f.
+        Ogre::Real x;
+        /// Icon Vertical Dimension, usually 1.0f.
+        Ogre::Real y;
+        /// Icon Horizontal Texture Coordinate.
+        Ogre::Real u1;
+        /// Icon Vertical Texture Coordinate.
+        Ogre::Real v1;
+        /// Icon Horizontal Texture Coordinate.
+        Ogre::Real u2;
+        /// Icon Vertical Texture Coordinate.
+        Ogre::Real v2;
+    };
+
+    /** Struct containing information about icon animation.
+    @remarks
+        This struct contain the animation frame order, and contains all
+        the frames for each icon.
+    */
+    struct IconSetData
+    {
+        /** Icon Frame Order.
+        @remarks
+            This vector contains the order which the frames
+            will show, if it is zero, then there will be no animation at all.
+            You may use the same frame more than once, and the number of frame orders
+            may be greater than the number of frames.
+        */
+        std::vector<size_t> iconFrameOrder;
+        /** Icon Frames.
+        @remarks
+            Every Icon must contain at last one frame.
+        */
+        std::vector<IconSetFrame> iconFrames;
+    };
+
+    /** Icon Set
+    @remarks
+        IconSet is a small class containing information about Icons to be used ingame.
+        Icons may contain animation frames, but everything must be contained inside one texture only.
+    @remarks
+        IconsSets only contains dimension, texture and material information about icons,
+        Animation must be implemented by the classes going to use it.
+    */
+    class SONETTO_EXPORT IconSet
+    {
+    public:
+        std::map<size_t, IconSetData> iconSetData;
+        Ogre::MaterialPtr iconMaterial;
     };
 }; // namespace
 

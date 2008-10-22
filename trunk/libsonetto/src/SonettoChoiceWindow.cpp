@@ -141,11 +141,13 @@ namespace Sonetto {
             choiceText->setDimensions(0.0f, 0.0f);
             choiceText->setPosition(bdistX, bdistY + (mTextSize * start));
             static_cast<TextElement*>(choiceText)->setFont(mpModule->mKernel->mDatabase->mGameFont);
-            static_cast<TextElement*>(choiceText)->setTextSize(mTextSize);
-            static_cast<TextElement*>(choiceText)->setAnimSettings(false, false, false, 0.0f, 0.0f);
-            static_cast<TextElement*>(choiceText)->forceAnimReset();
+            static_cast<TextElement*>(choiceText)->setTextSize(Ogre::Vector2(mTextSize,mTextSize));
+            static_cast<TextElement*>(choiceText)->setAnimSettings(false, false, false, false, 0.0f, 0.0f, 0.0f);
+            static_cast<TextElement*>(choiceText)->setIconSet(&mpModule->mKernel->mDatabase->mTextIconSet);
             static_cast<TextElement*>(choiceText)->setMessage(mpModule->mKernel->mDatabase->mSystemMessage->getMessage(mChoiceMessageID[start]));
             static_cast<TextElement*>(choiceText)->setAlpha(mTextAlpha);
+            static_cast<TextElement*>(choiceText)->setScrMetricsMode(SMM_RELATIVE_ASPECT_ADJUSTED);
+            static_cast<TextElement*>(choiceText)->showText();
             mWindowTextContainer->addChild(choiceText);
             mChoiceList.push_back(choiceText);
         }

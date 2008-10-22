@@ -183,6 +183,8 @@ namespace Sonetto {
         ManualSTRLoader * defaultSTR = new ManualSTRLoader();
         mResourceMan->addResourceLocation("system/","FileSystem","TEMP");
         mResourceMan->declareResource("system.str", "STR", "TEMP"/*, defaultSTR*/);
+        mResourceMan->declareResource("iconset.dds", "Texture", "TEMP"/*, defaultSTR*/);
+
 
         /*ManualMapFileLoader * defaultMap = new ManualMapFileLoader();
         mResourceMan->declareResource("system.map", "MapFile", "TEMP", defaultMap);*/
@@ -205,6 +207,8 @@ namespace Sonetto {
         mDatabase->mGameFont = mFontManager->load("dfont.bin", "TEMP");
         WindowSkinPtr newWindowskin = mWindowSkinManager->load("windowskin_00.bin", "TEMP");
         mDatabase->mWindowSkinList.push_back(newWindowskin);
+
+        //mDatabase->mIconSet
 
         initialiseFade();
         setupFade(1.0f/60.0f);

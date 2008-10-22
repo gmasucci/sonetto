@@ -139,6 +139,10 @@ namespace Sonetto {
 
         Script *mTestScript;
 
+        #ifdef DEBUG_BUILD
+        Sonetto::TextElement * mDebugText;
+        #endif
+
         size_t mState;
     };
 }; // namespace Sonetto

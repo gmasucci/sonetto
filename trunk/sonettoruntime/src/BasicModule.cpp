@@ -58,9 +58,12 @@ void BasicModule::enter()
     mOverlayContainer->addChild(text0);
     text0->setDimensions(1.0, 1.0);
     text0->setPosition(16/480.0f,16/480.0f);
-    static_cast<TextElement*>(text0)->setTextSize(0.07f);
-    static_cast<TextElement*>(text0)->setAnimSettings(false, false, false, 0.0f, 0.0f);
-    static_cast<TextElement*>(text0)->forceAnimReset();
+    static_cast<TextElement*>(text0)->setFont(mKernel->mDatabase->mGameFont);
+    static_cast<TextElement*>(text0)->setTextSize(Ogre::Vector2(0.07f,0.07f));
+    static_cast<TextElement*>(text0)->setAnimSettings(false, false, false, false, 0.0f, 0.0f, 0.0f);
+    static_cast<TextElement*>(text0)->setIconSet(&mKernel->mDatabase->mTextIconSet);
+    static_cast<TextElement*>(text0)->setScrMetricsMode(SMM_RELATIVE_ASPECT_ADJUSTED);
+    static_cast<TextElement*>(text0)->showText();
     static_cast<TextElement*>(text0)->setMessage(mKernel->mDatabase->mSystemMessage->getMessage(0));
 
     Ogre::OverlayElement * text1 = mKernel->mOverlayMan->createOverlayElement("Text","text_00_01");
@@ -68,10 +71,17 @@ void BasicModule::enter()
     mOverlayContainer2->addChild(text1);
     text1->setDimensions(1.0, 1.0);
     text1->setPosition(16/480.0f,16/480.0f);
-    static_cast<TextElement*>(text1)->setTextSize(0.05f);
-    static_cast<TextElement*>(text1)->setAnimSettings(false, false, false, 0.0f, 0.0f);
-    static_cast<TextElement*>(text1)->forceAnimReset();
+    static_cast<TextElement*>(text1)->setFont(mKernel->mDatabase->mGameFont);
+    static_cast<TextElement*>(text1)->setTextSize(Ogre::Vector2(0.05f,0.05f));
+    static_cast<TextElement*>(text1)->setAnimSettings(true, true, true, false, 50.0f, 10.0f, 10.0f);
+    static_cast<TextElement*>(text1)->setIconSet(&mKernel->mDatabase->mTextIconSet);
+    static_cast<TextElement*>(text1)->setScrMetricsMode(SMM_RELATIVE_ASPECT_ADJUSTED);
+    //static_cast<TextElement*>(text1)->showText();
+    //static_cast<TextElement*>(text1)->startAnimation();
     static_cast<TextElement*>(text1)->setMessage(mKernel->mDatabase->mSystemMessage->getMessage(1));
+
+
+    text1g = static_cast<TextElement*>(text1);
 
     mOverlay->add2D(mOverlayContainer);
     mOverlay->add2D(mOverlayContainer2);
@@ -98,7 +108,10 @@ void BasicModule::update(Ogre::Real deltatime)
         break;
         case BMS_FADEIN:
             if( mKernel->getFadeStatus() == FS_IDLE_IN )
+            {
+                text1g->startAnimation();
                 mStatus = BMS_UPDATE;
+            }
         break;
         case BMS_FADEOUT_START:
             mKernel->getAudioMan()->stopMusic(1.0f/0.5f);
@@ -109,6 +122,7 @@ void BasicModule::update(Ogre::Real deltatime)
         case BMS_FADEOUT:
             if( mKernel->getFadeStatus() == FS_IDLE_OUT )
             {
+                text1g->stopAnimation();
                 switch(mChoiceState)
                 {
                     case 0:
@@ -182,6 +196,34 @@ void BasicModule::update(Ogre::Real deltatime)
                     delete mChoiceWindow;
                     mChoiceWindow = NULL;
                     mStatus = BMS_FADEOUT_START;
+                break;
+                case WOS_WAITING:
+                {
+                    size_t choice_new = mChoiceWindow->getChoiceResult();
+                    if(mChoiceState != choice_new)
+                    {
+                        switch(choice_new)
+                        {
+                            case 0:
+                            text1g->setMessage(mKernel->mDatabase->mSystemMessage->getMessage(10));
+                            text1g->startAnimation();
+                            break;
+                            case 2:
+                            text1g->setMessage(mKernel->mDatabase->mSystemMessage->getMessage(11));
+                            text1g->startAnimation();
+                            break;
+                            case 6:
+                            text1g->setMessage(mKernel->mDatabase->mSystemMessage->getMessage(12));
+                            text1g->startAnimation();
+                            break;
+                            default:
+                            text1g->setMessage(mKernel->mDatabase->mSystemMessage->getMessage(9));
+                            text1g->startAnimation();
+                            break;
+                        }
+                        mChoiceState = choice_new;
+                    }
+                }
                 break;
                 default:
                 break;
