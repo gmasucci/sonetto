@@ -131,7 +131,7 @@ namespace Sonetto {
         mParent = parent;
         mParent->addChild(mNode);
     }
-    const Ogre::Entity * EventObject::getEntity(void) const
+    Ogre::Entity * EventObject::getEntity(void) const
     {
         return mEntity;
     }

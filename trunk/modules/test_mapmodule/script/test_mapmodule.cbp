@@ -58,6 +58,7 @@
 			<Add alias="All" targets="Debug;Release;" />
 		</VirtualTargets>
 		<Compiler>
+			<Add option="-O3" />
 			<Add option="-Wall" />
 			<Add option="-mthreads" />
 			<Add option="-fmessage-length=0" />

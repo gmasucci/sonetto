@@ -54,8 +54,6 @@ namespace Sonetto {
         lOverlayContainer->setPosition(-(64/480.0f),(16/480.0f));
         lOverlayContainer->setDimensions(1.0f,64/480.0f);
 
-
-
         mDebugText = static_cast<Sonetto::TextElement*>(mKernel->mOverlayMan->createOverlayElement("Text", "DbgOverlay"));
         mDebugText->setFont(mKernel->mDatabase->mGameFont);
         mDebugText->setDimensions(1.0, 1.0);
@@ -80,7 +78,7 @@ namespace Sonetto {
         mKernel->mResourceMan->initialiseResourceGroup("DEBUGDATA");
 
         Ogre::Entity * worldmesh = mSceneMan->createEntity("CollisionMesh", "walkmesh.mesh");
-        mSceneMan->getRootSceneNode()->attachObject(worldmesh);
+        //mSceneMan->getRootSceneNode()->attachObject(worldmesh);
 
         mWalkmeshMan->createWalkmesh(worldmesh);
 
@@ -103,11 +101,35 @@ namespace Sonetto {
         mWalkmeshMan->registerEvent(mDummyHero);
         mWalkmeshMan->setEventPosition(mDummyHero,Ogre::Vector3(0.0f,-4.0f,4.0f));
         mWalkmeshMan->setEventPosition(dummyEvent,Ogre::Vector3(0.0f,20.0f,-4.0f));
+
+        //mDummyHero->getNode()->attachObject(mShadowPlane);
+
+        //mCurrentShadowMap = Ogre::ShadowCameraSetupPtr(new Ogre::FocusedShadowCameraSetup());
+        //mSceneMan->setShadowCameraSetup(mCurrentShadowMap);
+
+        //mCurrentShadowMap = Ogre::ShadowCameraSetupPtr(new Ogre::PlaneOptimalShadowCameraSetup(mShadowPlane));
+        //mSceneMan->setShadowCameraSetup(mCurrentShadowMap);
+
+        mSceneMan->setShadowTechnique(Ogre::SHADOWTYPE_TEXTURE_MODULATIVE_INTEGRATED);
+        mSceneMan->setShadowColour(Ogre::ColourValue(127.0f/255.0f,171.0f/255.0f,202.0f/255.0f));
+        mSceneMan->setShadowTexturePixelFormat(Ogre::PF_R5G6B5);
+        mSceneMan->setShadowTextureSize(512);
+        mSceneMan->setShadowFarDistance(12.5f);
+        mSceneMan->setShadowDirLightTextureOffset(4.0f);
+
+
+        mDummyHero->getEntity()->setCastShadows(true);
+
+        mCamera->setPosition(-133.577f, 250.527f, -143.885f);
+        mCamera->lookAt(0.0f,0.0f,0.0f);
+        Ogre::Vector3 lightdir = mCamera->getDirection();
+
         mCamera->setPosition(30.0f,30.0f,-30.0f);
         mCamera->lookAt(0.0f,0.0f,0.0f);
         mCamera->setNearClipDistance(1.0f);
-        mCamera->setFarClipDistance(1000.0f);
+        mCamera->setFarClipDistance(500.0f);
         mCamera->setFOVy(Ogre::Radian(Ogre::Degree(13.5f)));
+        //mCamera->setFOVy(Ogre::Radian(Ogre::Degree(30.0f)));
 
         mEvents.push_back(mDummyHero);
         mEvents.push_back(dummyEvent);
@@ -128,6 +150,15 @@ namespace Sonetto {
     	mKernel->mDatabase->mMapList.insert(std::pair<size_t, MapIndexData>(1,mapdata));
 
     	changeMap();
+
+    	mSceneMan->setAmbientLight(Ogre::ColourValue(127.0f/255.0f,171.0f/255.0f,202.0f/255.0f));
+
+        mMainLight0 = mSceneMan->createLight("MainLight0");
+        mMainLight0->setType(Ogre::Light::LT_DIRECTIONAL);
+    	mMainLight0->setPosition(0,0,0);
+    	mMainLight0->setDirection(lightdir);
+    	mMainLight0->setDiffuseColour(1.0f,1.0f,1.0f);
+    	//mMainLight0->setDirection(-1, -1, 0);
 
         mState = 0;
         mAngle = Ogre::Degree(360);
@@ -172,7 +203,12 @@ namespace Sonetto {
         movMagnitude = mov.length();
 
         // Clamp the Magnitude values to 0.3f to 1.0f
-        Math::clamp(movMagnitude,0.3f,1.0f);
+        //Math::clamp(movMagnitude,0.3f,1.0f);
+        if(movMagnitude < 0.3f)
+            movMagnitude = 0.0f;
+
+        if(movMagnitude > 1.0f)
+            movMagnitude = 1.0f;
 
         if (movMagnitude >= 0.3f)
         {
@@ -212,15 +248,16 @@ namespace Sonetto {
                                 "Hero Position\n"
                                 "X: "+Ogre::StringConverter::toString(heropos.x)+"\n"
                                 "Y: "+Ogre::StringConverter::toString(heropos.y)+"\n"
-                                "Z: "+Ogre::StringConverter::toString(heropos.z));
+                                "Z: "+Ogre::StringConverter::toString(heropos.z)+"\n"
+                                "Mov.Magnitude: "+Ogre::StringConverter::toString(movMagnitude));
         #endif
         //std::cout<<"HeroPos: "<<heropos.x<<"\t"<<heropos.y<<"\t"<<heropos.z<<"\n";
 
         mAngle += Ogre::Radian(rot.x * deltatime);
 
         Ogre::Vector3 dpos = mDummyHero->getPosition();
-        mCamera->setPosition(dpos.x + (Ogre::Math::Sin(Ogre::Radian(mAngle))) * 30.f,
-                dpos.y + 32.f,dpos.z + (Ogre::Math::Cos(Ogre::Radian(mAngle)) * 30.0f));
+        mCamera->setPosition(dpos.x + (Ogre::Math::Sin(Ogre::Radian(mAngle))) * 30.0f,
+                dpos.y + 32.0f,dpos.z + (Ogre::Math::Cos(Ogre::Radian(mAngle)) * 30.0f));
         mCamera->lookAt(dpos.x, dpos.y + 2.0f,dpos.z);
 
         switch(mState)
@@ -273,6 +310,12 @@ namespace Sonetto {
         }
 
         delete mWalkmeshMan;
+
+        static_cast<Ogre::OverlayContainer*>(mKernel->mOverlayMan->getOverlayElement("DbgContainer"))->removeChild("DbgOverlay");
+        mKernel->mOverlayMan->destroyOverlayElement("DbgContainer");
+        mKernel->mOverlayMan->destroyOverlayElement("DbgOverlay");
+        mOverlay->clear();
+
         // Call the Module base function.
         Module::exit();
     }
@@ -333,7 +376,7 @@ namespace Sonetto {
             mSceneMan->setAmbientLight(mapFile->mAmbientColor);
             mBackgroundColor = mapFile->mBackgroundColor;
             mKernel->getViewport()->setBackgroundColour(mBackgroundColor);
-
+/*
             if(mapFile->mUseLight0)
             {
                 mMainLight0 = mSceneMan->createLight("MainLight0");
@@ -343,7 +386,7 @@ namespace Sonetto {
                 mMainLight0->setDiffuseColour(mapFile->mLightColor0);
                 mMainLight0->setSpecularColour(mapFile->mLightColor0);
             }
-
+*/
             if(mapFile->mUseLight1)
             {
                 mMainLight1 = mSceneMan->createLight("MainLight1");
@@ -369,6 +412,7 @@ namespace Sonetto {
                 mapLayer.mAnimRotation = mapFile->mMapLayer[pos].mAnimRotation;
                 mapLayer.mAnimationSpeed = mapFile->mMapLayer[pos].mAnimationSpeed;
                 mapLayer.mMaterialName = mapFile->mMapLayer[pos].mMaterialName;
+                mapLayer.mModel->setCastShadows(false);
                 mMapLayers.push_back(mapLayer);
             }
             // Layer setup, second pass,
@@ -419,6 +463,7 @@ namespace Sonetto {
             // Here we would set the Hero's initial position, so let's set the dummy in their place instead
             //mDummyHero->setPosition(mKernel->mDatabase->mPlayerPosX,mKernel->mDatabase->mPlayerPosY,mKernel->mDatabase->mPlayerPosZ);
             //mDummyHero->setOrientation(mKernel->mDatabase->mPlayerRotW,mKernel->mDatabase->mPlayerRotX,mKernel->mDatabase->mPlayerRotY,mKernel->mDatabase->mPlayerRotZ);
+
         }
 
     }

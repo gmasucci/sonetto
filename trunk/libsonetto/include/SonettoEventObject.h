@@ -133,7 +133,7 @@ namespace Sonetto
         virtual void setParent(Ogre::SceneNode * parent);
 
         /// Return a pointer to this object's entity.
-        virtual const Ogre::Entity * getEntity(void) const;
+        virtual Ogre::Entity * getEntity(void) const;
 
         /// Return a pointer to this object's node.
         virtual Ogre::SceneNode * getNode(void);

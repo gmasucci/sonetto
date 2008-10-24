@@ -129,6 +129,10 @@ namespace Sonetto {
         std::vector<MapLayer> mMapLayers;
         std::vector<MapRTT> mMapRTT;
 
+        Ogre::ShadowCameraSetupPtr mCurrentShadowMap;
+
+        Ogre::MovablePlane * mShadowPlane;
+
         Ogre::Light * mMainLight0;
         Ogre::Light * mMainLight1;
 

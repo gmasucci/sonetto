@@ -72,7 +72,7 @@ void BasicModule::enter()
     text1->setDimensions(1.0, 1.0);
     text1->setPosition(16/480.0f,16/480.0f);
     static_cast<TextElement*>(text1)->setFont(mKernel->mDatabase->mGameFont);
-    static_cast<TextElement*>(text1)->setTextSize(Ogre::Vector2(0.05f,0.05f));
+    static_cast<TextElement*>(text1)->setTextSize(Ogre::Vector2(0.04f,0.05f));
     static_cast<TextElement*>(text1)->setAnimSettings(true, true, true, false, 50.0f, 10.0f, 10.0f);
     static_cast<TextElement*>(text1)->setIconSet(&mKernel->mDatabase->mTextIconSet);
     static_cast<TextElement*>(text1)->setScrMetricsMode(SMM_RELATIVE_ASPECT_ADJUSTED);

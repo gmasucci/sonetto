@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
 1219269822 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource.rc
 
-1224657731 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\basicmodule.cpp
+1224665278 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\src\basicmodule.cpp
 	<Ogre.h>
 	"SonettoInputManager.h"
 	"BasicModule.h"
@@ -1634,7 +1634,7 @@
 
 1219266222 source:c:\workspace\projects\sonetto\trunk\sonettoruntime\resource\resource_d.rc
 
-1224658634 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testmapmodule.h
+1224768262 c:\workspace\projects\sonetto\trunk\modules\test_mapmodule\include\testmapmodule.h
 	"SonettoModule.h"
 	"SonettoWalkmeshManager.h"
 	"SonettoScript.h"
@@ -1674,7 +1674,7 @@
 	"TESTMapFile.h"
 	<OgreSerializer.h>
 
-1223940581 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoeventobject.h
+1224757619 c:\workspace\projects\sonetto\trunk\libsonetto\include\sonettoeventobject.h
 	<vector>
 	<Ogre.h>
 	"SonettoMain.h"
