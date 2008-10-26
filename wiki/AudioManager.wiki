@@ -1,30 +1,17 @@
 #summary How AudioManager works and how to use it.
 
 = Introduction =
-This Manager is responsible for managing the audio objects of a game. It abstracts OpenAL's "no-object-orientation" approach, supplying a cleaner and more targeted audio control. Targeting, however, has its pros and cons. Actually the impact of such cons is not so heavy: Sonetto is made for, and thus should be used for making RPGs, which doesn't require much realistic aural effects like obstruction, doppler shifts, etc. The AudioManager will allow the use of OpenAL's effects extension on computers with at least EAX 3.0 support. Computers that don't will be presented with "dry" 3D sound, that is, they will still have standard 3D sound support, but with no aural effects. Sonetto has two ways of handling audio: treating it as a Sound or as a Music. Sounds will have a position in 3D space, producing a feeling of world-immersion to the player. From a programming perspective, Sounds differ from Musics because they're fully loaded into memory, whilst Musics are opened for reading, and keeps being read as long as the music plays. At the cost of some processing and disk-reading time, there'll be a lot lesser RAM usage. As Sounds are short pieces of audio, there is no need for streaming. Another change relies on the effects: Sounds can opt to use or not to use the map's environmental effect and uses audio filters. Musics don't. They are always presented dry. The only effect used by Sonetto is EAX Reverb, because of the lack of hardware support for other types of effects and because there really is no need for more than that.
+Sonetto has an audio manager that is responsible for managing audio resources and abstracting the underlying audio libraries used to decompress and play audio data.
 
-= Initialisation =
-AudioManager's initialisation works the same way as other Managers: It happens in the Kernel initialisation.
-The AudioManager does not depends on other Managers, so there is no need to initialise anything before it. Actually, a game can run without sound support. If this happens because of some problem in AudioManager::initialise(), this function will return false. Calling any other function after an initialisation failure will throw an exception, so if this happens, the Kernel will delete the Manager and set its AudioManager pointer to NULL, which needlessly to say should be checked before calling anything. After a successful initialisation, the Kernel will fill the AudioManager with sounds and musics listed in the Database, using AudioManager::addSound() and AudioManager::addMusic(). After registering something using one of these functions, it will remain inside the AudioManager until its deinitialisation. Although it is Kernel's job to fill AudioManager with data, this can be done on-the-fly by other components of Sonetto, such as Modules.
+= Audio Concepts =
+This audio manager has three audio concepts: Audio Listeners, Musics and Sounds. Each of these concepts will be explained before we get into the "how to use" part of this wiki page.
 
-= Updating =
-_This section merely informs you about how the Kernel does AudioManager's updates and why it does so. You can skip it if that's not of your interest._
+== Audio Listeners ==
+An Audio Listener, for those not used to 3D audio, is a point in 3D space used to calculate each audio source's 2D channel panning. This panning is used by our brain to figure from where the sound is coming. They can be attached to events or to the current camera.
 
-AudioManager's updates are done through the update() method. There is where listener's and sound sources' positions and directions are synchronised. It is recommended that property changes and updates are logically near, so that an overly long lag don't affect your game's audio. There is no need for being paranoid and updating everytime something changes a sound source property: in the Kernel loop, the order of updates is as follows:
-  # Update InputManager
-  # Update actual game baheviour (map updates, etc)
-  # Update AudioManager
-  # Render things on screen
-
-This is the most correct approach. You take the input, change the world(reacting to the input), and finally output the changes. The rendering should happen after the AudioManager update because it can take a particularly long time to be done, and the player would feel a delay from the time he presses a button to the time an aural confirmation appears. Most property changes take effect as soon as they are made(when the code asks AudioManager for it). But some of these properties, like the parent node of a sound source, will only effectively aurally happen after AudioManager being updated.
-
-= Playing Sounds and Musics =
-After Kernel's initialisation, the AudioManager should be already filled with information taken from the Database. Playing sounds and musics described in the Database is a matter of calling playSound() or playMusic(). The first argument of both functions is the ID to be played. Such ID is a desired sound or music zero-based index in the Database. For example, if you have two sounds in the Database: a bomb exploding and a sword-to-sword hitting sound in that order, and you wanted to make a sword noise, you would only need to write `id = AudioManager::playSound(1,swordSceneNode,true);`. This would play the sound, which would follow the Ogre::SceneNode `swordSceneNode`, and which would be affected by the environmental effect slot(i.e. would be played with reverberation, as asked for in the third argument). Passing a NULL SceneNode would make the sound follow the listener, in such a way that it would be played as-is, seemingly without 3D panning. The returned `id` is a `size_t` variable which represents this newly created sound instance. It can be used for property changing, etc.
-
-With musics, the concepts are mostly the same, with the exception that there is no ID returned by playMusic(), as there can only be one music playing at a time. playMusic() also accepts fade in and out speed values, so that a music can change from one to another more seemlessly. Another thing to note about is that musics are never affected by environmental effects and don't have 3D panning: they always follow the listener.
-
-= Changing audio properties =
-Todo
-
-= Deinitialisation =
-Todo
+== Musics ==
+Musics are divided into two types: Background Musics and Music Effects.
+Background Musics are musics that loop indefinitely until you want them to stop. They have a loop point from which the music will start playing when the stream ends. This is used to make seamless looping possible without letting go of music introductions, which are needed to make it easier to loop and still make the music sound good. Background Musics can fade in and out when you ask them to start and stop playing.
+Music Effects, contrary to Background Musics, don't use the music loop point and never fade. They are played only once. If there is a background music playing when a Music Effect is asked to play, this background music will be faded out and faded back in from the point it stopped when the Music Effect ends.
+It is important to note that fading is always optional. If you supply a fading speed of zero to any method that uses fading, the proposed changes will be taken instantly, without fading.
+From here on, we will use the term BGM to refer to Background Musics and ME to Music Effects.
