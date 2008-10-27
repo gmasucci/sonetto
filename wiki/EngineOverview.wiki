@@ -1,4 +1,5 @@
 #summary Top-level abstraction of the concepts behind Sonetto.
+#labels Deprecated
 
 = A word of thanks before beginning =
 Sonetto, as being an attempt to prove that even us, amateurs, can and should act as professionals, will have its bases quite similar to [http://q-gears.sourceforge.net/ Q-Gears], another RPG Engine, which is based on Square's Final Fantasy 7. That said, thanks to them. It's been really helpful to us.
