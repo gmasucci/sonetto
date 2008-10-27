@@ -11,9 +11,13 @@ An Audio Listener, for those not used to 3D audio, is a point in 3D space used t
 
 == Musics ==
 Musics are divided into two types: Background Musics and Music Effects.
+
 Background Musics are musics that loop indefinitely until you want them to stop. They have a loop point from which the music will start playing when the stream ends. This is used to make seamless looping possible without letting go of music introductions, which are needed to make it easier to loop and still make the music sound good. Background Musics can fade in and out when you ask them to start and stop playing.
+
 Music Effects, contrary to Background Musics, don't use the music loop point and never fade. They are played only once. If there is a background music playing when a Music Effect is asked to play, this background music will be faded out and faded back in from the point it stopped when the Music Effect ends.
+
 It is important to note that fading is always optional. If you supply a fading speed of zero to any method that uses fading, the proposed changes will be taken instantly, without fading. Also keep in mind that musics are always following the audio listener, so they seem like they don't have a position in space.
+
 From here on, we will use the term BGM to refer to Background Musics and ME to Music Effects.
 
 == Sounds ==
@@ -52,7 +56,9 @@ Of course, these maximum volumes are subject to their respective master volumes.
 == Playing musics ==
 The music IDs are indexes inside the Database.
 BGMs can be played using `void AudioManager::playBGM(size_t id,float aFadeOut,float aFadeIn)`. The `aFadeOut` argument determines the speed in which the current BGM should be faded out before starting the desired music, and the `aFadeIn` argument determines the speed in which the desired BGM will fade in.
+
 MEs can be played using `void AudioManager::playME(size_t id,float aFadeOut,float aFadeIn)`. Both fading values refer to the current BGM fading out and in, before the ME starts playing and after stopping, respectively.
+
 Whatever music type is currently playing, there are a few methods useful to control them:
 {{{
 // The fading arguments only apply when a BGM is currently playing
@@ -66,7 +72,9 @@ That's all about music playing.
 
 == Playing sounds ==
 The sound IDs are indexes inside the Database.
+
 Sounds need to be loaded prior to creating a sound source that uses its audio data. They can be loaded using `void AudioManager::loadSound(size_t id);` and disposed using `void AudioManager::unloadSound(size_t id);`.
+
 When a sound is loaded, a sound source using it can be created by using one of the following methods:
 {{{
 SoundSourcePtr AudioManager::createSound(size_t id,Ogre::Node *node = NULL);
