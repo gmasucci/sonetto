@@ -13,5 +13,25 @@ An Audio Listener, for those not used to 3D audio, is a point in 3D space used t
 Musics are divided into two types: Background Musics and Music Effects.
 Background Musics are musics that loop indefinitely until you want them to stop. They have a loop point from which the music will start playing when the stream ends. This is used to make seamless looping possible without letting go of music introductions, which are needed to make it easier to loop and still make the music sound good. Background Musics can fade in and out when you ask them to start and stop playing.
 Music Effects, contrary to Background Musics, don't use the music loop point and never fade. They are played only once. If there is a background music playing when a Music Effect is asked to play, this background music will be faded out and faded back in from the point it stopped when the Music Effect ends.
-It is important to note that fading is always optional. If you supply a fading speed of zero to any method that uses fading, the proposed changes will be taken instantly, without fading.
+It is important to note that fading is always optional. If you supply a fading speed of zero to any method that uses fading, the proposed changes will be taken instantly, without fading. Also keep in mind that musics are always following the audio listener, so they seem like they don't have a position in space.
 From here on, we will use the term BGM to refer to Background Musics and ME to Music Effects.
+
+== Sounds ==
+Sounds are short pieces of audio data, such as attack, door/chest opening, footstep sounds, etc. They are generally loaded and unloaded upon module and map changing. These sounds can be attached to Ogre::Nodes, so that its position is inherited from it. This way you can attach sound sources to your Ogre::SceneNodes or even to your meshes' bones, if needed. By default, sound sources are attached to audio listener (i.e. they will sound the same everywhere, like musics).
+
+= Using the AudioManager =
+The AudioManager can be accessed through `Kernel::get()->getAudioMan()`.
+
+== Changing settings ==
+You can attach the audio listener to an Ogre::Node by using `void AudioManager::setListenerNode(Ogre::Node *node)`, and retrieve this value using `Ogre::Node *AudioManager::getListenerNode()`. The supplied `node` can be NULL, in which case the listener will inherit the positions of the current module's camera.
+You can configure the master music and sound volume using:
+{{{
+void setMasterMusicVolume(float volume);
+float getMasterMusicVolume() const;
+void setMasterSoundVolume(float volume);
+float getMasterSoundVolume() const;
+}}}
+
+Beware that changing these values manually during gameplay is highly discouraged. They are chosen by the user in the configuration file, and _must_ be respected.
+
+== Playing musics ==
