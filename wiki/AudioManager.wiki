@@ -21,17 +21,34 @@ Sounds are short pieces of audio data, such as attack, door/chest opening, foots
 
 = Using the AudioManager =
 The AudioManager can be accessed through `Kernel::get()->getAudioMan()`.
+The MusicStream can be accessed through `Kernel::get()->getAudioMan()->getMusicStream()`.
 
 == Changing settings ==
 You can attach the audio listener to an Ogre::Node by using `void AudioManager::setListenerNode(Ogre::Node *node)`, and retrieve this value using `Ogre::Node *AudioManager::getListenerNode()`. The supplied `node` can be NULL, in which case the listener will inherit the positions of the current module's camera.
 You can configure the master music and sound volume using:
 {{{
-void setMasterMusicVolume(float volume);
-float getMasterMusicVolume() const;
-void setMasterSoundVolume(float volume);
-float getMasterSoundVolume() const;
+void AudioManager::setMasterMusicVolume(float volume);
+float AudioManager::getMasterMusicVolume() const;
+void AudioManager::setMasterSoundVolume(float volume);
+float AudioManager::getMasterSoundVolume() const;
 }}}
 
-Beware that changing these values manually during gameplay is highly discouraged. They are chosen by the user in the configuration file, and _must_ be respected.
+Beware that changing these values manually during gameplay is highly discouraged. They are chosen by the user in the configuration file, and _must_ be respected. They are the maximum volume the music and the sounds will reach.
+
+There is the maximum volume, however, that is not user-configurable, and is intended to be changed internally by the game. This maximum volume of the musics can be accessed through:
+{{{
+void MusicStream::setMaxVolume(float vol);
+float MusicStream::getMaxVolume() const;
+}}}
+
+And the maximum volume of the sounds is local. That is, there is a maximum volume for each sound source you create. They can be accessed through:
+{{{
+void SoundSource::setMaxVolume(float maxVolume);
+float SoundSource::getMaxVolume() const;
+}}}
+
+Of course, these maximum volumes are subject to their respective master volumes.
 
 == Playing musics ==
+The music and sound IDs are indexes inside the Database.
+BGMs can be played using `void AudioManager::playBGM(size_t id,float aFadeOut,float aFadeIn)`. The `aFadeOut` argument determines the speed in which the current BGM should be faded out before starting the desired music, and the `aFadeIn` argument determines the speed in which the desired BGM will fade in.
