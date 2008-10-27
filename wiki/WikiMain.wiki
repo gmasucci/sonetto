@@ -8,8 +8,8 @@ This is the Sonetto Wiki's main page. This is indeed just an index to other wiki
 
 = Wiki Pages =
   * == Sonetto Core ==
-|| [http://code.google.com/p/sonetto/wiki/EngineOverview Engine Overview] || Top-level abstraction of the concepts behind Sonetto ||
+|| [http://code.google.com/p/sonetto/wiki/EngineOverview Engine Overview] (deprecated page) || Top-level abstraction of the concepts behind Sonetto ||
 
   * == Managers ==
-|| InputManager || Describes how the input manager works and how to use it ||
+|| InputManager (deprecated page) || Describes how the input manager works and how to use it ||
 || AudioManager || Describes how the audio manager works and how to use it ||
