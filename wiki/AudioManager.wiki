@@ -65,7 +65,7 @@ MEs can be played using `void AudioManager::playME(size_t id,float aFadeOut,floa
 Whatever music type is currently playing, there are a few methods useful to control them:
 {{{
 // The fading arguments only apply when a BGM is currently playing
-// They should be self-explanatory
+// These methods should be self-explanatory
 void AudioManager::stopMusic(float fadeOut);
 void AudioManager::pauseMusic(float fadeOut);
 void AudioManager::resumeMusic(float fadeIn);
@@ -84,4 +84,4 @@ SoundSourcePtr AudioManager::createSound(size_t id,Ogre::Node *node = NULL);
 void AudioManager::playSound(size_t id,float aMaxVolume = 1.0f,Ogre::Node *node = NULL);
 }}}
 
-The second method is the easiest one. It will create a sound source, set its maximum volume and node, and then start playing it. The sound source will play the sound once and then will be deleted. This is useful for things like menu sound playing, where you don't need much control over the source. The first method will just create the sound source and return a pointer to it. This is useful if you want more control over the sound source (you can play it as many times as you want, stop it, and pause it). When it is not needed anymore, you can simply let it run out of scope. The AudioManager will take care of destroying it when it stops playing.
+The second method is the easiest one. It will create a sound source, set its maximum volume and node, and then start playing it. The sound source will play the sound once and then will be deleted. This is useful for things like menu sound playing, where you don't need much control over the source. The first method will just create the sound source and return a pointer to it. This is useful if you want more control over the sound source (you can play it as many times as you want, stop it, and pause it). When it is not needed anymore, you can simply let the returned SoundSourcePtr run out of scope. The AudioManager will take care of destroying it when it stops playing.
