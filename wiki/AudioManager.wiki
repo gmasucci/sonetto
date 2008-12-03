@@ -5,7 +5,7 @@ Sonetto has an audio manager that is responsible for managing audio resources an
 
 = Audio Concepts =
 This audio manager has three audio concepts: Audio Listeners, Musics and Sounds. Each of these concepts will be explained before we get into the "how to use" part of this wiki page.
-
+ OAEIUhoIWUheo! 8D
 == Audio Listeners ==
 An Audio Listener, for those not used to 3D audio, is a point in 3D space used to calculate each audio source's 2D channel panning. This panning is used by our brain to figure from where the sound is coming. They can be attached to events or to the current camera.
 
@@ -85,3 +85,4 @@ void AudioManager::playSound(size_t id,float aMaxVolume = 1.0f,Ogre::Node *node 
 }}}
 
 The second method is the easiest one. It will create a sound source, set its maximum volume and node, and then start playing it. The sound source will play the sound once and then will be deleted. This is useful for things like menu sound playing, where you don't need much control over the source. The first method will just create the sound source and return a pointer to it. This is useful if you want more control over the sound source (you can play it as many times as you want, stop it, and pause it). When it is not needed anymore, you can simply let the returned SoundSourcePtr run out of scope. The AudioManager will take care of destroying it when it stops playing.
+Conflict 1.
