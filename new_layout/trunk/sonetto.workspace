@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Sonetto Workspace">
+		<Project filename="libsonetto\scripts\LibSonetto.cbp" active="1" />
+		<Project filename="modules\bootmodule\scripts\bootmodule.cbp" />
+		<Project filename="modules\mapmodule\scripts\mapmodule.cbp" />
+		<Project filename="sonettoruntime\scripts\sonettoruntime.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>
