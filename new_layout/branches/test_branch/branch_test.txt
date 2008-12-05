@@ -1,4 +1,0 @@
-This is a file inside trunk/.
-
-This should go to revision 157.
-And this should go to revision 159 (the other one was 158, sorry).
