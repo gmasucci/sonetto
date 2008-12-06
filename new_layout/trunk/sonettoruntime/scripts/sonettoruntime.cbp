@@ -108,7 +108,6 @@
 		<Linker>
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
-		<Unit filename="..\src\main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
