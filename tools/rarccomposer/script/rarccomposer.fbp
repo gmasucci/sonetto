@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<wxFormBuilder_Project>
+    <FileVersion major="1" minor="9" />
+    <object class="Project" expanded="1">
+        <property name="bitmaps"></property>
+        <property name="class_decoration"></property>
+        <property name="code_generation">C++</property>
+        <property name="encoding">UTF-8</property>
+        <property name="event_generation">table</property>
+        <property name="file">MainFrame</property>
+        <property name="first_id">1000</property>
+        <property name="help_provider">none</property>
+        <property name="icons"></property>
+        <property name="internationalize">0</property>
+        <property name="name">RARC Composer</property>
+        <property name="namespace"></property>
+        <property name="path">.</property>
+        <property name="precompiled_header"></property>
+        <property name="relative_path">1</property>
+        <property name="use_enum">1</property>
+        <property name="use_microsoft_bom">0</property>
+        <object class="Frame" expanded="1">
+            <property name="bg"></property>
+            <property name="center"></property>
+            <property name="context_help"></property>
+            <property name="enabled">1</property>
+            <property name="extra_style"></property>
+            <property name="fg"></property>
+            <property name="font"></property>
+            <property name="hidden">0</property>
+            <property name="id">wxID_ANY</property>
+            <property name="maximum_size"></property>
+            <property name="minimum_size"></property>
+            <property name="name">MainFrame</property>
+            <property name="pos"></property>
+            <property name="size">560,450</property>
+            <property name="style">wxDEFAULT_FRAME_STYLE</property>
+            <property name="subclass"></property>
+            <property name="title">RARC Composer</property>
+            <property name="tooltip"></property>
+            <property name="window_extra_style"></property>
+            <property name="window_name"></property>
+            <property name="window_style">wxTAB_TRAVERSAL</property>
+            <property name="xrc_skip_sizer">1</property>
+            <event name="OnActivate"></event>
+            <event name="OnActivateApp"></event>
+            <event name="OnChar"></event>
+            <event name="OnClose">onExit</event>
+            <event name="OnEnterWindow"></event>
+            <event name="OnEraseBackground"></event>
+            <event name="OnHibernate"></event>
+            <event name="OnIconize"></event>
+            <event name="OnIdle"></event>
+            <event name="OnKeyDown"></event>
+            <event name="OnKeyUp"></event>
+            <event name="OnKillFocus"></event>
+            <event name="OnLeaveWindow"></event>
+            <event name="OnLeftDClick"></event>
+            <event name="OnLeftDown"></event>
+            <event name="OnLeftUp"></event>
+            <event name="OnMiddleDClick"></event>
+            <event name="OnMiddleDown"></event>
+            <event name="OnMiddleUp"></event>
+            <event name="OnMotion"></event>
+            <event name="OnMouseEvents"></event>
+            <event name="OnMouseWheel"></event>
+            <event name="OnPaint"></event>
+            <event name="OnRightDClick"></event>
+            <event name="OnRightDown"></event>
+            <event name="OnRightUp"></event>
+            <event name="OnSetFocus"></event>
+            <event name="OnSize"></event>
+            <event name="OnUpdateUI"></event>
+            <object class="wxMenuBar" expanded="1">
+                <property name="bg"></property>
+                <property name="context_help"></property>
+                <property name="enabled">1</property>
+                <property name="fg"></property>
+                <property name="font"></property>
+                <property name="hidden">0</property>
+                <property name="id">wxID_ANY</property>
+                <property name="label">Menu Bard</property>
+                <property name="maximum_size"></property>
+                <property name="minimum_size"></property>
+                <property name="name">main_menubar</property>
+                <property name="permission">protected</property>
+                <property name="pos"></property>
+                <property name="size"></property>
+                <property name="style"></property>
+                <property name="subclass"></property>
+                <property name="tooltip"></property>
+                <property name="window_extra_style"></property>
+                <property name="window_name"></property>
+                <property name="window_style"></property>
+                <event name="OnChar"></event>
+                <event name="OnEnterWindow"></event>
+                <event name="OnEraseBackground"></event>
+                <event name="OnKeyDown"></event>
+                <event name="OnKeyUp"></event>
+                <event name="OnKillFocus"></event>
+                <event name="OnLeaveWindow"></event>
+                <event name="OnLeftDClick"></event>
+                <event name="OnLeftDown"></event>
+                <event name="OnLeftUp"></event>
+                <event name="OnMiddleDClick"></event>
+                <event name="OnMiddleDown"></event>
+                <event name="OnMiddleUp"></event>
+                <event name="OnMotion"></event>
+                <event name="OnMouseEvents"></event>
+                <event name="OnMouseWheel"></event>
+                <event name="OnPaint"></event>
+                <event name="OnRightDClick"></event>
+                <event name="OnRightDown"></event>
+                <event name="OnRightUp"></event>
+                <event name="OnSetFocus"></event>
+                <event name="OnSize"></event>
+                <event name="OnUpdateUI"></event>
+                <object class="wxMenu" expanded="1">
+                    <property name="label">File</property>
+                    <property name="name">m_file</property>
+                    <property name="permission">protected</property>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap">icn/page_white.png; Load From File</property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_NEW</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">New File</property>
+                        <property name="name">m_item_new</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">Ctrl-N</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onCreateNew</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap">icn/folder_page.png; Load From File</property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_OPEN</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Open File...</property>
+                        <property name="name">m_item_open</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">Ctrl-O</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onOpenFile</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap">icn/page_save.png; Load From File</property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_SAVE</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Save File</property>
+                        <property name="name">m_item_save</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">Ctrl-S</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onSaveFile</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap">icn/page_save.png; Load From File</property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_SAVEAS</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Save File As...</property>
+                        <property name="name">m_item_save_as</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">Ctrl-Shift-S</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onSaveFileAs</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="separator" expanded="1">
+                        <property name="permission">none</property>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap">icn/cross.png; Load From File</property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_EXIT</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Exit</property>
+                        <property name="name">m_item_exit</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">Alt-F4</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onClickExit</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                </object>
+                <object class="wxMenu" expanded="1">
+                    <property name="label">Action</property>
+                    <property name="name">m_action</property>
+                    <property name="permission">protected</property>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap">icn/page_add.png; Load From File</property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">ID_FILE_ADD</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Add File</property>
+                        <property name="name">m_item_add_file</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">Ctrl-I</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onAddFile</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap">icn/page_go.png; Load From File</property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">ID_FILE_EXPORT</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Export File</property>
+                        <property name="name">m_item_export_file</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">Ctrl-E</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onExportFile</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap">icn/folder_add.png; Load From File</property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">ID_NEW_FOLDER</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Create Folder</property>
+                        <property name="name">m_item_folder_new</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">Insert</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onCreateFolder</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap">icn/delete.png; Load From File</property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">ID_FILE_REMOVE</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Remove Item</property>
+                        <property name="name">m_item_remove_file</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">Del</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onRemoveFile</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="separator" expanded="1">
+                        <property name="permission">none</property>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap">icn/arrow_up.png; Load From File</property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_UP</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Move Up</property>
+                        <property name="name">m_item_move_up</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut"></property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onMoveUp</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap">icn/arrow_down.png; Load From File</property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_DOWN</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Move Down</property>
+                        <property name="name">m_item_move_down</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut"></property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onMoveDown</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="separator" expanded="1">
+                        <property name="permission">none</property>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_VIEW_SORTNAME</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Sort by Name</property>
+                        <property name="name">m_item_sortname</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut"></property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onOrganize</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_VIEW_SORTTYPE</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">Sort by Type</property>
+                        <property name="name">m_item_sorttype</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut"></property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection"></event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                </object>
+                <object class="wxMenu" expanded="1">
+                    <property name="label">About</property>
+                    <property name="name">m_about</property>
+                    <property name="permission">protected</property>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap">; Load From File</property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_ABOUT</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">About</property>
+                        <property name="name">m_item_about</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut"></property>
+                        <property name="unchecked_bitmap">; Load From File [-1; -1]</property>
+                        <event name="OnMenuSelection">onClickAbout</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                </object>
+            </object>
+            <object class="wxToolBar" expanded="1">
+                <property name="bg"></property>
+                <property name="bitmapsize">16,16</property>
+                <property name="context_help"></property>
+                <property name="enabled">1</property>
+                <property name="fg"></property>
+                <property name="font"></property>
+                <property name="hidden">0</property>
+                <property name="id">wxID_ANY</property>
+                <property name="margins">-1,-1</property>
+                <property name="maximum_size"></property>
+                <property name="minimum_size"></property>
+                <property name="name">m_tool_bar</property>
+                <property name="packing">1</property>
+                <property name="permission">protected</property>
+                <property name="pos"></property>
+                <property name="separation">5</property>
+                <property name="size"></property>
+                <property name="style">wxTB_HORIZONTAL</property>
+                <property name="subclass"></property>
+                <property name="tooltip"></property>
+                <property name="window_extra_style"></property>
+                <property name="window_name"></property>
+                <property name="window_style"></property>
+                <event name="OnChar"></event>
+                <event name="OnEnterWindow"></event>
+                <event name="OnEraseBackground"></event>
+                <event name="OnKeyDown"></event>
+                <event name="OnKeyUp"></event>
+                <event name="OnKillFocus"></event>
+                <event name="OnLeaveWindow"></event>
+                <event name="OnLeftDClick"></event>
+                <event name="OnLeftDown"></event>
+                <event name="OnLeftUp"></event>
+                <event name="OnMiddleDClick"></event>
+                <event name="OnMiddleDown"></event>
+                <event name="OnMiddleUp"></event>
+                <event name="OnMotion"></event>
+                <event name="OnMouseEvents"></event>
+                <event name="OnMouseWheel"></event>
+                <event name="OnPaint"></event>
+                <event name="OnRightDClick"></event>
+                <event name="OnRightDown"></event>
+                <event name="OnRightUp"></event>
+                <event name="OnSetFocus"></event>
+                <event name="OnSize"></event>
+                <event name="OnUpdateUI"></event>
+                <object class="tool" expanded="1">
+                    <property name="bitmap">icn/page_white.png; Load From File</property>
+                    <property name="id">wxID_NEW</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">New File</property>
+                    <property name="name">m_tool_new</property>
+                    <property name="statusbar"></property>
+                    <property name="tooltip">Create a new file.</property>
+                    <event name="OnMenuSelection"></event>
+                    <event name="OnToolClicked">onCreateNew</event>
+                    <event name="OnToolEnter"></event>
+                    <event name="OnToolRClicked"></event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="tool" expanded="1">
+                    <property name="bitmap">icn/folder_page.png; Load From File</property>
+                    <property name="id">wxID_OPEN</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">Open File</property>
+                    <property name="name">m_tool_open</property>
+                    <property name="statusbar"></property>
+                    <property name="tooltip">Open an existing file.</property>
+                    <event name="OnMenuSelection"></event>
+                    <event name="OnToolClicked">onOpenFile</event>
+                    <event name="OnToolEnter"></event>
+                    <event name="OnToolRClicked"></event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="tool" expanded="1">
+                    <property name="bitmap">icn/page_save.png; Load From File</property>
+                    <property name="id">wxID_SAVE</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">Save File</property>
+                    <property name="name">m_tool_save</property>
+                    <property name="statusbar"></property>
+                    <property name="tooltip">Save this file.</property>
+                    <event name="OnMenuSelection"></event>
+                    <event name="OnToolClicked">onSaveFile</event>
+                    <event name="OnToolEnter"></event>
+                    <event name="OnToolRClicked"></event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="toolSeparator" expanded="1" />
+                <object class="tool" expanded="1">
+                    <property name="bitmap">icn/page_add.png; Load From File</property>
+                    <property name="id">ID_T_ADD</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">Add File</property>
+                    <property name="name">m_tool_add_file</property>
+                    <property name="statusbar"></property>
+                    <property name="tooltip">Add a file to this archive.</property>
+                    <event name="OnMenuSelection"></event>
+                    <event name="OnToolClicked">onAddFile</event>
+                    <event name="OnToolEnter"></event>
+                    <event name="OnToolRClicked"></event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="tool" expanded="1">
+                    <property name="bitmap">icn/page_go.png; Load From File</property>
+                    <property name="id">ID_T_EXPORT</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">tool</property>
+                    <property name="name">m_tool_export_file</property>
+                    <property name="statusbar"></property>
+                    <property name="tooltip">Export a file from this archive.</property>
+                    <event name="OnMenuSelection"></event>
+                    <event name="OnToolClicked">onExportFile</event>
+                    <event name="OnToolEnter"></event>
+                    <event name="OnToolRClicked"></event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="tool" expanded="1">
+                    <property name="bitmap">icn/folder_add.png; Load From File</property>
+                    <property name="id">ID_T_NEW_FOLDER</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">tool</property>
+                    <property name="name">m_tool_folder</property>
+                    <property name="statusbar"></property>
+                    <property name="tooltip">Add a folder to this archive.</property>
+                    <event name="OnMenuSelection"></event>
+                    <event name="OnToolClicked">onCreateFolder</event>
+                    <event name="OnToolEnter"></event>
+                    <event name="OnToolRClicked"></event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="tool" expanded="1">
+                    <property name="bitmap">icn/delete.png; Load From File</property>
+                    <property name="id">ID_T_REMOVE</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">Remove File</property>
+                    <property name="name">m_tool_remove_file</property>
+                    <property name="statusbar"></property>
+                    <property name="tooltip">Remove an item (either folder or file)</property>
+                    <event name="OnMenuSelection"></event>
+                    <event name="OnToolClicked">onRemoveFile</event>
+                    <event name="OnToolEnter"></event>
+                    <event name="OnToolRClicked"></event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="toolSeparator" expanded="1" />
+                <object class="tool" expanded="1">
+                    <property name="bitmap">icn/arrow_up.png; Load From File</property>
+                    <property name="id">wxID_UP</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">Move Up</property>
+                    <property name="name">m_tool_move_up</property>
+                    <property name="statusbar"></property>
+                    <property name="tooltip">Move the selected item up.</property>
+                    <event name="OnMenuSelection"></event>
+                    <event name="OnToolClicked">onMoveUp</event>
+                    <event name="OnToolEnter"></event>
+                    <event name="OnToolRClicked"></event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="tool" expanded="1">
+                    <property name="bitmap">icn/arrow_down.png; Load From File</property>
+                    <property name="id">wxID_DOWN</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">Move Down</property>
+                    <property name="name">m_tool_move_down</property>
+                    <property name="statusbar"></property>
+                    <property name="tooltip">Move the selected item down.</property>
+                    <event name="OnMenuSelection"></event>
+                    <event name="OnToolClicked">onMoveDown</event>
+                    <event name="OnToolEnter"></event>
+                    <event name="OnToolRClicked"></event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="toolSeparator" expanded="1" />
+                <object class="tool" expanded="1">
+                    <property name="bitmap">icn/cross.png; Load From File</property>
+                    <property name="id">wxID_EXIT</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">Exit</property>
+                    <property name="name">m_tool_exit</property>
+                    <property name="statusbar"></property>
+                    <property name="tooltip">Exit this program.</property>
+                    <event name="OnMenuSelection"></event>
+                    <event name="OnToolClicked">onClickExit</event>
+                    <event name="OnToolEnter"></event>
+                    <event name="OnToolRClicked"></event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+            </object>
+            <object class="wxStatusBar" expanded="1">
+                <property name="bg"></property>
+                <property name="context_help"></property>
+                <property name="enabled">1</property>
+                <property name="fg"></property>
+                <property name="fields">2</property>
+                <property name="font"></property>
+                <property name="hidden">0</property>
+                <property name="id">wxID_ANY</property>
+                <property name="maximum_size"></property>
+                <property name="minimum_size"></property>
+                <property name="name">m_status_bar</property>
+                <property name="permission">protected</property>
+                <property name="pos"></property>
+                <property name="size"></property>
+                <property name="style">wxST_SIZEGRIP</property>
+                <property name="subclass"></property>
+                <property name="tooltip"></property>
+                <property name="window_extra_style"></property>
+                <property name="window_name"></property>
+                <property name="window_style"></property>
+                <event name="OnChar"></event>
+                <event name="OnEnterWindow"></event>
+                <event name="OnEraseBackground"></event>
+                <event name="OnKeyDown"></event>
+                <event name="OnKeyUp"></event>
+                <event name="OnKillFocus"></event>
+                <event name="OnLeaveWindow"></event>
+                <event name="OnLeftDClick"></event>
+                <event name="OnLeftDown"></event>
+                <event name="OnLeftUp"></event>
+                <event name="OnMiddleDClick"></event>
+                <event name="OnMiddleDown"></event>
+                <event name="OnMiddleUp"></event>
+                <event name="OnMotion"></event>
+                <event name="OnMouseEvents"></event>
+                <event name="OnMouseWheel"></event>
+                <event name="OnPaint"></event>
+                <event name="OnRightDClick"></event>
+                <event name="OnRightDown"></event>
+                <event name="OnRightUp"></event>
+                <event name="OnSetFocus"></event>
+                <event name="OnSize"></event>
+                <event name="OnUpdateUI"></event>
+            </object>
+            <object class="wxBoxSizer" expanded="1">
+                <property name="minimum_size">-1,-1</property>
+                <property name="name">bSizer2</property>
+                <property name="orient">wxVERTICAL</property>
+                <property name="permission">none</property>
+                <object class="sizeritem" expanded="1">
+                    <property name="border">5</property>
+                    <property name="flag">wxEXPAND</property>
+                    <property name="proportion">1</property>
+                    <object class="wxGridSizer" expanded="1">
+                        <property name="cols">1</property>
+                        <property name="hgap">0</property>
+                        <property name="minimum_size"></property>
+                        <property name="name">gSizer1</property>
+                        <property name="permission">none</property>
+                        <property name="rows">1</property>
+                        <property name="vgap">0</property>
+                        <object class="sizeritem" expanded="1">
+                            <property name="border">0</property>
+                            <property name="flag">wxEXPAND</property>
+                            <property name="proportion">0</property>
+                            <object class="wxTreeCtrl" expanded="1">
+                                <property name="bg"></property>
+                                <property name="context_help"></property>
+                                <property name="enabled">1</property>
+                                <property name="fg"></property>
+                                <property name="font"></property>
+                                <property name="hidden">0</property>
+                                <property name="id">ID_FILE_DISPLAY</property>
+                                <property name="maximum_size"></property>
+                                <property name="minimum_size"></property>
+                                <property name="name">m_file_ctrl</property>
+                                <property name="permission">protected</property>
+                                <property name="pos"></property>
+                                <property name="size"></property>
+                                <property name="style">wxTR_DEFAULT_STYLE|wxTR_EDIT_LABELS</property>
+                                <property name="subclass"></property>
+                                <property name="tooltip"></property>
+                                <property name="window_extra_style"></property>
+                                <property name="window_name"></property>
+                                <property name="window_style"></property>
+                                <event name="OnChar"></event>
+                                <event name="OnEnterWindow"></event>
+                                <event name="OnEraseBackground"></event>
+                                <event name="OnKeyDown"></event>
+                                <event name="OnKeyUp"></event>
+                                <event name="OnKillFocus"></event>
+                                <event name="OnLeaveWindow"></event>
+                                <event name="OnLeftDClick"></event>
+                                <event name="OnLeftDown"></event>
+                                <event name="OnLeftUp"></event>
+                                <event name="OnMiddleDClick"></event>
+                                <event name="OnMiddleDown"></event>
+                                <event name="OnMiddleUp"></event>
+                                <event name="OnMotion"></event>
+                                <event name="OnMouseEvents"></event>
+                                <event name="OnMouseWheel"></event>
+                                <event name="OnPaint"></event>
+                                <event name="OnRightDClick"></event>
+                                <event name="OnRightDown"></event>
+                                <event name="OnRightUp"></event>
+                                <event name="OnSetFocus"></event>
+                                <event name="OnSize"></event>
+                                <event name="OnTreeBeginDrag"></event>
+                                <event name="OnTreeBeginLabelEdit"></event>
+                                <event name="OnTreeBeginRDrag"></event>
+                                <event name="OnTreeDeleteItem"></event>
+                                <event name="OnTreeEndDrag">updateItemList</event>
+                                <event name="OnTreeEndLabelEdit">renameEntry</event>
+                                <event name="OnTreeGetInfo"></event>
+                                <event name="OnTreeItemActivated"></event>
+                                <event name="OnTreeItemCollapsed"></event>
+                                <event name="OnTreeItemCollapsing"></event>
+                                <event name="OnTreeItemExpanded"></event>
+                                <event name="OnTreeItemExpanding"></event>
+                                <event name="OnTreeItemGetTooltip"></event>
+                                <event name="OnTreeItemMenu"></event>
+                                <event name="OnTreeItemMiddleClick"></event>
+                                <event name="OnTreeItemRightClick"></event>
+                                <event name="OnTreeKeyDown"></event>
+                                <event name="OnTreeSelChanged"></event>
+                                <event name="OnTreeSelChanging"></event>
+                                <event name="OnTreeSetInfo"></event>
+                                <event name="OnTreeStateImageClick"></event>
+                                <event name="OnUpdateUI"></event>
+                            </object>
+                        </object>
+                    </object>
+                </object>
+            </object>
+        </object>
+    </object>
+</wxFormBuilder_Project>

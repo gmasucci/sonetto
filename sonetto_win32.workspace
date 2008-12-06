@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Sonetto">
+		<Project filename="libsonetto\scripts\libsonetto_win32.cbp" />
+		<Project filename="sonettoruntime\script\sonettoruntime_win32.cbp" active="1">
+			<Depends filename="libsonetto\scripts\libsonetto_win32.cbp" />
+			<Depends filename="modules\test_mapmodule\script\test_mapmodule.cbp" />
+		</Project>
+		<Project filename="modules\test_mapmodule\script\test_mapmodule.cbp">
+			<Depends filename="libsonetto\scripts\libsonetto_win32.cbp" />
+		</Project>
+		<Project filename="tools\configtool\scripts\configtools_win32.cbp" />
+		<Project filename="tools\rarccomposer\script\rarccomposer_win32.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

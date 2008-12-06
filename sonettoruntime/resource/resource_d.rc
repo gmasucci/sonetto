@@ -1,0 +1,30 @@
+IDI_ICON ICON DISCARDABLE "..\\resource\\snticon.ico"
+1 VERSIONINFO
+FILEVERSION 0,0,0,1
+PRODUCTVERSION 0,0,0,1
+FILEFLAGSMASK 0x0000003FL
+FILEFLAGS 0x0000000BL
+FILEOS 0x00010001L
+FILETYPE 0x00000001L
+FILESUBTYPE 0x00000000L
+BEGIN
+BLOCK "StringFileInfo"
+BEGIN
+BLOCK "040904E4"
+BEGIN
+VALUE "CompanyName", "Sonetto Team"
+VALUE "FileDescription","Sonetto Game Runtime (Debug Version)"
+VALUE "FileVersion", "0,0,0,1"
+VALUE "InternalName", "game"
+VALUE "LegalCopyright","Copyright\251 2008 Sonetto"
+VALUE "OriginalFilename", "game.exe"
+VALUE "ProductName", "Game Runtime (Debug Version)"
+VALUE "ProductVersion", "0,0,0,1"
+END
+END
+BLOCK "VarFileInfo"
+BEGIN
+VALUE "Translation", 0x0409,1200
+END
+END
+
