@@ -86,8 +86,8 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Weffc++" />
 			<Add option="-Wall" />
+			<Add directory="..\include" />
 			<Add directory="..\..\..\libsonetto\include" />
 			<Add directory="..\..\..\dependencies\include" />
 			<Add directory="$(OGRE_HOME)\OgreMain\include" />

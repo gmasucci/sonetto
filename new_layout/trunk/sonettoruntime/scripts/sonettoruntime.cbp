@@ -98,14 +98,17 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Weffc++" />
 			<Add option="-Wall" />
+			<Add directory="..\..\libsonetto\include" />
+			<Add directory="..\..\modules\bootmodule\include" />
+			<Add directory="..\..\modules\mapmodule\include" />
 			<Add directory="..\..\dependencies\include" />
 			<Add directory="$(OGRE_HOME)\OgreMain\include" />
 		</Compiler>
 		<Linker>
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
+		<Unit filename="..\src\main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
