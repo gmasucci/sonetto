@@ -106,6 +106,14 @@
 		<Unit filename="..\include\SonettoException.h" />
 		<Unit filename="..\include\SonettoKernel.h" />
 		<Unit filename="..\include\SonettoPrerequisites.h" />
+		<Unit filename="..\resource\resource.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="Win32 Release" />
+		</Unit>
+		<Unit filename="..\resource\resource_d.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="Win32 Debug" />
+		</Unit>
 		<Unit filename="..\src\SonettoException.cpp" />
 		<Unit filename="..\src\SonettoKernel.cpp" />
 		<Extensions>

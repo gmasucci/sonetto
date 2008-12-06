@@ -108,6 +108,15 @@
 		<Linker>
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
+		<Unit filename="..\resource\resource.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="Win32 Release" />
+		</Unit>
+		<Unit filename="..\resource\resource_d.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="Win32 Debug" />
+		</Unit>
+		<Unit filename="..\src\main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
