@@ -12,7 +12,7 @@ BLOCK "StringFileInfo"
 BEGIN
 BLOCK "040904E4"
 BEGIN
-VALUE "CompanyName", "Sonetto Team"
+VALUE "CompanyName", "Sonetto Project"
 VALUE "FileDescription","Sonetto Game Runtime"
 VALUE "FileVersion", "0,0,0,1"
 VALUE "InternalName", "game.exe"
