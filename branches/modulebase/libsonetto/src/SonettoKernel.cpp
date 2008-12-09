@@ -28,7 +28,6 @@ POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
 #include "SonettoKernel.h"
-#include "SonettoMenuModule.h"
 
 namespace Sonetto
 {
