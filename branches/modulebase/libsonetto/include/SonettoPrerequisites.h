@@ -62,6 +62,13 @@ namespace Sonetto
 {
     class Kernel;
     class Exception;
+    class Module;
+    class BootModule;
+    class TitleModule;
+    class MapModule;
+    class MenuModule;
+    class WorldModule;
+    class BattleModule;
 } // namespace
 
 // Include only essential headers here

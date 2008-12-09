@@ -27,25 +27,27 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include <exception>
-#include "SonettoKernel.h"
-#include "GenericModuleFactory.h"
+#ifndef SONETTO_BATTLEMODULE_H
+#define SONETTO_BATTLEMODULE_H
 
-int main()
+#include "SonettoPrerequisites.h"
+#include "SonettoModule.h"
+
+namespace Sonetto
 {
-    try {
-        GenericModuleFactory *factory = new GenericModuleFactory;
+    class SONETTO_API BattleModule : public Module
+    {
+    public:
+        struct _BattleData
+        {
+            int sampleData;
+        };
 
-        // Instantiates the Kernel, initialises and runs it
-        Sonetto::Kernel *kernel = new Sonetto::Kernel(factory);
-        kernel->initialise();
-        kernel->run();
+        BattleModule() {}
+        virtual ~BattleModule() {}
 
-        // Deletes Kernel when finished running
-        delete kernel;
-    } catch(std::exception &e) {
-        std::cout << e.what() << std::endl;
-    }
+        static _BattleData BattleData;
+    };
+} //namespace
 
-    return 0;
-}
+#endif

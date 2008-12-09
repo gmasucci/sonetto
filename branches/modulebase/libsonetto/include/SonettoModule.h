@@ -27,25 +27,40 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include <exception>
-#include "SonettoKernel.h"
-#include "GenericModuleFactory.h"
+#ifndef SONETTO_MODULE_H
+#define SONETTO_MODULE_H
 
-int main()
+#include <stack>
+#include "SonettoPrerequisites.h"
+
+namespace Sonetto
 {
-    try {
-        GenericModuleFactory *factory = new GenericModuleFactory;
+    class SONETTO_API Module
+    {
+    public:
+        enum ModuleType
+        {
+            MT_NONE,
+            MT_BOOT,
+            MT_TITLE,
+            MT_MAP,
+            MT_MENU,
+            MT_WORLD,
+            MT_BATTLE
+        };
 
-        // Instantiates the Kernel, initialises and runs it
-        Sonetto::Kernel *kernel = new Sonetto::Kernel(factory);
-        kernel->initialise();
-        kernel->run();
+        Module() {}
+        virtual ~Module() {}
 
-        // Deletes Kernel when finished running
-        delete kernel;
-    } catch(std::exception &e) {
-        std::cout << e.what() << std::endl;
-    }
+        virtual void initialise() = 0;
+        virtual void update() = 0;
+        virtual void deinitialise() = 0;
 
-    return 0;
-}
+        virtual void halt() = 0;
+        virtual void resume() = 0;
+    };
+
+    typedef std::stack<Module *> ModuleStack;
+} // namespace
+
+#endif

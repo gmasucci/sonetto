@@ -32,6 +32,8 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include <Ogre.h>
 #include "SonettoPrerequisites.h"
+#include "SonettoModule.h"
+#include "SonettoModuleFactory.h"
 
 namespace Sonetto
 {
@@ -44,14 +46,51 @@ namespace Sonetto
     class SONETTO_API Kernel : public Ogre::Singleton<Kernel>
     {
     public:
+        /** Describes what to do after rendering
+
+        @see
+            Sonetto::Kernel::setAction()
+        */
+        enum KernelAction
+        {
+            /// Does nothing
+            KA_NONE,
+            /// Changes active module
+            KA_CHANGE_MODULE,
+            /// Shutdowns Sonetto
+            KA_SHUTDOWN
+        };
+
+        /** Describes what to do with a module
+
+        @see
+            Sonetto::Kernel::setAction()
+        */
+        enum ModuleAction
+        {
+            /// Does nothing
+            MA_NONE,
+            /// Deletes it and instantiates a new one to take its place
+            MA_CHANGE,
+            /// Instantiates a new one and halts current one
+            MA_CALL,
+            /// Deletes it and gives control to the previous module
+            MA_RETURN
+        };
+
         /** Constructor
 
         @remarks
             This instance will only be ready for use when initialise() is called.
+        @param moduleFactory
+            External module factory used to help the Kernel to create modules
+            unknown at compile time. It will not be deleted it for you even after
+            Kernel's destruction.
         @see
             Kernel::initialise().
         */
-        Kernel() : mInitialised(false) {}
+        Kernel(const ModuleFactory *moduleFactory)
+                : mModuleFactory(moduleFactory),mInitialised(false) {}
 
         /** Destructor
 
@@ -120,15 +159,102 @@ namespace Sonetto
         */
         void run();
 
+        /** Gets currently active game module
+
+        @see
+            Sonetto::Module
+        */
+        inline Module *getActiveModule() { return mModuleStack.top(); }
+
+        /** Sets kernel action to be done after rendering
+
+            This method can be used for two things: to shutdown Sonetto and to
+            change the current active module. When shutdowning, `mact' must
+            be MA_NONE and `modtype' must be MT_NONE. When changing the active
+            module, `mact' can be MA_CHANGE_MODULE, MA_CALL_MODULE or MA_RETURN.
+            When `mact' is set to MA_RETURN, `modtype' must be MT_NONE. When
+            `mact' is set to MA_CHANGE_MODULE or MA_CALL_MODULE, `modtype' must
+            be the type of module you want to instantiate.
+        @remarks
+            When calling this method more than once in the same main loop, only
+            the last call to it will be in effect.
+        @see
+            Sonetto::Kernel::KernelAction
+        @see
+            Sonetto::Kernel::ModuleAction
+        @see
+            Sonetto::Module::ModuleType
+        */
+        void setAction(KernelAction kact,ModuleAction mact = MA_NONE,
+                Module::ModuleType modtype = Module::MT_NONE);
+
     private:
         /// Loads configuration from file and configures Sonetto
         void loadConfig(std::string file);
+
+        /** Pushes new module into stack
+
+            Instantiates a new module of type `modtype' using the module
+            factory. This new module will be the new active module. If
+            `mact' is set to MA_CALL, the old module remains in the stack.
+            If `mact' is set to MA_CHANGE, the old one will be removed from
+            the stack and deleted.
+        @remarks
+            MA_NONE and MA_RETURN are both invalid values for `mact'.
+        @param modtype
+            Module type to be instantiated.
+        @param mact
+            Whether to call it or change to it (see ModuleAction::MA_CHANGE
+            and ModuleAction::MA_CALL).
+        */
+        void pushModule(Module::ModuleType modtype,ModuleAction mact);
+
+        /** Pops current active module from stack
+
+            Deinitialises, removes from stack and deletes the current active
+            module, resuming any halted module below it in the stack.
+        @remarks
+            If no module remains in the stack, this method will throw an
+            exception.
+        */
+        void popModule();
+
+        /// Module factory
+        const ModuleFactory *mModuleFactory;
 
         /// Ogre::Root instance
         Ogre::Root *mOgreRoot;
 
         /// Whether initialise() was called or not
         bool mInitialised;
+
+        /** Stack of instantiated modules
+
+        @see
+            Sonetto::Module
+        */
+        ModuleStack mModuleStack;
+
+        /** Kernel action
+
+        @see
+            Sonetto::Kernel::setAction()
+        */
+        KernelAction mKernelAction;
+
+        /** Module action
+
+        @see
+            Sonetto::Kernel::setAction()
+        */
+        ModuleAction mModuleAction;
+
+        /** Next module type to be instantiated
+
+        @see
+            Sonetto::Kernel::setAction()
+        */
+        Module::ModuleType mNextModuleType;
     };
 } // namespace
 

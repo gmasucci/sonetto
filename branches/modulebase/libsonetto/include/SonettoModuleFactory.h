@@ -27,25 +27,34 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include <exception>
-#include "SonettoKernel.h"
-#include "GenericModuleFactory.h"
+#ifndef SONETTO_MODULEFACTORY_H
+#define SONETTO_MODULEFACTORY_H
 
-int main()
+#include "SonettoPrerequisites.h"
+#include "SonettoModule.h"
+#include "SonettoBootModule.h"
+#include "SonettoTitleModule.h"
+#include "SonettoMapModule.h"
+#include "SonettoMenuModule.h"
+#include "SonettoWorldModule.h"
+#include "SonettoBattleModule.h"
+
+namespace Sonetto
 {
-    try {
-        GenericModuleFactory *factory = new GenericModuleFactory;
+    class SONETTO_API ModuleFactory
+    {
+    public:
+        ModuleFactory() {}
+        virtual ~ModuleFactory() {}
 
-        // Instantiates the Kernel, initialises and runs it
-        Sonetto::Kernel *kernel = new Sonetto::Kernel(factory);
-        kernel->initialise();
-        kernel->run();
+        virtual Module *createModule(Module::ModuleType modtype) const;
+        virtual BootModule *createBootModule() const = 0;
+        virtual TitleModule *createTitleModule() const = 0;
+        virtual MapModule *createMapModule() const = 0;
+        virtual MenuModule *createMenuModule() const = 0;
+        virtual WorldModule *createWorldModule() const = 0;
+        virtual BattleModule *createBattleModule() const = 0;
+    };
+} // namespace
 
-        // Deletes Kernel when finished running
-        delete kernel;
-    } catch(std::exception &e) {
-        std::cout << e.what() << std::endl;
-    }
-
-    return 0;
-}
+#endif

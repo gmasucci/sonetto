@@ -27,25 +27,48 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include <exception>
-#include "SonettoKernel.h"
-#include "GenericModuleFactory.h"
+#include "SonettoModuleFactory.h"
 
-int main()
+namespace Sonetto
 {
-    try {
-        GenericModuleFactory *factory = new GenericModuleFactory;
+    // ----------------------------------------------------------------------
+    // Sonetto::ModuleFactory implementation
+    // ----------------------------------------------------------------------
+    Module *ModuleFactory::createModule(Module::ModuleType modtype) const
+    {
+        // Makes sure parameters are valid
+        assert(modtype != Module::MT_NONE);
 
-        // Instantiates the Kernel, initialises and runs it
-        Sonetto::Kernel *kernel = new Sonetto::Kernel(factory);
-        kernel->initialise();
-        kernel->run();
+        // Creates and returns appropriate module instance
+        switch (modtype)
+        {
+            case Module::MT_BOOT:
+                return createBootModule();
+            break;
 
-        // Deletes Kernel when finished running
-        delete kernel;
-    } catch(std::exception &e) {
-        std::cout << e.what() << std::endl;
+            case Module::MT_TITLE:
+                return createTitleModule();
+            break;
+
+            case Module::MT_MAP:
+                return createMapModule();
+            break;
+
+            case Module::MT_MENU:
+                return createMenuModule();
+            break;
+
+            case Module::MT_WORLD:
+                return createWorldModule();
+            break;
+
+            case Module::MT_BATTLE:
+                return createBattleModule();
+            break;
+
+            default: break; // Avoids compiler warnings
+        }
+
+        return NULL; // Avoids compiler warnings
     }
-
-    return 0;
-}
+} // namespace

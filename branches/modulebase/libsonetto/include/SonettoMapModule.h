@@ -27,25 +27,27 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include <exception>
-#include "SonettoKernel.h"
-#include "GenericModuleFactory.h"
+#ifndef SONETTO_MAPMODULE_H
+#define SONETTO_MAPMODULE_H
 
-int main()
+#include "SonettoPrerequisites.h"
+#include "SonettoModule.h"
+
+namespace Sonetto
 {
-    try {
-        GenericModuleFactory *factory = new GenericModuleFactory;
+    class SONETTO_API MapModule : public Module
+    {
+    public:
+        struct _MapData
+        {
+            int heroCurTriangle;
+        };
 
-        // Instantiates the Kernel, initialises and runs it
-        Sonetto::Kernel *kernel = new Sonetto::Kernel(factory);
-        kernel->initialise();
-        kernel->run();
+        MapModule() {}
+        virtual ~MapModule() {}
 
-        // Deletes Kernel when finished running
-        delete kernel;
-    } catch(std::exception &e) {
-        std::cout << e.what() << std::endl;
-    }
+        static _MapData MapData;
+    };
+} //namespace
 
-    return 0;
-}
+#endif
