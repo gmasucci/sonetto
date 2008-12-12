@@ -38,26 +38,66 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     void Kernel::initialise()
     {
+        Ogre::NameValuePairList  wndParamList; // Needed for Ogre to use SDL rendering window
+        SDL_SysWMinfo      wmInfo;       // Structure holding SDL window information
+
         // Checks if wasn't initialised yet
         if (mInitialised)
         {
             SONETTO_THROW("Kernel is already initialised");
         }
+        // ------------------
+        // SDL Initialisation
+        // ------------------
+        // Initialises SDL video and joystick subsystems
+        if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_JOYSTICK) == -1)
+        {
+            SONETTO_THROW("Could not initialise SDL");
+        }
 
-        // Creates Ogre root
+        // Create SDL rendering window (resize later to the desired resolution)
+        mWindow = SDL_SetVideoMode(640,480,0,0);
+        if (!mWindow)
+        {
+            SONETTO_THROW("Could not create SDL window");
+        }
+
+        // Disable cursor, Sonetto does not support mouse for now.
+        SDL_ShowCursor(SDL_DISABLE);
+        SDL_WM_SetCaption("Now Loading...","Now Loading...");
+
+        SDL_Flip(mWindow);
+
+        // Get window info to attach Ogre at it
+        SDL_VERSION(&wmInfo.version);
+        SDL_GetWMInfo(&wmInfo);
+
+        // -------------------
+        // Ogre Initialisation
+        // -------------------
         // Produce logs only on debug compilations
-        #ifdef DEBUG
-            mOgreRoot = new Ogre::Root("","","game.log");
-        #else
-            mOgreRoot = new Ogre::Root("","","");
-        #endif
+#ifdef DEBUG
+        mOgre = new Ogre::Root("","","game.log");
+#else
+        mOgre = new Ogre::Root("","","");
+#endif
 
-        // Configures Sonetto based on configuration file
-        loadConfig("config.ini");
+#ifdef WINDOWS
+        wndParamList["externalWindowHandle"] = Ogre::StringConverter::toString((unsigned long)wmInfo.window);
+#else
+        // TODO
+#endif
 
-        // <todo> Get this caption from somewhere that makes more sense
-        // (Sonetto Runtime, maybe?)
-        mOgreRoot->initialise(true,"Game");
+        // Load and configure sonetto.
+        // <todo> Store and load Sonetto Configuration from User directory.
+        loadConfig("config.ini",wndParamList);
+
+        // Initialise Ogre Root
+        mOgre->initialise(false);
+        // Create the Ogre Render Window.
+        mRenderWindow = mOgre->createRenderWindow("", mScreenWidth, mScreenHeight, mIsFullScreen,&wndParamList);
+
+        SDL_WM_SetCaption(mGameTitle.c_str(),mGameTitle.c_str());
 
         // Flags we have initialised
         mInitialised = true;
@@ -69,11 +109,62 @@ namespace Sonetto
         if (mInitialised)
         {
             // Deletes Ogre
-            delete mOgreRoot;
+            delete mOgre;
+
+            // Deinitialise SDL
+            SDL_Quit();
         }
     }
     // ----------------------------------------------------------------------
-    void Kernel::loadConfig(std::string file) {}
+    bool Kernel::loadConfig(const Ogre::String& fname,Ogre::NameValuePairList &wndParamList)
+    {
+        Ogre::ConfigFile config;
+        //config.loadDirect(fname, "\t:=", false);
+        config.load(fname);
+
+        // Video Configuration Section
+        Ogre::String videoSectName = "video";
+        mGameTitle = config.getSetting("projectTitle",videoSectName);
+
+        mOgre->loadPlugin(config.getSetting("renderSystemPlugin",videoSectName));
+        Ogre::RenderSystem* rs = mOgre->getRenderSystemByName(config.getSetting("renderSystem",videoSectName));
+
+        Ogre::String resolution = config.getSetting("screenResolution",videoSectName);
+
+        size_t divpos = resolution.find_first_of('x');
+
+        std::vector< Ogre::String > res = Ogre::StringUtil::split(resolution, "x", 1);
+
+        mScreenWidth = Ogre::StringConverter::parseUnsignedInt(res[0]);
+        mScreenHeight = Ogre::StringConverter::parseUnsignedInt(res[1]);
+
+        Ogre::String fullscreen = config.getSetting("fullScreen",videoSectName);
+
+        if(fullscreen == "true")
+        {
+            mIsFullScreen = true;
+        }
+        if(fullscreen == "false")
+        {
+            mIsFullScreen = false;
+        }
+
+        wndParamList["vsync"] = config.getSetting("vsync",videoSectName);
+        wndParamList["displayFrequency"] = config.getSetting("displayFrequency",videoSectName);
+        wndParamList["colourDepth"] = config.getSetting("colourDepth",videoSectName);
+        wndParamList["FSAA"] = config.getSetting("FSAA",videoSectName);
+        mWindow = SDL_SetVideoMode(mScreenWidth, mScreenHeight, Ogre::StringConverter::parseUnsignedInt(config.getSetting("colourDepth")),0);
+        if (!rs)
+        {
+            // Unrecognised render system
+            return false;
+        }
+
+        mOgre->setRenderSystem(rs);
+
+        return true;
+    }
     // ----------------------------------------------------------------------
-    void Kernel::run() {}
+    void Kernel::run() {
+    }
 } // namespace

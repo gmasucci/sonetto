@@ -30,7 +30,12 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTO_KERNEL_H
 #define SONETTO_KERNEL_H
 
+#include <SDL/SDL.h>
+#include <SDL/SDL_syswm.h>
+#include <SDL/SDL_video.h>
+
 #include <Ogre.h>
+
 #include "SonettoPrerequisites.h"
 
 namespace Sonetto
@@ -51,7 +56,11 @@ namespace Sonetto
         @see
             Kernel::initialise().
         */
-        Kernel() : mInitialised(false) {}
+        Kernel() :
+        mScreenWidth(640),
+        mScreenHeight(480),
+        mIsFullScreen(false),
+        mInitialised(false) {}
 
         /** Destructor
 
@@ -120,12 +129,27 @@ namespace Sonetto
         */
         void run();
 
+        /// Project / Game Title
+        Ogre::String mGameTitle;
+        /// Current Screen Resolution (Width)
+        int mScreenWidth;
+        /// Current Screen Resolution (Height)
+        int mScreenHeight;
+        /// Screen Mode (Full / Window)
+        bool mIsFullScreen;
+
     private:
         /// Loads configuration from file and configures Sonetto
-        void loadConfig(std::string file);
+        bool loadConfig(const Ogre::String& fname,Ogre::NameValuePairList &wndParamList);
 
         /// Ogre::Root instance
-        Ogre::Root *mOgreRoot;
+        Ogre::Root *mOgre;
+
+        /// Ogre::RenderWindow instance
+        Ogre::RenderWindow *mRenderWindow;
+
+        /// SDL Surface (Window)
+        SDL_Surface * mWindow;
 
         /// Whether initialise() was called or not
         bool mInitialised;

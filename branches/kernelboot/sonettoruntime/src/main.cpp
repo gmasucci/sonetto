@@ -27,10 +27,18 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
+#ifdef WINDOWS
+#include "windows.h"
+#endif
+
 #include <exception>
 #include "SonettoKernel.h"
 
-int main()
+#ifdef WINDOWS
+INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
+#else
+int main(int argc, char **argv)
+#endif
 {
     try {
         // Instantiates the Kernel, initialises and runs it
@@ -40,6 +48,19 @@ int main()
 
         // Deletes Kernel when finished running
         delete kernel;
+    } catch(Sonetto::Exception &e) {
+        const char *what = e.what();
+        if (!what)
+        {
+            what =  "An unknown error has happened,\n"
+                    "It was not possible to identify the error.";
+        }
+    #ifdef WINDOWS
+        MessageBox(NULL,what,"Game Runtime Error",
+                MB_OK|MB_ICONERROR|MB_TASKMODAL);
+    #else
+        cerr << "[!] Game Runtime Error\n" << what << "\n";
+    #endif
     } catch(std::exception &e) {
         std::cout << e.what() << std::endl;
     }
