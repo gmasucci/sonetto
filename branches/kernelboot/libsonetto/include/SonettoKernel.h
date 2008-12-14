@@ -131,6 +131,14 @@ namespace Sonetto
 
         /// Project / Game Title
         Ogre::String mGameTitle;
+        /// Project / Game Identifier (Save Folder)
+        Ogre::String mGameIdentifier;
+        /// Project / Game Author
+        Ogre::String mGameAuthor;
+        /// Game Data Path (Savegame directory)
+        Ogre::String mGameData;
+        /// Game Data Path (Including Project Directory)
+        Ogre::String mGameDataPath;
         /// Current Screen Resolution (Width)
         int mScreenWidth;
         /// Current Screen Resolution (Height)
@@ -141,6 +149,11 @@ namespace Sonetto
     private:
         /// Loads configuration from file and configures Sonetto
         bool loadConfig(const Ogre::String& fname,Ogre::NameValuePairList &wndParamList);
+
+        /// Read the Sonetto Project File.
+        bool readSPF();
+
+        std::string readString(std::ifstream &stream);
 
         /// Ogre::Root instance
         Ogre::Root *mOgre;

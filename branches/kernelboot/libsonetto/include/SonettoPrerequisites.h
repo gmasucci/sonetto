@@ -60,9 +60,14 @@ POSSIBILITY OF SUCH DAMAGE.
 // Forward declarations
 namespace Sonetto
 {
+    typedef unsigned long uint32;
+    typedef unsigned short uint16;
+    typedef unsigned char uint8;
     class Kernel;
     class Exception;
 } // namespace
+
+#define MKFOURCC(c0,c1,c2,c3) ((uint32)(uint8)(c0)|((uint32)(uint8)(c1)<<8)|((uint32)(uint8)(c2)<<16)|((uint32)(uint8)(c3)<<24))
 
 // Include only essential headers here
 #include "SonettoException.h"
