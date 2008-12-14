@@ -130,15 +130,15 @@ namespace Sonetto
         void run();
 
         /// Project / Game Title
-        Ogre::String mGameTitle;
+        std::string mGameTitle;
         /// Project / Game Identifier (Save Folder)
-        Ogre::String mGameIdentifier;
+        std::string mGameIdentifier;
         /// Project / Game Author
-        Ogre::String mGameAuthor;
+        std::string mGameAuthor;
         /// Game Data Path (Savegame directory)
-        Ogre::String mGameData;
+        std::string mGameData;
         /// Game Data Path (Including Project Directory)
-        Ogre::String mGameDataPath;
+        std::string mGameDataPath;
         /// Current Screen Resolution (Width)
         int mScreenWidth;
         /// Current Screen Resolution (Height)
@@ -148,7 +148,7 @@ namespace Sonetto
 
     private:
         /// Loads configuration from file and configures Sonetto
-        bool loadConfig(const Ogre::String& fname,Ogre::NameValuePairList &wndParamList);
+        bool loadConfig(const std::string &fname,Ogre::NameValuePairList &wndParamList);
 
         /// Read the Sonetto Project File.
         bool readSPF();
@@ -162,7 +162,7 @@ namespace Sonetto
         Ogre::RenderWindow *mRenderWindow;
 
         /// SDL Surface (Window)
-        SDL_Surface * mWindow;
+        SDL_Surface *mWindow;
 
         /// Whether initialise() was called or not
         bool mInitialised;

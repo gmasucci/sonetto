@@ -27,7 +27,15 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
+#include <cstdlib>
+#ifdef WINDOWS
+#   include <windows.h>
+#else
+#   include <sys/stat.h>
+#   include <dirent.h>
+#endif
 #include "SonettoKernel.h"
+
 namespace Sonetto
 {
     // ----------------------------------------------------------------------
@@ -37,9 +45,10 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     void Kernel::initialise()
     {
+        // Reads Sonetto Project File
         readSPF();
+
         #ifdef WINDOWS
-        // Start by getting the current user application data folder for windows builds
         {
             // Get the User Application Data directory.
             mGameData = getenv("APPDATA");
@@ -58,18 +67,78 @@ namespace Sonetto
                 mkdir(mGameDataPath.c_str());
             }
             // Check if the configuration file for this project exists.
-            Ogre::String configfile = mGameDataPath + mGameIdentifier + ".INI";
+            std::string configfile = mGameDataPath + mGameIdentifier + ".INI";
             if((_access(configfile.c_str(),0)) == -1)
             {
                 // If not, then copy the default config file from the game directory.
-                Ogre::String defconfile = getcwd(NULL,0);
-                defconfile += "\\defaultconfig.ini";
-                CopyFile((LPCTSTR)defconfile.c_str(), (LPCTSTR)configfile.c_str(),true);
+                CopyFile("defaultcfg.dat",configfile.c_str(),true);
             }
         }
         #else
-            #error Game Data directory creation is not yet implemented, except for Win32 Applications.
+        {
+            DIR *dir;          // Used to check directory existence
+            struct stat fstat; // Used to check file existence
+
+            // Gets user home directory
+            mGameData = std::string("/home/") + getenv("PWD");
+
+            // Appends Sonetto directory to the end of it
+            mGameData += "/Sonetto/";
+
+            // Verifies existence of directory
+            dir = opendir(mGameData.c_str(),0);
+            if (!dir) {
+                // If it does not exist, creates it
+                mkdir(mGameData.c_str(),S_IRWXU);
+            } else {
+                // If openned successfuly, closes it
+                closedir(dir);
+            }
+
+            // Creates path for the actual game data folder
+            mGameDataPath = mGameData + mGameIdentifier + "/";
+
+            // Verifies existence of directory
+            dir = opendir(mGameDataPath.c_str(),0);
+            if (!dir) {
+                // If it does not exist, creates it
+                mkdir(mGameDataPath.c_str(),S_IRWXU);
+            } else {
+                // If openned successfuly, closes it
+                closedir(dir);
+            }
+
+            // Check if the configuration file for this project exists.
+            std::string configfile = mGameDataPath + mGameIdentifier + ".INI";
+            if (stat(configfile.c_str(),&fstat) < 0)
+            {
+                ifstream src;
+                ofstream dest;
+
+                // Opens default configuration file
+                src.open("defaultcfg.dat");
+                if (!src.is_open())
+                {
+                    SONETTO_THROW("Missing default configuration file");
+                }
+
+                // Opens local user configuration file
+                dest.open(configfile.c_str());
+                if (!dest.is_open())
+                {
+                    SONETTO_THROW("Could not open configuration file for writing");
+                }
+
+                // Copies contents from default to local user config file
+                dest << src.rdbuf();
+
+                // Closes handles
+                src.close();
+                dest.close();
+            }
+        }
         #endif
+
         Ogre::NameValuePairList  wndParamList; // Needed for Ogre to use SDL rendering window
         SDL_SysWMinfo      wmInfo;       // Structure holding SDL window information
 
