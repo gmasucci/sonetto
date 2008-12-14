@@ -70,8 +70,15 @@ namespace Sonetto
             std::string configfile = mGameDataPath + mGameIdentifier + ".INI";
             if((_access(configfile.c_str(),0)) == -1)
             {
+                if(_access("defaultcfg.dat",0) == -1)
+                {
+                    SONETTO_THROW("Missing default configuration file");
+                }
                 // If not, then copy the default config file from the game directory.
-                CopyFile("defaultcfg.dat",configfile.c_str(),true);
+                if(!CopyFile("defaultcfg.dat",configfile.c_str(),true))
+                {
+                    SONETTO_THROW("Unable to copy configuration file");
+                }
             }
         }
         #else
@@ -83,7 +90,7 @@ namespace Sonetto
             mGameData = std::string("/home/") + getenv("PWD");
 
             // Appends Sonetto directory to the end of it
-            mGameData += "/Sonetto/";
+            mGameData += "/.sonetto/";
 
             // Verifies existence of directory
             dir = opendir(mGameData.c_str(),0);
@@ -126,7 +133,7 @@ namespace Sonetto
                 dest.open(configfile.c_str());
                 if (!dest.is_open())
                 {
-                    SONETTO_THROW("Could not open configuration file for writing");
+                    SONETTO_THROW("Unable to copy configuration file");
                 }
 
                 // Copies contents from default to local user config file
