@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #define SONETTO_PREREQUISITES_H
 
 // SONETTO_API definition
-#ifdef WIN32 // Under Windows we must import/export object definitions
+#ifdef WINDOWS // Under Windows we must import/export object definitions
 #   ifdef SONETTO_DLL_BUILD
 #       define SONETTO_API __declspec(dllexport)
 #   else
