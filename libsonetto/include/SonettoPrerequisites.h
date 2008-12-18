@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #define SONETTO_PREREQUISITES_H
 
 // SONETTO_API definition
-#ifdef WIN32 // Under Windows we must import/export object definitions
+#ifdef WINDOWS // Under Windows we must import/export object definitions
 #   ifdef SONETTO_DLL_BUILD
 #       define SONETTO_API __declspec(dllexport)
 #   else
@@ -57,9 +57,17 @@ POSSIBILITY OF SUCH DAMAGE.
         return ms_Singleton; \
     }
 
-// Forward declarations
 namespace Sonetto
 {
+    // Declare common data types
+    typedef unsigned long uint32;
+    typedef unsigned short uint16;
+    typedef unsigned char uint8;
+    typedef signed long int32;
+    typedef signed short int16;
+    typedef signed char int8;
+
+    // Forward declarations
     class Kernel;
     class Exception;
     class Module;
@@ -71,6 +79,8 @@ namespace Sonetto
     class WorldModule;
     class BattleModule;
 } // namespace
+
+#define MKFOURCC(c0,c1,c2,c3) ((uint32)(uint8)(c0)|((uint32)(uint8)(c1)<<8)|((uint32)(uint8)(c2)<<16)|((uint32)(uint8)(c3)<<24))
 
 // Include only essential headers here
 #include "SonettoException.h"
