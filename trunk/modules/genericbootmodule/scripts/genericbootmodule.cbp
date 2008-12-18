@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Boot Module" />
+		<Option title="Generic Boot Module" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Win32 Debug">
-				<Option output="..\..\..\lib\win32\libbootmodule_d.a" prefix_auto="0" extension_auto="0" />
+				<Option output="..\..\..\lib\win32\libgenericbootmodule_d.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output="..\obj\win32\debug" />
 				<Option type="2" />
@@ -26,7 +26,7 @@
 				</Linker>
 			</Target>
 			<Target title="Win32 Release">
-				<Option output="..\..\..\lib\win32\libbootmodule.a" prefix_auto="0" extension_auto="0" />
+				<Option output="..\..\..\lib\win32\libgenericbootmodule.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output="..\obj\win32\release" />
 				<Option type="2" />
@@ -46,7 +46,7 @@
 				</Linker>
 			</Target>
 			<Target title="Linux Debug">
-				<Option output="..\..\..\lib\linux\libbootmodule_d.a" prefix_auto="0" extension_auto="0" />
+				<Option output="..\..\..\lib\linux\libgenericbootmodule_d.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output="..\obj\linux\debug" />
 				<Option type="2" />
@@ -65,7 +65,7 @@
 				</Linker>
 			</Target>
 			<Target title="Linux Release">
-				<Option output="..\..\..\lib\linux\libbootmodule.a" prefix_auto="0" extension_auto="0" />
+				<Option output="..\..\..\lib\linux\libgenericbootmodule.a" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="" />
 				<Option object_output="..\obj\linux\release" />
 				<Option type="2" />
@@ -95,6 +95,8 @@
 		<Linker>
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
+		<Unit filename="..\include\GenericBootModule.h" />
+		<Unit filename="..\src\GenericBootModule.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
