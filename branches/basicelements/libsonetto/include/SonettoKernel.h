@@ -194,6 +194,18 @@ namespace Sonetto
         void setAction(KernelAction kact,ModuleAction mact = MA_NONE,
                 Module::ModuleType modtype = Module::MT_NONE);
 
+        /** Returns the ogre root. */
+        Ogre::Root * getOgre();
+
+        /** Get the Render Window */
+        Ogre::RenderWindow * getRenderWindow();
+
+        /// Current Screen Pixel Aspect Ratio.
+        float mAspectRatio;
+
+        /// Pointer to OverlayManager.
+        Ogre::OverlayManager *mOverlayMan;
+
     private:
         /// Loads configuration from file and configures Sonetto
         void loadConfig(const std::string &fname,Ogre::NameValuePairList &wndParamList);

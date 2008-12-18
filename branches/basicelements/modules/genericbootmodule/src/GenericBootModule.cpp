@@ -34,17 +34,34 @@ namespace BootModule
     // ----------------------------------------------------------------------
     // BootModule::GenericBootModule implementation
     // ----------------------------------------------------------------------
-    GenericBootModule::GenericBootModule() {}
+    GenericBootModule::GenericBootModule() : BootModule::BootModule()
+    {}
     // ----------------------------------------------------------------------
     GenericBootModule::~GenericBootModule() {}
     // ----------------------------------------------------------------------
-    void GenericBootModule::initialize() {}
+    void GenericBootModule::initialize()
+    {
+        BootModule::initialize();
+        setBgColor(Ogre::ColourValue(16.0f/255.0f,16.0f/255.0f,235.0f/255.0f));
+    }
     // ----------------------------------------------------------------------
-    void GenericBootModule::update() {}
+    void GenericBootModule::update()
+    {
+        BootModule::update();
+    }
     // ----------------------------------------------------------------------
-    void GenericBootModule::deinitialize() {}
+    void GenericBootModule::deinitialize()
+    {
+        BootModule::deinitialize();
+    }
     // ----------------------------------------------------------------------
-    void GenericBootModule::halt() {}
+    void GenericBootModule::halt()
+    {
+        BootModule::halt();
+    }
     // ----------------------------------------------------------------------
-    void GenericBootModule::resume() {}
+    void GenericBootModule::resume()
+    {
+        BootModule::resume();
+    }
 } // namespace
