@@ -27,7 +27,6 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include <iostream>
 #include "GenericBootModule.h"
 
 namespace BootModule
@@ -41,7 +40,7 @@ namespace BootModule
     // ----------------------------------------------------------------------
     void GenericBootModule::initialize() {}
     // ----------------------------------------------------------------------
-    void GenericBootModule::update() { std::cout << "Test\n"; }
+    void GenericBootModule::update() {}
     // ----------------------------------------------------------------------
     void GenericBootModule::deinitialize() {}
     // ----------------------------------------------------------------------

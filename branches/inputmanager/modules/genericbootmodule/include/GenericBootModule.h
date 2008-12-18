@@ -27,25 +27,26 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include <iostream>
-#include "GenericBootModule.h"
+#ifndef BOOTMODULE_GENERICBOOTMODULE_H
+#define BOOTMODULE_GENERICBOOTMODULE_H
+
+#include "SonettoBootModule.h"
 
 namespace BootModule
 {
-    // ----------------------------------------------------------------------
-    // BootModule::GenericBootModule implementation
-    // ----------------------------------------------------------------------
-    GenericBootModule::GenericBootModule() {}
-    // ----------------------------------------------------------------------
-    GenericBootModule::~GenericBootModule() {}
-    // ----------------------------------------------------------------------
-    void GenericBootModule::initialize() {}
-    // ----------------------------------------------------------------------
-    void GenericBootModule::update() { std::cout << "Test\n"; }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::deinitialize() {}
-    // ----------------------------------------------------------------------
-    void GenericBootModule::halt() {}
-    // ----------------------------------------------------------------------
-    void GenericBootModule::resume() {}
+    class GenericBootModule : public Sonetto::BootModule
+    {
+    public:
+        GenericBootModule();
+        ~GenericBootModule();
+
+        void initialize();
+        void update();
+        void deinitialize();
+
+        void halt();
+        void resume();
+    };
 } // namespace
+
+#endif
