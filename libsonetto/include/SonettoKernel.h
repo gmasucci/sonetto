@@ -33,9 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <SDL/SDL.h>
 #include <SDL/SDL_syswm.h>
 #include <SDL/SDL_video.h>
-
 #include <Ogre.h>
-
 #include "SonettoPrerequisites.h"
 #include "SonettoModule.h"
 #include "SonettoModuleFactory.h"
@@ -86,27 +84,27 @@ namespace Sonetto
         /** Constructor
 
         @remarks
-            This instance will only be ready for use when initialise() is called.
+            This instance will only be ready for use when initialize() is called.
         @param moduleFactory
             External module factory used to help the Kernel to create modules
             unknown at compile time. It will not be deleted it for you even after
             Kernel's destruction.
         @see
-            Kernel::initialise().
+            Kernel::initialize().
         */
         Kernel(const ModuleFactory *moduleFactory)
                 : mModuleFactory(moduleFactory),
                   mScreenWidth(640),mScreenHeight(480),
                   mIsFullScreen(false),
-                  mInitialised(false) {}
+                  mInitialized(false) {}
 
         /** Destructor
 
-            If initialise() was called before this destructor, it will
-            deinitialise Sonetto and the other libraries used during this
+            If initialize() was called before this destructor, it will
+            deinitialize Sonetto and the other libraries used during this
             singleton's lifetime.
         @see
-            Kernel::initialise()
+            Kernel::initialize()
         */
         ~Kernel();
 
@@ -148,7 +146,7 @@ namespace Sonetto
         */
         static Kernel *getSingletonPtr();
 
-        /** Initialises the Kernel
+        /** Initializes the Kernel
 
             This is where Sonetto and all libraries it uses are set up. After a
             call to this method, the Kernel is ready to start its main loop. See
@@ -156,7 +154,7 @@ namespace Sonetto
         @see
             Kernel::run().
         */
-        void initialise();
+        void initialize();
 
         /** Starts running the game
 
@@ -219,7 +217,7 @@ namespace Sonetto
 
         /** Pops current active module from stack
 
-            Deinitialises, removes from stack and deletes the current active
+            Deinitializes, removes from stack and deletes the current active
             module, resuming any halted module below it in the stack.
         @remarks
             If no module remains in the stack, this method will throw an
@@ -269,8 +267,26 @@ namespace Sonetto
         /// Screen Mode (Full / Window)
         bool mIsFullScreen;
 
-        /// Whether initialise() was called or not
-        bool mInitialised;
+        /// Boot icon filename
+        std::string mLoadingImg;
+
+        /// Loading image's X position in screen
+        uint16 mLoadingImgLeft;
+
+        /// Loading image's Y position in screen
+        uint16 mLoadingImgTop;
+
+        /// Loading screen background color (Red)
+        uint8 mLoadingBGR;
+
+        /// Loading screen background color (Green)
+        uint8 mLoadingBGG;
+
+        /// Loading screen background color (Blue)
+        uint8 mLoadingBGB;
+
+        /// Whether initialize() was called or not
+        bool mInitialized;
 
         /** Stack of instantiated modules
 

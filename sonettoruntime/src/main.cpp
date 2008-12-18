@@ -44,9 +44,9 @@ int main(int argc, char **argv)
     try {
         GenericModuleFactory *factory = new GenericModuleFactory;
 
-        // Instantiates the Kernel, initialises and runs it
+        // Instantiates the Kernel, initializes and runs it
         Sonetto::Kernel *kernel = new Sonetto::Kernel(factory);
-        kernel->initialise();
+        kernel->initialize();
         kernel->run();
 
         // Deletes Kernel when finished running
