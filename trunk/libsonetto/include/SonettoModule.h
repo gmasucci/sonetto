@@ -52,9 +52,9 @@ namespace Sonetto
         Module() {}
         virtual ~Module() {}
 
-        virtual void initialise() = 0;
+        virtual void initialize() = 0;
         virtual void update() = 0;
-        virtual void deinitialise() = 0;
+        virtual void deinitialize() = 0;
 
         virtual void halt() = 0;
         virtual void resume() = 0;

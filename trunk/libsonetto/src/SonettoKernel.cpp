@@ -41,12 +41,79 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     SONETTO_SINGLETON_IMPLEMENT(Kernel);
     // ----------------------------------------------------------------------
-    void Kernel::initialise()
+    void Kernel::initialize()
     {
+        Ogre::NameValuePairList wndParamList;
+        SDL_SysWMinfo wmInfo;
         const char *defaultCfgName = "defaultcfg.dat";
+
+        // Checks if wasn't initialized yet
+        if (mInitialized)
+        {
+            SONETTO_THROW("Kernel is already initialized");
+        }
 
         // Reads Sonetto Project File
         readSPF();
+
+        // ------------------
+        // SDL Initialisation
+        // ------------------
+        // Initializes SDL video and joystick subsystems
+        if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_JOYSTICK) == -1)
+        {
+            SONETTO_THROW("Could not initialize SDL");
+        }
+
+        // Creates SDL rendering window with default resolutions
+        // (resize later to the desired resolution)
+        mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,0,0);
+        if (!mWindow)
+        {
+            SONETTO_THROW("Could not create SDL window");
+        }
+
+        // Disable cursor, Sonetto does not support mouse for now.
+        SDL_ShowCursor(SDL_DISABLE);
+        SDL_WM_SetCaption("Now Loading...","Now Loading...");
+
+        if (mLoadingImg.size() > 0)
+        {
+            SDL_Surface *loading;
+            SDL_Rect src,dest;
+
+            // Fills the screen with the background colour
+            // taken from the SPF file
+            SDL_FillRect(mWindow,NULL,SDL_MapRGB(mWindow->format,
+                    mLoadingBGR,mLoadingBGG,mLoadingBGB));
+
+            // Loads loading image and checks for errors
+            loading = SDL_LoadBMP(mLoadingImg.c_str());
+            if (!loading)
+            {
+                SONETTO_THROW("Unable to find " + mLoadingImg);
+            }
+
+            // Source rectangle: Full image
+            src.x = src.y = 0;
+            src.w = loading->w;
+            src.h = loading->h;
+
+            // Destination rectangle: Position took from SPF file
+            dest.x = mLoadingImgLeft;
+            dest.y = mLoadingImgTop;
+
+            // Blits loading image into screen buffer and flips it
+            SDL_BlitSurface(loading,&src,mWindow,&dest);
+            SDL_Flip(mWindow);
+
+            // Frees loaded loading image
+            SDL_FreeSurface(loading);
+        }
+
+        // Get window info to attach Ogre at it
+        SDL_VERSION(&wmInfo.version);
+        SDL_GetWMInfo(&wmInfo);
 
         #ifdef WINDOWS
         {
@@ -148,42 +215,6 @@ namespace Sonetto
         }
         #endif
 
-        Ogre::NameValuePairList wndParamList; // Needed for Ogre to use SDL rendering window
-        SDL_SysWMinfo wmInfo;                 // Structure holding SDL window information
-
-        // Checks if wasn't initialised yet
-        if (mInitialised)
-        {
-            SONETTO_THROW("Kernel is already initialised");
-        }
-
-        // ------------------
-        // SDL Initialisation
-        // ------------------
-        // Initialises SDL video and joystick subsystems
-        if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_JOYSTICK) == -1)
-        {
-            SONETTO_THROW("Could not initialise SDL");
-        }
-
-        // Creates SDL rendering window with default resolutions
-        // (resize later to the desired resolution)
-        mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,0,0);
-        if (!mWindow)
-        {
-            SONETTO_THROW("Could not create SDL window");
-        }
-
-        // Disable cursor, Sonetto does not support mouse for now.
-        SDL_ShowCursor(SDL_DISABLE);
-        SDL_WM_SetCaption("Now Loading...","Now Loading...");
-
-        SDL_Flip(mWindow);
-
-        // Get window info to attach Ogre at it
-        SDL_VERSION(&wmInfo.version);
-        SDL_GetWMInfo(&wmInfo);
-
         // -------------------
         // Ogre Initialisation
         // -------------------
@@ -193,6 +224,9 @@ namespace Sonetto
 #else
         mOgre = new Ogre::Root("","","");
 #endif
+
+        // Flips loading screen (temporary)
+        SDL_Flip(mWindow);
 
 #ifdef WINDOWS
         wndParamList["externalWindowHandle"] =
@@ -205,11 +239,22 @@ namespace Sonetto
         // Load and configure Sonetto
         loadConfig(mGameDataPath+mGameIdentifier+".INI",wndParamList);
 
-        // Initialise Ogre Root
+        // Initialize Ogre Root
         mOgre->initialise(false);
 
+        // Flips loading screen (temporary)
+        SDL_Flip(mWindow);
+
+        // <todo> Initialize managers
+
+        // Resets video mode to loaded configurations
+        mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,
+                Ogre::StringConverter::parseUnsignedInt(
+                wndParamList["colourDepth"]),0);
+
         // Create the Ogre Render Window
-        mRenderWindow = mOgre->createRenderWindow("",mScreenWidth,mScreenHeight,mIsFullScreen,&wndParamList);
+        mRenderWindow = mOgre->createRenderWindow("",mScreenWidth,
+                mScreenHeight,mIsFullScreen,&wndParamList);
 
         // Resets caption to real game window caption
         SDL_WM_SetCaption(mGameTitle.c_str(),mGameTitle.c_str());
@@ -217,22 +262,22 @@ namespace Sonetto
         // Creates a Boot Module and activates it
         pushModule(Module::MT_BOOT,MA_CHANGE);
 
-        // Flags we have initialised
-        mInitialised = true;
+        // Flags we have initialized
+        mInitialized = true;
     }
     // ----------------------------------------------------------------------
     Kernel::~Kernel()
     {
-        // Deinitialise if initialised
-        if (mInitialised)
+        // Deinitialize if initialized
+        if (mInitialized)
         {
-            // Deinitialises and deletes instantiated modules
+            // Deinitializes and deletes instantiated modules
             while (!mModuleStack.empty())
             {
                 Module *module = mModuleStack.top();
 
-                // Deinitialises, deletes and removes from stack
-                module->deinitialise();
+                // Deinitializes, deletes and removes from stack
+                module->deinitialize();
                 delete mModuleStack.top();
                 mModuleStack.pop();
             }
@@ -240,7 +285,7 @@ namespace Sonetto
             // Deletes Ogre
             delete mOgre;
 
-            // Deinitialise SDL
+            // Deinitialize SDL
             SDL_Quit();
         }
     }
@@ -249,12 +294,33 @@ namespace Sonetto
     {
         bool running = true;
 
-        // <todo> Implement this method correctly
         while (running)
         {
-            // Update managers
-            // Update top module
-            // Render one frame
+            SDL_Event evt;
+
+            // Pump events
+            while (SDL_PollEvent(&evt))
+            {
+                if (evt.type == SDL_QUIT)
+                {
+                    // Shutdowns the game when asked to
+                    mKernelAction = KA_SHUTDOWN;
+                }
+            }
+
+            // Stops game while window is deactivated (minimised)
+            if (!(SDL_GetAppState() & SDL_APPACTIVE))
+            {
+                // Loop until the window gets activated again
+                while (SDL_WaitEvent(&evt))
+                {
+                    if (SDL_GetAppState() & SDL_APPACTIVE)
+                    {
+                        // Window activated; break the loop and continue the game
+                        break;
+                    }
+                }
+            }
 
             switch (mKernelAction)
             {
@@ -264,6 +330,8 @@ namespace Sonetto
                         popModule();
                     } else {
                         // Pushes desired module with the desired action
+                        // (if action is MA_CHANGE, pushModule() will remove
+                        // the current one by itself)
                         pushModule(mNextModuleType,mModuleAction);
                     }
 
@@ -280,6 +348,18 @@ namespace Sonetto
 
                 default: break;
             }
+
+            // Checks whether the stack is empty
+            if (mModuleStack.empty())
+            {
+                SONETTO_THROW("The module stack is empty");
+            }
+
+            // Updates active module
+            mModuleStack.top()->update();
+
+            // Renders one frame
+            mOgre->renderOneFrame();
         }
     }
     // ----------------------------------------------------------------------
@@ -359,6 +439,9 @@ namespace Sonetto
         renderers = mOgre->getAvailableRenderers();
         assert(!renderers->empty());
 
+        // Sets the render system we've just loaded as active
+        mOgre->setRenderSystem(renderers->back());
+
         // Gets resolution config string
         std::string resolution = config.getSetting("screenResolution",
                 videoSectName);
@@ -401,16 +484,6 @@ namespace Sonetto
         wndParamList["colourDepth"] = config.
                 getSetting("colourDepth",videoSectName);
         wndParamList["FSAA"] = config.getSetting("FSAA",videoSectName);
-
-        // Resets video mode to loaded configurations
-        mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,
-                Ogre::StringConverter::parseUnsignedInt(config.
-                getSetting("colourDepth",videoSectName)),0);
-
-        // Sets the render system we've just loaded above as active
-        // <todo> Does this really need to be done after
-        // SDL_SetVideoMode()'ing?
-        mOgre->setRenderSystem(renderers->back());
     }
     // ----------------------------------------------------------------------
     void Kernel::pushModule(Module::ModuleType modtype,ModuleAction mact)
@@ -430,9 +503,9 @@ namespace Sonetto
             curmod = mModuleStack.top();
 
             if (mact == MA_CHANGE) {
-                // Deinitialises, deletes and removes the
+                // Deinitializes, deletes and removes the
                 // current module from the stack
-                curmod->deinitialise();
+                curmod->deinitialize();
                 delete curmod;
                 mModuleStack.pop();
             } else {
@@ -441,9 +514,9 @@ namespace Sonetto
             }
         }
 
-        // Pushes new module into stack and initialises it
+        // Pushes new module into stack and initializes it
         mModuleStack.push(newmod);
-        newmod->initialise();
+        newmod->initialize();
     }
     // ----------------------------------------------------------------------
     void Kernel::popModule()
@@ -456,9 +529,9 @@ namespace Sonetto
             SONETTO_THROW("Cannot empty module stack");
         }
 
-        // Gets current active module, deinitialises and deletes it
+        // Gets current active module, deinitializes and deletes it
         module = mModuleStack.top();
-        module->deinitialise();
+        module->deinitialize();
         delete module;
 
         // Gets new top module and resume its execution
@@ -488,13 +561,19 @@ namespace Sonetto
             SONETTO_THROW("Invalid SPF file");
         }
 
-        // Skips four bytes (<todo> What are those?)
+        // Skips the last modification timestamp
         gamespf.seekg(4,std::ios_base::cur);
 
         // Reads information from file
         mGameTitle = readString(gamespf);
         mGameIdentifier = readString(gamespf);
         mGameAuthor = readString(gamespf);
+        mLoadingImg = readString(gamespf);
+        gamespf.read((char *)&mLoadingImgLeft,sizeof(mLoadingImgLeft));
+        gamespf.read((char *)&mLoadingImgTop,sizeof(mLoadingImgTop));
+        gamespf.read((char *)&mLoadingBGR,sizeof(mLoadingBGR));
+        gamespf.read((char *)&mLoadingBGG,sizeof(mLoadingBGG));
+        gamespf.read((char *)&mLoadingBGB,sizeof(mLoadingBGB));
 
         // Closes file handle
         gamespf.close();
