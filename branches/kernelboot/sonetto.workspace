@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<CodeBlocks_workspace_file>
-	<Workspace title="Sonetto Workspace">
-		<Project filename="libsonetto\scripts\libsonetto.cbp" />
-		<Project filename="sonettoruntime\scripts\sonettoruntime.cbp" active="1">
-			<Depends filename="libsonetto\scripts\libsonetto.cbp" />
-		</Project>
-	</Workspace>
-</CodeBlocks_workspace_file>

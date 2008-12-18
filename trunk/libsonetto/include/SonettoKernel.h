@@ -30,7 +30,12 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTO_KERNEL_H
 #define SONETTO_KERNEL_H
 
+#include <SDL/SDL.h>
+#include <SDL/SDL_syswm.h>
+#include <SDL/SDL_video.h>
+
 #include <Ogre.h>
+
 #include "SonettoPrerequisites.h"
 #include "SonettoModule.h"
 #include "SonettoModuleFactory.h"
@@ -90,7 +95,10 @@ namespace Sonetto
             Kernel::initialise().
         */
         Kernel(const ModuleFactory *moduleFactory)
-                : mModuleFactory(moduleFactory),mInitialised(false) {}
+                : mModuleFactory(moduleFactory),
+                  mScreenWidth(640),mScreenHeight(480),
+                  mIsFullScreen(false),
+                  mInitialised(false) {}
 
         /** Destructor
 
@@ -190,7 +198,7 @@ namespace Sonetto
 
     private:
         /// Loads configuration from file and configures Sonetto
-        void loadConfig(std::string file);
+        void loadConfig(const std::string &fname,Ogre::NameValuePairList &wndParamList);
 
         /** Pushes new module into stack
 
@@ -219,11 +227,47 @@ namespace Sonetto
         */
         void popModule();
 
+        /// Reads the Sonetto Project File
+        void readSPF();
+
+        /// Reads a string from an std::ifstream given a preceeding uint16 (Temporary)
+        std::string readString(std::ifstream &stream);
+
+        /// Ogre::Root instance
+        Ogre::Root *mOgre;
+
+        /// Ogre::RenderWindow instance
+        Ogre::RenderWindow *mRenderWindow;
+
+        /// SDL Surface (Window)
+        SDL_Surface *mWindow;
+
         /// Module factory
         const ModuleFactory *mModuleFactory;
 
-        /// Ogre::Root instance
-        Ogre::Root *mOgreRoot;
+        /// Project / Game Title
+        std::string mGameTitle;
+
+        /// Project / Game Identifier (Save Folder)
+        std::string mGameIdentifier;
+
+        /// Project / Game Author
+        std::string mGameAuthor;
+
+        /// Game Data Path (Savegame directory)
+        std::string mGameData;
+
+        /// Game Data Path (Including Project Directory)
+        std::string mGameDataPath;
+
+        /// Current Screen Resolution (Width)
+        int mScreenWidth;
+
+        /// Current Screen Resolution (Height)
+        int mScreenHeight;
+
+        /// Screen Mode (Full / Window)
+        bool mIsFullScreen;
 
         /// Whether initialise() was called or not
         bool mInitialised;
