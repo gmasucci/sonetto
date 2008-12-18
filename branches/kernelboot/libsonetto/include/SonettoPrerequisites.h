@@ -57,12 +57,17 @@ POSSIBILITY OF SUCH DAMAGE.
         return ms_Singleton; \
     }
 
-// Forward declarations
 namespace Sonetto
 {
+    // Declare common data types
     typedef unsigned long uint32;
     typedef unsigned short uint16;
     typedef unsigned char uint8;
+    typedef signed long int32;
+    typedef signed short int16;
+    typedef signed char int8;
+
+    // Forward declarations
     class Kernel;
     class Exception;
 } // namespace

@@ -28,9 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
 #include <cstdlib>
-#ifdef WINDOWS
-#   include <windows.h>
-#else
+#ifndef WINDOWS
 #   include <sys/stat.h>
 #   include <dirent.h>
 #endif
@@ -45,6 +43,8 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     void Kernel::initialise()
     {
+        const char *defaultCfgName = "defaultcfg.dat";
+
         // Reads Sonetto Project File
         readSPF();
 
@@ -70,12 +70,14 @@ namespace Sonetto
             std::string configfile = mGameDataPath + mGameIdentifier + ".INI";
             if((_access(configfile.c_str(),0)) == -1)
             {
-                if(_access("defaultcfg.dat",0) == -1)
+                if(_access(defaultCfgName,0) == -1)
                 {
                     SONETTO_THROW("Missing default configuration file");
                 }
-                // If not, then copy the default config file from the game directory.
-                if(!CopyFile("defaultcfg.dat",configfile.c_str(),true))
+
+                // If not, then copy the default config file from the
+                // game directory
+                if(!CopyFile(defaultCfgName,configfile.c_str(),true))
                 {
                     SONETTO_THROW("Unable to copy configuration file");
                 }
@@ -123,7 +125,7 @@ namespace Sonetto
                 ofstream dest;
 
                 // Opens default configuration file
-                src.open("defaultcfg.dat");
+                src.open(defaultCfgName);
                 if (!src.is_open())
                 {
                     SONETTO_THROW("Missing default configuration file");
@@ -146,14 +148,15 @@ namespace Sonetto
         }
         #endif
 
-        Ogre::NameValuePairList  wndParamList; // Needed for Ogre to use SDL rendering window
-        SDL_SysWMinfo      wmInfo;       // Structure holding SDL window information
+        Ogre::NameValuePairList wndParamList; // Needed for Ogre to use SDL rendering window
+        SDL_SysWMinfo wmInfo;                 // Structure holding SDL window information
 
         // Checks if wasn't initialised yet
         if (mInitialised)
         {
             SONETTO_THROW("Kernel is already initialised");
         }
+
         // ------------------
         // SDL Initialisation
         // ------------------
@@ -163,8 +166,9 @@ namespace Sonetto
             SONETTO_THROW("Could not initialise SDL");
         }
 
-        // Create SDL rendering window (resize later to the desired resolution)
-        mWindow = SDL_SetVideoMode(640,480,0,0);
+        // Creates SDL rendering window with default resolutions
+        // (resize later to the desired resolution)
+        mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,0,0);
         if (!mWindow)
         {
             SONETTO_THROW("Could not create SDL window");
@@ -191,20 +195,23 @@ namespace Sonetto
 #endif
 
 #ifdef WINDOWS
-        wndParamList["externalWindowHandle"] = Ogre::StringConverter::toString((unsigned long)wmInfo.window);
+        wndParamList["externalWindowHandle"] =
+                Ogre::StringConverter::toString((uint32)wmInfo.window);
 #else
-        #error External window handle is not yet implemented on non Win32 Applications.
+        #error External window handle is not yet implemented on non Windows \
+               applications.
 #endif
 
-        // Load and configure sonetto.
-        // <todo> Store and load Sonetto Configuration from User directory.
+        // Load and configure Sonetto
         loadConfig(mGameDataPath+mGameIdentifier+".INI",wndParamList);
 
         // Initialise Ogre Root
         mOgre->initialise(false);
-        // Create the Ogre Render Window.
-        mRenderWindow = mOgre->createRenderWindow("", mScreenWidth, mScreenHeight, mIsFullScreen,&wndParamList);
 
+        // Create the Ogre Render Window
+        mRenderWindow = mOgre->createRenderWindow("",mScreenWidth,mScreenHeight,mIsFullScreen,&wndParamList);
+
+        // Resets caption to real game window caption
         SDL_WM_SetCaption(mGameTitle.c_str(),mGameTitle.c_str());
 
         // Flags we have initialised
@@ -224,90 +231,132 @@ namespace Sonetto
         }
     }
     // ----------------------------------------------------------------------
-    bool Kernel::loadConfig(const Ogre::String& fname,Ogre::NameValuePairList &wndParamList)
+    void Kernel::loadConfig(const std::string &fname,
+            Ogre::NameValuePairList &wndParamList)
     {
+        // Checks for config file existence
+        {
+            const std::string cannotLoadMsg = "Unable to load " + fname +
+                    ",\nthe file does not exist";
+
         #ifdef WINDOWS
-        if((_access(fname.c_str(),0)) == -1)
-            SONETTO_THROW("Unable to load "+fname+",\nthe file does not exist");
+            if((_access(fname.c_str(),0)) == -1)
+            {
+                SONETTO_THROW(cannotLoadMsg);
+            }
+        #else
+            struct stat fstat;
+            if (stat(fname.c_str(),&fstat) < 0)
+            {
+                SONETTO_THROW(cannotLoadMsg);
+            }
         #endif
-        Ogre::ConfigFile config;
-        //config.loadDirect(fname, "\t:=", false);
+        }
+
+        Ogre::ConfigFile        config;
+        Ogre::RenderSystemList *renderers;
+
+        // Loads file into Ogre::ConfigFile
         config.load(fname);
 
-        // Video Configuration Section
-        Ogre::String videoSectName = "video";
+        // Video configuration section name
+        const char *videoSectName = "video";
 
-        mOgre->loadPlugin(config.getSetting("renderSystemPlugin",videoSectName));
-        Ogre::RenderSystem* rs = mOgre->getRenderSystemByName(config.getSetting("renderSystem",videoSectName));
+        // Loads the desired render system plugin
+        mOgre->loadPlugin(config.getSetting("renderSystem",
+                videoSectName));
 
-        Ogre::String resolution = config.getSetting("screenResolution",videoSectName);
+        // Gets list of loaded render systems and makes sure it's not empty
+        renderers = mOgre->getAvailableRenderers();
+        assert(!renderers->empty());
 
-        size_t divpos = resolution.find_first_of('x');
+        // Gets resolution config string
+        std::string resolution = config.getSetting("screenResolution",
+                videoSectName);
 
-        std::vector< Ogre::String > res = Ogre::StringUtil::split(resolution, "x", 1);
+        // Explodes resolution string on the "x" and validates it
+        std::vector<Ogre::String> res = Ogre::StringUtil::split(resolution,"x",1);
+        if (res.size() != 2)
+        {
+            SONETTO_THROW("Invalid screen resolution set in configuration "
+                          "file");
+        }
 
+        // Parses width and height took from resolution
+        // string as integers
         mScreenWidth = Ogre::StringConverter::parseUnsignedInt(res[0]);
         mScreenHeight = Ogre::StringConverter::parseUnsignedInt(res[1]);
 
-        Ogre::String fullscreen = config.getSetting("fullScreen",videoSectName);
+        // Gets fullscreen config string
+        Ogre::String fullscreen = config.getSetting("fullScreen",
+                videoSectName);
 
+        // Checks its value
         if(fullscreen == "true")
         {
             mIsFullScreen = true;
-        }
+        } else
         if(fullscreen == "false")
         {
             mIsFullScreen = false;
+        } else {
+            SONETTO_THROW("Invalid fullscreen value set in configuration "
+                          "file");
         }
 
+        // Gets other config strings and set them as
+        // window parameters accordingly
         wndParamList["vsync"] = config.getSetting("vsync",videoSectName);
-        wndParamList["displayFrequency"] = config.getSetting("displayFrequency",videoSectName);
-        wndParamList["colourDepth"] = config.getSetting("colourDepth",videoSectName);
+        wndParamList["displayFrequency"] = config.
+                getSetting("displayFrequency",videoSectName);
+        wndParamList["colourDepth"] = config.
+                getSetting("colourDepth",videoSectName);
         wndParamList["FSAA"] = config.getSetting("FSAA",videoSectName);
-        mWindow = SDL_SetVideoMode(mScreenWidth, mScreenHeight, Ogre::StringConverter::parseUnsignedInt(config.getSetting("colourDepth")),0);
-        if (!rs)
-        {
-            // Unrecognised render system
-            return false;
-        }
 
-        mOgre->setRenderSystem(rs);
+        // Resets video mode to loaded configurations
+        mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,
+                Ogre::StringConverter::parseUnsignedInt(config.
+                getSetting("colourDepth",videoSectName)),0);
 
-        return true;
+        // Sets the render system we've just loaded above as active
+        // <todo> Does this really need to be done after
+        // SDL_SetVideoMode()'ing?
+        mOgre->setRenderSystem(renderers->back());
     }
-    bool Kernel::readSPF()
+    // ----------------------------------------------------------------------
+    void Kernel::readSPF()
     {
         uint32 spffourcc = MKFOURCC('S','P','F','0');
         uint32 filefourcc = 0;
-        #ifdef WINDOWS
-        if(_access("game.spf",0) == -1)
-        {
-            SONETTO_THROW("Unable to find game.spf");
-        }
-        #endif
+
+        // Opens SPF file
         std::ifstream gamespf;
         gamespf.open("game.spf", std::ios_base::in | std::ios_base::binary);
 
-        std::cout<<"FourCC Value: "<<spffourcc<<"\nFourCC from file: ";
-        // Read the fourcc
-        gamespf.read((char*)&filefourcc, sizeof(filefourcc));
+        // Checks if it was opened successfuly
+        if (!gamespf.is_open())
+        {
+            SONETTO_THROW("Unable to find game.spf or the file is in "
+                          "use by another proccess");
+        }
 
-        std::cout<<filefourcc<<"\n";
-
+        // Reads and checks file's fourcc identification
+        gamespf.read((char*)&filefourcc,sizeof(filefourcc));
         if(filefourcc != spffourcc)
         {
             SONETTO_THROW("Invalid SPF file");
         }
 
-        gamespf.seekg(4, std::ios_base::cur);
+        // Skips four bytes (<todo> What are those?)
+        gamespf.seekg(4,std::ios_base::cur);
 
+        // Reads information from file
         mGameTitle = readString(gamespf);
         mGameIdentifier = readString(gamespf);
         mGameAuthor = readString(gamespf);
 
+        // Closes file handle
         gamespf.close();
-
-        return true;
     }
     // ----------------------------------------------------------------------
     std::string Kernel::readString(std::ifstream &stream)
@@ -321,6 +370,6 @@ namespace Sonetto
         delete[] stringbuffer;
         return rstring;
     }
-    void Kernel::run() {
-    }
+    // ----------------------------------------------------------------------
+    void Kernel::run() {}
 } // namespace

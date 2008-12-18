@@ -148,11 +148,12 @@ namespace Sonetto
 
     private:
         /// Loads configuration from file and configures Sonetto
-        bool loadConfig(const std::string &fname,Ogre::NameValuePairList &wndParamList);
+        void loadConfig(const std::string &fname,Ogre::NameValuePairList &wndParamList);
 
-        /// Read the Sonetto Project File.
-        bool readSPF();
+        /// Reads the Sonetto Project File
+        void readSPF();
 
+        /// Reads a string from an std::ifstream given a preceeding uint16 (Temporary)
         std::string readString(std::ifstream &stream);
 
         /// Ogre::Root instance

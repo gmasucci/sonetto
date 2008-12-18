@@ -101,7 +101,11 @@
 			<Add directory="$(OGRE_HOME)\OgreMain\include" />
 		</Compiler>
 		<Linker>
-			<Add library="libSDL" />
+			<Add library="SDL" />
+			<Add library="m" />
+			<Add library="user32" />
+			<Add library="gdi32" />
+			<Add library="winmm" />
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
 		<Unit filename="..\include\SonettoException.h" />
