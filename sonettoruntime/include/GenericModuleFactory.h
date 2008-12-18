@@ -31,6 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #define SONETTORUNTIME_GENERICMODULEFACTORY_H
 
 #include "SonettoModuleFactory.h"
+#include "GenericBootModule.h"
 
 class GenericModuleFactory : public Sonetto::ModuleFactory
 {
@@ -38,7 +39,7 @@ public:
     GenericModuleFactory() {}
     ~GenericModuleFactory() {}
 
-    Sonetto::BootModule *createBootModule() const { return NULL; }
+    Sonetto::BootModule *createBootModule() const { return new BootModule::GenericBootModule(); }
     Sonetto::TitleModule *createTitleModule() const { return NULL; }
     Sonetto::MapModule *createMapModule() const { return NULL; }
     Sonetto::MenuModule *createMenuModule() const { return NULL; }

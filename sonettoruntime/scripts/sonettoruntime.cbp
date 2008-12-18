@@ -21,6 +21,7 @@
 				</Compiler>
 				<Linker>
 					<Add library="sonetto_d" />
+					<Add library="genericbootmodule_d" />
 					<Add library="OgreMain_d" />
 					<Add directory="..\..\dependencies\lib\win32" />
 					<Add directory="..\..\lib\win32" />
@@ -46,6 +47,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="sonetto" />
+					<Add library="genericbootmodule" />
 					<Add library="OgreMain" />
 					<Add directory="..\..\dependencies\lib\win32" />
 					<Add directory="..\..\lib\win32" />
@@ -69,6 +71,7 @@
 				</Compiler>
 				<Linker>
 					<Add library="sonetto_d" />
+					<Add library="genericbootmodule_d" />
 					<Add library="OgreMain_d" />
 					<Add directory="..\..\dependencies\lib\linux" />
 					<Add directory="..\..\lib\linux" />
@@ -93,6 +96,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add library="sonetto" />
+					<Add library="genericbootmodule" />
 					<Add library="OgreMain" />
 					<Add directory="..\..\dependencies\lib\linux" />
 					<Add directory="..\..\lib\linux" />
@@ -108,8 +112,8 @@
 			<Add option="-Wall" />
 			<Add directory="..\include" />
 			<Add directory="..\..\libsonetto\include" />
-			<Add directory="..\..\modules\bootmodule\include" />
-			<Add directory="..\..\modules\mapmodule\include" />
+			<Add directory="..\..\modules\genericbootmodule\include" />
+			<Add directory="..\..\modules\genericmapmodule\include" />
 			<Add directory="..\..\dependencies\include" />
 			<Add directory="$(OGRE_HOME)\OgreMain\include" />
 		</Compiler>
