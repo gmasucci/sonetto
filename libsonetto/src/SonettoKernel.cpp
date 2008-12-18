@@ -59,6 +59,9 @@ namespace Sonetto
         // (Sonetto Runtime, maybe?)
         mOgreRoot->initialise(true,"Game");
 
+        // Creates a Boot Module and activates it
+        pushModule(Module::MT_BOOT,MA_CHANGE);
+
         // Flags we have initialised
         mInitialised = true;
     }
@@ -68,12 +71,148 @@ namespace Sonetto
         // Deinitialise if initialised
         if (mInitialised)
         {
+            // Deinitialises and deletes instantiated modules
+            while (!mModuleStack.empty())
+            {
+                Module *module = mModuleStack.top();
+
+                // Deinitialises, deletes and removes from stack
+                module->deinitialise();
+                delete mModuleStack.top();
+                mModuleStack.pop();
+            }
+
             // Deletes Ogre
             delete mOgreRoot;
         }
     }
     // ----------------------------------------------------------------------
+    void Kernel::run()
+    {
+        bool running = true;
+
+        // <todo> Implement this method correctly
+        while (running)
+        {
+            // Update managers
+            // Update top module
+            // Render one frame
+
+            switch (mKernelAction)
+            {
+                case KA_CHANGE_MODULE:
+                    if (mModuleAction == MA_RETURN) {
+                        // Pops current module, returning to the previous one
+                        popModule();
+                    } else {
+                        // Pushes desired module with the desired action
+                        pushModule(mNextModuleType,mModuleAction);
+                    }
+
+                    // Resets action parameters
+                    mKernelAction   = KA_NONE;
+                    mModuleAction   = MA_NONE;
+                    mNextModuleType = Module::MT_NONE;
+                break;
+
+                case KA_SHUTDOWN:
+                    // Stops running
+                    running = false;
+                break;
+
+                default: break;
+            }
+        }
+    }
+    // ----------------------------------------------------------------------
+    void Kernel::setAction(KernelAction kact,ModuleAction mact,
+            Module::ModuleType modtype)
+    {
+        switch (kact)
+        {
+            case KA_NONE:
+                // Makes sure parameters are valid
+                assert(mact == MA_NONE && modtype == Module::MT_NONE);
+
+                // Sets action parameters
+                mKernelAction   = KA_NONE;
+                mModuleAction   = MA_NONE;
+                mNextModuleType = Module::MT_NONE;
+            break;
+
+            case KA_CHANGE_MODULE:
+                // Makes sure parameters are valid
+                assert(mact != MA_NONE && modtype != Module::MT_NONE);
+
+                // Sets action parameters
+                mKernelAction   = KA_CHANGE_MODULE;
+                mModuleAction   = mact;
+                mNextModuleType = modtype;
+            break;
+
+            case KA_SHUTDOWN:
+                // Makes sure parameters are valid
+                assert(mact == MA_NONE && modtype == Module::MT_NONE);
+
+                // Sets action parameters
+                mKernelAction   = KA_SHUTDOWN;
+                mModuleAction   = MA_NONE;
+                mNextModuleType = Module::MT_NONE;
+            break;
+        }
+    }
+    // ----------------------------------------------------------------------
     void Kernel::loadConfig(std::string file) {}
     // ----------------------------------------------------------------------
-    void Kernel::run() {}
+    void Kernel::pushModule(Module::ModuleType modtype,ModuleAction mact)
+    {
+        Module *newmod,*curmod = NULL;
+
+        // Makes sure parameters are valid
+        assert(modtype != Module::MT_NONE && mact != MA_NONE &&
+                mact != MA_RETURN);
+
+        // Instantiates new module
+        newmod = mModuleFactory->createModule(modtype);
+
+        // Gets current active module (if any)
+        if (!mModuleStack.empty())
+        {
+            curmod = mModuleStack.top();
+
+            if (mact == MA_CHANGE) {
+                // Deinitialises, deletes and removes the
+                // current module from the stack
+                curmod->deinitialise();
+                delete curmod;
+                mModuleStack.pop();
+            } else {
+                // Halts current module
+                curmod->halt();
+            }
+        }
+
+        // Pushes new module into stack and initialises it
+        mModuleStack.push(newmod);
+        newmod->initialise();
+    }
+    // ----------------------------------------------------------------------
+    void Kernel::popModule()
+    {
+        Module *module;
+
+        // Makes sure this won't leave the stack empty
+        if (mModuleStack.size() < 2)
+        {
+            SONETTO_THROW("Cannot empty module stack");
+        }
+
+        // Gets current active module, deinitialises and deletes it
+        module = mModuleStack.top();
+        module->deinitialise();
+        delete module;
+
+        // Gets new top module and resume its execution
+        mModuleStack.top()->resume();
+    }
 } // namespace

@@ -27,25 +27,27 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include <exception>
-#include "SonettoKernel.h"
-#include "GenericModuleFactory.h"
+#ifndef SONETTO_WORLDMODULE_H
+#define SONETTO_WORLDMODULE_H
 
-int main()
+#include "SonettoPrerequisites.h"
+#include "SonettoModule.h"
+
+namespace Sonetto
 {
-    try {
-        GenericModuleFactory *factory = new GenericModuleFactory;
+    class SONETTO_API WorldModule : public Module
+    {
+    public:
+        struct _WorldData
+        {
+            int sampleData;
+        };
 
-        // Instantiates the Kernel, initialises and runs it
-        Sonetto::Kernel *kernel = new Sonetto::Kernel(factory);
-        kernel->initialise();
-        kernel->run();
+        WorldModule() {}
+        virtual ~WorldModule() {}
 
-        // Deletes Kernel when finished running
-        delete kernel;
-    } catch(std::exception &e) {
-        std::cout << e.what() << std::endl;
-    }
+        static _WorldData WorldData;
+    };
+} // namespace
 
-    return 0;
-}
+#endif

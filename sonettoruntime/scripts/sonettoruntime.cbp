@@ -99,6 +99,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="..\include" />
 			<Add directory="..\..\libsonetto\include" />
 			<Add directory="..\..\modules\bootmodule\include" />
 			<Add directory="..\..\modules\mapmodule\include" />
@@ -108,6 +109,7 @@
 		<Linker>
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
+		<Unit filename="..\include\GenericModuleFactory.h" />
 		<Unit filename="..\resource\resource.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="Win32 Release" />
