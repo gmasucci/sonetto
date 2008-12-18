@@ -103,9 +103,17 @@
 		<Linker>
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
+		<Unit filename="..\include\SonettoBattleModule.h" />
+		<Unit filename="..\include\SonettoBootModule.h" />
 		<Unit filename="..\include\SonettoException.h" />
 		<Unit filename="..\include\SonettoKernel.h" />
+		<Unit filename="..\include\SonettoMapModule.h" />
+		<Unit filename="..\include\SonettoMenuModule.h" />
+		<Unit filename="..\include\SonettoModule.h" />
+		<Unit filename="..\include\SonettoModuleFactory.h" />
 		<Unit filename="..\include\SonettoPrerequisites.h" />
+		<Unit filename="..\include\SonettoTitleModule.h" />
+		<Unit filename="..\include\SonettoWorldModule.h" />
 		<Unit filename="..\resource\resource.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="Win32 Release" />
@@ -114,8 +122,13 @@
 			<Option compilerVar="WINDRES" />
 			<Option target="Win32 Debug" />
 		</Unit>
+		<Unit filename="..\src\SonettoBattleModule.cpp" />
 		<Unit filename="..\src\SonettoException.cpp" />
 		<Unit filename="..\src\SonettoKernel.cpp" />
+		<Unit filename="..\src\SonettoMapModule.cpp" />
+		<Unit filename="..\src\SonettoMenuModule.cpp" />
+		<Unit filename="..\src\SonettoModuleFactory.cpp" />
+		<Unit filename="..\src\SonettoWorldModule.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

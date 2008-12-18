@@ -29,12 +29,15 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include <exception>
 #include "SonettoKernel.h"
+#include "GenericModuleFactory.h"
 
 int main()
 {
     try {
+        GenericModuleFactory *factory = new GenericModuleFactory;
+
         // Instantiates the Kernel, initialises and runs it
-        Sonetto::Kernel *kernel = new Sonetto::Kernel;
+        Sonetto::Kernel *kernel = new Sonetto::Kernel(factory);
         kernel->initialise();
         kernel->run();
 

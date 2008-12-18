@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTO_EXCEPTION_H
 #define SONETTO_EXCEPTION_H
 
+#include <string>
 #include <exception>
 
 namespace Sonetto
