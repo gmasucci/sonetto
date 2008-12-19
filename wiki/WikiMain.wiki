@@ -1,13 +1,4 @@
 #summary Wiki Main Page
 
 = Introduction =
-This is the Sonetto Wiki's main page. This is indeed just an index to other wiki pages. If you want to browse the wiki using Googlecode's default browser, [http://code.google.com/p/sonetto/w/list click here]. To browse the deprecated wiki pages, [http://code.google.com/p/sonetto/w/list?can=4&q=&colspec=PageName+Summary+Changed+ChangedBy click here].
-
-
-= Wiki Pages =
-  * == Sonetto Core ==
-|| [http://code.google.com/p/sonetto/wiki/EngineOverview Engine Overview] (deprecated page) || Top-level abstraction of the concepts behind Sonetto ||
-
-  * == Managers ==
-|| InputManager (deprecated page) || Describes how the input manager works and how to use it ||
-|| AudioManager || Describes how the audio manager works and how to use it ||
+Sonetto's wiki is hosted at Wikia.com. Please, go to http://sonetto.wikia.com/.
