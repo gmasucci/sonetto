@@ -1,4 +1,3 @@
-#summary Wiki Main Page
+#summary Wiki page forward
 
-= Introduction =
 Sonetto's wiki is hosted at Wikia.com. Please, go to http://sonetto.wikia.com/.
