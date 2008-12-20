@@ -14,7 +14,6 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
-
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -28,47 +27,66 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifdef WINDOWS
-#   include "windows.h"
+#ifndef SONETTO_JOYSTICK_H
+#define SONETTO_JOYSTICK_H
+
+#ifndef WINDOWS
+#   error Sonetto::Joystick not yet implemented in Linux.
 #endif
 
-#include <exception>
-#include "SonettoKernel.h"
-#include "GenericModuleFactory.h"
+#include <SDL/SDL_joystick.h>
+#include "SonettoPrerequisites.h"
 
-#ifdef WINDOWS
-INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
-#else
-int main(int argc, char **argv)
-#endif
+namespace Sonetto
 {
-    try {
-        GenericModuleFactory *factory = new GenericModuleFactory;
+    #ifdef WINDOWS
+    /// Windows-pertinent Joystick hardware information
+    struct JoystickHardwareData
+    {
+        unsigned int id;
 
-        // Instantiates the Kernel, initializes and runs it
-        Sonetto::Kernel *kernel = new Sonetto::Kernel(factory);
-        kernel->initialize();
-        kernel->run();
-
-        // Deletes Kernel when finished running
-        delete kernel;
-    } catch(Sonetto::Exception &e) {
-        const char *what = e.what();
-        if (!what)
+        struct
         {
-            what = "An unknown error has happened,\n"
-                   "It was not possible to identify the error.";
-        }
+            int   offset;
+            float scale;
+        } transaxis[6];
+    };
+    #endif
 
-        #ifdef WINDOWS
-            MessageBox(NULL,what,"Game Runtime Error",
-                    MB_OK|MB_ICONERROR|MB_TASKMODAL);
-        #else
-            cerr << "[!] Game Runtime Error\n" << what << "\n";
-        #endif
-    } catch(std::exception &e) {
-        std::cerr << e.what() << std::endl;
-    }
+    /// The real SDL_Joystick structure
+    class Joystick {
+    public:
+        Joystick() {}
+        ~Joystick() {}
 
-    return 0;
-}
+        /// Checks whether this joystick is plugged or not
+        bool _isPlugged() const;
+
+    private:
+        uint8 id;
+        const char *name;
+
+        int    axesNum;
+        int16 *axes;
+
+        int    hatsNum;
+        uint8 *hats;
+
+        int ballsNum;
+        struct
+        {
+            int dx;
+            int dy;
+        } *balls;
+
+        int    btnsNum;
+        uint8 *btns;
+
+        JoystickHardwareData *hwData;
+
+        int refCount;
+    };
+} // namespace
+
+#endif
+

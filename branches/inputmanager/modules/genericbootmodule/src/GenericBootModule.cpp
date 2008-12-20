@@ -27,6 +27,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
+#include "SonettoInputManager.h"
 #include "GenericBootModule.h"
 
 namespace BootModule
@@ -38,9 +39,29 @@ namespace BootModule
     // ----------------------------------------------------------------------
     GenericBootModule::~GenericBootModule() {}
     // ----------------------------------------------------------------------
-    void GenericBootModule::initialize() {}
+    void GenericBootModule::initialize()
+    {
+        Sonetto::InputManager *inputMan =
+                Sonetto::InputManager::getSingletonPtr();
+
+        Sonetto::PlayerInput *input0 = inputMan->getPlayer(0);
+        Sonetto::PlayerInput *input1 = inputMan->getPlayer(1);
+        input0->setJoystick(2);
+        input0->setEnabled(true);
+        input1->setJoystick(1);
+        input1->setEnabled(true);
+    }
     // ----------------------------------------------------------------------
-    void GenericBootModule::update() {}
+    void GenericBootModule::update()
+    {
+        Sonetto::InputManager *inputMan =
+                Sonetto::InputManager::getSingletonPtr();
+
+        Sonetto::PlayerInput *input0 = inputMan->getPlayer(0);
+        Sonetto::PlayerInput *input1 = inputMan->getPlayer(1);
+        std::cout << "Input0: " << input0->isPlugged() << "\n";
+        std::cout << "Input1: " << input1->isPlugged() << "\n";
+    }
     // ----------------------------------------------------------------------
     void GenericBootModule::deinitialize() {}
     // ----------------------------------------------------------------------

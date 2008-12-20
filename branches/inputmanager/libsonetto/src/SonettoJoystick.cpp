@@ -14,7 +14,6 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
-
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -29,46 +28,30 @@ POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
 #ifdef WINDOWS
-#   include "windows.h"
+#   include <windows.h>
 #endif
+#include <iostream>
+#include "SonettoJoystick.h"
 
-#include <exception>
-#include "SonettoKernel.h"
-#include "GenericModuleFactory.h"
-
-#ifdef WINDOWS
-INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
-#else
-int main(int argc, char **argv)
-#endif
+namespace Sonetto
 {
-    try {
-        GenericModuleFactory *factory = new GenericModuleFactory;
-
-        // Instantiates the Kernel, initializes and runs it
-        Sonetto::Kernel *kernel = new Sonetto::Kernel(factory);
-        kernel->initialize();
-        kernel->run();
-
-        // Deletes Kernel when finished running
-        delete kernel;
-    } catch(Sonetto::Exception &e) {
-        const char *what = e.what();
-        if (!what)
-        {
-            what = "An unknown error has happened,\n"
-                   "It was not possible to identify the error.";
-        }
-
+    // ----------------------------------------------------------------------
+    // Sonetto::Joystick implementation
+    // ----------------------------------------------------------------------
+    bool Joystick::_isPlugged() const
+    {
         #ifdef WINDOWS
-            MessageBox(NULL,what,"Game Runtime Error",
-                    MB_OK|MB_ICONERROR|MB_TASKMODAL);
-        #else
-            cerr << "[!] Game Runtime Error\n" << what << "\n";
-        #endif
-    } catch(std::exception &e) {
-        std::cerr << e.what() << std::endl;
-    }
+        {
+            JOYINFOEX joyinfo;
 
-    return 0;
-}
+            if (joyGetPosEx(hwData->id,&joyinfo) == JOYERR_UNPLUGGED)
+            {
+                return false;
+            }
+        }
+        #endif
+
+        return true;
+    }
+} // namespace
+
