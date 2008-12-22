@@ -48,7 +48,9 @@ namespace BootModule
         setBgColor(Ogre::ColourValue(16.0f/255.0f,16.0f/255.0f,235.0f/255.0f));
 
         ManualFontLoader * fontloader = new ManualFontLoader();
+        Ogre::ResourceGroupManager::getSingleton().createResourceGroup("TEMP");
         Ogre::ResourceGroupManager::getSingleton ().declareResource("font.bin", "SFont", "TEMP", fontloader);
+        Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("TEMP");
         Sonetto::FontPtr font = Sonetto::Kernel::getSingletonPtr()->mFontMan->load("font.bin", "TEMP");
         Sonetto::FontSerializer serializer;
         serializer.exportFont((Sonetto::Font*)font.getPointer(), "baar_sophia.sfn");

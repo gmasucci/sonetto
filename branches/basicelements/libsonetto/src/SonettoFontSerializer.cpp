@@ -62,11 +62,12 @@ namespace Sonetto
 		fwrite(&pFont->mVerticalOffsetBottom, sizeof(uint32), 1, mpfFile);
 		fwrite(&pFont->mHorizontalScale, sizeof(uint32), 1, mpfFile);
 
-		saveString(pFont->mName);
+		saveString(pFont->mIName);
 
-		Ogre::MaterialPtr fontmat = pFont->mMaterial;
+		if(pFont->mMaterial.isNull())
+            SONETTO_THROW("Material does not exist");
 
-		Ogre::Pass * pass = fontmat->getTechnique(0)->getPass(0);
+		Ogre::Pass * pass = pFont->mMaterial->getTechnique(0)->getPass(0);
 
 		bool has_separate_blend = pass->hasSeparateSceneBlending();
 
@@ -115,7 +116,7 @@ namespace Sonetto
             fwrite(&pFont->mColorList[i],sizeof(Ogre::ColourValue), 1, mpfFile);
         }
 
-        for(uint8 i = 0; i != 256; ++i)
+        for(uint32 i = 0; i != 256; ++i)
         {
             FontGlyph glyph = pFont->mGlyph[i];
             fwrite(&glyph, sizeof(FontGlyph), 1,mpfFile);
@@ -159,9 +160,9 @@ namespace Sonetto
         stream->read(&pDest->mVerticalOffsetBottom, sizeof(float));
         stream->read(&pDest->mHorizontalScale, sizeof(float));
 
-        pDest->mName = loadString(stream);
+        pDest->mIName = loadString(stream);
         // setup material
-        pDest->mMaterial = Ogre::MaterialManager::getSingleton().create(pDest->mName+"_mat",pDest->getGroup());
+        pDest->mMaterial = Ogre::MaterialManager::getSingleton().create(pDest->mIName+"_mat",pDest->getGroup());
 
         if(pDest->mMaterial.isNull())
             SONETTO_THROW("Unable to create material for font.");
@@ -245,9 +246,10 @@ namespace Sonetto
         stream->read(&txt_pixelformat, sizeof(size_t));
         stream->read(&txt_faces, sizeof(size_t));
         stream->read(&txt_mipmaps, sizeof(size_t));
+        pDest->mFontImage = new Ogre::Image();
         pDest->mFontImage->loadRawData(stream, txt_width, txt_height, txt_depth, (Ogre::PixelFormat)txt_pixelformat, txt_faces, txt_mipmaps);
 
-        Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().loadImage(pDest->mName+"_tex",pDest->getGroup(), *pDest->mFontImage, Ogre::TEX_TYPE_2D, 0);
+        Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().loadImage(pDest->mIName+"_tex",pDest->getGroup(), *pDest->mFontImage, Ogre::TEX_TYPE_2D, 0);
 
         tex_unit->setTextureName(texture->getName(), Ogre::TEX_TYPE_2D);
     }
@@ -266,6 +268,7 @@ namespace Sonetto
     void FontSerializer::saveString(const std::string &str)
     {
         uint32 strsize = str.size();
+        fwrite(&strsize, sizeof(uint32), 1, mpfFile);
         fwrite(str.c_str(), strsize, 1, mpfFile);
     }
 }; // namespace

@@ -88,7 +88,7 @@ namespace Sonetto
 
         static uint32 mFourCC;
 
-        std::string mName;
+        std::string mIName;
         /// Font File Version.
         uint32 mVersion;
         /// Font File Encode.

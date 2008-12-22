@@ -57,13 +57,13 @@ namespace BootModule
     class ManualFontLoader  : public Ogre::ManualResourceLoader
     {
     public:
-        ManualFontLoader();
-        virtual ~ManualFontLoader();
+        ManualFontLoader(){}
+        virtual ~ManualFontLoader(){}
 
         void loadResource(Ogre::Resource *resource)
         {
             Sonetto::Font * font = static_cast<Sonetto::Font *>(resource);
-            font->mName = "baar_sophia";
+            font->mIName = "baar_sophia";
             font->mVersion = Sonetto::SFV_VER_1_0;
             font->mEncode = Sonetto::FE_ASCII;
             font->mVerticalOffsetTop = 24.0f / 128.0f;
@@ -79,13 +79,18 @@ namespace BootModule
 
             Ogre::ResourceGroupManager * resourcegroup = Ogre::ResourceGroupManager::getSingletonPtr();
             resourcegroup->createResourceGroup("TEMP_FONT_GENERATION_GROUP");
-            resourcegroup->addResourceLocation("temp/","FileSystem","TEMP_FONT_GENERATION_GROUP");
+            resourcegroup->addResourceLocation("temp","FileSystem","TEMP_FONT_GENERATION_GROUP");
             resourcegroup->declareResource("baar_sophia.material","Material","TEMP_FONT_GENERATION_GROUP");
             resourcegroup->declareResource("baarsophia1024.dds","Texture","TEMP_FONT_GENERATION_GROUP");
+            resourcegroup->initialiseResourceGroup("TEMP_FONT_GENERATION_GROUP");
             resourcegroup->loadResourceGroup("TEMP_FONT_GENERATION_GROUP");
 
-            font->mMaterial = Ogre::MaterialManager::getSingleton().getByName("baar_sophia");
+            std::cout<<"Parsing material should start now\n";
+            Ogre::MaterialManager::getSingleton().load("baar_sophia.material","TEMP_FONT_GENERATION_GROUP");
+            std::cout<<"Parsing should be finished by now, or not\n";
 
+            font->mMaterial = Ogre::MaterialManager::getSingleton().getByName("baar_sophia");
+            font->mFontImage = new Ogre::Image();
             font->mFontImage->load("baarsophia1024.dds", "TEMP_FONT_GENERATION_GROUP");
         }
         void generateFontTexCoords(Sonetto::Font * font)

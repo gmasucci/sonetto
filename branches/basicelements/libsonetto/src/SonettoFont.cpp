@@ -39,6 +39,7 @@ namespace Sonetto
                 Ogre::ManualResourceLoader *loader) :
                 Ogre::Resource(creator, name, handle, group, isManual, loader)
     {
+        mFontImage = NULL;
     }
     // ----------------------------------------------------------------------
     Font::~Font()
@@ -55,6 +56,9 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     void Font::unloadImpl()
     {
+        mColorList.clear();
+        mGlyph.clear();
+        delete mFontImage;
     }
     // ----------------------------------------------------------------------
     size_t Font::calculateSize() const
