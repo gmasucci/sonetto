@@ -112,6 +112,7 @@
 		<Unit filename="..\include\SonettoBootModule.h" />
 		<Unit filename="..\include\SonettoException.h" />
 		<Unit filename="..\include\SonettoFont.h" />
+		<Unit filename="..\include\SonettoFontManager.h" />
 		<Unit filename="..\include\SonettoFontSerializer.h" />
 		<Unit filename="..\include\SonettoKernel.h" />
 		<Unit filename="..\include\SonettoMapModule.h" />
@@ -133,6 +134,7 @@
 		<Unit filename="..\src\SonettoBattleModule.cpp" />
 		<Unit filename="..\src\SonettoException.cpp" />
 		<Unit filename="..\src\SonettoFont.cpp" />
+		<Unit filename="..\src\SonettoFontManager.cpp" />
 		<Unit filename="..\src\SonettoFontSerializer.cpp" />
 		<Unit filename="..\src\SonettoKernel.cpp" />
 		<Unit filename="..\src\SonettoMapModule.cpp" />

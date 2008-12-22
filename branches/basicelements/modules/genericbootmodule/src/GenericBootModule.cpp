@@ -29,6 +29,9 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "GenericBootModule.h"
 
+#include "SonettoPrerequisites.h"
+#include "SonettoKernel.h"
+
 namespace BootModule
 {
     // ----------------------------------------------------------------------
@@ -43,6 +46,13 @@ namespace BootModule
     {
         BootModule::initialize();
         setBgColor(Ogre::ColourValue(16.0f/255.0f,16.0f/255.0f,235.0f/255.0f));
+
+        ManualFontLoader * fontloader = new ManualFontLoader();
+        Ogre::ResourceGroupManager::getSingleton ().declareResource("font.bin", "SFont", "TEMP", fontloader);
+        Sonetto::FontPtr font = Sonetto::Kernel::getSingletonPtr()->mFontMan->load("font.bin", "TEMP");
+        Sonetto::FontSerializer serializer;
+        serializer.exportFont((Sonetto::Font*)font.getPointer(), "baar_sophia.sfn");
+
     }
     // ----------------------------------------------------------------------
     void GenericBootModule::update()
