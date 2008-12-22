@@ -267,8 +267,7 @@ namespace Sonetto
         SDL_Flip(mWindow);
 
         // <todo> Initialize managers
-
-        SDL_Delay(8000);
+        mFontMan = new FontManager();
 
         // Resets video mode to loaded configurations
         mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,
@@ -304,6 +303,9 @@ namespace Sonetto
                 delete mModuleStack.top();
                 mModuleStack.pop();
             }
+
+            // Remove and delete all Sonetto Resources.
+            delete Ogre::ResourceGroupManager::getSingleton()._getResourceManager("SFont");
 
             // Deletes Ogre
             delete mOgre;

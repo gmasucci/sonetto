@@ -37,6 +37,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "SonettoPrerequisites.h"
 #include "SonettoModule.h"
 #include "SonettoModuleFactory.h"
+#include "SonettoFontManager.h"
 
 namespace Sonetto
 {
@@ -206,6 +207,9 @@ namespace Sonetto
         /// Pointer to OverlayManager.
         Ogre::OverlayManager *mOverlayMan;
 
+        // Sonetto Managers
+        FontManager * mFontMan;
+
     private:
         /// Loads configuration from file and configures Sonetto
         void loadConfig(const std::string &fname,Ogre::NameValuePairList &wndParamList);
@@ -240,8 +244,10 @@ namespace Sonetto
         /// Reads the Sonetto Project File
         void readSPF();
 
+    public:
         /// Reads a string from an std::ifstream given a preceeding uint16 (Temporary)
         std::string readString(std::ifstream &stream);
+    private:
 
         /// Ogre::Root instance
         Ogre::Root *mOgre;
