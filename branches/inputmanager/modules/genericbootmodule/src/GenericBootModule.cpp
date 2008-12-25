@@ -50,6 +50,9 @@ namespace BootModule
         input0->setEnabled(true);
         input1->setJoystick(1);
         input1->setEnabled(true);
+
+        input0->configBtn(Sonetto::BTN_CROSS,Sonetto::InputSource(true,
+                Sonetto::InputSource::IST_KEY,1));
     }
     // ----------------------------------------------------------------------
     void GenericBootModule::update()
@@ -59,8 +62,7 @@ namespace BootModule
 
         Sonetto::PlayerInput *input0 = inputMan->getPlayer(0);
         Sonetto::PlayerInput *input1 = inputMan->getPlayer(1);
-        std::cout << "Input0: " << input0->isPlugged() << "\n";
-        std::cout << "Input1: " << input1->isPlugged() << "\n";
+        std::cout << input0->getBtnState(Sonetto::BTN_CROSS) << "\n";
     }
     // ----------------------------------------------------------------------
     void GenericBootModule::deinitialize() {}

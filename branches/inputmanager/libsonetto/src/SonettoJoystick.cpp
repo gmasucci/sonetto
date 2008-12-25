@@ -41,14 +41,14 @@ namespace Sonetto
     bool Joystick::_isPlugged() const
     {
         #ifdef WINDOWS
-        {
+        /*{
             JOYINFOEX joyinfo;
 
             if (joyGetPosEx(hwData->id,&joyinfo) == JOYERR_UNPLUGGED)
             {
                 return false;
             }
-        }
+        }*/
         #endif
 
         return true;

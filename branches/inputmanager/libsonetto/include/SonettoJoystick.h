@@ -30,61 +30,33 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTO_JOYSTICK_H
 #define SONETTO_JOYSTICK_H
 
-#ifndef WINDOWS
+#ifdef WINDOWS
+#   include <dinput.h>
+#else
 #   error Sonetto::Joystick not yet implemented in Linux.
 #endif
-
-#include <SDL/SDL_joystick.h>
+#include <OgreSharedPtr.h>
 #include "SonettoPrerequisites.h"
 
 namespace Sonetto
 {
-    #ifdef WINDOWS
-    /// Windows-pertinent Joystick hardware information
-    struct JoystickHardwareData
+    /// Reference counted Joystick shared pointer type
+    typedef Ogre::SharedPtr<Joystick> JoystickPtr;
+
+    class Joystick
     {
-        unsigned int id;
-
-        struct
-        {
-            int   offset;
-            float scale;
-        } transaxis[6];
-    };
-    #endif
-
-    /// The real SDL_Joystick structure
-    class Joystick {
     public:
-        Joystick() {}
-        ~Joystick() {}
+        Joystick(uint16 id) : mID(id) {}
+        virtual ~Joystick() {}
 
-        /// Checks whether this joystick is plugged or not
+        inline virtual uint16 getDeviceID() const { return mID; }
+
         bool _isPlugged() const;
 
-    private:
-        uint8 id;
-        const char *name;
+        virtual void update() {}
 
-        int    axesNum;
-        int16 *axes;
-
-        int    hatsNum;
-        uint8 *hats;
-
-        int ballsNum;
-        struct
-        {
-            int dx;
-            int dy;
-        } *balls;
-
-        int    btnsNum;
-        uint8 *btns;
-
-        JoystickHardwareData *hwData;
-
-        int refCount;
+    protected:
+        uint16 mID;
     };
 } // namespace
 

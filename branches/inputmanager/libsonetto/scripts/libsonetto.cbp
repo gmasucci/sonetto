@@ -17,6 +17,7 @@
 					<Add option="-g" />
 					<Add option="-DWINDOWS" />
 					<Add option="-DDEBUG" />
+					<Add directory="..\..\dependencies\include\DirectX" />
 				</Compiler>
 				<Linker>
 					<Add library="OgreMain_d" />
@@ -38,6 +39,7 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DWINDOWS" />
+					<Add directory="..\..\dependencies\include\DirectX" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -106,6 +108,8 @@
 			<Add library="user32" />
 			<Add library="gdi32" />
 			<Add library="winmm" />
+			<Add library="dxguid" />
+			<Add library="dinput8" />
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
 		<Unit filename="..\include\SonettoBattleModule.h" />

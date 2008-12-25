@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include <vector>
 #include "SonettoPrerequisites.h"
+#include "SonettoJoystick.h"
 
 // Types needed by other headers
 namespace Sonetto
@@ -145,10 +146,11 @@ namespace Sonetto
             PlayerInput(bool enabled = false,uint32 joyID = 0);
 
             /// Destructor
-            ~PlayerInput();
+            ~PlayerInput() {}
 
             /** Updates input states
 
+            @remarks
                 This is called by InputManager::update(), so you don't
                 really have to worry about it.
             */
@@ -172,8 +174,7 @@ namespace Sonetto
 
             @param
                 joyID Joystick ID to be used. A value of zero means no joystick
-                will be used. Be careful the ID must never be greater than
-                InputManager::getJoystickNum().
+                will be used.
             */
             void setJoystick(uint32 joyID);
 
@@ -182,7 +183,7 @@ namespace Sonetto
             @return
                 Joystick ID. A value of zero means no joystick is being used.
             */
-            inline uint32 getJoystick() const { return mJoyID; }
+            uint32 getJoystick() const;
 
             /// Enables or disables this player's input updates
             inline void setEnabled(bool enable) { mEnabled = enable; }
@@ -203,11 +204,8 @@ namespace Sonetto
             /// Whether this PlayerInput is enabled or not
             bool mEnabled;
 
-            /// Joystick ID
-            uint32 mJoyID;
-
-            /// Joystick pointer from which this PlayerInput will get its input from
-            Joystick *mJoy;
+            /// Joystick shared pointer from which this PlayerInput will get its input from
+            JoystickPtr mJoy;
 
             /// Input source attachments
             InputSource mInputCfg[INPUT_SRC_NUM];

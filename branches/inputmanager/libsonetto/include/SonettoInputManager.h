@@ -30,167 +30,173 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTO_INPUTMANAGER_H
 #define SONETTO_INPUTMANAGER_H
 
+#ifdef WINDOWS
+#   include <dinput.h>
+#else
+#   error Sonetto::InputManager not yet implemented in Linux.
+#endif
 #include <OgreSingleton.h>
-#include <SDL/SDL.h>
 #include "SonettoPrerequisites.h"
 #include "SonettoPlayerInput.h"
-
+#include "SonettoJoystick.h"
 
 namespace Sonetto
 {
-    /** @brief Class responsible for managing input resources
+    /** Class responsible for managing input resources
 
         From this class, you can get Sonetto::PlayerInput instances, which you
         can use for retrieving input from joysticks and keyboard.
     */
     class SONETTO_API InputManager : public Ogre::Singleton<InputManager>
     {
-        public:
-            /** Constructor
+    public:
+        #ifndef WINDOWS
+        /** Windows HWND typedef
 
-            @param
-                players Number of PlayerInputs to be created
-            */
-            InputManager(size_t players)
-                    : mInitialized(false), mPlayerNum(players) {}
+            Used to avoid needing to modify a method definition under Linux.
+            Under Windows, a window handle needs to be passed to initialize()
+            in order for DirectInput to only listen to input directed to our
+            window. In Linux, this should be ignored.
+        */
+        typedef HWND uint32;
+        #endif
 
-            /// Destructor
-            ~InputManager();
+        /** Constructor
 
-            /// Initializes InputManager
-            void initialize();
+        @param
+            players Number of PlayerInputs to be created
+        */
+        InputManager(size_t players)
+                : mPlayerNum(players), mInitialized(false) {}
 
-            /** Overrides standard Singleton retrieval
+        /// Destructor
+        ~InputManager();
 
-            @remarks
-                Warning: These comments below were copied straight from Ogre3D code.
-                Why do we do this? Well, it's because the Singleton
-                implementation is in a .h file, which means it gets compiled
-                into anybody who includes it. This is needed for the
-                Singleton template to work, but we actually only want it
-                compiled into the implementation of the class based on the
-                Singleton, not all of them. If we don't change this, we get
-                link errors when trying to use the Singleton-based class from
-                an outside dll.
-            @param
-                This method just delegates to the template version anyway,
-                but the implementation stays in this single compilation unit,
-                preventing link errors.
-            */
-            static InputManager &getSingleton();
+        /** Initializes InputManager
 
-            /** Overrides standard Singleton retrieval
+        @param
+            hWnd Window handle (HWND) to be used with DirectInput. Linux
+            users should leave this 0.
+        */
+        void initialize(HWND hWnd = 0);
 
-            @remarks
-                Warning: These comments below were copied straight from Ogre3D code.
-                Why do we do this? Well, it's because the Singleton
-                implementation is in a .h file, which means it gets compiled
-                into anybody who includes it. This is needed for the
-                Singleton template to work, but we actually only want it
-                compiled into the implementation of the class based on the
-                Singleton, not all of them. If we don't change this, we get
-                link errors when trying to use the Singleton-based class from
-                an outside dll.
-            @param
-                This method just delegates to the template version anyway,
-                but the implementation stays in this single compilation unit,
-                preventing link errors.
-            */
-            static InputManager *getSingletonPtr();
+        /** Overrides standard Singleton retrieval
 
-            /** Updates all PlayerInputs.
+        @remarks
+            Warning: These comments below were copied straight from Ogre3D code.
+            Why do we do this? Well, it's because the Singleton
+            implementation is in a .h file, which means it gets compiled
+            into anybody who includes it. This is needed for the
+            Singleton template to work, but we actually only want it
+            compiled into the implementation of the class based on the
+            Singleton, not all of them. If we don't change this, we get
+            link errors when trying to use the Singleton-based class from
+            an outside dll.
+        @param
+            This method just delegates to the template version anyway,
+            but the implementation stays in this single compilation unit,
+            preventing link errors.
+        */
+        static InputManager &getSingleton();
 
-                This is called by Kernel::run(), so you
-                don't have to worry about it.
-            */
-            void update();
+        /** Overrides standard Singleton retrieval
 
-            /** Retrieves a PlayerInput given its index
+        @remarks
+            Warning: These comments below were copied straight from Ogre3D code.
+            Why do we do this? Well, it's because the Singleton
+            implementation is in a .h file, which means it gets compiled
+            into anybody who includes it. This is needed for the
+            Singleton template to work, but we actually only want it
+            compiled into the implementation of the class based on the
+            Singleton, not all of them. If we don't change this, we get
+            link errors when trying to use the Singleton-based class from
+            an outside dll.
+        @param
+            This method just delegates to the template version anyway,
+            but the implementation stays in this single compilation unit,
+            preventing link errors.
+        */
+        static InputManager *getSingletonPtr();
 
-            @remarks
-                Be careful not to access an index greater than
-                or equal to getPlayerNum().
-            */
-            PlayerInput *getPlayer(size_t num);
+        /** Updates all PlayerInputs.
 
-            /// Retrieves the number of PlayerInputs in the manager
-            inline size_t getPlayerNum() const { return mPlayerNum; }
+            This is called by Kernel::run(), so you
+            don't have to worry about it.
+        */
+        void update();
 
-            /** Gets a joystick to be used in by a PlayerInput
+        /** Retrieves a PlayerInput given its index
 
-            @remarks
-                Must be released using _releaseJoystick(). Be careful
-                not to access an index greater than getJoystickNum().
-            */
-            Joystick *_getJoystick(uint32 index);
+        @remarks
+            Be careful not to access an index greater than
+            or equal to getPlayerNum().
+        */
+        PlayerInput *getPlayer(size_t num);
 
-            /** Releases a joystick that was being used by a PlayerInput
+        /// Retrieves the number of PlayerInputs in the manager
+        inline size_t getPlayerNum() const { return mPlayerNum; }
 
-                PlayerInput's release their joysticks using this method so
-                that the InputManager can free joysticks not being used by
-                any other PlayerInput.
-            */
-            void _releaseJoystick(uint32 index);
+        /** Gets a joystick to be used by a PlayerInput
 
-            /// Returns the number of available joysticks for use
-            uint16 getJoystickNum() const;
+        @see
+            Joystick
+        */
+        JoystickPtr _getJoystick(uint16 id);
 
-            /// Checks whether the joystick in the given index is being used by a PlayerInput or not
-            bool joystickAttached(uint16 index) const;
+        /// Returns the number of currently plugged joysticks
+        uint16 getJoystickNum() const;
 
-            /** Directly checks a physical keyboard key state
+        /// Checks whether the joystick of the given ID is being used by a PlayerInput or not
+        bool joystickAttached(uint16 id) const;
 
-                This method is intended mainly for debugging, when user configuration is something
-                that should be avoided. It returns the state of a given keyboard key.
-            @param
-                key Key to be checked.
-            @see
+        /** Directly checks a physical keyboard key state
 
-            */
-            inline KeyState getDirectKeyState(SDLKey key) const { return mKeyboardStates[key]; }
+            This method is intended mainly for debugging, when user configuration is something
+            that should be avoided. It returns the state of a given keyboard key.
+        @param
+            key Key to be checked.
+        @see
 
-        private:
-            /** Reference counting structure for joysticks
+        */
+        inline KeyState getDirectKeyState(uint8 key) const { return mKeyboardStates[key]; }
 
-                Keeps track of how many PlayerInput's use a given Joystick. This is used
-                to free unused joysticks.
-            */
-            struct JoyRefCount
-            {
-                /// Default constructor
-                JoyRefCount() : joyPtr(NULL), refCount(0) {}
+    private:
+        /// Gets direct keyboard key state (either pressed or not)
+        bool getRawKeyState(uint32 key);
 
-                /// Quick constructor
-                JoyRefCount(Joystick *aJoyPtr) : joyPtr(aJoyPtr), refCount(0) {}
+        /// Vector of Joystick shared pointers
+        typedef std::vector<JoystickPtr> JoystickPtrVector;
 
-                /// Joystick pointer
-                Joystick *joyPtr;
+        /// PlayerInput vector
+        PlayerInputVector mPlayers;
 
-                /// Number of references to joyPtr
-                size_t refCount;
-            };
+        /// Number of player inputs
+        size_t mPlayerNum;
 
-            /// Map of JoyRefCount's
-            typedef std::map<size_t,JoyRefCount> JoyRefCountMap;
+        /** Vector of Joystick shared pointers
 
-            /// PlayerInput vector
-            PlayerInputVector mPlayers;
+        @see
+            _getJoystick()
+        */
+        JoystickPtrVector mJoysticks;
 
-            /// Reference counts of joysticks currently in use
-            JoyRefCountMap mJoyRefCounts;
+        #ifdef WINDOWS
+        /// DirectInput object
+        LPDIRECTINPUT8  mDirectInput;
 
-            /// Whether this singleton is initialized or not
-            bool mInitialized;
+        /// Keyboard device handle
+        LPDIRECTINPUTDEVICE8 mKeyboard;
+        #endif
 
-            /// Number of player inputs
-            size_t mPlayerNum;
+        /// Whether this singleton is initialized or not
+        bool mInitialized;
 
-            /** Keyboard keystates
+        /** Keyboard keystates
 
-            @see
-                getDirectKeyState()
-            */
-            KeyState mKeyboardStates[SDLK_LAST + 1];
+        @see
+            getDirectKeyState()
+        */
+        KeyState mKeyboardStates[256];
     };
 } // namespace
 

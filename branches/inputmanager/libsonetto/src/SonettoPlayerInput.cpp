@@ -36,7 +36,7 @@ namespace Sonetto
     // Sonetto::PlayerInput implementation
     // ----------------------------------------------------------------------
     PlayerInput::PlayerInput(bool enabled,uint32 joyID)
-            : mEnabled(enabled), mJoyID(joyID), mJoy(NULL)
+            : mEnabled(enabled)
     {
         // Clears arrays
         memset(mBtnStates,0x00,sizeof(mBtnStates));
@@ -50,37 +50,21 @@ namespace Sonetto
         }
     }
     // ----------------------------------------------------------------------
-    PlayerInput::~PlayerInput()
-    {
-        // Releases joystick if using a valid one
-        if (mJoy)
-        {
-            InputManager::getSingletonPtr()->_releaseJoystick(mJoyID);
-        }
-    }
-    // ----------------------------------------------------------------------
     void PlayerInput::setJoystick(uint32 joyID)
     {
-        // Releases current joystick if using a valid one
-        if (mJoy)
-        {
-            InputManager::getSingletonPtr()->_releaseJoystick(mJoyID);
-            mJoy = NULL;
-        }
-
-        // Sets new joystick ID
-        mJoyID = joyID;
-
-        // Gets pointer to joystick if requested
         if (joyID != 0) {
+            // Gets shared pointer to joystick if requested
             mJoy = InputManager::getSingletonPtr()->_getJoystick(joyID);
+        } else {
+            // Releases joystick
+            mJoy.setNull();
         }
     }
     // ----------------------------------------------------------------------
     bool PlayerInput::isPlugged() const
     {
-        // If no valid joystick is being used, returns false
-        if (!mJoy)
+        // If no joystick is being used, returns false
+        if (mJoy.isNull())
         {
             return false;
         }
@@ -96,14 +80,7 @@ namespace Sonetto
         mAxesValues[1].x = mAxesValues[1].y = 0.0f;
 
         if (mEnabled) {
-            uint8 *keystates = SDL_GetKeyState(NULL);
-
-            // If a joystick ID was requested but was not yet open (i.e. wasn't plugged),
-            // checks again whether it can be opened
-            if (mJoyID != 0 && !mJoy)
-            {
-                mJoy = InputManager::getSingletonPtr()->_getJoystick(mJoyID);
-            }
+            InputManager *inputMan = InputManager::getSingletonPtr();
 
             for (size_t i = 0;i < INPUT_SRC_NUM;++i)
             {
@@ -112,19 +89,23 @@ namespace Sonetto
 
                     switch (mInputCfg[i].type) {
                         case InputSource::IST_KEY:
-                            state = (keystates[mInputCfg[i].value]) ? KS_PRESS : KS_NONE;
+                            // Gets key state from InputManager
+                            if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE) {
+                                state = KS_PRESS;
+                            } else {
+                                state = KS_NONE;
+                            }
                         break;
 
                         case InputSource::IST_BUTTON:
-                            if (mJoy)
+                            if (!mJoy.isNull())
                             {
-                                state = (SDL_JoystickGetButton((SDL_Joystick *)mJoy,
-                                         mInputCfg[i].value)) ? KS_PRESS : KS_NONE;
+                                state = KS_NONE;
                             }
                         break;
 
                         case InputSource::IST_AXIS:
-                            if (mJoy)
+                            if (!mJoy.isNull())
                             {
                                 Axis axisCheck;
                                 uint8 axisNum;
@@ -142,7 +123,7 @@ namespace Sonetto
                                         }
 
                                         // Gets axis value as a [-1.0f, +1.0f] ranging float
-                                        value = SDL_JoystickGetAxis((SDL_Joystick *)mJoy,axisNum);
+                                        value = 0.0f;
                                         value /= ((value > 0) ? 32767.0f : 32768.0f);
 
                                         // Inverts axis direction check if INV_Y_POLARITY bit is set
@@ -170,7 +151,7 @@ namespace Sonetto
                                         }
 
                                         // Gets axis value as a [-1.0f, +1.0f] ranging float
-                                        value = SDL_JoystickGetAxis((SDL_Joystick *)mJoy,axisNum);
+                                        value = 0.0f;
                                         value /= ((value > 0) ? 32767.0f : 32768.0f);
 
                                         // Inverts axis direction check if INV_Y_POLARITY bit is set
@@ -198,7 +179,7 @@ namespace Sonetto
                                         }
 
                                         // Gets axis value as a [-1.0f, +1.0f] ranging float
-                                        value = SDL_JoystickGetAxis((SDL_Joystick *)mJoy,axisNum);
+                                        value = 0.0f;
                                         value /= ((value > 0) ? 32767.0f : 32768.0f);
 
                                         // Inverts axis direction check if INV_Y_POLARITY bit is set
@@ -226,7 +207,7 @@ namespace Sonetto
                                         }
 
                                         // Gets axis value as a [-1.0f, +1.0f] ranging float
-                                        value = SDL_JoystickGetAxis((SDL_Joystick *)mJoy,axisNum);
+                                        value = 0.0f;
                                         value /= ((value > 0) ? 32767.0f : 32768.0f);
 
                                         // Inverts axis direction check if INV_Y_POLARITY bit is set
@@ -299,28 +280,28 @@ namespace Sonetto
                             switch (dir)
                             {
                                 case 0: // Up
-                                    if (keystates[mInputCfg[i].value])
+                                    if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
                                     {
                                         value = (mAxesValues[axis].y != 0.0f) ? 0.0f : -1.0f;
                                     }
                                 break;
 
                                 case 1: // Right
-                                    if (keystates[mInputCfg[i].value])
+                                    if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
                                     {
                                         value = (mAxesValues[axis].x != 0.0f) ? 0.0f : +1.0f;
                                     }
                                 break;
 
                                 case 2: // Down
-                                    if (keystates[mInputCfg[i].value])
+                                    if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
                                     {
                                         value = (mAxesValues[axis].y != 0.0f) ? 0.0f : +1.0f;
                                     }
                                 break;
 
                                 case 3: // Left
-                                    if (keystates[mInputCfg[i].value])
+                                    if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
                                     {
                                         value = (mAxesValues[axis].x != 0.0f) ? 0.0f : -1.0f;
                                     }
@@ -329,33 +310,34 @@ namespace Sonetto
                         break;
 
                         case InputSource::IST_BUTTON:
-                            if (mJoy)
+                            if (!mJoy.isNull())
                             {
                                 switch (dir)
                                 {
                                     case 0: // Up
-                                        if (SDL_JoystickGetButton((SDL_Joystick *)mJoy,mInputCfg[i].value))
+                                        // <todo> Get joystick button state
+                                        if (false)
                                         {
                                             value = (mAxesValues[axis].y != 0.0f) ? 0.0f : -1.0f;
                                         }
                                     break;
 
                                     case 1: // Right
-                                        if (SDL_JoystickGetButton((SDL_Joystick *)mJoy,mInputCfg[i].value))
+                                        if (false)
                                         {
                                             value = (mAxesValues[axis].x != 0.0f) ? 0.0f : +1.0f;
                                         }
                                     break;
 
                                     case 2: // Down
-                                        if (SDL_JoystickGetButton((SDL_Joystick *)mJoy,mInputCfg[i].value))
+                                        if (false)
                                         {
                                             value = (mAxesValues[axis].y != 0.0f) ? 0.0f : +1.0f;
                                         }
                                     break;
 
                                     case 3: // Left
-                                        if (SDL_JoystickGetButton((SDL_Joystick *)mJoy,mInputCfg[i].value))
+                                        if (false)
                                         {
                                             value = (mAxesValues[axis].x != 0.0f) ? 0.0f : -1.0f;
                                         }
@@ -367,7 +349,7 @@ namespace Sonetto
                         case InputSource::IST_AXIS:
                             if (dir == 0 || dir == 4)
                             {
-                                if (mJoy)
+                                if (!mJoy.isNull())
                                 {
                                     int cfgAxis;
 
@@ -380,10 +362,8 @@ namespace Sonetto
                                         break;
                                     }
 
-                                    mAxesValues[axis].x =
-                                            SDL_JoystickGetAxis((SDL_Joystick *)mJoy,cfgAxis);     // Horizontal
-                                    mAxesValues[axis].y =
-                                            SDL_JoystickGetAxis((SDL_Joystick *)mJoy,cfgAxis + 1); // Vertical
+                                    mAxesValues[axis].x = 0.0f; // Horizontal
+                                    mAxesValues[axis].y = 0.0f; // Vertical
                                     mAxesValues[axis].x /= ((mAxesValues[axis].x > 0) ? 32767.0f : 32768.0f);
                                     mAxesValues[axis].y /= ((mAxesValues[axis].y > 0) ? 32767.0f : 32768.0f);
 
@@ -446,6 +426,17 @@ namespace Sonetto
                     default: break;
                 }
             }
+        }
+    }
+    // ----------------------------------------------------------------------
+    Ogre::Vector2 PlayerInput::getAxisValue(Axis axs)
+    {
+        switch (axs)
+        {
+            case AX_LEFT:  return mAxesValues[0]; break;
+            case AX_RIGHT: return mAxesValues[1]; break;
+
+            default: return Ogre::Vector2(0.0f,0.0f); break;
         }
     }
     // ----------------------------------------------------------------------

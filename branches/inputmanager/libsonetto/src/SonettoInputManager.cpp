@@ -27,11 +27,16 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
+#ifdef WINDOWS
+#   include <windows.h>
+#   include <dinput.h>
+#endif
 #include <vector>
 #include <OgreVector2.h>
-#include <SDL/SDL.h>
 #include "SonettoKernel.h"
 #include "SonettoInputManager.h"
+#include "SonettoPlayerInput.h"
+#include "SonettoJoystick.h"
 
 namespace Sonetto
 {
@@ -54,9 +59,50 @@ namespace Sonetto
         }
     }
     // ----------------------------------------------------------------------
-    void InputManager::initialize()
+    void InputManager::initialize(HWND hWnd)
     {
-        // Creates desired number of unplugged PlayerInput structures
+        #ifdef WINDOWS
+        {
+            // Creates DirectInput object
+            if ( FAILED(DirectInput8Create(GetModuleHandle(NULL),
+                    DIRECTINPUT_VERSION,IID_IDirectInput8,
+                    (void **)(&mDirectInput),NULL)) )
+            {
+                SONETTO_THROW("Could not initialize DirectInput");
+            }
+
+            // Creates DirectInput keyboard device
+            if ( FAILED(mDirectInput->CreateDevice(GUID_SysKeyboard,
+                    &mKeyboard,NULL)) )
+            {
+                SONETTO_THROW("Could not create DirectInput keyboard "
+                              "device");
+            }
+
+            // Sets keyboard device data format
+            if ( FAILED(mKeyboard->SetDataFormat(&c_dfDIKeyboard)) )
+            {
+                SONETTO_THROW("Could not set DirectInput keyboard device "
+                              "data format");
+            }
+
+            // Sets keyboard cooperative level
+            if ( FAILED(mKeyboard->SetCooperativeLevel(hWnd,
+                    DISCL_FOREGROUND | DISCL_NONEXCLUSIVE)) )
+            {
+                SONETTO_THROW("Could not set DirectInput keyboard "
+                              "cooperative level");
+            }
+
+            // Acquires keyboard
+            if ( FAILED(mKeyboard->Acquire()) )
+            {
+                SONETTO_THROW("Could not acquire DirectInput keyboard");
+            }
+        }
+        #endif
+
+        // Creates desired number of empty PlayerInput structures
         for (size_t i = 0;i < mPlayerNum;++i)
         {
             mPlayers.push_back(new PlayerInput());
@@ -69,9 +115,9 @@ namespace Sonetto
     void InputManager::update()
     {
         // Updates keyboard states
-        for (size_t i = SDLK_FIRST;i <= SDLK_LAST;++i)
+        for (size_t i = 0;i < 256;++i)
         {
-            bool rawState = SDL_GetKeyState(NULL)[i];
+            bool rawState = getRawKeyState(i);
 
             switch (mKeyboardStates[i])
             {
@@ -107,8 +153,21 @@ namespace Sonetto
             }
         }
 
-        // Updates all connected joysticks' states
-        SDL_JoystickUpdate();
+        // Updates joystick states
+        for (size_t i = 0;i < mJoysticks.size();++i)
+        {
+            if (mJoysticks[i].unique()) {
+                // Deletes joystick not in use anymore
+                mJoysticks.erase(mJoysticks.begin() + i);
+
+                // Rewinds one because we have just
+                // deleted an mJoysticks entry
+                --i;
+            } else {
+                // Updates if joystick is still in use
+                mJoysticks[i]->update();
+            }
+        }
 
         // And updates PlayerInputs' states
         for (size_t i = 0;i < mPlayerNum;++i)
@@ -117,64 +176,47 @@ namespace Sonetto
         }
     }
     // ----------------------------------------------------------------------
-    Joystick *InputManager::_getJoystick(uint32 index)
+    JoystickPtr InputManager::_getJoystick(uint16 id)
     {
-        Joystick *joy;
-
-        if (mJoyRefCounts.find(index) == mJoyRefCounts.end()) {
-            // Tries to open joystick
-            joy = (Sonetto::Joystick *)( SDL_JoystickOpen(index - 1) );
-
-            // If successful, creates a reference counting structure for it
-            if (joy)
+        // Checks if a joystick with this ID is already
+        // available and returns it
+        for (size_t i = 0;i < mJoysticks.size();++i)
+        {
+            if (mJoysticks[i]->getDeviceID() == id)
             {
-                // Adds reference count structure to reference count vector
-                JoyRefCount refCount(joy);
-                ++refCount.refCount;
-                mJoyRefCounts[index] = refCount;
+                return mJoysticks[i];
             }
-        } else {
-            // Gets already open joystick and increments reference count
-            joy = mJoyRefCounts[index].joyPtr;
-            ++mJoyRefCounts[index].refCount;
         }
 
-         return joy;
-    }
-    // ----------------------------------------------------------------------
-    void InputManager::_releaseJoystick(uint32 index)
-    {
-        if (mJoyRefCounts.find(index) == mJoyRefCounts.end())
-        {
-            SONETTO_THROW("Releasing joystick that isn't open");
-        }
-
-        // Decrements reference count for the joystick being released
-        JoyRefCount &refCount = mJoyRefCounts[index];
-        --refCount.refCount;
-
-        // If there are no more references to it, frees and removes it
-        // from vector
-        if (refCount.refCount == 0)
-        {
-            SDL_JoystickClose((SDL_Joystick *)refCount.joyPtr);
-            mJoyRefCounts.erase(index);
-        }
+        // Elsewise, creates a new joystick, adds it to
+        // our vector and returns it
+        JoystickPtr joy(new Joystick(id));
+        mJoysticks.push_back(joy);
+        return joy;
     }
     // ----------------------------------------------------------------------
     uint16 InputManager::getJoystickNum() const
     {
-        return (uint16)SDL_NumJoysticks();
+        #ifdef WINDOWS
+        // <todo> Implement
+        return 0;
+        #endif
     }
     // ----------------------------------------------------------------------
-    bool InputManager::joystickAttached(uint16 index) const
+    bool InputManager::joystickAttached(uint16 id) const
     {
-        // Checks map of currently in use joysticks
-        if (mJoyRefCounts.find(index) != mJoyRefCounts.end())
+        // Searches vector of joysticks for a joystick
+        // that has the provided ID
+        for (size_t i = 0;i < mJoysticks.size();++i)
         {
-            return true;
+            if (mJoysticks[i]->getDeviceID() == id)
+            {
+                // Returns true if one is found...
+                return true;
+            }
         }
 
+        // ...or false otherwise
         return false;
     }
     // ----------------------------------------------------------------------
@@ -190,14 +232,29 @@ namespace Sonetto
         return mPlayers[num];
     }
     // ----------------------------------------------------------------------
-    Ogre::Vector2 PlayerInput::getAxisValue(Axis axs)
+    bool InputManager::getRawKeyState(uint32 key)
     {
-        switch (axs)
-        {
-            case AX_LEFT:  return mAxesValues[0]; break;
-            case AX_RIGHT: return mAxesValues[1]; break;
+        #ifdef WINDOWS
+        uint8 keys[256];
+        HRESULT hr;
 
-            default: return Ogre::Vector2(0.0f,0.0f); break;
+        // Gets device state and checks for errors
+        hr = mKeyboard->GetDeviceState(sizeof(keys),(void *)keys);
+        if (hr == DIERR_INPUTLOST || hr == DIERR_NOTACQUIRED) {
+            // If the keyboard was lost (probably due to the window losing
+            // focus), tries do reacquire it and returns false
+            mKeyboard->Acquire();
+            return false;
+        } else
+        if ( FAILED(hr) ) {
+            // If an error has occurred, throws exception
+            SONETTO_THROW("Could not get DirectInput keyboard device "
+                          "state");
         }
+
+        // Returns whether the high bit is 1, meaning the key is down
+        // (who understands Windows programming?)
+        return (keys[key] & 0x80);
+        #endif
     }
 };
