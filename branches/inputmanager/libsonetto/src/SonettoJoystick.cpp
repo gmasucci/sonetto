@@ -38,7 +38,7 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     // Sonetto::Joystick implementation
     // ----------------------------------------------------------------------
-    bool Joystick::_isPlugged() const
+    bool Joystick::isPlugged() const
     {
         #ifdef WINDOWS
         /*{

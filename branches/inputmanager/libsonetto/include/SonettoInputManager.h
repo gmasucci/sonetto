@@ -50,17 +50,6 @@ namespace Sonetto
     class SONETTO_API InputManager : public Ogre::Singleton<InputManager>
     {
     public:
-        #ifndef WINDOWS
-        /** Windows HWND typedef
-
-            Used to avoid needing to modify a method definition under Linux.
-            Under Windows, a window handle needs to be passed to initialize()
-            in order for DirectInput to only listen to input directed to our
-            window. In Linux, this should be ignored.
-        */
-        typedef HWND uint32;
-        #endif
-
         /** Constructor
 
         @param
@@ -74,11 +63,16 @@ namespace Sonetto
 
         /** Initializes InputManager
 
+        @remarks
+            On Linux builds, this method takes no parameters
         @param
-            hWnd Window handle (HWND) to be used with DirectInput. Linux
-            users should leave this 0.
+            hWnd Window handle (HWND) to be used with DirectInput.
         */
+        #ifdef WINDOWS
         void initialize(HWND hWnd = 0);
+        #else
+        void initialize();
+        #endif
 
         /** Overrides standard Singleton retrieval
 
@@ -164,6 +158,13 @@ namespace Sonetto
         /// Gets direct keyboard key state (either pressed or not)
         bool getRawKeyState(uint32 key);
 
+        void updateJoysticks();
+
+        #ifdef WINDOWS
+        static BOOL CALLBACK joystickEnumCallback(LPCDIDEVICEINSTANCE dev,
+                void *empty);
+        #endif
+
         /// Vector of Joystick shared pointers
         typedef std::vector<JoystickPtr> JoystickPtrVector;
 
@@ -182,7 +183,7 @@ namespace Sonetto
 
         #ifdef WINDOWS
         /// DirectInput object
-        LPDIRECTINPUT8  mDirectInput;
+        LPDIRECTINPUT8 mDirectInput;
 
         /// Keyboard device handle
         LPDIRECTINPUTDEVICE8 mKeyboard;

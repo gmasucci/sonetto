@@ -37,26 +37,33 @@ POSSIBILITY OF SUCH DAMAGE.
 #endif
 #include <OgreSharedPtr.h>
 #include "SonettoPrerequisites.h"
+#include "SonettoJoystickHardwareData.h"
 
 namespace Sonetto
 {
     /// Reference counted Joystick shared pointer type
     typedef Ogre::SharedPtr<Joystick> JoystickPtr;
 
-    class Joystick
+    class SONETTO_API Joystick
     {
     public:
-        Joystick(uint16 id) : mID(id) {}
+        Joystick(const JoystickHardwareData &hwdata)
+                : mHWData(hwdata) {}
+
         virtual ~Joystick() {}
 
-        inline virtual uint16 getDeviceID() const { return mID; }
+        bool isPlugged() const;
 
-        bool _isPlugged() const;
+        inline const JoystickHardwareData &getHardwareData() const
+                { return mHWData; }
+
+        inline void setHardwareData(const JoystickHardwareData &hwdata)
+                { mHWData = hwdata; }
 
         virtual void update() {}
 
     protected:
-        uint16 mID;
+        JoystickHardwareData mHWData;
     };
 } // namespace
 

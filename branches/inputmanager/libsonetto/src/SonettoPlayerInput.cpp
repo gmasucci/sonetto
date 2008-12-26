@@ -70,7 +70,7 @@ namespace Sonetto
         }
 
         // Returns whether the joystick is plugged or not
-        return mJoy->_isPlugged();
+        return mJoy->isPlugged();
     }
     // ----------------------------------------------------------------------
     void PlayerInput::update()

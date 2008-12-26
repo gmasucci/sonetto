@@ -183,7 +183,7 @@ namespace Sonetto
             @return
                 Joystick ID. A value of zero means no joystick is being used.
             */
-            uint32 getJoystick() const;
+            inline uint32 getJoystick() const { return mJoyID; }
 
             /// Enables or disables this player's input updates
             inline void setEnabled(bool enable) { mEnabled = enable; }
@@ -203,6 +203,9 @@ namespace Sonetto
         private:
             /// Whether this PlayerInput is enabled or not
             bool mEnabled;
+
+            /// Joystick ID (0 for none)
+            uint16 mJoyID;
 
             /// Joystick shared pointer from which this PlayerInput will get its input from
             JoystickPtr mJoy;
