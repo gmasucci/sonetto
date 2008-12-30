@@ -247,7 +247,7 @@ namespace Sonetto
 
         // Initializes input manager
         mInputMan = new InputManager(4);
-        mInputMan->initialize(wmInfo.window);
+        mInputMan->initialize();
 
         // Resets video mode to loaded configurations
         mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,

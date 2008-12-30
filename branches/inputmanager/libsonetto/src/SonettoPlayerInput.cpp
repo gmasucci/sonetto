@@ -100,129 +100,50 @@ namespace Sonetto
                         case InputSource::IST_BUTTON:
                             if (!mJoy.isNull())
                             {
-                                state = KS_NONE;
+                                state = mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value) ? KS_PRESS : KS_NONE;
                             }
                         break;
 
                         case InputSource::IST_AXIS:
                             if (!mJoy.isNull())
                             {
-                                Axis axisCheck;
-                                uint8 axisNum;
-                                float value;
+                                Ogre::Vector2 leftVect,rightVect;
+
+                                leftVect = mJoy->getRawAnalogState(Joystick::RWA_1,(InputSource::InvertInput)mInputCfg[i].invert);
+                                rightVect = mJoy->getRawAnalogState(Joystick::RWA_2,(InputSource::InvertInput)mInputCfg[i].invert);
 
                                 switch (mInputCfg[i].value)
                                 {
                                     case AXE_LEFT_LEFT:
+                                        state = (leftVect.x < -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
+                                    break;
+
                                     case AXE_LEFT_RIGHT:
-                                        // Inverts axis number if INV_ORDER bit is set
-                                        if (mInputCfg[i].invert & InputSource::INV_ORDER) {
-                                            axisNum = 1;
-                                        } else {
-                                            axisNum = 0;
-                                        }
-
-                                        // Gets axis value as a [-1.0f, +1.0f] ranging float
-                                        value = 0.0f;
-                                        value /= ((value > 0) ? 32767.0f : 32768.0f);
-
-                                        // Inverts axis direction check if INV_Y_POLARITY bit is set
-                                        if (mInputCfg[i].invert & InputSource::INV_X_POLARITY) {
-                                            axisCheck = AXE_LEFT_RIGHT;
-                                        } else {
-                                            axisCheck = AXE_LEFT_LEFT;
-                                        }
-
-                                        // Gets button state from axis
-                                        if (mInputCfg[i].value == axisCheck) {
-                                            state = (value <= -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                        } else {
-                                            state = (value >= +mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                        }
+                                        state = (leftVect.x > mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
                                     break;
 
                                     case AXE_LEFT_UP:
-                                    case AXE_LEFT_DOWN:
-                                        // Inverts axis number if INV_ORDER bit is set
-                                        if (mInputCfg[i].invert & InputSource::INV_ORDER) {
-                                            axisNum = 0;
-                                        } else {
-                                            axisNum = 1;
-                                        }
-
-                                        // Gets axis value as a [-1.0f, +1.0f] ranging float
-                                        value = 0.0f;
-                                        value /= ((value > 0) ? 32767.0f : 32768.0f);
-
-                                        // Inverts axis direction check if INV_Y_POLARITY bit is set
-                                        if (mInputCfg[i].invert & InputSource::INV_Y_POLARITY) {
-                                            axisCheck = AXE_LEFT_DOWN;
-                                        } else {
-                                            axisCheck = AXE_LEFT_UP;
-                                        }
-
-                                        // Gets button state from axis
-                                        if (mInputCfg[i].value == axisCheck) {
-                                            state = (value <= -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                        } else {
-                                            state = (value >= +mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                        }
+                                        state = (leftVect.y < -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
                                     break;
 
-                                    case AXE_RIGHT_UP:
-                                    case AXE_RIGHT_DOWN:
-                                        // Inverts axis number if INV_ORDER bit is set
-                                        if (mInputCfg[i].invert & InputSource::INV_ORDER) {
-                                            axisNum = 3;
-                                        } else {
-                                            axisNum = 2;
-                                        }
-
-                                        // Gets axis value as a [-1.0f, +1.0f] ranging float
-                                        value = 0.0f;
-                                        value /= ((value > 0) ? 32767.0f : 32768.0f);
-
-                                        // Inverts axis direction check if INV_Y_POLARITY bit is set
-                                        if (mInputCfg[i].invert & InputSource::INV_Y_POLARITY) {
-                                            axisCheck = AXE_RIGHT_DOWN;
-                                        } else {
-                                            axisCheck = AXE_RIGHT_UP;
-                                        }
-
-                                        // Gets button state from axis
-                                        if (mInputCfg[i].value == axisCheck) {
-                                            state = (value <= -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                        } else {
-                                            state = (value >= +mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                        }
+                                    case AXE_LEFT_DOWN:
+                                        state = (leftVect.y > mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
                                     break;
 
                                     case AXE_RIGHT_LEFT:
+                                        state = (rightVect.x < -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
+                                    break;
+
                                     case AXE_RIGHT_RIGHT:
-                                        // Inverts axis number if INV_ORDER bit is set
-                                        if (mInputCfg[i].invert & InputSource::INV_ORDER) {
-                                            axisNum = 2;
-                                        } else {
-                                            axisNum = 3;
-                                        }
+                                        state = (rightVect.x > mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
+                                    break;
 
-                                        // Gets axis value as a [-1.0f, +1.0f] ranging float
-                                        value = 0.0f;
-                                        value /= ((value > 0) ? 32767.0f : 32768.0f);
+                                    case AXE_RIGHT_UP:
+                                        state = (rightVect.y < -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
+                                    break;
 
-                                        // Inverts axis direction check if INV_Y_POLARITY bit is set
-                                        if (mInputCfg[i].invert & InputSource::INV_X_POLARITY) {
-                                            axisCheck = AXE_RIGHT_RIGHT;
-                                        } else {
-                                            axisCheck = AXE_RIGHT_LEFT;
-                                        }
-
-                                        // Gets button state from axis
-                                        if (mInputCfg[i].value == axisCheck) {
-                                            state = (value <= -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                        } else {
-                                            state = (value >= +mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                        }
+                                    case AXE_RIGHT_DOWN:
+                                        state = (rightVect.y > mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
                                     break;
 
                                     default: state = KS_NONE; break;
@@ -265,45 +186,39 @@ namespace Sonetto
                     }
                 } else {                   // Axes
                     float value = 0.0f;
-                    int   axis = (i - (BTN_LAST + 1) >= 0 && i - (BTN_LAST + 1) <= 3) ? 0 : 1;
+                    int   axis = (i - (BTN_LAST + 1) <= 3) ? 0 : 1;
                     char  dir  = (i - (BTN_LAST + 1)) % 4;
-
-                    if (dir == 0 || dir == 2) { // Vertical axis (dir == UP || dir == DOWN)
-                        value = mAxesValues[axis].y;
-                    } else {                    // Horizontal axis (dir != UP && dir != DOWN)
-                        value = mAxesValues[axis].x;
-                    }
 
                     switch (mInputCfg[i].type)
                     {
                         case InputSource::IST_KEY:
                             switch (dir)
                             {
-                                case 0: // Up
+                                case 0:
                                     if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
                                     {
-                                        value = (mAxesValues[axis].y != 0.0f) ? 0.0f : -1.0f;
+                                        mAxesValues[axis].y -= 1.0f;
                                     }
                                 break;
 
-                                case 1: // Right
+                                case 1:
                                     if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
                                     {
-                                        value = (mAxesValues[axis].x != 0.0f) ? 0.0f : +1.0f;
+                                        mAxesValues[axis].x += 1.0f;
                                     }
                                 break;
 
-                                case 2: // Down
+                                case 2:
                                     if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
                                     {
-                                        value = (mAxesValues[axis].y != 0.0f) ? 0.0f : +1.0f;
+                                        mAxesValues[axis].y += 1.0f;
                                     }
                                 break;
 
-                                case 3: // Left
+                                case 3:
                                     if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
                                     {
-                                        value = (mAxesValues[axis].x != 0.0f) ? 0.0f : -1.0f;
+                                        mAxesValues[axis].x -= 1.0f;
                                     }
                                 break;
                             }
@@ -314,32 +229,31 @@ namespace Sonetto
                             {
                                 switch (dir)
                                 {
-                                    case 0: // Up
-                                        // <todo> Get joystick button state
-                                        if (false)
+                                    case 0:
+                                        if (mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value))
                                         {
-                                            value = (mAxesValues[axis].y != 0.0f) ? 0.0f : -1.0f;
+                                            mAxesValues[axis].y -= 1.0f;
                                         }
                                     break;
 
-                                    case 1: // Right
-                                        if (false)
+                                    case 1:
+                                        if (mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value))
                                         {
-                                            value = (mAxesValues[axis].x != 0.0f) ? 0.0f : +1.0f;
+                                            mAxesValues[axis].x += 1.0f;
                                         }
                                     break;
 
-                                    case 2: // Down
-                                        if (false)
+                                    case 2:
+                                        if (mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value))
                                         {
-                                            value = (mAxesValues[axis].y != 0.0f) ? 0.0f : +1.0f;
+                                            mAxesValues[axis].y += 1.0f;
                                         }
                                     break;
 
-                                    case 3: // Left
-                                        if (false)
+                                    case 3:
+                                        if (mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value))
                                         {
-                                            value = (mAxesValues[axis].x != 0.0f) ? 0.0f : -1.0f;
+                                            mAxesValues[axis].x -= 1.0f;
                                         }
                                     break;
                                 }
@@ -347,64 +261,21 @@ namespace Sonetto
                         break;
 
                         case InputSource::IST_AXIS:
-                            if (dir == 0 || dir == 4)
+                            if (!mJoy.isNull())
                             {
-                                if (!mJoy.isNull())
-                                {
-                                    int cfgAxis;
-
-                                    if (mInputCfg[i].value == AX_LEFT) {
-                                        cfgAxis = 0;
-                                    } else
-                                    if (mInputCfg[i].value == AX_RIGHT) {
-                                        cfgAxis = 2;
-                                    } else {
-                                        break;
-                                    }
-
-                                    mAxesValues[axis].x = 0.0f; // Horizontal
-                                    mAxesValues[axis].y = 0.0f; // Vertical
-                                    mAxesValues[axis].x /= ((mAxesValues[axis].x > 0) ? 32767.0f : 32768.0f);
-                                    mAxesValues[axis].y /= ((mAxesValues[axis].y > 0) ? 32767.0f : 32768.0f);
-
-                                    // Inverts axes if needed
-                                    if (mInputCfg[i].invert & InputSource::INV_ORDER)
-                                    {
-                                        float tmp = mAxesValues[axis].x;
-                                        mAxesValues[axis].x = mAxesValues[axis].y;
-                                        mAxesValues[axis].y = tmp;
-                                    }
-
-                                    // Inverts polarity if needed
-                                    if (mInputCfg[i].invert & InputSource::INV_X_POLARITY)
-                                    {
-                                        mAxesValues[axis].x = -mAxesValues[axis].x;
-                                    }
-
-                                    if (mInputCfg[i].invert & InputSource::INV_Y_POLARITY)
-                                    {
-                                        mAxesValues[axis].y = -mAxesValues[axis].y;
-                                    }
-
-                                    i += 3;
-                                    continue;
-                                }
+                                mAxesValues[axis] = mJoy->getRawAnalogState((Joystick::RawAnalog)(dir / 4),
+                                        (InputSource::InvertInput)mInputCfg[i].invert);
 
                                 i += 3;
+                                continue;
                             }
                         break;
                     }
-
-                    if (dir == 0 || dir == 2) { // Vertical axis (dir == UP || dir == DOWN)
-                        mAxesValues[axis].y = value;
-                    } else {                    // Horizontal axis (dir != UP && dir != DOWN)
-                        mAxesValues[axis].x = value;
-                    }
-
-                    // Normalises vector
-                    mAxesValues[axis].normalise();
                 }
             }
+
+            mAxesValues[0].normalise();
+            mAxesValues[1].normalise();
         } else {
             // Releases buttons when this PlayerInput is disabled
             for (size_t i = 0;i < 16;++i)

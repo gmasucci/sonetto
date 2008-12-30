@@ -30,11 +30,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTO_INPUTMANAGER_H
 #define SONETTO_INPUTMANAGER_H
 
-#ifdef WINDOWS
-#   include <dinput.h>
-#else
-#   error Sonetto::InputManager not yet implemented in Linux.
-#endif
 #include <OgreSingleton.h>
 #include "SonettoPrerequisites.h"
 #include "SonettoPlayerInput.h"
@@ -68,11 +63,7 @@ namespace Sonetto
         @param
             hWnd Window handle (HWND) to be used with DirectInput.
         */
-        #ifdef WINDOWS
-        void initialize(HWND hWnd = 0);
-        #else
         void initialize();
-        #endif
 
         /** Overrides standard Singleton retrieval
 
@@ -158,13 +149,6 @@ namespace Sonetto
         /// Gets direct keyboard key state (either pressed or not)
         bool getRawKeyState(uint32 key);
 
-        void updateJoysticks();
-
-        #ifdef WINDOWS
-        static BOOL CALLBACK joystickEnumCallback(LPCDIDEVICEINSTANCE dev,
-                void *empty);
-        #endif
-
         /// Vector of Joystick shared pointers
         typedef std::vector<JoystickPtr> JoystickPtrVector;
 
@@ -180,14 +164,6 @@ namespace Sonetto
             _getJoystick()
         */
         JoystickPtrVector mJoysticks;
-
-        #ifdef WINDOWS
-        /// DirectInput object
-        LPDIRECTINPUT8 mDirectInput;
-
-        /// Keyboard device handle
-        LPDIRECTINPUTDEVICE8 mKeyboard;
-        #endif
 
         /// Whether this singleton is initialized or not
         bool mInitialized;

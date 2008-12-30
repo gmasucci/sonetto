@@ -30,14 +30,11 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTO_JOYSTICK_H
 #define SONETTO_JOYSTICK_H
 
-#ifdef WINDOWS
-#   include <dinput.h>
-#else
-#   error Sonetto::Joystick not yet implemented in Linux.
-#endif
 #include <OgreSharedPtr.h>
+#include <OgreVector2.h>
+#include <SDL/SDL_joystick.h>
 #include "SonettoPrerequisites.h"
-#include "SonettoJoystickHardwareData.h"
+#include "SonettoInputSource.h"
 
 namespace Sonetto
 {
@@ -47,23 +44,60 @@ namespace Sonetto
     class SONETTO_API Joystick
     {
     public:
-        Joystick(const JoystickHardwareData &hwdata)
-                : mHWData(hwdata) {}
+        enum RawButton
+        {
+            RWB_NONE,
+            RWB_1,
+            RWB_2,
+            RWB_3,
+            RWB_4,
+            RWB_5,
+            RWB_6,
+            RWB_7,
+            RWB_8,
+            RWB_9,
+            RWB_10,
+            RWB_11,
+            RWB_12,
+            RWB_13,
+            RWB_14,
+            RWB_15,
+            RWB_16,
+            RWB_FIRST_HAT,
+            RWB_HAT_UP = RWB_FIRST_HAT,
+            RWB_HAT_RIGHT,
+            RWB_HAT_DOWN,
+            RWB_HAT_LEFT
+        };
 
-        virtual ~Joystick() {}
+        enum RawAnalog
+        {
+            RWA_NONE,
+            RWA_1,
+            RWA_2
+        };
 
-        bool isPlugged() const;
+        Joystick(uint16 id) : mID(id),mJoy(NULL) {}
 
-        inline const JoystickHardwareData &getHardwareData() const
-                { return mHWData; }
+        virtual ~Joystick();
 
-        inline void setHardwareData(const JoystickHardwareData &hwdata)
-                { mHWData = hwdata; }
+        // Winmm hack
+        bool isPlugged();
 
-        virtual void update() {}
+        inline uint16 getID() const { return mID; }
+
+        inline bool isEnabled() const { return (mJoy != NULL); }
+
+        void setEnabled(bool enable);
+
+        bool getRawButtonState(RawButton button);
+
+        Ogre::Vector2 getRawAnalogState(RawAnalog analog,InputSource::InvertInput invertions);
 
     protected:
-        JoystickHardwareData mHWData;
+        uint16 mID;
+
+        SDL_Joystick *mJoy;
     };
 } // namespace
 

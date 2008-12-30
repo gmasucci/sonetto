@@ -27,10 +27,6 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifdef WINDOWS
-#   include <windows.h>
-#   include <dinput.h>
-#endif
 #include <algorithm>
 #include <vector>
 #include <OgreVector2.h>
@@ -38,24 +34,11 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "SonettoInputManager.h"
 #include "SonettoPlayerInput.h"
 #include "SonettoJoystick.h"
-#include "SonettoJoystickHardwareData.h"
 
 namespace Sonetto
 {
     // ----------------------------------------------------------------------
     // Sonetto::InputManager implementation
-    // ----------------------------------------------------------------------
-    #ifdef WINDOWS
-    struct GuidCount
-    {
-        GuidCount(GUID aGuid,size_t aCount) : guid(aGuid),count(aCount) {}
-
-        GUID guid;
-        size_t count;
-    };
-
-    typedef std::vector<GuidCount> GuidCountVector;
-    #endif
     // ----------------------------------------------------------------------
     SONETTO_SINGLETON_IMPLEMENT(InputManager);
     // ----------------------------------------------------------------------
@@ -73,55 +56,12 @@ namespace Sonetto
         }
     }
     // ----------------------------------------------------------------------
-    #ifdef WINDOWS
-    void InputManager::initialize(HWND hWnd)
-    #else
     void InputManager::initialize()
-    #endif
     {
-        #ifdef WINDOWS
+        for (size_t i = 1;i <= SDL_NumJoysticks();++i)
         {
-            // Creates DirectInput object
-            if ( FAILED(DirectInput8Create(GetModuleHandle(NULL),
-                    DIRECTINPUT_VERSION,IID_IDirectInput8,
-                    (void **)(&mDirectInput),NULL)) )
-            {
-                SONETTO_THROW("Could not initialize DirectInput");
-            }
-
-            // Creates DirectInput keyboard device
-            if ( FAILED(mDirectInput->CreateDevice(GUID_SysKeyboard,
-                    &mKeyboard,NULL)) )
-            {
-                SONETTO_THROW("Could not create DirectInput keyboard "
-                              "device");
-            }
-
-            // Sets keyboard device data format
-            if ( FAILED(mKeyboard->SetDataFormat(&c_dfDIKeyboard)) )
-            {
-                SONETTO_THROW("Could not set DirectInput keyboard device "
-                              "data format");
-            }
-
-            // Sets keyboard cooperative level
-            if ( FAILED(mKeyboard->SetCooperativeLevel(hWnd,
-                    DISCL_FOREGROUND | DISCL_NONEXCLUSIVE)) )
-            {
-                SONETTO_THROW("Could not set DirectInput keyboard "
-                              "cooperative level");
-            }
-
-            // Acquires keyboard
-            if ( FAILED(mKeyboard->Acquire()) )
-            {
-                SONETTO_THROW("Could not acquire DirectInput keyboard");
-            }
-
-            // Enumerates joysticks for use
-            updateJoysticks();
+            mJoysticks.push_back(JoystickPtr(new Joystick(i)));
         }
-        #endif
 
         // Creates desired number of empty PlayerInput structures
         for (size_t i = 0;i < mPlayerNum;++i)
@@ -138,7 +78,7 @@ namespace Sonetto
         // Updates keyboard states
         for (size_t i = 0;i < 256;++i)
         {
-            bool rawState = getRawKeyState(i);
+            bool rawState = SDL_GetKeyState(NULL)[i];
 
             switch (mKeyboardStates[i])
             {
@@ -174,22 +114,14 @@ namespace Sonetto
             }
         }
 
-        // Updates joystick states
-        updateJoysticks();
-        /*for (size_t i = 0;i < mJoysticks.size();++i)
+        SDL_JoystickUpdate();
+        for (size_t i = 0;i < mJoysticks.size();++i)
         {
-            if (mJoysticks[i].unique()) {
-                // Deletes joystick not in use anymore
-                mJoysticks.erase(mJoysticks.begin() + i);
-
-                // Rewinds one because we have just
-                // deleted an mJoysticks entry
-                --i;
-            } else {
-                // Updates if joystick is still in use
-                mJoysticks[i]->update();
+            if (mJoysticks[i].unique() && mJoysticks[i]->isEnabled())
+            {
+                mJoysticks[i]->setEnabled(false);
             }
-        }*/
+        }
 
         // And updates PlayerInputs' states
         for (size_t i = 0;i < mPlayerNum;++i)
@@ -217,24 +149,16 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     bool InputManager::joystickAttached(uint16 id) const
     {
-        // ID 0 is never attached
         if (id == 0)
         {
             return false;
         }
 
-        // Searches vector of player inputs for a joystick
-        // that has the provided ID
-        for (size_t i = 0;i < mPlayers.size();++i)
+        if (!mJoysticks[id - 1].unique())
         {
-            if (mPlayers[i]->getJoystick() == id)
-            {
-                // Returns true if one is found...
-                return true;
-            }
+            return true;
         }
 
-        // ...or false otherwise
         return false;
     }
     // ----------------------------------------------------------------------
@@ -249,108 +173,4 @@ namespace Sonetto
         // Returns requested PlayerInput
         return mPlayers[num];
     }
-    // ----------------------------------------------------------------------
-    bool InputManager::getRawKeyState(uint32 key)
-    {
-        #ifdef WINDOWS
-        uint8 keys[256];
-        HRESULT hr;
-
-        // Gets device state and checks for errors
-        hr = mKeyboard->GetDeviceState(sizeof(keys),(void *)keys);
-        if (hr == DIERR_INPUTLOST || hr == DIERR_NOTACQUIRED) {
-            // If the keyboard was lost (probably due to the window losing
-            // focus), tries do reacquire it and returns false
-            mKeyboard->Acquire();
-            return false;
-        } else
-        if ( FAILED(hr) ) {
-            // If an error has occurred, throws exception
-            SONETTO_THROW("Could not get DirectInput keyboard device "
-                          "state");
-        }
-
-        // Returns whether the high bit is 1, meaning the key is down
-        // (who understands Windows programming?)
-        return (keys[key] & 0x80);
-        #endif
-    }
-    // ----------------------------------------------------------------------
-    void InputManager::updateJoysticks()
-    {
-        #ifdef WINDOWS
-        // This GUID counting vector is used to reference
-        // devices under the same product GUID
-        GuidCountVector guidCounts;
-        mDirectInput->EnumDevices(DI8DEVCLASS_GAMECTRL,joystickEnumCallback,
-                &guidCounts,DIEDFL_ATTACHEDONLY);
-        #endif
-    }
-    // ----------------------------------------------------------------------
-    #ifdef WINDOWS
-    BOOL CALLBACK InputManager::joystickEnumCallback(
-                LPCDIDEVICEINSTANCE dev,void *aGuidCounts)
-    {
-        InputManager &inputMan = InputManager::getSingleton();
-
-        size_t guidIndex = 0;
-        GuidCountVector *guidCounts = (GuidCountVector *)aGuidCounts;
-        GuidCountVector::iterator iter;
-        GUID guid = dev->guidProduct;
-
-        for (size_t i = 0;i < guidCounts->size();++i)
-        {
-            if ((*guidCounts)[i].guid == guid)
-            {
-                guidIndex = (*guidCounts)[i].count++;
-            }
-        }
-
-        if (guidIndex == 0)
-        {
-            guidCounts->push_back(GuidCount(guid,1));
-        }
-
-        // Searches for joysticks already assigned to this device
-        // Updates their structures if this device was assigned
-        // to one of them; this way, joystick IDs are always kept
-        for (size_t i = 0;i < inputMan.mJoysticks.size();++i)
-        {
-            const JoystickHardwareData &hwdata = inputMan.mJoysticks[i]->
-                    getHardwareData();
-
-            if (dev == hwdata.device)
-            {
-                // Device already detected; skip
-                return true;
-            }
-
-            GUID iGuid = hwdata.device->guidProduct;
-
-            if (guid.Data1 == iGuid.Data1 &&
-                guid.Data2 == iGuid.Data2 &&
-                guid.Data3 == iGuid.Data3 &&
-                memcmp(guid.Data4,iGuid.Data4,sizeof(guid.Data4)) &&
-                hwdata.guidIndex == guidIndex)
-            {
-                // Updates joysticks' old hwdata to new one
-                inputMan.mJoysticks[i]->setHardwareData(
-                        JoystickHardwareData(dev,guidIndex));
-
-                std::cout << "Reassigned\n";
-
-                // Device detected and reassigned; return
-                return true;
-            }
-        }
-
-        // If no joystick was already assigned to this device, creates one
-        inputMan.mJoysticks.push_back(JoystickPtr(new Joystick(
-                JoystickHardwareData(dev,guidIndex))));
-
-        std::cout << "Created\n";
-
-        return true;
-    }
-    #endif
 };

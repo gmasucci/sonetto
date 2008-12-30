@@ -62,7 +62,7 @@ namespace BootModule
 
         Sonetto::PlayerInput *input0 = inputMan->getPlayer(0);
         Sonetto::PlayerInput *input1 = inputMan->getPlayer(1);
-        //std::cout << input0->getBtnState(Sonetto::BTN_CROSS) << "\n";
+        std::cout << input0->getBtnState(Sonetto::BTN_CROSS) << "\n";
     }
     // ----------------------------------------------------------------------
     void GenericBootModule::deinitialize() {}
