@@ -42,6 +42,12 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     SONETTO_SINGLETON_IMPLEMENT(InputManager);
     // ----------------------------------------------------------------------
+    InputManager::InputManager(size_t players)
+            : mPlayerNum(players), mInitialized(false)
+    {
+        memset(mKeyboardStates,0x00,sizeof(mKeyboardStates));
+    }
+    // ----------------------------------------------------------------------
     InputManager::~InputManager()
     {
         if (mInitialized)
@@ -117,9 +123,10 @@ namespace Sonetto
         SDL_JoystickUpdate();
         for (size_t i = 0;i < mJoysticks.size();++i)
         {
-            if (mJoysticks[i].unique() && mJoysticks[i]->isEnabled())
-            {
+            if (mJoysticks[i].unique()) {
                 mJoysticks[i]->setEnabled(false);
+            } else {
+                mJoysticks[i]->setEnabled(true);
             }
         }
 

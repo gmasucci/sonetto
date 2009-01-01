@@ -36,7 +36,7 @@ namespace Sonetto
     // Sonetto::PlayerInput implementation
     // ----------------------------------------------------------------------
     PlayerInput::PlayerInput(bool enabled,uint32 joyID)
-            : mEnabled(enabled)
+            : mJoyID(joyID),mEnabled(enabled)
     {
         // Clears arrays
         memset(mBtnStates,0x00,sizeof(mBtnStates));
@@ -52,8 +52,8 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     void PlayerInput::setJoystick(uint32 joyID)
     {
+        mJoyID = joyID;
         if (joyID != 0) {
-            // Gets shared pointer to joystick if requested
             mJoy = InputManager::getSingletonPtr()->_getJoystick(joyID);
         } else {
             // Releases joystick
@@ -87,69 +87,73 @@ namespace Sonetto
                 if (i <= BTN_LAST) { // Buttons
                     KeyState state = KS_NONE;
 
-                    switch (mInputCfg[i].type) {
-                        case InputSource::IST_KEY:
-                            // Gets key state from InputManager
-                            if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE) {
-                                state = KS_PRESS;
-                            } else {
-                                state = KS_NONE;
-                            }
-                        break;
-
-                        case InputSource::IST_BUTTON:
-                            if (!mJoy.isNull())
-                            {
-                                state = mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value) ? KS_PRESS : KS_NONE;
-                            }
-                        break;
-
-                        case InputSource::IST_AXIS:
-                            if (!mJoy.isNull())
-                            {
-                                Ogre::Vector2 leftVect,rightVect;
-
-                                leftVect = mJoy->getRawAnalogState(Joystick::RWA_1,(InputSource::InvertInput)mInputCfg[i].invert);
-                                rightVect = mJoy->getRawAnalogState(Joystick::RWA_2,(InputSource::InvertInput)mInputCfg[i].invert);
-
-                                switch (mInputCfg[i].value)
-                                {
-                                    case AXE_LEFT_LEFT:
-                                        state = (leftVect.x < -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                    break;
-
-                                    case AXE_LEFT_RIGHT:
-                                        state = (leftVect.x > mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                    break;
-
-                                    case AXE_LEFT_UP:
-                                        state = (leftVect.y < -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                    break;
-
-                                    case AXE_LEFT_DOWN:
-                                        state = (leftVect.y > mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                    break;
-
-                                    case AXE_RIGHT_LEFT:
-                                        state = (rightVect.x < -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                    break;
-
-                                    case AXE_RIGHT_RIGHT:
-                                        state = (rightVect.x > mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                    break;
-
-                                    case AXE_RIGHT_UP:
-                                        state = (rightVect.y < -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                    break;
-
-                                    case AXE_RIGHT_DOWN:
-                                        state = (rightVect.y > mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
-                                    break;
-
-                                    default: state = KS_NONE; break;
+                    if (mInputCfg[i].enabled)
+                    {
+                        switch (mInputCfg[i].type)
+                        {
+                            case InputSource::IST_KEY:
+                                // Gets key state from InputManager
+                                if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE) {
+                                    state = KS_PRESS;
+                                } else {
+                                    state = KS_NONE;
                                 }
-                            }
-                        break;
+                            break;
+
+                            case InputSource::IST_BUTTON:
+                                if (!mJoy.isNull())
+                                {
+                                    state = mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value) ? KS_PRESS : KS_NONE;
+                                }
+                            break;
+
+                            case InputSource::IST_AXIS:
+                                if (!mJoy.isNull())
+                                {
+                                    Ogre::Vector2 leftVect,rightVect;
+
+                                    leftVect = mJoy->getRawAnalogState(Joystick::RWA_1,(InputSource::InvertInput)mInputCfg[i].invert);
+                                    rightVect = mJoy->getRawAnalogState(Joystick::RWA_2,(InputSource::InvertInput)mInputCfg[i].invert);
+
+                                    switch (mInputCfg[i].value)
+                                    {
+                                        case AXE_LEFT_LEFT:
+                                            state = (leftVect.x < -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
+                                        break;
+
+                                        case AXE_LEFT_RIGHT:
+                                            state = (leftVect.x > mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
+                                        break;
+
+                                        case AXE_LEFT_UP:
+                                            state = (leftVect.y < -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
+                                        break;
+
+                                        case AXE_LEFT_DOWN:
+                                            state = (leftVect.y > mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
+                                        break;
+
+                                        case AXE_RIGHT_LEFT:
+                                            state = (rightVect.x < -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
+                                        break;
+
+                                        case AXE_RIGHT_RIGHT:
+                                            state = (rightVect.x > mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
+                                        break;
+
+                                        case AXE_RIGHT_UP:
+                                            state = (rightVect.y < -mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
+                                        break;
+
+                                        case AXE_RIGHT_DOWN:
+                                            state = (rightVect.y > mInputCfg[i].axisDeadzone) ? KS_PRESS : KS_NONE;
+                                        break;
+
+                                        default: state = KS_NONE; break;
+                                    }
+                                }
+                            break;
+                        }
                     }
 
                     switch (mBtnStates[i])
@@ -189,87 +193,88 @@ namespace Sonetto
                     int   axis = (i - (BTN_LAST + 1) <= 3) ? 0 : 1;
                     char  dir  = (i - (BTN_LAST + 1)) % 4;
 
-                    switch (mInputCfg[i].type)
+                    if (mInputCfg[i].enabled)
                     {
-                        case InputSource::IST_KEY:
-                            switch (dir)
-                            {
-                                case 0:
-                                    if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
-                                    {
-                                        mAxesValues[axis].y -= 1.0f;
-                                    }
-                                break;
-
-                                case 1:
-                                    if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
-                                    {
-                                        mAxesValues[axis].x += 1.0f;
-                                    }
-                                break;
-
-                                case 2:
-                                    if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
-                                    {
-                                        mAxesValues[axis].y += 1.0f;
-                                    }
-                                break;
-
-                                case 3:
-                                    if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
-                                    {
-                                        mAxesValues[axis].x -= 1.0f;
-                                    }
-                                break;
-                            }
-                        break;
-
-                        case InputSource::IST_BUTTON:
-                            if (!mJoy.isNull())
-                            {
+                        // <todo> Use invertions outside Sonetto::Joystick
+                        switch (mInputCfg[i].type)
+                        {
+                            case InputSource::IST_KEY:
                                 switch (dir)
                                 {
                                     case 0:
-                                        if (mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value))
+                                        if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
                                         {
                                             mAxesValues[axis].y -= 1.0f;
                                         }
                                     break;
 
                                     case 1:
-                                        if (mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value))
+                                        if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
                                         {
                                             mAxesValues[axis].x += 1.0f;
                                         }
                                     break;
 
                                     case 2:
-                                        if (mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value))
+                                        if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
                                         {
                                             mAxesValues[axis].y += 1.0f;
                                         }
                                     break;
 
                                     case 3:
-                                        if (mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value))
+                                        if (inputMan->getDirectKeyState(mInputCfg[i].value) != KS_NONE)
                                         {
                                             mAxesValues[axis].x -= 1.0f;
                                         }
                                     break;
                                 }
-                            }
-                        break;
+                            break;
 
-                        case InputSource::IST_AXIS:
-                            if (!mJoy.isNull())
-                            {
-                                mAxesValues[axis] = mJoy->getRawAnalogState((Joystick::RawAnalog)(dir / 4),
-                                        (InputSource::InvertInput)mInputCfg[i].invert);
+                            case InputSource::IST_BUTTON:
+                                if (!mJoy.isNull())
+                                {
+                                    switch (dir)
+                                    {
+                                        case 0:
+                                            if (mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value))
+                                            {
+                                                mAxesValues[axis].y -= 1.0f;
+                                            }
+                                        break;
 
-                                i += 3;
-                                continue;
-                            }
-                        break;
+                                        case 1:
+                                            if (mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value))
+                                            {
+                                                mAxesValues[axis].x += 1.0f;
+                                            }
+                                        break;
+
+                                        case 2:
+                                            if (mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value))
+                                            {
+                                                mAxesValues[axis].y += 1.0f;
+                                            }
+                                        break;
+
+                                        case 3:
+                                            if (mJoy->getRawButtonState((Joystick::RawButton)mInputCfg[i].value))
+                                            {
+                                                mAxesValues[axis].x -= 1.0f;
+                                            }
+                                        break;
+                                    }
+                                }
+                            break;
+
+                            case InputSource::IST_AXIS:
+                                if (!mJoy.isNull())
+                                {
+                                    mAxesValues[axis] = mJoy->getRawAnalogState((Joystick::RawAnalog)((dir / 4) + 1),
+                                            (InputSource::InvertInput)mInputCfg[i].invert);
+                                }
+                            break;
+                        }
                     }
                 }
             }

@@ -27,8 +27,48 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
+#ifdef WINDOWS
+#   include <windows.h>
+#endif
 #include <iostream>
+#include "SonettoPrerequisites.h"
 #include "SonettoJoystick.h"
+
+struct JoystickHardwareData
+{
+	unsigned int id;
+
+	struct
+	{
+		int offset;
+		float scale;
+	} transaxis[6];
+};
+
+struct _SDL_Joystick {
+	Sonetto::uint8 index;
+	const char *name;
+
+	int axisNum;
+	Sonetto::int16 *axes;
+
+	int hatNum;
+	Sonetto::uint8 *hats;
+
+	int ballNum;
+	struct
+	{
+		int dx;
+		int dy;
+	} *balls;
+
+	int buttonNum;
+	Sonetto::uint8 *buttons;
+
+	JoystickHardwareData *hwdata;
+
+	int refCount;
+};
 
 namespace Sonetto
 {
@@ -51,15 +91,14 @@ namespace Sonetto
         }
 
         #ifdef WINDOWS
-        SONETTO_THROW("Implement Joystick::isPlugged() winmm hack");
-        /*{
+        {
             JOYINFOEX joyinfo;
 
-            if (joyGetPosEx(hwData->id,&joyinfo) == JOYERR_UNPLUGGED)
+            if (joyGetPosEx(mJoy->hwdata->id,&joyinfo) == JOYERR_UNPLUGGED)
             {
                 return false;
             }
-        }*/
+        }
         #endif
 
         return true;

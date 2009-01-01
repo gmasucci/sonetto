@@ -27,6 +27,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
+#include <SDL/SDL.h>
 #include "SonettoInputManager.h"
 #include "GenericBootModule.h"
 
@@ -46,13 +47,15 @@ namespace BootModule
 
         Sonetto::PlayerInput *input0 = inputMan->getPlayer(0);
         Sonetto::PlayerInput *input1 = inputMan->getPlayer(1);
-        input0->setJoystick(2);
+        input0->setJoystick(1);
         input0->setEnabled(true);
-        input1->setJoystick(1);
+        input1->setJoystick(2);
         input1->setEnabled(true);
 
         input0->configBtn(Sonetto::BTN_CROSS,Sonetto::InputSource(true,
-                Sonetto::InputSource::IST_KEY,1));
+                Sonetto::InputSource::IST_BUTTON,Sonetto::Joystick::RWB_3));
+        input0->configAxis(Sonetto::AX_LEFT,Sonetto::InputSource(true,
+                Sonetto::InputSource::IST_AXIS,Sonetto::Joystick::RWA_1));
     }
     // ----------------------------------------------------------------------
     void GenericBootModule::update()
@@ -62,7 +65,6 @@ namespace BootModule
 
         Sonetto::PlayerInput *input0 = inputMan->getPlayer(0);
         Sonetto::PlayerInput *input1 = inputMan->getPlayer(1);
-        std::cout << input0->getBtnState(Sonetto::BTN_CROSS) << "\n";
     }
     // ----------------------------------------------------------------------
     void GenericBootModule::deinitialize() {}

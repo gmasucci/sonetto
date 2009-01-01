@@ -50,8 +50,7 @@ namespace Sonetto
         @param
             players Number of PlayerInputs to be created
         */
-        InputManager(size_t players)
-                : mPlayerNum(players), mInitialized(false) {}
+        InputManager(size_t players);
 
         /// Destructor
         ~InputManager();
