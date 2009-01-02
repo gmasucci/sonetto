@@ -161,8 +161,7 @@ namespace Sonetto
         }
     }
     // ----------------------------------------------------------------------
-    Ogre::Vector2 Joystick::getRawAnalogState(RawAnalog analog,
-            InputSource::InvertInput invertions)
+    Ogre::Vector2 Joystick::getRawAnalogState(RawAnalog analog)
     {
         if (!mJoy)
         {
@@ -170,29 +169,13 @@ namespace Sonetto
         }
 
         Ogre::Vector2 state;
-        uint8 baseid = (analog - 1) * 2,xid = 0,yid = 1;
+        uint8 baseid = (analog - 1) * 2;
 
-        if (invertions & InputSource::INV_ORDER)
-        {
-            xid = 1;
-            yid = 0;
-        }
-
-        state.x = SDL_JoystickGetAxis(mJoy,baseid + xid);
-        state.y = SDL_JoystickGetAxis(mJoy,baseid + yid);
+        state.x = SDL_JoystickGetAxis(mJoy,baseid);
+        state.y = SDL_JoystickGetAxis(mJoy,baseid + 1);
 
         state.x /= ((state.x > 0) ? 32767.0f : 32768.0f);
         state.y /= ((state.y > 0) ? 32767.0f : 32768.0f);
-
-        if (invertions & InputSource::INV_X_POLARITY)
-        {
-            state.x = -state.x;
-        }
-
-        if (invertions & InputSource::INV_Y_POLARITY)
-        {
-            state.y = -state.y;
-        }
 
         return state;
     }

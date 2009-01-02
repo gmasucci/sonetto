@@ -40,32 +40,9 @@ namespace BootModule
     // ----------------------------------------------------------------------
     GenericBootModule::~GenericBootModule() {}
     // ----------------------------------------------------------------------
-    void GenericBootModule::initialize()
-    {
-        Sonetto::InputManager *inputMan =
-                Sonetto::InputManager::getSingletonPtr();
-
-        Sonetto::PlayerInput *input0 = inputMan->getPlayer(0);
-        Sonetto::PlayerInput *input1 = inputMan->getPlayer(1);
-        input0->setJoystick(1);
-        input0->setEnabled(true);
-        input1->setJoystick(2);
-        input1->setEnabled(true);
-
-        input0->configBtn(Sonetto::BTN_CROSS,Sonetto::InputSource(true,
-                Sonetto::InputSource::IST_BUTTON,Sonetto::Joystick::RWB_3));
-        input0->configAxis(Sonetto::AX_LEFT,Sonetto::InputSource(true,
-                Sonetto::InputSource::IST_AXIS,Sonetto::Joystick::RWA_1));
-    }
+    void GenericBootModule::initialize() {}
     // ----------------------------------------------------------------------
-    void GenericBootModule::update()
-    {
-        Sonetto::InputManager *inputMan =
-                Sonetto::InputManager::getSingletonPtr();
-
-        Sonetto::PlayerInput *input0 = inputMan->getPlayer(0);
-        Sonetto::PlayerInput *input1 = inputMan->getPlayer(1);
-    }
+    void GenericBootModule::update() {}
     // ----------------------------------------------------------------------
     void GenericBootModule::deinitialize() {}
     // ----------------------------------------------------------------------

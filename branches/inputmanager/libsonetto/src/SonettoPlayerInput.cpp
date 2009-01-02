@@ -112,8 +112,8 @@ namespace Sonetto
                                 {
                                     Ogre::Vector2 leftVect,rightVect;
 
-                                    leftVect = mJoy->getRawAnalogState(Joystick::RWA_1,(InputSource::InvertInput)mInputCfg[i].invert);
-                                    rightVect = mJoy->getRawAnalogState(Joystick::RWA_2,(InputSource::InvertInput)mInputCfg[i].invert);
+                                    leftVect = mJoy->getRawAnalogState(Joystick::RWA_1);
+                                    rightVect = mJoy->getRawAnalogState(Joystick::RWA_2);
 
                                     switch (mInputCfg[i].value)
                                     {
@@ -189,13 +189,11 @@ namespace Sonetto
                         break;
                     }
                 } else {                   // Axes
-                    float value = 0.0f;
-                    int   axis = (i - (BTN_LAST + 1) <= 3) ? 0 : 1;
-                    char  dir  = (i - (BTN_LAST + 1)) % 4;
-
                     if (mInputCfg[i].enabled)
                     {
-                        // <todo> Use invertions outside Sonetto::Joystick
+                        int axis = (i - (BTN_LAST + 1) <= 3) ? 0 : 1;
+                        char dir  = (i - (BTN_LAST + 1)) % 4;
+
                         switch (mInputCfg[i].type)
                         {
                             case InputSource::IST_KEY:
@@ -270,17 +268,40 @@ namespace Sonetto
                             case InputSource::IST_AXIS:
                                 if (!mJoy.isNull())
                                 {
-                                    mAxesValues[axis] = mJoy->getRawAnalogState((Joystick::RawAnalog)((dir / 4) + 1),
-                                            (InputSource::InvertInput)mInputCfg[i].invert);
+                                    mAxesValues[axis] = mJoy->getRawAnalogState((Joystick::RawAnalog)((dir / 4) + 1));
                                 }
                             break;
+                        }
+
+                        if (mInputCfg[i].invert & InputSource::INV_ORDER)
+                        {
+                            float tx = mAxesValues[axis].x;
+                            mAxesValues[axis].x = mAxesValues[axis].y;
+                            mAxesValues[axis].y = tx;
+                        }
+
+                        if (mInputCfg[i].invert & InputSource::INV_X_POLARITY)
+                        {
+                            mAxesValues[axis].x = -mAxesValues[axis].x;
+                        }
+
+                        if (mInputCfg[i].invert & InputSource::INV_Y_POLARITY)
+                        {
+                            mAxesValues[axis].y = -mAxesValues[axis].y;
                         }
                     }
                 }
             }
 
-            mAxesValues[0].normalise();
-            mAxesValues[1].normalise();
+            if (mAxesValues[0].squaredLength() > 1.0f)
+            {
+                mAxesValues[0].normalise();
+            }
+
+            if (mAxesValues[1].squaredLength() > 1.0f)
+            {
+                mAxesValues[1].normalise();
+            }
         } else {
             // Releases buttons when this PlayerInput is disabled
             for (size_t i = 0;i < 16;++i)

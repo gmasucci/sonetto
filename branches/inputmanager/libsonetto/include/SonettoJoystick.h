@@ -92,7 +92,7 @@ namespace Sonetto
 
         bool getRawButtonState(RawButton button);
 
-        Ogre::Vector2 getRawAnalogState(RawAnalog analog,InputSource::InvertInput invertions);
+        Ogre::Vector2 getRawAnalogState(RawAnalog analog);
 
     protected:
         uint16 mID;
