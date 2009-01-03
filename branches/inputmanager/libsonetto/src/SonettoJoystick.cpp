@@ -36,38 +36,38 @@ POSSIBILITY OF SUCH DAMAGE.
 
 struct JoystickHardwareData
 {
-	unsigned int id;
+    unsigned int id;
 
-	struct
-	{
-		int offset;
-		float scale;
-	} transaxis[6];
+    struct
+    {
+        int offset;
+        float scale;
+    } transaxis[6];
 };
 
 struct _SDL_Joystick {
-	Sonetto::uint8 index;
-	const char *name;
+    Sonetto::uint8 index;
+    const char *name;
 
-	int axisNum;
-	Sonetto::int16 *axes;
+    int axisNum;
+    Sonetto::int16 *axes;
 
-	int hatNum;
-	Sonetto::uint8 *hats;
+    int hatNum;
+    Sonetto::uint8 *hats;
 
-	int ballNum;
-	struct
-	{
-		int dx;
-		int dy;
-	} *balls;
+    int ballNum;
+    struct
+    {
+        int dx;
+        int dy;
+    } *balls;
 
-	int buttonNum;
-	Sonetto::uint8 *buttons;
+    int buttonNum;
+    Sonetto::uint8 *buttons;
 
-	JoystickHardwareData *hwdata;
+    JoystickHardwareData *hwdata;
 
-	int refCount;
+    int refCount;
 };
 
 namespace Sonetto
