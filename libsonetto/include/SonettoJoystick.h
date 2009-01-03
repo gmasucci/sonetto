@@ -14,7 +14,6 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
-
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -28,47 +27,79 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifdef WINDOWS
-#   include "windows.h"
-#endif
+#ifndef SONETTO_JOYSTICK_H
+#define SONETTO_JOYSTICK_H
 
-#include <exception>
-#include "SonettoKernel.h"
-#include "GenericModuleFactory.h"
+#include <OgreSharedPtr.h>
+#include <OgreVector2.h>
+#include <SDL/SDL_joystick.h>
+#include "SonettoPrerequisites.h"
+#include "SonettoInputSource.h"
 
-#ifdef WINDOWS
-INT WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT )
-#else
-int main(int argc, char **argv)
-#endif
+namespace Sonetto
 {
-    try {
-        GenericModuleFactory *factory = new GenericModuleFactory;
+    /// Reference counted Joystick shared pointer type
+    typedef Ogre::SharedPtr<Joystick> JoystickPtr;
 
-        // Instantiates the Kernel, initializes and runs it
-        Sonetto::Kernel *kernel = new Sonetto::Kernel(factory);
-        kernel->initialize();
-        kernel->run();
-
-        // Deletes Kernel when finished running
-        delete kernel;
-    } catch(Sonetto::Exception &e) {
-        const char *what = e.what();
-        if (!what)
+    class SONETTO_API Joystick
+    {
+    public:
+        enum RawButton
         {
-            what = "An unknown error has happened,\n"
-                   "It was not possible to identify the error.";
-        }
+            RWB_NONE,
+            RWB_1,
+            RWB_2,
+            RWB_3,
+            RWB_4,
+            RWB_5,
+            RWB_6,
+            RWB_7,
+            RWB_8,
+            RWB_9,
+            RWB_10,
+            RWB_11,
+            RWB_12,
+            RWB_13,
+            RWB_14,
+            RWB_15,
+            RWB_16,
+            RWB_FIRST_HAT,
+            RWB_HAT_UP = RWB_FIRST_HAT,
+            RWB_HAT_RIGHT,
+            RWB_HAT_DOWN,
+            RWB_HAT_LEFT
+        };
 
-        #ifdef WINDOWS
-            MessageBox(NULL,what,"Game Runtime Error",
-                    MB_OK|MB_ICONERROR|MB_TASKMODAL);
-        #else
-            cerr << "[!] Game Runtime Error\n" << what << "\n";
-        #endif
-    } catch(std::exception &e) {
-        std::cerr << e.what() << std::endl;
-    }
+        enum RawAnalog
+        {
+            RWA_NONE,
+            RWA_1,
+            RWA_2
+        };
 
-    return 0;
-}
+        Joystick(uint16 id) : mID(id),mJoy(NULL) {}
+
+        virtual ~Joystick();
+
+        // Winmm hack
+        bool isPlugged();
+
+        inline uint16 getID() const { return mID; }
+
+        inline bool isEnabled() const { return (mJoy != NULL); }
+
+        void setEnabled(bool enable);
+
+        bool getRawButtonState(RawButton button);
+
+        Ogre::Vector2 getRawAnalogState(RawAnalog analog);
+
+    protected:
+        uint16 mID;
+
+        SDL_Joystick *mJoy;
+    };
+} // namespace
+
+#endif
+

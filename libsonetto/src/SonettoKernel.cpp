@@ -245,7 +245,9 @@ namespace Sonetto
         // Flips loading screen (temporary)
         SDL_Flip(mWindow);
 
-        // <todo> Initialize managers
+        // Initializes input manager
+        mInputMan = new InputManager(4);
+        mInputMan->initialize();
 
         // Resets video mode to loaded configurations
         mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,
@@ -281,6 +283,9 @@ namespace Sonetto
                 delete mModuleStack.top();
                 mModuleStack.pop();
             }
+
+            // Deletes input manager
+            delete mInputMan;
 
             // Deletes Ogre
             delete mOgre;
@@ -348,6 +353,9 @@ namespace Sonetto
 
                 default: break;
             }
+
+            // Updates input manager
+            mInputMan->update();
 
             // Checks whether the stack is empty
             if (mModuleStack.empty())

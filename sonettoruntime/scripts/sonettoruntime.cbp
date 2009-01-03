@@ -18,6 +18,7 @@
 					<Add option="-g" />
 					<Add option="-DWINDOWS" />
 					<Add option="-DDEBUG" />
+					<Add directory="..\..\dependencies\include\DirectX" />
 				</Compiler>
 				<Linker>
 					<Add library="sonetto_d" />
@@ -43,6 +44,7 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DWINDOWS" />
+					<Add directory="..\..\dependencies\include\DirectX" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
