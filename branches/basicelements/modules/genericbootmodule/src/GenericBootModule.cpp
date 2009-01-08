@@ -85,7 +85,7 @@ namespace BootModule
         //mDebugText->setMaterialName(font->mMaterial->getName());
         mDebugText->setDimensions(1.0, 1.0);
         mDebugText->setPosition(20.0f/480.0f,20.0f/480.0f);
-        mDebugText->mText = std::string("Prism Barrier\nRaging Beast\nWater Laser\n\x1B\x80\x1Red\x1B\x80\x2 Green\x1B\x80\x3 Blue\x1B\x81 Color Reset.\n\x1B\x82\xFF\xFF\xFFCustom RGB Text Color!");
+        mDebugText->mText = std::string("Prism Barrier\nRaging Beast\nWater Laser\n\x1B\x80\x1Red\x1B\x80\x2 Green\x1B\x80\x3 Blue\x1B\x81 Color Reset.\n\x1B\x82\xFF\xFF\xFF-Custom RGB Text Color!");
 
         mOverlay->add2D(lOverlayContainer);
         lOverlayContainer->addChild(mDebugText);
