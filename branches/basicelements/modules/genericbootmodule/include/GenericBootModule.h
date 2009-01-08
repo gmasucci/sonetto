@@ -31,11 +31,8 @@ POSSIBILITY OF SUCH DAMAGE.
 #define BOOTMODULE_GENERICBOOTMODULE_H
 
 #include "SonettoBootModule.h"
-
-#include "SonettoPrerequisites.h"
-#include "SonettoFontManager.h"
 #include "SonettoFont.h"
-#include "SonettoFontSerializer.h"
+#include "SonettoPrerequisites.h"
 
 namespace BootModule
 {
@@ -117,6 +114,7 @@ namespace BootModule
         }
     };
     // Temporary ----------------------------------------------------
+
 
 } // namespace
 

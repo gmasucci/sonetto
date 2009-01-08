@@ -31,6 +31,9 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "SonettoPrerequisites.h"
 #include "SonettoKernel.h"
+#include "SonettoFontManager.h"
+#include "SonettoFont.h"
+#include "SonettoFontSerializer.h"
 
 namespace BootModule
 {
@@ -50,13 +53,46 @@ namespace BootModule
         ManualFontLoader * fontloader = new ManualFontLoader();
         Ogre::ResourceGroupManager::getSingleton().createResourceGroup("TEMP");
         Ogre::ResourceGroupManager::getSingleton ().declareResource("font.bin", "SFont", "TEMP", fontloader);
+        Ogre::ResourceGroupManager::getSingleton ().addResourceLocation("font","FileSystem","TEMP");
+        Ogre::ResourceGroupManager::getSingleton ().declareResource("baar_sophia.sfn", "SFont", "TEMP");
         Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("TEMP");
-        Sonetto::FontPtr font = Sonetto::Kernel::getSingletonPtr()->mFontMan->load("font.bin", "TEMP");
+        Sonetto::FontPtr afont = Sonetto::Kernel::getSingletonPtr()->mFontMan->load("font.bin", "TEMP");
         Sonetto::FontSerializer serializer;
-        serializer.exportFont((Sonetto::Font*)font.getPointer(), "baar_sophia.sfn");
+        serializer.exportFont((Sonetto::Font*)afont.getPointer(), "font/baar_sophia.sfn");
+        Sonetto::FontPtr font = Sonetto::Kernel::getSingletonPtr()->mFontMan->load("baar_sophia.sfn", "TEMP");
+/*
+        Sonetto::Kernel::getSingleton().mDatabase.system.defaultFont = font.getPointer();
+        Sonetto::Kernel::getSingleton().mDatabase.system.textSize = 0.05f;
+        Sonetto::Kernel::getSingleton().mDatabase.system.textAnimationSpeed = 1.0f;
+        Sonetto::Kernel::getSingleton().mDatabase.system.textFadeInSpeed = 1.0f;
+        Sonetto::Kernel::getSingleton().mDatabase.system.textFadeOutSpeed = 1.0f;
+        Sonetto::Kernel::getSingleton().mDatabase.system.textHorizontalScale = 1.0f;
+        Sonetto::Kernel::getSingleton().mDatabase.system.textVerticalSpacing = 1.0f;
+        Sonetto::Kernel::getSingleton().mDatabase.system.defaultColor = 0;
+*/
+/*
+        Ogre::ResourceGroupManager::getSingleton().createResourceGroup("TEMP");
+        Ogre::ResourceGroupManager::getSingleton().addResourceLocation("temp","FileSystem","TEMP");
+        Ogre::ResourceGroupManager::getSingleton ().declareResource("baar_sophia.material", "Material", "TEMP");
+        Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("TEMP");*/
 
+        Ogre::OverlayContainer * lOverlayContainer = static_cast<Ogre::OverlayContainer*>(Sonetto::Kernel::getSingleton().mOverlayMan->createOverlayElement("Panel","DbgContainer"));
+        lOverlayContainer->setPosition(-(80.0f/480.0f),0.0f);
+        lOverlayContainer->setDimensions(1.0f,1.0f);
+
+        Sonetto::StaticTextElement * mDebugText = static_cast<Sonetto::StaticTextElement*>(Sonetto::Kernel::getSingleton().mOverlayMan->createOverlayElement("StaticText", "DbgOverlay"));
+        mDebugText->mpFont = font.getPointer();
+        //mDebugText->setMaterialName(font->mMaterial->getName());
+        mDebugText->setDimensions(1.0, 1.0);
+        mDebugText->setPosition(20.0f/480.0f,20.0f/480.0f);
+        mDebugText->mText = std::string("Prism Barrier\nRaging Beast\nWater Laser");
+
+        mOverlay->add2D(lOverlayContainer);
+        lOverlayContainer->addChild(mDebugText);
+        lOverlayContainer->show();
+        mDebugText->show();
     }
-    // ----------------------------------------------------------------------
+    // #include "OgreRoot.h"
     void GenericBootModule::update()
     {
         BootModule::update();

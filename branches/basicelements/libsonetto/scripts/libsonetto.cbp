@@ -120,7 +120,7 @@
 		<Unit filename="..\include\SonettoModule.h" />
 		<Unit filename="..\include\SonettoModuleFactory.h" />
 		<Unit filename="..\include\SonettoPrerequisites.h" />
-		<Unit filename="..\include\SonettoTextElement.h" />
+		<Unit filename="..\include\SonettoStaticTextElement.h" />
 		<Unit filename="..\include\SonettoTitleModule.h" />
 		<Unit filename="..\include\SonettoWorldModule.h" />
 		<Unit filename="..\resource\resource.rc">
@@ -141,7 +141,7 @@
 		<Unit filename="..\src\SonettoMenuModule.cpp" />
 		<Unit filename="..\src\SonettoModule.cpp" />
 		<Unit filename="..\src\SonettoModuleFactory.cpp" />
-		<Unit filename="..\src\SonettoTextElement.cpp" />
+		<Unit filename="..\src\SonettoStaticTextElement.cpp" />
 		<Unit filename="..\src\SonettoWorldModule.cpp" />
 		<Extensions>
 			<code_completion />

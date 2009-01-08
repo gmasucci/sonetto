@@ -58,9 +58,9 @@ namespace Sonetto
 
 		fwrite(&pFont->mVersion, sizeof(uint32), 1, mpfFile);
 		fwrite(&pFont->mEncode, sizeof(uint32), 1, mpfFile);
-		fwrite(&pFont->mVerticalOffsetTop, sizeof(uint32), 1, mpfFile);
-		fwrite(&pFont->mVerticalOffsetBottom, sizeof(uint32), 1, mpfFile);
-		fwrite(&pFont->mHorizontalScale, sizeof(uint32), 1, mpfFile);
+		fwrite(&pFont->mVerticalOffsetTop, sizeof(float), 1, mpfFile);
+		fwrite(&pFont->mVerticalOffsetBottom, sizeof(float), 1, mpfFile);
+		fwrite(&pFont->mHorizontalScale, sizeof(float), 1, mpfFile);
 
 		saveString(pFont->mIName);
 
@@ -76,6 +76,7 @@ namespace Sonetto
         uint32 mat_scene_blend_source_a = (uint32)pass->getSourceBlendFactorAlpha();
         uint32 mat_scene_blend_dest_a = (uint32)pass->getDestBlendFactorAlpha();
 
+        fwrite(&has_separate_blend, sizeof(bool), 1, mpfFile);
         fwrite(&mat_scene_blend_source, sizeof(uint32), 1, mpfFile);
         fwrite(&mat_scene_blend_dest, sizeof(uint32), 1, mpfFile);
         fwrite(&mat_scene_blend_source_a, sizeof(uint32), 1, mpfFile);
@@ -106,14 +107,14 @@ namespace Sonetto
         fwrite(&tex_address_mode_w,sizeof(uint32), 1, mpfFile);
         fwrite(&tex_filtering_min,sizeof(uint32), 1, mpfFile);
         fwrite(&tex_filtering_mag,sizeof(uint32), 1, mpfFile);
-        fwrite(&tex_border_color,sizeof(Ogre::ColourValue), 1, mpfFile);
+        fwrite(tex_border_color.ptr(),sizeof(float)*4, 1, mpfFile);
 
         uint32 colsize = (uint32)pFont->mColorList.size();
         fwrite(&colsize,sizeof(uint32), 1, mpfFile);
 
         for(int32 i = 0; i != colsize; ++i)
         {
-            fwrite(&pFont->mColorList[i],sizeof(Ogre::ColourValue), 1, mpfFile);
+            fwrite(pFont->mColorList[i].ptr(),sizeof(float)*4, 1, mpfFile);
         }
 
         for(uint32 i = 0; i != 256; ++i)
@@ -161,6 +162,7 @@ namespace Sonetto
         stream->read(&pDest->mHorizontalScale, sizeof(float));
 
         pDest->mIName = loadString(stream);
+
         // setup material
         pDest->mMaterial = Ogre::MaterialManager::getSingleton().create(pDest->mIName+"_mat",pDest->getGroup());
 
@@ -227,17 +229,23 @@ namespace Sonetto
         stream->read(&numcol, sizeof(uint32));
         for(uint32 l = 0; l != numcol; ++l)
         {
+            std::cout << "reading color #"<<l<<"...\n";
             Ogre::ColourValue color;
             stream->read(color.ptr(), sizeof(float) * 4);
             pDest->mColorList.push_back(color);
+            std::cout << "color #"<<l<<" read complete...\n";
         }
-
-        for(uint8 i = 0; i != 256; ++i)
+        std::cout << "all color values have been read correctly...\n";
+        std::cout << "reading font glyph list...\n";
+        for(uint16 i = 0; i != 256; ++i)
         {
+            std::cout << "reading glyph #"<<(int)i<<"...\n";
             FontGlyph glyph;
             stream->read(&glyph, sizeof(FontGlyph));
             pDest->mGlyph.push_back(glyph);
+            std::cout << "glyph #"<<(int)i<<" read complete...\n";
         }
+        std::cout << "all font glyph have been read correctly...\n";
         // size_t width, size_t height, size_t depth, size_t pixel format
         size_t txt_width, txt_height, txt_depth, txt_pixelformat, txt_faces, txt_mipmaps = 0;
         stream->read(&txt_width, sizeof(size_t));
@@ -246,8 +254,29 @@ namespace Sonetto
         stream->read(&txt_pixelformat, sizeof(size_t));
         stream->read(&txt_faces, sizeof(size_t));
         stream->read(&txt_mipmaps, sizeof(size_t));
+
+        std::cout <<
+        "Loading Font Texture Data...\n"
+        "Texture Width: "<<txt_width<<"\n"
+        "Texture Height: "<<txt_height<<"\n"
+        "Texture Depth: "<<txt_depth<<"\n"
+        "Texture Pixel Format: "<<txt_pixelformat<<"\n"
+        "Texture Faces: "<<txt_faces<<"\n"
+        "Texture Mipmaps: "<<txt_mipmaps<<"\n";
+
         pDest->mFontImage = new Ogre::Image();
-        pDest->mFontImage->loadRawData(stream, txt_width, txt_height, txt_depth, (Ogre::PixelFormat)txt_pixelformat, txt_faces, txt_mipmaps);
+
+        size_t totalimagesize = Ogre::Image::calculateSize(txt_mipmaps, txt_faces, txt_width, txt_height, txt_depth, (Ogre::PixelFormat)txt_pixelformat);
+
+        std::cout << "Current position at file: "<<stream->tell()<<"\n"
+        "Target Image Size: "<<totalimagesize<<"\n"
+        "Remaining File Size: "<<stream->size()<<"\n";
+
+        unsigned char * imgbuffer = new unsigned char [totalimagesize];
+
+        stream->read(imgbuffer, totalimagesize);
+
+        pDest->mFontImage->loadDynamicImage(imgbuffer, txt_width, txt_height, txt_depth, (Ogre::PixelFormat)txt_pixelformat, true, txt_faces, txt_mipmaps);
 
         Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().loadImage(pDest->mIName+"_tex",pDest->getGroup(), *pDest->mFontImage, Ogre::TEX_TYPE_2D, 0);
 
@@ -263,12 +292,13 @@ namespace Sonetto
         stringbuffer[strsize] = '\0';
         std::string rstring = stringbuffer;
         delete[] stringbuffer;
+        return rstring;
     }
     // ----------------------------------------------------------------------
     void FontSerializer::saveString(const std::string &str)
     {
-        uint32 strsize = str.size();
-        fwrite(&strsize, sizeof(uint32), 1, mpfFile);
+        uint16 strsize = str.size();
+        fwrite(&strsize, sizeof(uint16), 1, mpfFile);
         fwrite(str.c_str(), strsize, 1, mpfFile);
     }
 }; // namespace

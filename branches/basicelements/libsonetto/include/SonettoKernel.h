@@ -38,9 +38,29 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "SonettoModule.h"
 #include "SonettoModuleFactory.h"
 #include "SonettoFontManager.h"
+#include "SonettoStaticTextElement.h"
+
 
 namespace Sonetto
 {
+    // Move this to its own file, I've just put it here to test the TextElement.
+    struct GameSystem
+    {
+        float textSize;
+        float textAnimationSpeed;
+        float textFadeInSpeed;
+        float textFadeOutSpeed;
+        float textHorizontalScale;
+        float textVerticalSpacing;
+        //Font * defaultFont;
+        uint8 defaultColor;
+    };
+    class SONETTO_API Database
+    {
+    public:
+        GameSystem system;
+    };
+
     /** Sonetto Kernel
 
         This singleton is the core of this library. When its time to run Sonetto,
@@ -97,7 +117,8 @@ namespace Sonetto
                 : mModuleFactory(moduleFactory),
                   mScreenWidth(640),mScreenHeight(480),
                   mIsFullScreen(false),
-                  mInitialized(false) {}
+                  mInitialized(false),
+                  mAspectRatio(640.0f/480.0f) {}
 
         /** Destructor
 
@@ -204,11 +225,17 @@ namespace Sonetto
         /// Current Screen Pixel Aspect Ratio.
         float mAspectRatio;
 
+        /// Frame Time.
+        float mFrameTime;
+
         /// Pointer to OverlayManager.
         Ogre::OverlayManager *mOverlayMan;
 
-        // Sonetto Managers
+        Database mDatabase;
+
         FontManager * mFontMan;
+
+        // Sonetto Managers
 
     private:
         /// Loads configuration from file and configures Sonetto

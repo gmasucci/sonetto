@@ -269,6 +269,10 @@ namespace Sonetto
         // <todo> Initialize managers
         mFontMan = new FontManager();
 
+        // Initialize Objects/Elements;
+        StaticTextElementFactory * mTextElementFactory = new StaticTextElementFactory();
+        mOverlayMan->addOverlayElementFactory(mTextElementFactory);
+
         // Resets video mode to loaded configurations
         mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,
                 Ogre::StringConverter::parseUnsignedInt(
