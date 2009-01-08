@@ -50,15 +50,15 @@ namespace BootModule
         BootModule::initialize();
         setBgColor(Ogre::ColourValue(16.0f/255.0f,16.0f/255.0f,235.0f/255.0f));
 
-        ManualFontLoader * fontloader = new ManualFontLoader();
+        //ManualFontLoader * fontloader = new ManualFontLoader();
         Ogre::ResourceGroupManager::getSingleton().createResourceGroup("TEMP");
-        Ogre::ResourceGroupManager::getSingleton ().declareResource("font.bin", "SFont", "TEMP", fontloader);
+        //Ogre::ResourceGroupManager::getSingleton ().declareResource("font.bin", "SFont", "TEMP", fontloader);
         Ogre::ResourceGroupManager::getSingleton ().addResourceLocation("font","FileSystem","TEMP");
         Ogre::ResourceGroupManager::getSingleton ().declareResource("baar_sophia.sfn", "SFont", "TEMP");
         Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup("TEMP");
-        Sonetto::FontPtr afont = Sonetto::Kernel::getSingletonPtr()->mFontMan->load("font.bin", "TEMP");
-        Sonetto::FontSerializer serializer;
-        serializer.exportFont((Sonetto::Font*)afont.getPointer(), "font/baar_sophia.sfn");
+        //Sonetto::FontPtr afont = Sonetto::Kernel::getSingletonPtr()->mFontMan->load("font.bin", "TEMP");
+        //Sonetto::FontSerializer serializer;
+        //serializer.exportFont((Sonetto::Font*)afont.getPointer(), "font/baar_sophia.sfn");
         Sonetto::FontPtr font = Sonetto::Kernel::getSingletonPtr()->mFontMan->load("baar_sophia.sfn", "TEMP");
 /*
         Sonetto::Kernel::getSingleton().mDatabase.system.defaultFont = font.getPointer();
@@ -85,7 +85,7 @@ namespace BootModule
         //mDebugText->setMaterialName(font->mMaterial->getName());
         mDebugText->setDimensions(1.0, 1.0);
         mDebugText->setPosition(20.0f/480.0f,20.0f/480.0f);
-        mDebugText->mText = std::string("Prism Barrier\nRaging Beast\nWater Laser");
+        mDebugText->mText = std::string("Prism Barrier\nRaging Beast\nWater Laser\n\x1B\x80\x1Red\x1B\x80\x2 Green\x1B\x80\x3 Blue\x1B\x81 Color Reset.\n\x1B\x82\xFF\xFF\xFFCustom RGB Text Color!");
 
         mOverlay->add2D(lOverlayContainer);
         lOverlayContainer->addChild(mDebugText);

@@ -51,7 +51,7 @@ namespace Sonetto
         // Pre Processing Opcodes
         // ----------------------
         // Hero Namme
-        SCI_HERO_NAME,
+        SCI_HERO_NAME=1,
         // Variable
         SCI_VARIABLE_INT, // Variable is Int Type
         SCI_VARIABLE_FLOAT, // Variable is Float Type
@@ -100,8 +100,9 @@ namespace Sonetto
         // Post Processing Opcodes
         // ----------------------
         // Color Opcodes
-        SCI_COLOR_CHANGE, // Change current text color
+        SCI_COLOR_CHANGE=0x80, // Change current text color
         SCI_COLOR_RESET, // Reset the current color to default
+        SCI_COLOR_SET_RGB,
         // Text Animation Speed Opcodes
         SCI_SPEED_UP, // Speed up text animation speed
         SCI_SPEED_DOWN, // Speed down text animation speed

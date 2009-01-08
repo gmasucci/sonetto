@@ -181,7 +181,6 @@ namespace Sonetto
         // Reset Text Color
         Ogre::RGBA cursorColor;
         Ogre::ColourValue color = mpFont->mColorList[0];
-        Ogre::Root::getSingleton().convertColourValue(color, &cursorColor);
 
         for(size_t p = 0; p < mStringSize;)
         {
@@ -202,6 +201,44 @@ namespace Sonetto
                 txtPosY += ((mpFont->mVerticalOffsetTop)* 2.0f) * mTextSize.y;
                 ++itr;
                 ++p;
+                break;
+                case SCT_POST_PROCESSING:
+                ++itr;
+                ++p;
+                switch(*itr)
+                {
+                    case SCI_COLOR_CHANGE:
+                    ++itr;
+                    {
+                        color = mpFont->mColorList[(unsigned char)*itr];
+                        ++itr;
+                    }
+                    ++p;
+                    ++p;
+                    break;
+                    case SCI_COLOR_RESET:
+                    ++itr;
+                    {
+                        color = mpFont->mColorList[0];
+                    }
+                    ++p;
+                    break;
+                    case SCI_COLOR_SET_RGB:
+                    ++itr;
+                    {
+                        unsigned char r = *itr;
+                        ++itr;
+                        unsigned char g = *itr;
+                        ++itr;
+                        unsigned char b = *itr;
+                        ++itr;
+                        color = Ogre::ColourValue(r/256.0f,g/256.0f,b/256.0f,1.0f);
+                    }
+                    ++p;
+                    ++p;
+                    ++p;
+                    break;
+                }
                 break;
                 default:
                 {
