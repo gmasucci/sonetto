@@ -33,6 +33,9 @@ POSSIBILITY OF SUCH DAMAGE.
 #   include <dirent.h>
 #endif
 #include "SonettoKernel.h"
+#include "SonettoDatabase.h"
+#include "SonettoInputManager.h"
+#include "SonettoScriptManager.h"
 
 namespace Sonetto
 {
@@ -46,6 +49,8 @@ namespace Sonetto
         Ogre::NameValuePairList wndParamList;
         SDL_SysWMinfo wmInfo;
         const char *defaultCfgName = "defaultcfg.dat";
+        mScreenWidth = DEFAULT_SCREEN_WIDTH;
+        mScreenHeight = DEFAULT_SCREEN_HEIGHT;
 
         // Checks if wasn't initialized yet
         if (mInitialized)
@@ -245,6 +250,11 @@ namespace Sonetto
         // Flips loading screen (temporary)
         SDL_Flip(mWindow);
 
+        mScriptMan = new ScriptManager();
+
+        mDatabase = new Database();
+        mDatabase->initialize();
+
         // Initializes input manager
         mInputMan = new InputManager(4);
         mInputMan->initialize();
@@ -286,6 +296,10 @@ namespace Sonetto
 
             // Deletes input manager
             delete mInputMan;
+
+            delete mScriptMan;
+
+            delete mDatabase;
 
             // Deletes Ogre
             delete mOgre;

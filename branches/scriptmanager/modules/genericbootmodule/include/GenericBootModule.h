@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef BOOTMODULE_GENERICBOOTMODULE_H
 #define BOOTMODULE_GENERICBOOTMODULE_H
 
+#include "SonettoScript.h"
 #include "SonettoBootModule.h"
 
 namespace BootModule
@@ -46,6 +47,9 @@ namespace BootModule
 
         void halt();
         void resume();
+
+    private:
+        Sonetto::Script *mScript;
     };
 } // namespace
 

@@ -64,7 +64,7 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     void InputManager::initialize()
     {
-        for (size_t i = 1;i <= SDL_NumJoysticks();++i)
+        for (int i = 1;i <= SDL_NumJoysticks();++i)
         {
             mJoysticks.push_back(JoystickPtr(new Joystick(i)));
         }

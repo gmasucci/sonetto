@@ -82,6 +82,21 @@ namespace Sonetto
     class PlayerInput;
     class InputSource;
     class Joystick;
+    class ScriptManager;
+    class ScriptFile;
+    class ScriptFilePtr;
+    class Script;
+    class OpcodeHandler;
+    class OpcodeArgument;
+    class Opcode;
+    class OpFlowStop;
+    class OpFlowJmp;
+    class OpFlowCJmp;
+    class ScriptFlowHandler;
+    class Database;
+    class Savemap;
+    class Variable;
+    class ScriptDataHandler;
 } // namespace
 
 #define MKFOURCC(c0,c1,c2,c3) ((uint32)(uint8)(c0)|((uint32)(uint8)(c1)<<8)|((uint32)(uint8)(c2)<<16)|((uint32)(uint8)(c3)<<24))

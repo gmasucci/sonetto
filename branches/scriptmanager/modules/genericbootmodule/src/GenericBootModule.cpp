@@ -29,6 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include <SDL/SDL.h>
 #include "SonettoInputManager.h"
+#include "SonettoScriptManager.h"
 #include "GenericBootModule.h"
 
 namespace BootModule
@@ -40,9 +41,22 @@ namespace BootModule
     // ----------------------------------------------------------------------
     GenericBootModule::~GenericBootModule() {}
     // ----------------------------------------------------------------------
-    void GenericBootModule::initialize() {}
+    void GenericBootModule::initialize()
+    {
+        Ogre::ResourceGroupManager *groupMan =
+                Ogre::ResourceGroupManager::getSingletonPtr();
+
+        groupMan->addResourceLocation("resources","FileSystem");
+        groupMan->initialiseAllResourceGroups();
+
+        mScript = Sonetto::ScriptManager::getSingleton().createScript("test.ssf",
+                Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,NULL);
+    }
     // ----------------------------------------------------------------------
-    void GenericBootModule::update() {}
+    void GenericBootModule::update()
+    {
+        Sonetto::ScriptManager::getSingleton().updateScript(mScript);
+    }
     // ----------------------------------------------------------------------
     void GenericBootModule::deinitialize() {}
     // ----------------------------------------------------------------------

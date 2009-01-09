@@ -37,10 +37,12 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "SonettoPrerequisites.h"
 #include "SonettoModule.h"
 #include "SonettoModuleFactory.h"
-#include "SonettoInputManager.h"
 
 namespace Sonetto
 {
+    const size_t DEFAULT_SCREEN_WIDTH = 640;
+    const size_t DEFAULT_SCREEN_HEIGHT = 480;
+
     /** Sonetto Kernel
 
         This singleton is the core of this library. When its time to run Sonetto,
@@ -95,7 +97,6 @@ namespace Sonetto
         */
         Kernel(const ModuleFactory *moduleFactory)
                 : mModuleFactory(moduleFactory),
-                  mScreenWidth(640),mScreenHeight(480),
                   mIsFullScreen(false),
                   mInitialized(false) {}
 
@@ -240,6 +241,12 @@ namespace Sonetto
 
         /// SDL Surface (Window)
         SDL_Surface *mWindow;
+
+        Database *mDatabase;
+
+        ScriptManager *mScriptMan;
+
+        ScriptFlowHandler *mScriptFlowHandler;
 
         /// InputManager
         InputManager *mInputMan;
