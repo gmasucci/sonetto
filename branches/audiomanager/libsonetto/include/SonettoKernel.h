@@ -37,7 +37,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "SonettoPrerequisites.h"
 #include "SonettoModule.h"
 #include "SonettoModuleFactory.h"
-#include "SonettoInputManager.h"
 
 namespace Sonetto
 {
@@ -240,6 +239,10 @@ namespace Sonetto
 
         /// SDL Surface (Window)
         SDL_Surface *mWindow;
+
+        Database *mDatabase;
+
+        AudioManager *mAudioMan;
 
         /// InputManager
         InputManager *mInputMan;

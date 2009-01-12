@@ -33,6 +33,9 @@ POSSIBILITY OF SUCH DAMAGE.
 #   include <dirent.h>
 #endif
 #include "SonettoKernel.h"
+#include "SonettoDatabase.h"
+#include "SonettoAudioManager.h"
+#include "SonettoInputManager.h"
 
 namespace Sonetto
 {
@@ -245,6 +248,12 @@ namespace Sonetto
         // Flips loading screen (temporary)
         SDL_Flip(mWindow);
 
+        mDatabase = new Database();
+        mDatabase->initialize();
+
+        mAudioMan = new AudioManager();
+        mAudioMan->initialize();
+
         // Initializes input manager
         mInputMan = new InputManager(4);
         mInputMan->initialize();
@@ -286,6 +295,10 @@ namespace Sonetto
 
             // Deletes input manager
             delete mInputMan;
+
+            delete mAudioMan;
+
+            delete mDatabase;
 
             // Deletes Ogre
             delete mOgre;
@@ -353,6 +366,9 @@ namespace Sonetto
 
                 default: break;
             }
+
+            // <todo> Use deltatime
+            mAudioMan->_update(1.0f);
 
             // Updates input manager
             mInputMan->update();

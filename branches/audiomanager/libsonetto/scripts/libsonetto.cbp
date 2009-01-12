@@ -110,20 +110,27 @@
 			<Add library="winmm" />
 			<Add library="dxguid" />
 			<Add library="dinput8" />
+			<Add library="openal" />
+			<Add library="vorbisfile" />
+			<Add library="vorbis" />
+			<Add library="ogg" />
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
 		<Unit filename="..\include\SonettoAudioManager.h" />
 		<Unit filename="..\include\SonettoBattleModule.h" />
 		<Unit filename="..\include\SonettoBootModule.h" />
+		<Unit filename="..\include\SonettoDatabase.h" />
 		<Unit filename="..\include\SonettoException.h" />
 		<Unit filename="..\include\SonettoInputManager.h" />
 		<Unit filename="..\include\SonettoInputSource.h" />
 		<Unit filename="..\include\SonettoJoystick.h" />
 		<Unit filename="..\include\SonettoKernel.h" />
 		<Unit filename="..\include\SonettoMapModule.h" />
+		<Unit filename="..\include\SonettoMath.h" />
 		<Unit filename="..\include\SonettoMenuModule.h" />
 		<Unit filename="..\include\SonettoModule.h" />
 		<Unit filename="..\include\SonettoModuleFactory.h" />
+		<Unit filename="..\include\SonettoMusic.h" />
 		<Unit filename="..\include\SonettoMusicStream.h" />
 		<Unit filename="..\include\SonettoPlayerInput.h" />
 		<Unit filename="..\include\SonettoPrerequisites.h" />
@@ -140,6 +147,7 @@
 		</Unit>
 		<Unit filename="..\src\SonettoAudioManager.cpp" />
 		<Unit filename="..\src\SonettoBattleModule.cpp" />
+		<Unit filename="..\src\SonettoDatabase.cpp" />
 		<Unit filename="..\src\SonettoException.cpp" />
 		<Unit filename="..\src\SonettoInputManager.cpp" />
 		<Unit filename="..\src\SonettoJoystick.cpp" />
