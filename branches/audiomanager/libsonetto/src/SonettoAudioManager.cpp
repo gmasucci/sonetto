@@ -285,6 +285,7 @@ namespace Sonetto
         strcpy(constlessStr,path.c_str());
 
         // Opens file and checks for errors
+        // <todo> Check for -1
         errCode = ov_fopen(constlessStr,&file);
         if (errCode != 0)
         {
@@ -293,14 +294,24 @@ namespace Sonetto
         }
 
         // Not needed anymore
-        delete constlessStr;
+        delete[] constlessStr;
 
         // Gets sound length to create audio buffer
-        soundLen = static_cast<size_t>(ov_pcm_total(&file,-1))*2;
+        soundLen = static_cast<size_t>(ov_pcm_total(&file,-1));
         if ((int)soundLen == OV_EINVAL)
         {
             SONETTO_THROW("Failed telling OGG/Vorbis sound length ("+
                     Ogre::StringConverter::toString((int)soundLen)+")");
+        }
+
+        // Gets information about the stream and figures
+        // whether the format is mono or stereo
+        if (file.vi->channels == 1) {
+            format = AL_FORMAT_MONO16;
+            soundLen *= 2;
+        } else {
+            format = AL_FORMAT_STEREO16;
+            soundLen *= 4;
         }
 
         // Creates OpenAL buffer
@@ -342,14 +353,6 @@ namespace Sonetto
             }
         }
 
-        // Gets information about the stream and figures
-        // whether the format is mono or stereo
-        if (file.vi->channels == 1) {
-            format = AL_FORMAT_MONO16;
-        } else {
-            format = AL_FORMAT_STEREO16;
-        }
-
         // Fills an OpenAL audio data buffer with our
         // just decompressed audio data
         alBufferData(buffer,format,tmpBuffer,offset,file.vi->rate);
@@ -357,7 +360,7 @@ namespace Sonetto
 
         // Closes OGG/Vorbis file and deletes temporary buffer
         ov_clear(&file);
-        delete tmpBuffer;
+        delete[] tmpBuffer;
 
         // Inserts our buffer as a loaded sound in mSounds
         mSounds.insert(std::pair<size_t,Sound>(id,Sound(buffer)));
@@ -379,9 +382,7 @@ namespace Sonetto
             // If the IDs are the same, invalidate it
             if (snd->getSoundID() == id)
             {
-                // Invalidating a sound source will deattach the buffer from it,
-                // so that we can successfully delete the buffer
-                snd->_invalidate();
+                snd->setSoundID(0);
             }
         }
 

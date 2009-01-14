@@ -67,9 +67,8 @@ namespace Sonetto
 
         inline size_t getSoundID() const { return mSoundID; }
 
-        inline bool isValid() const { return (mSoundID > 0); }
-
-        void _invalidate();
+        void setSoundID(size_t id);
+        void setNode(Ogre::Node *node);
 
         void _update();
 

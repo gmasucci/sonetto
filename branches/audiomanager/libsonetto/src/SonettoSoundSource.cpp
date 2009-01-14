@@ -35,39 +35,22 @@ namespace Sonetto
     // Sonetto::SoundSource implementation.
     //-----------------------------------------------------------------------------
     SoundSource::SoundSource(size_t id,Ogre::Node *node)
-            : mSoundID(id), mMaxVolume(1.0f), mNode(node)
+            : mMaxVolume(1.0f)
     {
         Ogre::Vector3 pos;
 
         // Gets AudioManager singleton
         mAudioMan = AudioManager::getSingletonPtr();
 
-        // Generates OpenAL audio source
-        alGenSources(1,&mALSource);
-        mAudioMan->_alErrorCheck("SoundSource::SoundSource()","Failed generating "
-                "OpenAL audio source");
-
-        // Attaches buffer to sound source
-        alSourcei(mALSource,AL_BUFFER,mAudioMan->_getSound(mSoundID).buffer);
-        mAudioMan->_alErrorCheck("SoundSource::SoundSource()","Failed attaching "
-                "audio buffer to OpenAL audio source");
-
-        if (mNode) {
-            pos = mNode->_getDerivedPosition();
-        } else {
-            pos = mAudioMan->_getListenerPos();
-        }
-
-        alSource3f(mALSource,AL_POSITION,pos.x,pos.y,pos.z);
-        mAudioMan->_alErrorCheck("SoundSource::SoundSource()","Failed positioning "
-                "OpenAL audio source");
+        setSoundID(id);
+        setNode(node);
     }
     //-----------------------------------------------------------------------------
     SoundSource::~SoundSource()
     {
         // If this sound source is invalid, its OpenAL audio source was already
         // deleted, so we can't do this again
-        if (isValid())
+        if (mSoundID > 0)
         {
             // Deletes OpenAL audio source
             alDeleteSources(1,&mALSource);
@@ -78,9 +61,10 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     void SoundSource::setMaxVolume(float maxVolume)
     {
-        if (isValid())
+        mMaxVolume = Math::clamp(maxVolume,0.0f,1.0f);
+
+        if (mSoundID > 0)
         {
-            mMaxVolume = Math::clamp(maxVolume,0.0f,1.0f);
             alSourcef(mALSource,AL_GAIN,maxVolume *
                     mAudioMan->getMasterSoundVolume());
             mAudioMan->_alErrorCheck("SoundSource::setMaxVolume()","Failed setting "
@@ -91,7 +75,7 @@ namespace Sonetto
     SoundSourceState SoundSource::getState() const
     {
         // If this sound source is invalid, this method will report it is stopped
-        if (isValid())
+        if (mSoundID > 0)
         {
             ALenum state;
 
@@ -113,27 +97,59 @@ namespace Sonetto
         return SSS_STOPPED;
     }
     //-----------------------------------------------------------------------------
-    void SoundSource::_invalidate()
+    void SoundSource::setSoundID(size_t id)
     {
-        // Throws an exception if the sound source was already invalidated
-        if (!isValid())
-        {
-            SONETTO_THROW("Invalidating an already invalidated sound source");
+        if (id > 0) {
+            // Generates OpenAL audio source
+            alGenSources(1,&mALSource);
+            mAudioMan->_alErrorCheck("SoundSource::setSoundID()","Failed generating "
+                    "OpenAL audio source");
+
+            // Attaches buffer to sound source
+            alSourcei(mALSource,AL_BUFFER,mAudioMan->_getSound(id).buffer);
+            mAudioMan->_alErrorCheck("SoundSource::setSoundID()","Failed attaching "
+                    "audio buffer to OpenAL audio source");
+
+            alSourcef(mALSource,AL_GAIN,mMaxVolume *
+                    mAudioMan->getMasterSoundVolume());
+            mAudioMan->_alErrorCheck("SoundSource::setSoundID()","Failed setting "
+                    "OpenAL audio source gain");
+        } else {
+            if (mSoundID > 0)
+            {
+                alDeleteSources(1,&mALSource);
+                mAudioMan->_alErrorCheck("SoundSource::setSoundID()","Failed deleting "
+                        "OpenAL audio source");
+            }
         }
 
-        // Deletes sound source (it won't be needed anymore)
-        alDeleteSources(1,&mALSource);
-        mAudioMan->_alErrorCheck("SoundSource::_removeBuffer()","Failed deleting "
-                "OpenAL audio source");
+        mSoundID = id;
+    }
+    //-----------------------------------------------------------------------------
+    void SoundSource::setNode(Ogre::Node *node)
+    {
+        mNode = node;
 
-        // Invalidates sound source
-        mSoundID = 0;
+        if (mSoundID > 0)
+        {
+            Ogre::Vector3 pos;
+
+            if (node) {
+                pos = node->_getDerivedPosition();
+            } else {
+                pos = mAudioMan->_getListenerPos();
+            }
+
+            alSource3f(mALSource,AL_POSITION,pos.x,pos.y,pos.z);
+            mAudioMan->_alErrorCheck("SoundSource::setNode()","Failed positioning "
+                    "OpenAL audio source");
+        }
     }
     //-----------------------------------------------------------------------------
     void SoundSource::_update()
     {
         // Only updates valid sound sources
-        if (isValid())
+        if (mSoundID > 0)
         {
             Ogre::Vector3 pos;
 
@@ -147,7 +163,7 @@ namespace Sonetto
 
             // Sets new sound source position
             alSource3f(mALSource,AL_POSITION,pos.x,pos.y,pos.z);
-            mAudioMan->_alErrorCheck("SoundSource::SoundSource()","Failed positioning "
+            mAudioMan->_alErrorCheck("SoundSource::_update()","Failed positioning "
                     "OpenAL audio source");
 
             // Sets sound source gain based on its local maximum volume and
@@ -161,8 +177,7 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     void SoundSource::play()
     {
-        // Only plays valid sound sources that are not playing yet
-        if (isValid() && getState() != SSS_PLAYING)
+        if (mSoundID > 0)
         {
             alSourcePlay(mALSource);
             mAudioMan->_alErrorCheck("SoundSource::play()","Failed playing "
@@ -173,7 +188,7 @@ namespace Sonetto
     void SoundSource::pause()
     {
         // Only pauses valid sound sources that are currently playing
-        if (isValid() && getState() == SSS_PLAYING)
+        if (mSoundID > 0 && getState() == SSS_PLAYING)
         {
             alSourcePause(mALSource);
             mAudioMan->_alErrorCheck("SoundSource::pause()","Failed pausing "
@@ -184,7 +199,7 @@ namespace Sonetto
     void SoundSource::stop()
     {
         // Only stops valid sound sources that are not stopped yet
-        if (isValid() && getState() != SSS_STOPPED)
+        if (mSoundID > 0 && getState() != SSS_STOPPED)
         {
             alSourceStop(mALSource);
             mAudioMan->_alErrorCheck("SoundSource::stop()","Failed stopping "

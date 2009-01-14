@@ -29,10 +29,6 @@ http://www.gnu.org/copyleft/lesser.txt
 namespace Sonetto
 {
     //-----------------------------------------------------------------------------
-    // Sonetto::Music implementation.
-    //-----------------------------------------------------------------------------
-    const char *Music::FOLDER = "music/";
-    //-----------------------------------------------------------------------------
     // Sonetto::MusicStream implementation.
     //-----------------------------------------------------------------------------
     const size_t MusicStream::BUFFER_SIZE = 163840;
@@ -208,7 +204,7 @@ namespace Sonetto
         }
 
         // We don't need this anymore
-        delete constlessStr;
+        delete[] constlessStr;
 
         // Tells the length of our stream
         mStreamLen = static_cast<size_t>(ov_pcm_total(&mFile,-1));

@@ -84,6 +84,10 @@ namespace Sonetto
     class Joystick;
     class Database;
     class AudioManager;
+    class Music;
+    class MusicStream;
+    class SoundDef;
+    class SoundSource;
     class InputManager;
 } // namespace
 

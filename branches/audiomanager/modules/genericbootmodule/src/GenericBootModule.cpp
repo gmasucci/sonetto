@@ -29,6 +29,8 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include <SDL/SDL.h>
 #include "SonettoInputManager.h"
+#include "SonettoAudioManager.h"
+#include "SonettoSoundSource.h"
 #include "GenericBootModule.h"
 
 namespace BootModule
@@ -40,9 +42,32 @@ namespace BootModule
     // ----------------------------------------------------------------------
     GenericBootModule::~GenericBootModule() {}
     // ----------------------------------------------------------------------
-    void GenericBootModule::initialize() {}
+    void GenericBootModule::initialize()
+    {
+        Sonetto::AudioManager::getSingleton().loadSound(1);
+        mSound = Sonetto::AudioManager::getSingleton().createSound(0);
+
+        Sonetto::InputManager::getSingleton().getPlayer(0)->configBtn(
+                Sonetto::BTN_CROSS,Sonetto::InputSource(true,
+                Sonetto::InputSource::IST_KEY,SDLK_x));
+        Sonetto::InputManager::getSingleton().getPlayer(0)->configBtn(
+                Sonetto::BTN_TRIANGLE,Sonetto::InputSource(true,
+                Sonetto::InputSource::IST_KEY,SDLK_z));
+        Sonetto::InputManager::getSingleton().getPlayer(0)->setEnabled(true);
+    }
     // ----------------------------------------------------------------------
-    void GenericBootModule::update() {}
+    void GenericBootModule::update()
+    {
+        Sonetto::AudioManager &audioMan = Sonetto::AudioManager::
+                getSingleton();
+        Sonetto::PlayerInput *p0 = Sonetto::InputManager::getSingleton().
+                getPlayer(0);
+
+        if (p0->getBtnState(Sonetto::BTN_CROSS) == Sonetto::KS_PRESS)
+        {
+            mSound->play();
+        }
+    }
     // ----------------------------------------------------------------------
     void GenericBootModule::deinitialize() {}
     // ----------------------------------------------------------------------

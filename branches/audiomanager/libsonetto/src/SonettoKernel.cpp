@@ -368,7 +368,7 @@ namespace Sonetto
             }
 
             // <todo> Use deltatime
-            mAudioMan->_update(1.0f);
+            mAudioMan->_update(0.001f);
 
             // Updates input manager
             mInputMan->update();

@@ -22,6 +22,7 @@ http://www.gnu.org/copyleft/lesser.txt
 
 #include "SonettoPrerequisites.h"
 #include "SonettoDatabase.h"
+#include "SonettoMusic.h"
 
 namespace Sonetto
 {
@@ -36,5 +37,7 @@ namespace Sonetto
     //--------------------------------------------------------------------------
     void Database::initialize()
     {
+        musics.push_back(Music("music.ogg",0));
+        sounds.push_back(SoundDef("sound.ogg"));
     }
 } // namespace

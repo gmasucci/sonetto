@@ -155,6 +155,7 @@
 		<Unit filename="..\src\SonettoMapModule.cpp" />
 		<Unit filename="..\src\SonettoMenuModule.cpp" />
 		<Unit filename="..\src\SonettoModuleFactory.cpp" />
+		<Unit filename="..\src\SonettoMusic.cpp" />
 		<Unit filename="..\src\SonettoMusicStream.cpp" />
 		<Unit filename="..\src\SonettoPlayerInput.cpp" />
 		<Unit filename="..\src\SonettoSoundSource.cpp" />
