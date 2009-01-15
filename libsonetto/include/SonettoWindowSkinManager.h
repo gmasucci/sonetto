@@ -27,49 +27,31 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include "SonettoModuleFactory.h"
+#ifndef SONETTO_WINDOWSKINMANAGER_H
+#define SONETTO_WINDOWSKINMANAGER_H
+
+#include <OgreResourceManager.h>
+#include "SonettoPrerequisites.h"
 
 namespace Sonetto
 {
-    // ----------------------------------------------------------------------
-    // Sonetto::ModuleFactory implementation
-    // ----------------------------------------------------------------------
-    Module *ModuleFactory::createModule(Module::ModuleType modtype) const
-    {
-        // Makes sure parameters are valid
-        assert(modtype != Module::MT_NONE);
+	class SONETTO_API WindowSkinManager : public Ogre::ResourceManager, public Ogre::Singleton<WindowSkinManager>
+	{
+    private:
+        // must implement this from ResourceManager's interface
+        Ogre::Resource *createImpl(const Ogre::String &name, Ogre::ResourceHandle handle,
+            const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader,
+            const Ogre::NameValuePairList *createParams);
+	public:
+		WindowSkinManager();
+		virtual ~WindowSkinManager();
 
-        // Creates and returns appropriate module instance
-        switch (modtype)
-        {
-            case Module::MT_BOOT:
-                return createBootModule();
-            break;
+		virtual WindowSkinPtr load(const Ogre::String &name, const Ogre::String &group);
 
-            case Module::MT_TITLE:
-                return createTitleModule();
-            break;
+        static WindowSkin &getSingleton();
+        static WindowSkin *getSingletonPtr();
 
-            case Module::MT_MAP:
-                return createMapModule();
-            break;
+	};
+}
 
-            case Module::MT_MENU:
-                return createMenuModule();
-            break;
-
-            case Module::MT_WORLD:
-                return createWorldModule();
-            break;
-
-            case Module::MT_BATTLE:
-                return createBattleModule();
-            break;
-
-            default: break; // Avoids compiler warnings
-        }
-
-        return NULL; // Avoids compiler warnings
-    }
-    // ----------------------------------------------------------------------
-} // namespace
+#endif // SONETTO_WINDOWSKINMANAGER_H

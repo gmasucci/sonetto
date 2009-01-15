@@ -639,4 +639,5 @@ namespace Sonetto
         delete[] stringbuffer;
         return rstring;
     }
+    // ----------------------------------------------------------------------
 } // namespace

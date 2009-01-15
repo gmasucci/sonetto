@@ -35,4 +35,5 @@ namespace Sonetto
     // Sonetto::BattleModule implementation
     // ----------------------------------------------------------------------
     BattleModule::_BattleData BattleModule::BattleData;
+    // ----------------------------------------------------------------------
 } // namespace

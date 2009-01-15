@@ -27,25 +27,25 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include "SonettoFontManager.h"
+#include "SonettoWindowSkinManager.cpp"
 
 namespace Sonetto
 {
     // ----------------------------------------------------------------------
-    template<> FontManager *Ogre::Singleton<FontManager>::ms_Singleton = 0;
+    template<> WindowSkinManager *Ogre::Singleton<WindowSkinManager>::ms_Singleton = 0;
     // ----------------------------------------------------------------------
-    FontManager *FontManager::getSingletonPtr()
+    WindowSkinManager *WindowSkinManager::getSingletonPtr()
     {
         return ms_Singleton;
     }
     // ----------------------------------------------------------------------
-    FontManager &FontManager::getSingleton()
+    WindowSkinManager &WindowSkinManager::getSingleton()
     {
         assert(ms_Singleton);
         return(*ms_Singleton);
     }
     // ----------------------------------------------------------------------
-    FontManager::FontManager()
+    WindowSkinManager::WindowSkinManager()
     {
         mResourceType = "WindowSkin";
 
@@ -56,28 +56,28 @@ namespace Sonetto
         Ogre::ResourceGroupManager::getSingleton()._registerResourceManager(mResourceType, this);
     }
     // ----------------------------------------------------------------------
-    FontManager::~FontManager()
+    WindowSkinManager::~WindowSkinManager()
     {
         // unregister the resource manager.
         Ogre::ResourceGroupManager::getSingleton()._unregisterResourceManager(mResourceType);
     }
     // ----------------------------------------------------------------------
-    FontPtr FontManager::load(const Ogre::String &name, const Ogre::String &group)
+    WindowSkinPtr WindowSkinManager::load(const Ogre::String &name, const Ogre::String &group)
     {
-        FontPtr fontf = getByName(name);
+        WindowSkinPtr WindowSkinf = getByName(name);
 
-        if (fontf.isNull())
-            fontf = create(name, group);
+        if (WindowSkinf.isNull())
+            WindowSkinf = create(name, group);
 
-        fontf->load();
-        return fontf;
+        WindowSkinf->load();
+        return WindowSkinf;
     }
     // ----------------------------------------------------------------------
-    Ogre::Resource *FontManager::createImpl(const Ogre::String &name, Ogre::ResourceHandle handle,
+    Ogre::Resource *WindowSkinManager::createImpl(const Ogre::String &name, Ogre::ResourceHandle handle,
                                                 const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader,
                                                 const Ogre::NameValuePairList *createParams)
     {
-        return new Font(this, name, handle, group, isManual, loader);
+        return new WindowSkin(this, name, handle, group, isManual, loader);
     }
     // ----------------------------------------------------------------------
 } // namespace

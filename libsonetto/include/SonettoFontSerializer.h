@@ -28,7 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
 #ifndef SONETTO_FONTSERIALIZER_H
-#define SONETTO_FONTSERIALIZER_HFont
+#define SONETTO_FONTSERIALIZER_H
 
 #include <OgreSerializer.h>
 #include "SonettoPrerequisites.h"

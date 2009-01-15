@@ -317,4 +317,5 @@ namespace Sonetto
         cvbuf->unlock();
         vbuf->unlock();
     }
+    // ----------------------------------------------------------------------
 } // namespace

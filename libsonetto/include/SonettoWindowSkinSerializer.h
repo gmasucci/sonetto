@@ -27,49 +27,26 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include "SonettoModuleFactory.h"
+#ifndef SONETTO_WindowSkinSerializer_H
+#define SONETTO_WindowSkinSerializer_H
 
-namespace Sonetto
+#include <OgreSerializer.h>
+#include "SonettoPrerequisites.h"
+
+namespace SONETTO_API Sonetto
 {
-    // ----------------------------------------------------------------------
-    // Sonetto::ModuleFactory implementation
-    // ----------------------------------------------------------------------
-    Module *ModuleFactory::createModule(Module::ModuleType modtype) const
-    {
-        // Makes sure parameters are valid
-        assert(modtype != Module::MT_NONE);
+    class WindowSkin;
 
-        // Creates and returns appropriate module instance
-        switch (modtype)
-        {
-            case Module::MT_BOOT:
-                return createBootModule();
-            break;
+	class WindowSkinSerializer : Ogre::Serializer
+	{
+	public:
+		WindowSkinSerializer() {}
+		virtual ~WindowSkinSerializer() {}
 
-            case Module::MT_TITLE:
-                return createTitleModule();
-            break;
+		void exportWindowSkin(const WindowSkin *pWindowSkin, const Ogre::String &fileName);
+        void importWindowSkin(Ogre::DataStreamPtr &stream, WindowSkin *pDest);
 
-            case Module::MT_MAP:
-                return createMapModule();
-            break;
-
-            case Module::MT_MENU:
-                return createMenuModule();
-            break;
-
-            case Module::MT_WORLD:
-                return createWorldModule();
-            break;
-
-            case Module::MT_BATTLE:
-                return createBattleModule();
-            break;
-
-            default: break; // Avoids compiler warnings
-        }
-
-        return NULL; // Avoids compiler warnings
-    }
-    // ----------------------------------------------------------------------
+	};
 } // namespace
+
+#endif // SONETTO_WindowSkinSerializer_H

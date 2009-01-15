@@ -27,49 +27,43 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include "SonettoModuleFactory.h"
+#include "SonettoWindowSkin.h"
 
 namespace Sonetto
 {
     // ----------------------------------------------------------------------
-    // Sonetto::ModuleFactory implementation
+    uint32 Font::mFourCC = MKFOURCC('S','W','N','0');
     // ----------------------------------------------------------------------
-    Module *ModuleFactory::createModule(Module::ModuleType modtype) const
+    WindowSkin::WindowSkin( Ogre::ResourceManager *creator, const Ogre::String &name,
+                Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual,
+                Ogre::ManualResourceLoader *loader) :
+                Ogre::Resource(creator, name, handle, group, isManual, loader)
     {
-        // Makes sure parameters are valid
-        assert(modtype != Module::MT_NONE);
-
-        // Creates and returns appropriate module instance
-        switch (modtype)
-        {
-            case Module::MT_BOOT:
-                return createBootModule();
-            break;
-
-            case Module::MT_TITLE:
-                return createTitleModule();
-            break;
-
-            case Module::MT_MAP:
-                return createMapModule();
-            break;
-
-            case Module::MT_MENU:
-                return createMenuModule();
-            break;
-
-            case Module::MT_WORLD:
-                return createWorldModule();
-            break;
-
-            case Module::MT_BATTLE:
-                return createBattleModule();
-            break;
-
-            default: break; // Avoids compiler warnings
-        }
-
-        return NULL; // Avoids compiler warnings
     }
     // ----------------------------------------------------------------------
-} // namespace
+    WindowSkin::~WindowSkin()
+    {
+        unload()
+    }
+    // ----------------------------------------------------------------------
+    void WindowSkin::loadImpl()
+    {
+        WindowSkinSerializer serializer;
+        Ogre::DataStreamPtr stream = Ogre::ResourceGroupManager::getSingleton().openResource(mName, mGroup, true, this);
+        serializer.importWindowSkin(stream, this);
+    }
+    // ----------------------------------------------------------------------
+    void WindowSkin::unloadImpl()
+    {
+        mTexCoordSet.clear();
+        mMaterial.clear();
+        mImage.clear();
+    }
+    // ----------------------------------------------------------------------
+    size_t WindowSkin::calculateSize() const
+    {
+        return 0;
+    }
+    // ----------------------------------------------------------------------
+
+};

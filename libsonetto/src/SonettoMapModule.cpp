@@ -35,4 +35,5 @@ namespace Sonetto
     // Sonetto::MapModule implementation
     // ----------------------------------------------------------------------
     MapModule::_MapData MapModule::MapData;
+    // ----------------------------------------------------------------------
 } // namespace
