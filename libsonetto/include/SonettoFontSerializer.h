@@ -27,62 +27,29 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_MODULE_H
-#define SONETTO_MODULE_H
+#ifndef SONETTO_FONTSERIALIZER_H
+#define SONETTO_FONTSERIALIZER_HFont
 
-#include <stack>
-#include <Ogre.h>
+#include <OgreSerializer.h>
 #include "SonettoPrerequisites.h"
 
 namespace Sonetto
 {
-    class SONETTO_API Module
+    class Font; // forward declaration
+
+    class SONETTO_API FontSerializer : public Ogre::Serializer
     {
     public:
-        enum ModuleType
-        {
-            MT_NONE,
-            MT_BOOT,
-            MT_TITLE,
-            MT_MAP,
-            MT_MENU,
-            MT_WORLD,
-            MT_BATTLE
-        };
+        FontSerializer();
+        virtual ~FontSerializer();
 
-        Module(){}
-        virtual ~Module() {}
+        void exportFont(const Font *pFont, const Ogre::String &fileName);
+        void importFont(Ogre::DataStreamPtr &stream, Font *pDest);
 
-        virtual void initialize();
-        virtual void update();
-        virtual void deinitialize();
-
-        virtual void halt();
-        virtual void resume();
-
-        /** Change the viewport background color */
-        void setBgColor(const Ogre::ColourValue &col);
-
-        /// Pointer to the scene manager for this module.
-        Ogre::SceneManager * mSceneMan;
-
-        /// Pointer to the overlay for this module.
-        Ogre::Overlay * mOverlay;
-
-        /// Pointer to this module's camera.
-        Ogre::Camera * mCamera;
-
-        /// Pointer to the module viewport.
-        Ogre::Viewport * mViewport;
-
-        /// String containing the Overlay name for this module.
-        std::string mOverlayName;
-
-        /// Current background color for this module's viewport.
-        Ogre::ColourValue mBgColor;
+        std::string loadString(Ogre::DataStreamPtr& stream);
+        void saveString(const std::string &str);
     };
 
-    typedef std::stack<Module *> ModuleStack;
-} // namespace
+}; // namespace
 
-#endif
+#endif // SONETTO_FONTSERIALIZER_H

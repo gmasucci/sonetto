@@ -82,6 +82,19 @@ namespace Sonetto
     class PlayerInput;
     class InputSource;
     class Joystick;
+    class FontManager;
+    class Font;
+    class FontSerializer;
+    class StaticTextElement;
+    class StaticTextElementFactory;
+
+    // <todo> Find a good place for this (I don't think this is a good place to
+    // put things we don't know where to put; it will probably lead to problems of
+    // having to recompile the whole library each time you edit those things)
+    /*enum ScreenMetricsMode {
+        SMM_RELATIVE,
+        SMM_RELATIVE_ASPECT_ADJUSTED
+    };*/
 } // namespace
 
 #define MKFOURCC(c0,c1,c2,c3) ((uint32)(uint8)(c0)|((uint32)(uint8)(c1)<<8)|((uint32)(uint8)(c2)<<16)|((uint32)(uint8)(c3)<<24))

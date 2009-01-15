@@ -33,6 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #   include <dirent.h>
 #endif
 #include "SonettoKernel.h"
+#include "SonettoStaticTextElement.h"
 
 namespace Sonetto
 {
@@ -67,7 +68,7 @@ namespace Sonetto
 
         // Creates SDL rendering window with default resolutions
         // (resize later to the desired resolution)
-        mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,0,0);
+        mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,32,0);
         if (!mWindow)
         {
             SONETTO_THROW("Could not create SDL window");
@@ -77,8 +78,8 @@ namespace Sonetto
         SDL_ShowCursor(SDL_DISABLE);
         SDL_WM_SetCaption("Now Loading...","Now Loading...");
 
-        if (mLoadingImg.size() > 0)
-        {
+        /*if (mLoadingImg.size() > 0)
+        {*/
             SDL_Surface *loading;
             SDL_Rect src,dest;
 
@@ -108,8 +109,9 @@ namespace Sonetto
             SDL_Flip(mWindow);
 
             // Frees loaded loading image
-            SDL_FreeSurface(loading);
-        }
+            //SDL_BlitSurface(loading,&src,mWindow,&dest);
+            //SDL_FreeSurface(loading);
+        /*}*/
 
         // Get window info to attach Ogre at it
         SDL_VERSION(&wmInfo.version);
@@ -239,8 +241,28 @@ namespace Sonetto
         // Load and configure Sonetto
         loadConfig(mGameDataPath+mGameIdentifier+".INI",wndParamList);
 
+        int sdlwindowcfg = 0;
+
+        // Resets video mode to loaded configurations
+        if(mIsFullScreen)
+        {
+            sdlwindowcfg = SDL_FULLSCREEN;
+        } else {
+            sdlwindowcfg = 0;
+        }
+        mWindow = SDL_SetVideoMode(640,480, 32,sdlwindowcfg);
+
+        SDL_FillRect(mWindow,NULL,SDL_MapRGB(mWindow->format,
+                    mLoadingBGR,mLoadingBGG,mLoadingBGB));
+        SDL_BlitSurface(loading,&src,mWindow,&dest);
+        SDL_FreeSurface(loading);
+        SDL_Flip(mWindow);
+
         // Initialize Ogre Root
         mOgre->initialise(false);
+
+        // Get ogre managers and copy them to pointers for easy access.
+        mOverlayMan  = Ogre::OverlayManager::getSingletonPtr();
 
         // Flips loading screen (temporary)
         SDL_Flip(mWindow);
@@ -248,11 +270,16 @@ namespace Sonetto
         // Initializes input manager
         mInputMan = new InputManager(4);
         mInputMan->initialize();
+        mFontMan = new FontManager();
+
+        // Initialize Objects/Elements;
+        StaticTextElementFactory * mTextElementFactory = new StaticTextElementFactory();
+        mOverlayMan->addOverlayElementFactory(mTextElementFactory);
 
         // Resets video mode to loaded configurations
         mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,
                 Ogre::StringConverter::parseUnsignedInt(
-                wndParamList["colourDepth"]),0);
+                wndParamList["colourDepth"]),sdlwindowcfg);
 
         // Create the Ogre Render Window
         mRenderWindow = mOgre->createRenderWindow("",mScreenWidth,
@@ -286,6 +313,9 @@ namespace Sonetto
 
             // Deletes input manager
             delete mInputMan;
+
+            // Remove and delete all Sonetto Resources.
+            delete Ogre::ResourceGroupManager::getSingleton()._getResourceManager("SFont");
 
             // Deletes Ogre
             delete mOgre;
@@ -408,6 +438,16 @@ namespace Sonetto
         }
     }
     // ----------------------------------------------------------------------
+    Ogre::Root * Kernel::getOgre()
+    {
+        return mOgre;
+    }
+    // ----------------------------------------------------------------------
+    Ogre::RenderWindow * Kernel::getRenderWindow()
+    {
+        return mRenderWindow;
+    }
+    // ----------------------------------------------------------------------
     void Kernel::loadConfig(const std::string &fname,
             Ogre::NameValuePairList &wndParamList)
     {
@@ -475,6 +515,7 @@ namespace Sonetto
         if(fullscreen == "true")
         {
             mIsFullScreen = true;
+
         } else
         if(fullscreen == "false")
         {

@@ -27,62 +27,31 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_MODULE_H
-#define SONETTO_MODULE_H
+#ifndef SONETTO_FONTMANAGER_H
+#define SONETTO_FONTMANAGER_H
 
-#include <stack>
-#include <Ogre.h>
+#include <OgreResourceManager.h>
 #include "SonettoPrerequisites.h"
+#include "SonettoFont.h"
 
 namespace Sonetto
 {
-    class SONETTO_API Module
+    class SONETTO_API FontManager : public Ogre::ResourceManager, public Ogre::Singleton<FontManager>
     {
+    protected:
+        // must implement this from ResourceManager's interface
+        Ogre::Resource *createImpl(const Ogre::String &name, Ogre::ResourceHandle handle,
+            const Ogre::String &group, bool isManual, Ogre::ManualResourceLoader *loader,
+            const Ogre::NameValuePairList *createParams);
     public:
-        enum ModuleType
-        {
-            MT_NONE,
-            MT_BOOT,
-            MT_TITLE,
-            MT_MAP,
-            MT_MENU,
-            MT_WORLD,
-            MT_BATTLE
-        };
+        FontManager();
+        virtual ~FontManager();
 
-        Module(){}
-        virtual ~Module() {}
+        virtual FontPtr load(const Ogre::String &name, const Ogre::String &group);
 
-        virtual void initialize();
-        virtual void update();
-        virtual void deinitialize();
-
-        virtual void halt();
-        virtual void resume();
-
-        /** Change the viewport background color */
-        void setBgColor(const Ogre::ColourValue &col);
-
-        /// Pointer to the scene manager for this module.
-        Ogre::SceneManager * mSceneMan;
-
-        /// Pointer to the overlay for this module.
-        Ogre::Overlay * mOverlay;
-
-        /// Pointer to this module's camera.
-        Ogre::Camera * mCamera;
-
-        /// Pointer to the module viewport.
-        Ogre::Viewport * mViewport;
-
-        /// String containing the Overlay name for this module.
-        std::string mOverlayName;
-
-        /// Current background color for this module's viewport.
-        Ogre::ColourValue mBgColor;
+        static FontManager &getSingleton();
+        static FontManager *getSingletonPtr();
     };
-
-    typedef std::stack<Module *> ModuleStack;
 } // namespace
 
-#endif
+#endif // SONETTO_FONTMANAGER_H

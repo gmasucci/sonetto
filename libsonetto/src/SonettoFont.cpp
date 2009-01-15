@@ -27,62 +27,43 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_MODULE_H
-#define SONETTO_MODULE_H
-
-#include <stack>
-#include <Ogre.h>
-#include "SonettoPrerequisites.h"
+#include "SonettoFont.h"
+#include "SonettoFontSerializer.h"
 
 namespace Sonetto
 {
-    class SONETTO_API Module
+    uint32 Font::mFourCC = MKFOURCC('S','F','N','T');
+    // ----------------------------------------------------------------------
+    Font::Font( Ogre::ResourceManager *creator, const Ogre::String &name,
+                Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual,
+                Ogre::ManualResourceLoader *loader) :
+                Ogre::Resource(creator, name, handle, group, isManual, loader)
     {
-    public:
-        enum ModuleType
-        {
-            MT_NONE,
-            MT_BOOT,
-            MT_TITLE,
-            MT_MAP,
-            MT_MENU,
-            MT_WORLD,
-            MT_BATTLE
-        };
-
-        Module(){}
-        virtual ~Module() {}
-
-        virtual void initialize();
-        virtual void update();
-        virtual void deinitialize();
-
-        virtual void halt();
-        virtual void resume();
-
-        /** Change the viewport background color */
-        void setBgColor(const Ogre::ColourValue &col);
-
-        /// Pointer to the scene manager for this module.
-        Ogre::SceneManager * mSceneMan;
-
-        /// Pointer to the overlay for this module.
-        Ogre::Overlay * mOverlay;
-
-        /// Pointer to this module's camera.
-        Ogre::Camera * mCamera;
-
-        /// Pointer to the module viewport.
-        Ogre::Viewport * mViewport;
-
-        /// String containing the Overlay name for this module.
-        std::string mOverlayName;
-
-        /// Current background color for this module's viewport.
-        Ogre::ColourValue mBgColor;
-    };
-
-    typedef std::stack<Module *> ModuleStack;
+        mFontImage = NULL;
+    }
+    // ----------------------------------------------------------------------
+    Font::~Font()
+    {
+        unload();
+    }
+    // ----------------------------------------------------------------------
+    void Font::loadImpl()
+    {
+        FontSerializer serializer;
+        Ogre::DataStreamPtr stream = Ogre::ResourceGroupManager::getSingleton().openResource(mName, mGroup, true, this);
+        serializer.importFont(stream, this);
+    }
+    // ----------------------------------------------------------------------
+    void Font::unloadImpl()
+    {
+        mColorList.clear();
+        mGlyph.clear();
+        delete mFontImage;
+    }
+    // ----------------------------------------------------------------------
+    size_t Font::calculateSize() const
+    {
+        return 0;
+    }
+    // ----------------------------------------------------------------------
 } // namespace
-
-#endif

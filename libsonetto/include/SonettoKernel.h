@@ -38,9 +38,28 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "SonettoModule.h"
 #include "SonettoModuleFactory.h"
 #include "SonettoInputManager.h"
+#include "SonettoFontManager.h"
 
 namespace Sonetto
 {
+    // Move this to its own file, I've just put it here to test the TextElement.
+    struct GameSystem
+    {
+        float textSize;
+        float textAnimationSpeed;
+        float textFadeInSpeed;
+        float textFadeOutSpeed;
+        float textHorizontalScale;
+        float textVerticalSpacing;
+        //Font * defaultFont;
+        uint8 defaultColor;
+    };
+    class SONETTO_API Database
+    {
+    public:
+        GameSystem system;
+    };
+
     /** Sonetto Kernel
 
         This singleton is the core of this library. When its time to run Sonetto,
@@ -97,7 +116,8 @@ namespace Sonetto
                 : mModuleFactory(moduleFactory),
                   mScreenWidth(640),mScreenHeight(480),
                   mIsFullScreen(false),
-                  mInitialized(false) {}
+                  mInitialized(false),
+                  mAspectRatio(640.0f/480.0f) {}
 
         /** Destructor
 
@@ -195,6 +215,27 @@ namespace Sonetto
         void setAction(KernelAction kact,ModuleAction mact = MA_NONE,
                 Module::ModuleType modtype = Module::MT_NONE);
 
+        /** Returns the ogre root. */
+        Ogre::Root * getOgre();
+
+        /** Get the Render Window */
+        Ogre::RenderWindow * getRenderWindow();
+
+        /// Current Screen Pixel Aspect Ratio.
+        float mAspectRatio;
+
+        /// Frame Time.
+        float mFrameTime;
+
+        /// Pointer to OverlayManager.
+        Ogre::OverlayManager *mOverlayMan;
+
+        Database mDatabase;
+
+        FontManager * mFontMan;
+
+        // Sonetto Managers
+
     private:
         /// Loads configuration from file and configures Sonetto
         void loadConfig(const std::string &fname,Ogre::NameValuePairList &wndParamList);
@@ -229,8 +270,10 @@ namespace Sonetto
         /// Reads the Sonetto Project File
         void readSPF();
 
+    public:
         /// Reads a string from an std::ifstream given a preceeding uint16 (Temporary)
         std::string readString(std::ifstream &stream);
+    private:
 
         /// Ogre::Root instance
         Ogre::Root *mOgre;
