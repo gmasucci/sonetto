@@ -130,6 +130,9 @@
 		<Unit filename="..\include\SonettoPrerequisites.h" />
 		<Unit filename="..\include\SonettoStaticTextElement.h" />
 		<Unit filename="..\include\SonettoTitleModule.h" />
+		<Unit filename="..\include\SonettoWindowSkin.h" />
+		<Unit filename="..\include\SonettoWindowSkinManager.h" />
+		<Unit filename="..\include\SonettoWindowSkinSerializer.h" />
 		<Unit filename="..\include\SonettoWorldModule.h" />
 		<Unit filename="..\resource\resource.rc">
 			<Option compilerVar="WINDRES" />
@@ -153,6 +156,9 @@
 		<Unit filename="..\src\SonettoModuleFactory.cpp" />
 		<Unit filename="..\src\SonettoPlayerInput.cpp" />
 		<Unit filename="..\src\SonettoStaticTextElement.cpp" />
+		<Unit filename="..\src\SonettoWindowSkin.cpp" />
+		<Unit filename="..\src\SonettoWindowSkinManager.cpp" />
+		<Unit filename="..\src\SonettoWindowSkinSerializer.cpp" />
 		<Unit filename="..\src\SonettoWorldModule.cpp" />
 		<Extensions>
 			<code_completion />

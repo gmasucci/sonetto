@@ -301,4 +301,5 @@ namespace Sonetto
         fwrite(&strsize, sizeof(uint16), 1, mpfFile);
         fwrite(str.c_str(), strsize, 1, mpfFile);
     }
+    // ----------------------------------------------------------------------
 }; // namespace

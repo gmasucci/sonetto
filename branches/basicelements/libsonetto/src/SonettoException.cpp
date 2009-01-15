@@ -52,4 +52,5 @@ namespace Sonetto
             mWhat = "Error formatting exception (out of memory?):\n" + desc;
         }
     }
+    // ----------------------------------------------------------------------
 }
