@@ -45,7 +45,7 @@ namespace BootModule
     void GenericBootModule::initialize()
     {
         Sonetto::AudioManager::getSingleton().loadSound(1);
-        mSound = Sonetto::AudioManager::getSingleton().createSound(0);
+        mSound = Sonetto::AudioManager::getSingleton().createSound(1);
 
         Sonetto::InputManager::getSingleton().getPlayer(0)->configBtn(
                 Sonetto::BTN_CROSS,Sonetto::InputSource(true,

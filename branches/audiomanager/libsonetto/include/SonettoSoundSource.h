@@ -54,7 +54,7 @@ namespace Sonetto
         size_t buffer;
     };
 
-    class SoundSource
+    class SONETTO_API SoundSource
     {
     public:
         SoundSource(size_t id,Ogre::Node *node);
