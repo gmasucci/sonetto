@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Sonetto Core" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Win32 Debug">
+				<Option output="..\..\lib\win32\sonetto_d.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="..\obj\win32\debug" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DWINDOWS" />
+					<Add option="-DDEBUG" />
+					<Add directory="..\..\dependencies\include\DirectX" />
+				</Compiler>
+				<Linker>
+					<Add library="OgreMain_d" />
+					<Add directory="..\..\dependencies\lib\win32" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cmd /c copy ..\..\lib\win32\sonetto_d.dll ..\..\bin\debug\sonettoruntime\" />
+					<Add after="cmd /c copy ..\..\lib\win32\sonetto_d.dll ..\..\bin\debug\tools\" />
+					<Mode after="always" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Win32 Release">
+				<Option output="..\..\lib\win32\sonetto.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="..\obj\win32\release" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DWINDOWS" />
+					<Add directory="..\..\dependencies\include\DirectX" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain" />
+					<Add directory="..\..\dependencies\lib\win32" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cmd /c copy ..\..\lib\win32\sonetto.dll ..\..\bin\release\sonettoruntime\" />
+					<Add after="cmd /c copy ..\..\lib\win32\sonetto.dll ..\..\bin\release\tools\" />
+					<Mode after="always" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Linux Debug">
+				<Option output="..\..\lib\linux\sonetto_d.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="..\obj\linux\debug" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add library="OgreMain_d" />
+					<Add directory="..\..\dependencies\lib\linux" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cmd /c cp ../../lib/linux/sonetto_d.so ../../bin/debug/sonettoruntime/" />
+					<Add after="cmd /c cp ../../lib/linux/sonetto_d.so ../../bin/debug/tools/" />
+					<Mode after="always" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Linux Release">
+				<Option output="..\..\lib\linux\sonetto.so" prefix_auto="0" extension_auto="0" />
+				<Option object_output="..\obj\linux\release" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option projectIncludeDirsRelation="2" />
+				<Option projectLibDirsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="OgreMain" />
+					<Add directory="..\..\dependencies\lib\linux" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="cmd /c cp ../../lib/linux/sonetto.so ../../bin/release/sonettoruntime/" />
+					<Add after="cmd /c cp ../../lib/linux/sonetto.so ../../bin/release/tools/" />
+					<Mode after="always" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-DSONETTO_DLL_BUILD" />
+			<Add directory="..\include" />
+			<Add directory="..\..\dependencies\include" />
+			<Add directory="$(OGRE_HOME)\OgreMain\include" />
+		</Compiler>
+		<Linker>
+			<Add library="SDL" />
+			<Add library="m" />
+			<Add library="user32" />
+			<Add library="gdi32" />
+			<Add library="winmm" />
+			<Add library="dxguid" />
+			<Add library="dinput8" />
+			<Add directory="$(OGRE_HOME)\lib" />
+		</Linker>
+		<Unit filename="..\include\SonettoBattleModule.h" />
+		<Unit filename="..\include\SonettoBootModule.h" />
+		<Unit filename="..\include\SonettoException.h" />
+		<Unit filename="..\include\SonettoInputManager.h" />
+		<Unit filename="..\include\SonettoInputSource.h" />
+		<Unit filename="..\include\SonettoJoystick.h" />
+		<Unit filename="..\include\SonettoFont.h" />
+		<Unit filename="..\include\SonettoFontManager.h" />
+		<Unit filename="..\include\SonettoFontSerializer.h" />
+		<Unit filename="..\include\SonettoKernel.h" />
+		<Unit filename="..\include\SonettoMapModule.h" />
+		<Unit filename="..\include\SonettoMenuModule.h" />
+		<Unit filename="..\include\SonettoModule.h" />
+		<Unit filename="..\include\SonettoModuleFactory.h" />
+		<Unit filename="..\include\SonettoPlayerInput.h" />
+		<Unit filename="..\include\SonettoPrerequisites.h" />
+		<Unit filename="..\include\SonettoStaticTextElement.h" />
+		<Unit filename="..\include\SonettoTitleModule.h" />
+		<Unit filename="..\include\SonettoWorldModule.h" />
+		<Unit filename="..\resource\resource.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="Win32 Release" />
+		</Unit>
+		<Unit filename="..\resource\resource_d.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="Win32 Debug" />
+		</Unit>
+		<Unit filename="..\src\SonettoBattleModule.cpp" />
+		<Unit filename="..\src\SonettoException.cpp" />
+		<Unit filename="..\src\SonettoInputManager.cpp" />
+		<Unit filename="..\src\SonettoJoystick.cpp" />
+		<Unit filename="..\src\SonettoFont.cpp" />
+		<Unit filename="..\src\SonettoFontManager.cpp" />
+		<Unit filename="..\src\SonettoFontSerializer.cpp" />
+		<Unit filename="..\src\SonettoKernel.cpp" />
+		<Unit filename="..\src\SonettoMapModule.cpp" />
+		<Unit filename="..\src\SonettoMenuModule.cpp" />
+		<Unit filename="..\src\SonettoModule.cpp" />
+		<Unit filename="..\src\SonettoModuleFactory.cpp" />
+		<Unit filename="..\src\SonettoPlayerInput.cpp" />
+		<Unit filename="..\src\SonettoStaticTextElement.cpp" />
+		<Unit filename="..\src\SonettoWorldModule.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
