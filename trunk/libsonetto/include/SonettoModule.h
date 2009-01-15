@@ -31,6 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #define SONETTO_MODULE_H
 
 #include <stack>
+#include <Ogre.h>
 #include "SonettoPrerequisites.h"
 
 namespace Sonetto
@@ -49,15 +50,36 @@ namespace Sonetto
             MT_BATTLE
         };
 
-        Module() {}
+        Module(){}
         virtual ~Module() {}
 
-        virtual void initialize() = 0;
-        virtual void update() = 0;
-        virtual void deinitialize() = 0;
+        virtual void initialize();
+        virtual void update();
+        virtual void deinitialize();
 
-        virtual void halt() = 0;
-        virtual void resume() = 0;
+        virtual void halt();
+        virtual void resume();
+
+        /** Change the viewport background color */
+        void setBgColor(const Ogre::ColourValue &col);
+
+        /// Pointer to the scene manager for this module.
+        Ogre::SceneManager * mSceneMan;
+
+        /// Pointer to the overlay for this module.
+        Ogre::Overlay * mOverlay;
+
+        /// Pointer to this module's camera.
+        Ogre::Camera * mCamera;
+
+        /// Pointer to the module viewport.
+        Ogre::Viewport * mViewport;
+
+        /// String containing the Overlay name for this module.
+        std::string mOverlayName;
+
+        /// Current background color for this module's viewport.
+        Ogre::ColourValue mBgColor;
     };
 
     typedef std::stack<Module *> ModuleStack;

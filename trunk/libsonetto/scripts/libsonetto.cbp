@@ -118,6 +118,9 @@
 		<Unit filename="..\include\SonettoInputManager.h" />
 		<Unit filename="..\include\SonettoInputSource.h" />
 		<Unit filename="..\include\SonettoJoystick.h" />
+		<Unit filename="..\include\SonettoFont.h" />
+		<Unit filename="..\include\SonettoFontManager.h" />
+		<Unit filename="..\include\SonettoFontSerializer.h" />
 		<Unit filename="..\include\SonettoKernel.h" />
 		<Unit filename="..\include\SonettoMapModule.h" />
 		<Unit filename="..\include\SonettoMenuModule.h" />
@@ -125,6 +128,7 @@
 		<Unit filename="..\include\SonettoModuleFactory.h" />
 		<Unit filename="..\include\SonettoPlayerInput.h" />
 		<Unit filename="..\include\SonettoPrerequisites.h" />
+		<Unit filename="..\include\SonettoStaticTextElement.h" />
 		<Unit filename="..\include\SonettoTitleModule.h" />
 		<Unit filename="..\include\SonettoWorldModule.h" />
 		<Unit filename="..\resource\resource.rc">
@@ -139,11 +143,16 @@
 		<Unit filename="..\src\SonettoException.cpp" />
 		<Unit filename="..\src\SonettoInputManager.cpp" />
 		<Unit filename="..\src\SonettoJoystick.cpp" />
+		<Unit filename="..\src\SonettoFont.cpp" />
+		<Unit filename="..\src\SonettoFontManager.cpp" />
+		<Unit filename="..\src\SonettoFontSerializer.cpp" />
 		<Unit filename="..\src\SonettoKernel.cpp" />
 		<Unit filename="..\src\SonettoMapModule.cpp" />
 		<Unit filename="..\src\SonettoMenuModule.cpp" />
+		<Unit filename="..\src\SonettoModule.cpp" />
 		<Unit filename="..\src\SonettoModuleFactory.cpp" />
 		<Unit filename="..\src\SonettoPlayerInput.cpp" />
+		<Unit filename="..\src\SonettoStaticTextElement.cpp" />
 		<Unit filename="..\src\SonettoWorldModule.cpp" />
 		<Extensions>
 			<code_completion />
