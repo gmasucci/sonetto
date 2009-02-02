@@ -253,7 +253,7 @@ namespace Sonetto
         }
     }
     //-----------------------------------------------------------------------------
-    void AudioManager::loadSound(size_t id)
+    void AudioManager::loadSound(uint32 id)
     {
         // Bounds checking
         if (id == 0 || id >= Database::getSingleton().sounds.size()+1)
@@ -363,10 +363,10 @@ namespace Sonetto
         delete[] tmpBuffer;
 
         // Inserts our buffer as a loaded sound in mSounds
-        mSounds.insert(std::pair<size_t,Sound>(id,Sound(buffer)));
+        mSounds.insert(std::pair<uint32,Sound>(id,Sound(buffer)));
     }
     //-----------------------------------------------------------------------------
-    void AudioManager::unloadSound(size_t id)
+    void AudioManager::unloadSound(uint32 id)
     {
         // Throw exception if the sound is not loaded yet
         if (mSounds.find(id) == mSounds.end())
@@ -391,6 +391,36 @@ namespace Sonetto
                 "audio buffers");
 
         mSounds.erase(mSounds.find(id));
+    }
+    //-----------------------------------------------------------------------------
+    void AudioManager::loadSoundSet(uint32 id)
+    {
+        const SoundSetVector &soundSets = Database::getSingleton().soundSets;
+        if (id == 0 || id > soundSets.size())
+        {
+            SONETTO_THROW("Unknown sound set ID");
+        }
+
+        const IDVector &soundSetSounds = soundSets[id - 1].getSounds();
+        for (size_t i = 0;i < soundSetSounds.size();++i)
+        {
+            loadSound(soundSetSounds[i]);
+        }
+    }
+    //-----------------------------------------------------------------------------
+    void AudioManager::unloadSoundSet(uint32 id)
+    {
+        const SoundSetVector &soundSets = Database::getSingleton().soundSets;
+        if (id == 0 || id > soundSets.size())
+        {
+            SONETTO_THROW("Unknown sound set ID");
+        }
+
+        const IDVector &soundSetSounds = soundSets[id - 1].getSounds();
+        for (size_t i = 0;i < soundSetSounds.size();++i)
+        {
+            unloadSound(soundSetSounds[i]);
+        }
     }
     //-----------------------------------------------------------------------------
     void AudioManager::_streamEnded()
@@ -428,32 +458,22 @@ namespace Sonetto
         }
     }
     //-----------------------------------------------------------------------------
-    SoundSourcePtr AudioManager::createSound(size_t id,Ogre::Node *node)
-    {
-        // Checks whether it's loaded or not
-        if (mSounds.find(id) == mSounds.end())
-        {
-            SONETTO_THROW("Trying to play a sound which is not loaded");
-        }
-
-        // Creates a new SoundSource and encapsulates it into an Ogre::SharedPtr
-        SoundSourcePtr snd(new SoundSource(id,node));
-
-        // Adds to list of SoundSources to be deleted when not needed anymore
-        mSoundSources.push_back(snd);
-
-        return snd;
-    }
-    //-----------------------------------------------------------------------------
     void AudioManager::playSound(size_t id,float aMaxVolume,Ogre::Node *node)
     {
+        if (mSounds.find(id) == mSounds.end())
+        {
+            SONETTO_THROW("Trying to play a sound that is not loaded");
+        }
+
         float maxVolume = Math::clamp(aMaxVolume,0.0f,1.0f);
 
         // Do not play if the maximum volume is 0.0f
         if (maxVolume > 0.0f)
         {
             // Creates sound, sets its maximum volume, and plays it
-            SoundSourcePtr snd = createSound(id,node);
+            SoundSourcePtr snd = createSound<SoundSource>();
+            snd->setSoundID(id);
+            snd->setNode(node);
             snd->setMaxVolume(maxVolume);
             snd->play();
         }

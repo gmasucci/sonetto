@@ -28,9 +28,6 @@ http://www.gnu.org/copyleft/lesser.txt
 
 namespace Sonetto
 {
-    // Forward declaration
-    class AudioManager;
-
     enum SoundSourceState
     {
         SSS_PLAYING,
@@ -57,31 +54,31 @@ namespace Sonetto
     class SONETTO_API SoundSource
     {
     public:
-        SoundSource(size_t id,Ogre::Node *node);
-        ~SoundSource();
+        SoundSource();
+        virtual ~SoundSource();
 
-        void setMaxVolume(float maxVolume);
-        inline float getMaxVolume() const { return mMaxVolume; }
+        virtual void setMaxVolume(float maxVolume);
+        virtual inline float getMaxVolume() const { return mMaxVolume; }
 
-        SoundSourceState getState() const;
+        virtual SoundSourceState getState() const;
 
-        inline size_t getSoundID() const { return mSoundID; }
+        virtual inline uint32 getSoundID() const { return mSoundID; }
 
-        void setSoundID(size_t id);
-        void setNode(Ogre::Node *node);
+        virtual void setSoundID(uint32 id);
+        virtual void setNode(Ogre::Node *node);
 
-        void _update();
+        virtual void _update();
 
-        void play();
-        void pause();
-        void stop();
+        virtual void play();
+        virtual void pause();
+        virtual void stop();
 
-    private:
+    protected:
         /// A pointer to the AudioManager singleton, for ease of use
         AudioManager *mAudioMan;
 
         /// Sound ID inside AudioManager::mSounds
-        size_t mSoundID;
+        uint32 mSoundID;
 
         /// An OpenAL audio source handle
         size_t mALSource;
@@ -97,7 +94,7 @@ namespace Sonetto
     typedef std::vector<SoundDef> SoundDefVector;
 
     /// Map of Sound structures
-    typedef std::map<size_t,Sound> SoundMap;
+    typedef std::map<uint32,Sound> SoundMap;
 
     /// Shared pointer to a SoundSource class
     typedef Ogre::SharedPtr<SoundSource> SoundSourcePtr;

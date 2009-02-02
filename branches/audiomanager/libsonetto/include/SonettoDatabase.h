@@ -34,9 +34,20 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "SonettoPrerequisites.h"
 #include "SonettoMusic.h"
 #include "SonettoSoundSource.h"
+#include "SonettoSoundSet.h"
 
 namespace Sonetto
 {
+    struct GroundType
+    {
+        IDVector defaultFootsteps;
+    };
+
+    typedef std::vector<GroundType> GroundTypeVector;
+
+    typedef std::map<uint32,IDVector> FootwearSounds;
+    typedef std::vector<FootwearSounds> FootwearSoundsVector;
+
     class SONETTO_API Database : public Ogre::Singleton<Database>
     {
     public:
@@ -85,6 +96,10 @@ namespace Sonetto
 
         MusicVector musics;
         SoundDefVector sounds;
+        SoundSetVector soundSets;
+
+        GroundTypeVector groundTypes;
+        FootwearSoundsVector footwears;
     };
 } // namespace
 

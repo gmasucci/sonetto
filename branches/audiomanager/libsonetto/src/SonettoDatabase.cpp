@@ -38,6 +38,26 @@ namespace Sonetto
     void Database::initialize()
     {
         musics.push_back(Music("music.ogg",0));
+
+        sounds.push_back(SoundDef("rmsystem_accept.ogg"));
         sounds.push_back(SoundDef("sound.ogg"));
+        sounds.push_back(SoundDef("rmsystem_cancel.ogg"));
+
+        SoundSet set;
+        set.getSounds().push_back(1);
+        set.getSounds().push_back(3);
+        set.getSounds().push_back(2);
+        soundSets.push_back(set);
+
+        GroundType ground;
+        ground.defaultFootsteps.push_back(2);
+        ground.defaultFootsteps.push_back(3);
+        groundTypes.push_back(ground);
+
+        FootwearSounds footwear;
+        /*IDVector &sounds = footwear[1];
+        sounds.push_back(1);
+        sounds.push_back(3);*/
+        footwears.push_back(footwear);
     }
 } // namespace

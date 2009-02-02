@@ -121,6 +121,7 @@
 		<Unit filename="..\include\SonettoBootModule.h" />
 		<Unit filename="..\include\SonettoDatabase.h" />
 		<Unit filename="..\include\SonettoException.h" />
+		<Unit filename="..\include\SonettoFootstepSoundSource.h" />
 		<Unit filename="..\include\SonettoInputManager.h" />
 		<Unit filename="..\include\SonettoInputSource.h" />
 		<Unit filename="..\include\SonettoJoystick.h" />
@@ -134,6 +135,8 @@
 		<Unit filename="..\include\SonettoMusicStream.h" />
 		<Unit filename="..\include\SonettoPlayerInput.h" />
 		<Unit filename="..\include\SonettoPrerequisites.h" />
+		<Unit filename="..\include\SonettoSoundSet.h" />
+		<Unit filename="..\include\SonettoSoundSetSource.h" />
 		<Unit filename="..\include\SonettoSoundSource.h" />
 		<Unit filename="..\include\SonettoTitleModule.h" />
 		<Unit filename="..\include\SonettoWorldModule.h" />
@@ -149,6 +152,7 @@
 		<Unit filename="..\src\SonettoBattleModule.cpp" />
 		<Unit filename="..\src\SonettoDatabase.cpp" />
 		<Unit filename="..\src\SonettoException.cpp" />
+		<Unit filename="..\src\SonettoFootstepSoundSource.cpp" />
 		<Unit filename="..\src\SonettoInputManager.cpp" />
 		<Unit filename="..\src\SonettoJoystick.cpp" />
 		<Unit filename="..\src\SonettoKernel.cpp" />
@@ -158,6 +162,7 @@
 		<Unit filename="..\src\SonettoMusic.cpp" />
 		<Unit filename="..\src\SonettoMusicStream.cpp" />
 		<Unit filename="..\src\SonettoPlayerInput.cpp" />
+		<Unit filename="..\src\SonettoSoundSetSource.cpp" />
 		<Unit filename="..\src\SonettoSoundSource.cpp" />
 		<Unit filename="..\src\SonettoWorldModule.cpp" />
 		<Extensions>

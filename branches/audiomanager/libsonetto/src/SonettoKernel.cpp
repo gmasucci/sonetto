@@ -28,6 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
 #include <cstdlib>
+#include <ctime>
 #ifndef WINDOWS
 #   include <sys/stat.h>
 #   include <dirent.h>
@@ -55,6 +56,9 @@ namespace Sonetto
         {
             SONETTO_THROW("Kernel is already initialized");
         }
+
+        // Seeds pseudo-random number generator
+        srand(time(NULL));
 
         // Reads Sonetto Project File
         readSPF();

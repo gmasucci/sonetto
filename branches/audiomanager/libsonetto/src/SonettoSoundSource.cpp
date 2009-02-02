@@ -34,16 +34,11 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     // Sonetto::SoundSource implementation.
     //-----------------------------------------------------------------------------
-    SoundSource::SoundSource(size_t id,Ogre::Node *node)
-            : mMaxVolume(1.0f)
+    SoundSource::SoundSource()
+            : mSoundID(0),mMaxVolume(1.0f),mNode(NULL)
     {
-        Ogre::Vector3 pos;
-
         // Gets AudioManager singleton
         mAudioMan = AudioManager::getSingletonPtr();
-
-        setSoundID(id);
-        setNode(node);
     }
     //-----------------------------------------------------------------------------
     SoundSource::~SoundSource()
@@ -97,13 +92,18 @@ namespace Sonetto
         return SSS_STOPPED;
     }
     //-----------------------------------------------------------------------------
-    void SoundSource::setSoundID(size_t id)
+    void SoundSource::setSoundID(uint32 id)
     {
         if (id > 0) {
-            // Generates OpenAL audio source
-            alGenSources(1,&mALSource);
-            mAudioMan->_alErrorCheck("SoundSource::setSoundID()","Failed generating "
-                    "OpenAL audio source");
+            if (mSoundID == 0)
+            {
+                // Generates OpenAL audio source
+                alGenSources(1,&mALSource);
+                mAudioMan->_alErrorCheck("SoundSource::setSoundID()","Failed "
+                        "generating OpenAL audio source");
+            }
+
+            alSourceStop(mALSource);
 
             // Attaches buffer to sound source
             alSourcei(mALSource,AL_BUFFER,mAudioMan->_getSound(id).buffer);

@@ -27,30 +27,35 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef BOOTMODULE_GENERICBOOTMODULE_H
-#define BOOTMODULE_GENERICBOOTMODULE_H
+#ifndef SONETTO_FOOTSTEPSOUNDSOURCE_H
+#define SONETTO_FOOTSTEPSOUNDSOURCE_H
 
-#include "SonettoFootstepSoundSource.h"
-#include "SonettoBootModule.h"
+#include <map>
+#include "SonettoPrerequisites.h"
+#include "SonettoSoundSource.h"
 
-namespace BootModule
+namespace Sonetto
 {
-    class GenericBootModule : public Sonetto::BootModule
+    class SONETTO_API FootstepSoundSource : public SoundSource
     {
     public:
-        GenericBootModule();
-        ~GenericBootModule();
+        FootstepSoundSource() : SoundSource() {}
+        virtual ~FootstepSoundSource() {}
 
-        void initialize();
-        void update();
-        void deinitialize();
+        virtual inline uint32 getGround() const { return mGround; }
+        virtual void setGround(uint32 ground);
 
-        void halt();
-        void resume();
+        virtual inline uint32 getFootwear() const { return mFootwear; }
+        virtual void setFootwear(uint32 footwear);
 
-    private:
-        Sonetto::FootstepSoundSourcePtr mSource;
+        virtual void play();
+
+    protected:
+        uint32 mGround;
+        uint32 mFootwear;
     };
+
+    typedef Ogre::SharedPtr<FootstepSoundSource> FootstepSoundSourcePtr;
 } // namespace
 
 #endif

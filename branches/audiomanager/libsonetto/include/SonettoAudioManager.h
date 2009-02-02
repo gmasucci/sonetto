@@ -27,6 +27,7 @@ http://www.gnu.org/copyleft/lesser.txt
 #include <AL/alc.h>
 #include <OgreSingleton.h>
 #include <OgreSharedPtr.h>
+#include "SonettoDatabase.h"
 #include "SonettoMusic.h"
 #include "SonettoMusicStream.h"
 #include "SonettoSoundSource.h"
@@ -159,6 +160,16 @@ namespace Sonetto
         /// Returns a reference to the music stream
         inline MusicStream *getMusicStream() { return mMusicStream; }
 
+        static inline uint32 fromSoundSet(uint32 setID,uint32 soundID)
+        {
+            if (setID == 0 || soundID == 0)
+            {
+                return 0;
+            }
+
+            return Database::getSingleton().soundSets[setID - 1].getSounds()[soundID - 1];
+        }
+
         /// Returns a sound reference from the loaded sounds map
         inline const Sound &_getSound(size_t id) const { return mSounds.find(id)->second; }
 
@@ -287,7 +298,7 @@ namespace Sonetto
         @param
             id An index inside Database::mSoundDefList to be loaded (0 is invalid).
         */
-        void loadSound(size_t id);
+        void loadSound(uint32 id);
 
         /** Unloads a sound from memory
 
@@ -296,7 +307,15 @@ namespace Sonetto
         @param
             id Index of a loaded sound in mSounds to be unloaded (0 is invalid).
         */
-        void unloadSound(size_t id);
+        void unloadSound(uint32 id);
+
+        inline bool isSoundLoaded(uint32 id) const
+        {
+            return (mSounds.find(id) != mSounds.end());
+        }
+
+        void loadSoundSet(uint32 id);
+        void unloadSoundSet(uint32 id);
 
         /** Creates a new sound source
 
@@ -316,7 +335,18 @@ namespace Sonetto
             Reference counted sound source pointer. Discard when not anymore
             needed.
         */
-        SoundSourcePtr createSound(size_t id,Ogre::Node *node = NULL);
+        template<class TSoundSourceImpl>
+        Ogre::SharedPtr<TSoundSourceImpl> createSound()
+        {
+            // Creates a new TSoundSourceImpl and encapsulates it into an
+            // Ogre::SharedPtr
+            Ogre::SharedPtr<TSoundSourceImpl> snd(new TSoundSourceImpl());
+
+            // Adds to list of SoundSources to be deleted when not needed anymore
+            mSoundSources.push_back(snd);
+
+            return snd;
+        }
 
         /** Plays a sound
 

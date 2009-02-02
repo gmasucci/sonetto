@@ -27,30 +27,27 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef BOOTMODULE_GENERICBOOTMODULE_H
-#define BOOTMODULE_GENERICBOOTMODULE_H
+#ifndef SONETTO_SOUNDSET_H
+#define SONETTO_SOUNDSET_H
 
-#include "SonettoFootstepSoundSource.h"
-#include "SonettoBootModule.h"
+#include <vector>
+#include "SonettoPrerequisites.h"
 
-namespace BootModule
+namespace Sonetto
 {
-    class GenericBootModule : public Sonetto::BootModule
+    class SoundSet
     {
     public:
-        GenericBootModule();
-        ~GenericBootModule();
+        SoundSet() {}
 
-        void initialize();
-        void update();
-        void deinitialize();
-
-        void halt();
-        void resume();
+        IDVector &getSounds() { return sounds; }
+        const IDVector &getSounds() const { return sounds; }
 
     private:
-        Sonetto::FootstepSoundSourcePtr mSource;
+        IDVector sounds;
     };
+
+    typedef std::vector<SoundSet> SoundSetVector;
 } // namespace
 
 #endif
