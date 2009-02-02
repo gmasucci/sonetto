@@ -33,30 +33,32 @@ namespace Sonetto {
 #include "SonettoScriptFile.h"
 #include "SonettoVariable.h"
 
-namespace Sonetto {
+namespace Sonetto
+{
     class SONETTO_API Script
     {
     public:
-        Script(ScriptFilePtr file,VariableMap *locals)
-                : mScriptFile(file), mOffset(0),mLocals(locals) {}
+        Script(ScriptFilePtr file)
+                : mScriptFile(file), mOffset(0),mLocals(NULL) {}
 
-        ~Script();
+        virtual ~Script();
 
-        inline VariableMap *_getLocals() { return mLocals; }
+        virtual inline void setLocals(VariableMap *locals) { mLocals = locals; }
+        virtual inline VariableMap *getLocals() { return mLocals; }
 
-        inline ScriptFilePtr _getScriptFile() { return mScriptFile; }
+        virtual inline ScriptFilePtr getScriptFile() { return mScriptFile; }
 
-        inline void _setOffset(size_t offset) { mOffset = offset; }
+        virtual inline void _setOffset(size_t offset) { mOffset = offset; }
 
-        inline size_t _getOffset() const { return mOffset; }
+        virtual inline size_t _getOffset() const { return mOffset; }
 
-        inline void stackPush(const Variable &var) { mVarStack.push(var); }
+        virtual inline void stackPush(const Variable &var) { mVarStack.push(var); }
 
-        inline void stackPop() { mVarStack.pop(); }
+        virtual inline void stackPop() { mVarStack.pop(); }
 
-        inline const Variable &stackPeek() { return mVarStack.top(); }
+        virtual inline const Variable &stackPeek() { return mVarStack.top(); }
 
-    private:
+    protected:
         /** ScriptFile pointer
 
             Holds opcodes to be used by this script.

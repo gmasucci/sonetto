@@ -92,8 +92,12 @@ namespace Sonetto
         virtual ScriptFilePtr load(const Ogre::String &name,
                 const Ogre::String &group);
 
-        Script *createScript(const std::string &scriptName,
-            const std::string &groupName,VariableMap *locals);
+        template<class ScriptImpl>
+        inline ScriptImpl *createScript(const std::string &scriptName,
+            const std::string &groupName)
+        {
+            return new ScriptImpl(load(scriptName,groupName));
+        }
 
         void updateScript(Script *script);
 

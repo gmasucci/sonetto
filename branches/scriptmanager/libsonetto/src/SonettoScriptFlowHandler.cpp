@@ -93,7 +93,7 @@ namespace Sonetto
             // The variable can be local, in which case it is taken from
             // the script's local variable map
             case VS_LOCAL:
-                rvars = script->_getLocals();
+                rvars = script->getLocals();
             break;
 
             // And the variable can be global, in which case it is taken from

@@ -75,17 +75,9 @@ namespace Sonetto
         return new ScriptFile(this,name,handle,group,isManual,loader);
     }
     //--------------------------------------------------------------------------
-    Script *ScriptManager::createScript(const std::string &scriptName,
-            const std::string &groupName,VariableMap *locals)
-    {
-        ScriptFilePtr scriptFile = load(scriptName,groupName);
-        Script *script = new Script(scriptFile,locals);
-        return script;
-    }
-    //--------------------------------------------------------------------------
     void ScriptManager::updateScript(Script *script)
     {
-        size_t scriptSize = script->_getScriptFile()->calculateSize();
+        size_t scriptSize = script->getScriptFile()->calculateSize();
 
         // Empty scripts are valid, but there is nothing to do with them
         if (scriptSize == 0)
@@ -199,7 +191,7 @@ namespace Sonetto
     void ScriptManager::readScriptData(Script *script,void *dest,size_t bytes)
     {
         size_t offset = script->_getOffset();
-        const ScriptData &data = script->_getScriptFile()->_getScriptData();
+        const ScriptData &data = script->getScriptFile()->_getScriptData();
 
         if (offset + bytes > data.size())
         {

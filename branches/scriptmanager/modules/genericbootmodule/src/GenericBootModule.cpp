@@ -49,8 +49,9 @@ namespace BootModule
         groupMan->addResourceLocation("resources","FileSystem");
         groupMan->initialiseAllResourceGroups();
 
-        mScript = Sonetto::ScriptManager::getSingleton().createScript("test.ssf",
-                Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,NULL);
+        mScript = Sonetto::ScriptManager::getSingleton().
+                createScript<Sonetto::Script>("test.ssf",
+                Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
     }
     // ----------------------------------------------------------------------
     void GenericBootModule::update()

@@ -489,14 +489,14 @@ namespace Sonetto
                 {
                     case VT_INT32:
                         if (exp._int < 0) {
-                            //retn = Variable(VT_FLOAT,std::pow((float)_int,(int)exp._int));
+                            retn = Variable(VT_FLOAT,std::pow((float)_int,(int)exp._int));
                         } else {
                             retn = Variable(VT_INT32,simplePow(_int,exp._int));
                         }
                     break;
 
                     case VT_FLOAT:
-                        //retn = Variable(VT_FLOAT,std::pow((float)_int,exp._float));
+                        retn = Variable(VT_FLOAT,std::pow((float)_int,exp._float));
                     break;
                 }
             break;
@@ -505,11 +505,11 @@ namespace Sonetto
                 switch (exp.type)
                 {
                     case VT_INT32:
-                        //retn = Variable(VT_FLOAT,std::pow(_float,(float)exp._int));
+                        retn = Variable(VT_FLOAT,std::pow(_float,(float)exp._int));
                     break;
 
                     case VT_FLOAT:
-                        //retn = Variable(VT_FLOAT,std::pow(_float,exp._float));
+                        retn = Variable(VT_FLOAT,std::pow(_float,exp._float));
                     break;
                 }
             break;

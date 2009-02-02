@@ -102,7 +102,7 @@ namespace Sonetto
         switch (opcode->scope)
         {
             case VS_LOCAL:
-                tVars = script->_getLocals();
+                tVars = script->getLocals();
 
                 if (!tVars)
                 {
@@ -141,7 +141,7 @@ namespace Sonetto
         switch (opcode->scope)
         {
             case VS_LOCAL:
-                tVars = script->_getLocals();
+                tVars = script->getLocals();
 
                 if (!tVars)
                 {
@@ -174,7 +174,7 @@ namespace Sonetto
         switch (opcode->scope)
         {
             case VS_LOCAL:
-                tVars = script->_getLocals();
+                tVars = script->getLocals();
 
                 if (!tVars)
                 {
