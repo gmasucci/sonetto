@@ -14,6 +14,7 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
+
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -27,63 +28,57 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_MODULE_H
-#define SONETTO_MODULE_H
+#ifndef SONETTO_SCRIPT_H
+#define SONETTO_SCRIPT_H
 
-#include <stack>
-#include <Ogre.h>
+// Typedefs and forward declarations
+namespace Sonetto {
+    class Script;
+}
+
+#include <vector>
 #include "SonettoPrerequisites.h"
+#include "SonettoScriptFile.h"
+#include "SonettoVariable.h"
 
 namespace Sonetto
 {
-    class SONETTO_API Module
+    class Script
     {
     public:
-        enum ModuleType
-        {
-            MT_NONE,
-            MT_BOOT,
-            MT_TITLE,
-            MT_MAP,
-            MT_MENU,
-            MT_WORLD,
-            MT_BATTLE
-        };
+        Script(ScriptFilePtr file)
+                : mScriptFile(file), mOffset(0),mLocals(NULL) {}
 
-        Module(){}
-        virtual ~Module() {}
+        virtual ~Script() {}
 
-        virtual void initialize();
-        virtual void update();
-        virtual void deinitialize();
+        virtual inline void setLocals(VariableMap *locals) { mLocals = locals; }
+        virtual inline VariableMap *getLocals() { return mLocals; }
 
-        virtual void halt();
-        virtual void resume();
+        virtual inline ScriptFilePtr getScriptFile() { return mScriptFile; }
 
-        /** Change the viewport background color */
-        void setBgColor(const Ogre::ColourValue &col);
+        virtual inline void _setOffset(size_t offset) { mOffset = offset; }
+
+        virtual inline size_t _getOffset() const { return mOffset; }
+
+        virtual inline void stackPush(const Variable &var) { mVarStack.push(var); }
+
+        virtual inline void stackPop() { mVarStack.pop(); }
+
+        virtual inline const Variable &stackPeek() { return mVarStack.top(); }
 
     protected:
-        /// Pointer to the scene manager for this module.
-        Ogre::SceneManager * mSceneMan;
+        /** ScriptFile pointer
 
-        /// Pointer to the overlay for this module.
-        Ogre::Overlay * mOverlay;
+            Holds opcodes to be used by this script.
+        */
+        ScriptFilePtr mScriptFile;
 
-        /// Pointer to this module's camera.
-        Ogre::Camera * mCamera;
+        size_t mOffset;
 
-        /// Pointer to the module viewport.
-        Ogre::Viewport * mViewport;
+        VariableMap *mLocals;
 
-        /// String containing the Overlay name for this module.
-        std::string mOverlayName;
-
-        /// Current background color for this module's viewport.
-        Ogre::ColourValue mBgColor;
+        VariableStack mVarStack;
     };
-
-    typedef std::stack<Module *> ModuleStack;
-} // namespace
+} // namespace Sonetto
 
 #endif

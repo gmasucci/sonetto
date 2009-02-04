@@ -14,6 +14,7 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
+
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -27,43 +28,36 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_INPUTMANAGER_H
-#define SONETTO_INPUTMANAGER_H
+#ifndef SONETTO_SCRIPTMANAGER_H
+#define SONETTO_SCRIPTMANAGER_H
 
+// Forward declarations
+namespace Sonetto
+{
+    class ScriptManager;
+
+    const int SCRIPT_STOP         = -4;
+    const int SCRIPT_SUSPEND      = -3;
+    const int SCRIPT_SUSPEND_NEXT = -3;
+    const int SCRIPT_CONTINUE     = -1;
+}
+
+#include <OgreResourceManager.h>
 #include <OgreSingleton.h>
-#include "SonettoPrerequisites.h"
-#include "SonettoPlayerInput.h"
-#include "SonettoJoystick.h"
-#include "SonettoScriptInputHandler.h"
+#include "SonettoScript.h"
+#include "SonettoScriptFile.h"
+#include "SonettoOpcodeHandler.h"
+#include "SonettoOpcode.h"
+#include "SonettoScriptFlowHandler.h"
 
 namespace Sonetto
 {
-    /** Class responsible for managing input resources
-
-        From this class, you can get Sonetto::PlayerInput instances, which you
-        can use for retrieving input from joysticks and keyboard.
-    */
-    class SONETTO_API InputManager : public Ogre::Singleton<InputManager>
+    class SONETTO_API ScriptManager : public Ogre::ResourceManager,
+            public Ogre::Singleton<ScriptManager>
     {
     public:
-        /** Constructor
-
-        @param
-            players Number of PlayerInputs to be created
-        */
-        InputManager(size_t players);
-
-        /// Destructor
-        ~InputManager();
-
-        /** Initializes InputManager
-
-        @remarks
-            On Linux builds, this method takes no parameters
-        @param
-            hWnd Window handle (HWND) to be used with DirectInput.
-        */
-        void initialize();
+        ScriptManager();
+        virtual ~ScriptManager();
 
         /** Overrides standard Singleton retrieval
 
@@ -82,7 +76,7 @@ namespace Sonetto
             but the implementation stays in this single compilation unit,
             preventing link errors.
         */
-        static InputManager &getSingleton();
+        static ScriptManager &getSingleton();
 
         /** Overrides standard Singleton retrieval
 
@@ -101,80 +95,40 @@ namespace Sonetto
             but the implementation stays in this single compilation unit,
             preventing link errors.
         */
-        static InputManager *getSingletonPtr();
+        static ScriptManager *getSingletonPtr();
 
-        /** Updates all PlayerInputs.
+        virtual ScriptFilePtr load(const Ogre::String &name,
+                const Ogre::String &group);
 
-            This is called by Kernel::run(), so you
-            don't have to worry about it.
-        */
-        void update();
+        template<class ScriptImpl>
+        inline ScriptImpl *createScript(const std::string &scriptName,
+            const std::string &groupName)
+        {
+            return new ScriptImpl(load(scriptName,groupName));
+        }
 
-        /** Retrieves a PlayerInput given its index
+        void updateScript(Script *script);
 
-        @remarks
-            Be careful not to access an index greater than
-            or equal to getPlayerNum().
-        */
-        PlayerInput *getPlayer(size_t num);
+        void _registerOpcode(size_t id,const Opcode *opcode);
+        void _unregisterOpcode(size_t id);
 
-        /// Retrieves the number of PlayerInputs in the manager
-        inline size_t getPlayerNum() const { return mPlayerNum; }
+    protected:
+        Ogre::Resource *createImpl(const Ogre::String &name,
+                Ogre::ResourceHandle handle,const Ogre::String &group,
+                bool isManual,Ogre::ManualResourceLoader *loader,
+                const Ogre::NameValuePairList *createParams);
 
-        /** Gets a joystick to be used by a PlayerInput
+        void readScriptData(Script *script,void *dest,size_t bytes);
 
-        @see
-            Joystick
-        */
-        JoystickPtr _getJoystick(uint32 id);
+        Opcode *readOpcode(Script *script,size_t &id,
+                size_t &bytesRead);
 
-        /// Returns the number of currently plugged joysticks
-        uint32 getJoystickNum() const { return mJoysticks.size(); }
+        size_t seekOpcode(Script *script,size_t opIndex);
 
-        /// Checks whether the joystick of the given ID is being used by a PlayerInput or not
-        bool isJoystickAssigned(uint32 id) const;
+        OpcodeTable mOpcodeTable;
 
-        /** Directly checks a physical keyboard key state
-
-            This method is intended mainly for debugging, when user configuration is something
-            that should be avoided. It returns the state of a given keyboard key.
-        @param
-            key Key to be checked.
-        */
-        inline KeyState getDirectKeyState(uint8 key) const { return mKeyboardStates[key]; }
-
-    private:
-        /// Gets direct keyboard key state (either pressed or not)
-        bool getRawKeyState(uint32 key);
-
-        /// Vector of Joystick shared pointers
-        typedef std::vector<JoystickPtr> JoystickPtrVector;
-
-        /// PlayerInput vector
-        PlayerInputVector mPlayers;
-
-        /// Number of player inputs
-        size_t mPlayerNum;
-
-        /** Vector of Joystick shared pointers
-
-        @see
-            _getJoystick()
-        */
-        JoystickPtrVector mJoysticks;
-
-        /// Whether this singleton is initialized or not
-        bool mInitialized;
-
-        /** Keyboard keystates
-
-        @see
-            getDirectKeyState()
-        */
-        KeyState mKeyboardStates[256];
-
-        ScriptInputHandler mScriptInputHandler;
+        ScriptFlowHandler mFlowHandler;
     };
-} // namespace
+} // namespace Sonetto
 
-#endif
+#endif // SONETTO_SCRIPTMANAGER_H

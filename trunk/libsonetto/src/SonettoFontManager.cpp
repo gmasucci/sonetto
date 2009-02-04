@@ -32,18 +32,9 @@ POSSIBILITY OF SUCH DAMAGE.
 namespace Sonetto
 {
     // ----------------------------------------------------------------------
-    template<> FontManager *Ogre::Singleton<FontManager>::ms_Singleton = 0;
+    // Sonetto::FontManager implementation.
     // ----------------------------------------------------------------------
-    FontManager *FontManager::getSingletonPtr()
-    {
-        return ms_Singleton;
-    }
-    // ----------------------------------------------------------------------
-    FontManager &FontManager::getSingleton()
-    {
-        assert(ms_Singleton);
-        return(*ms_Singleton);
-    }
+    SONETTO_SINGLETON_IMPLEMENT(FontManager);
     // ----------------------------------------------------------------------
     FontManager::FontManager()
     {

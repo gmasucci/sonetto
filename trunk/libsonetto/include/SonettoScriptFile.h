@@ -14,6 +14,7 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
+
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -27,63 +28,45 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_MODULE_H
-#define SONETTO_MODULE_H
+#ifndef SONETTO_SCRIPTFILE_H
+#define SONETTO_SCRIPTFILE_H
 
-#include <stack>
-#include <Ogre.h>
+// Forward declarations
+namespace Sonetto
+{
+    class ScriptFile;
+}
+
+#include <OgreResourceManager.h>
 #include "SonettoPrerequisites.h"
+#include "SonettoSharedPtr.h"
 
 namespace Sonetto
 {
-    class SONETTO_API Module
+    typedef std::vector<char> ScriptData;
+
+    class SONETTO_API ScriptFile : public Ogre::Resource
     {
     public:
-        enum ModuleType
-        {
-            MT_NONE,
-            MT_BOOT,
-            MT_TITLE,
-            MT_MAP,
-            MT_MENU,
-            MT_WORLD,
-            MT_BATTLE
-        };
+        ScriptFile(Ogre::ResourceManager *creator,const Ogre::String &name,
+        Ogre::ResourceHandle handle,const Ogre::String &group,
+        bool isManual = false,Ogre::ManualResourceLoader *loader = 0);
 
-        Module(){}
-        virtual ~Module() {}
+        virtual ~ScriptFile();
 
-        virtual void initialize();
-        virtual void update();
-        virtual void deinitialize();
+        ScriptData &_getScriptData() { return mScriptData; }
 
-        virtual void halt();
-        virtual void resume();
-
-        /** Change the viewport background color */
-        void setBgColor(const Ogre::ColourValue &col);
+        size_t calculateSize() const;
 
     protected:
-        /// Pointer to the scene manager for this module.
-        Ogre::SceneManager * mSceneMan;
+        // Ogre::Resource interface implementation
+        void loadImpl();
+        void unloadImpl();
 
-        /// Pointer to the overlay for this module.
-        Ogre::Overlay * mOverlay;
-
-        /// Pointer to this module's camera.
-        Ogre::Camera * mCamera;
-
-        /// Pointer to the module viewport.
-        Ogre::Viewport * mViewport;
-
-        /// String containing the Overlay name for this module.
-        std::string mOverlayName;
-
-        /// Current background color for this module's viewport.
-        Ogre::ColourValue mBgColor;
+        ScriptData mScriptData;
     };
 
-    typedef std::stack<Module *> ModuleStack;
+    typedef SharedPtr<ScriptFile> ScriptFilePtr;
 } // namespace
 
-#endif
+#endif // SONETTO_SCRIPTFILE_H

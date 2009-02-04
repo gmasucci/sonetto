@@ -77,14 +77,14 @@ namespace Sonetto
             RWA_2
         };
 
-        Joystick(uint16 id) : mID(id),mJoy(NULL) {}
+        Joystick(uint32 id) : mID(id),mJoy(NULL) {}
 
         virtual ~Joystick();
 
         // Winmm hack
         bool isPlugged();
 
-        inline uint16 getID() const { return mID; }
+        inline uint32 getID() const { return mID; }
 
         inline bool isEnabled() const { return (mJoy != NULL); }
 
@@ -95,7 +95,7 @@ namespace Sonetto
         Ogre::Vector2 getRawAnalogState(RawAnalog analog);
 
     protected:
-        uint16 mID;
+        uint32 mID;
 
         SDL_Joystick *mJoy;
     };

@@ -36,7 +36,7 @@ namespace Sonetto
     // Sonetto::PlayerInput implementation
     // ----------------------------------------------------------------------
     PlayerInput::PlayerInput(bool enabled,uint32 joyID)
-            : mJoyID(joyID),mEnabled(enabled)
+            : mEnabled(enabled),mJoyID(joyID)
     {
         // Clears arrays
         memset(mBtnStates,0x00,sizeof(mBtnStates));
@@ -326,7 +326,7 @@ namespace Sonetto
         }
     }
     // ----------------------------------------------------------------------
-    Ogre::Vector2 PlayerInput::getAxisValue(Axis axs)
+    Ogre::Vector2 PlayerInput::getAnalogValue(Axis axs)
     {
         switch (axs)
         {

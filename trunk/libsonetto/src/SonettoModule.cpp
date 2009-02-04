@@ -35,19 +35,23 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     void Module::initialize()
     {
-        Kernel * kernel = Kernel::getSingletonPtr();
-        if (kernel->getRenderWindow()->getNumViewports() != 0)
+        Kernel *kernel = Kernel::getSingletonPtr();
+
+        if (kernel->getRenderWindow()->getNumViewports() > 0)
+        {
             kernel->getRenderWindow()->removeAllViewports();
+        }
 
         // Create the scene manager for this module.
-        mSceneMan = kernel->getOgre()->createSceneManager(Ogre::ST_GENERIC);
-        mCamera   = mSceneMan->createCamera(Ogre::StringUtil::BLANK);
+        mSceneMan = Ogre::Root::getSingleton().
+                createSceneManager(Ogre::ST_GENERIC);
 
+        mCamera = mSceneMan->createCamera(Ogre::StringUtil::BLANK);
         mViewport = kernel->getRenderWindow()->addViewport(mCamera);
-        setBgColor(mBgColor);
         mCamera->setAspectRatio(kernel->mAspectRatio);
+        setBgColor(mBgColor);
 
-        mOverlay = kernel->mOverlayMan->create(mOverlayName);
+        mOverlay = Ogre::OverlayManager::getSingleton().create(mOverlayName);
         mOverlay->show();
     }
     // ----------------------------------------------------------------------
@@ -69,7 +73,7 @@ namespace Sonetto
 
         mSceneMan->clearScene();
         mSceneMan->destroyCamera(mCamera);
-        kernel->getOgre()->destroySceneManager(mSceneMan);
+        Ogre::Root::getSingleton().destroySceneManager(mSceneMan);
         mSceneMan = NULL;
     }
     // ----------------------------------------------------------------------

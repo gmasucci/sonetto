@@ -59,12 +59,21 @@ namespace Sonetto
             {
                 delete mPlayers[i];
             }
+
+            mScriptInputHandler.unregisterOpcodes();
         }
     }
     // ----------------------------------------------------------------------
     void InputManager::initialize()
     {
-        for (size_t i = 1;i <= SDL_NumJoysticks();++i)
+        if (mInitialized)
+        {
+            SONETTO_THROW("InputManager was already initialized");
+        }
+
+        mScriptInputHandler.registerOpcodes();
+
+        for (int i = 1;i <= SDL_NumJoysticks();++i)
         {
             mJoysticks.push_back(JoystickPtr(new Joystick(i)));
         }
@@ -137,7 +146,7 @@ namespace Sonetto
         }
     }
     // ----------------------------------------------------------------------
-    JoystickPtr InputManager::_getJoystick(uint16 id)
+    JoystickPtr InputManager::_getJoystick(uint32 id)
     {
         // Checks if a joystick with this ID exists and returns it
         if (id <= mJoysticks.size())
@@ -149,12 +158,7 @@ namespace Sonetto
         return JoystickPtr();
     }
     // ----------------------------------------------------------------------
-    uint16 InputManager::getJoystickNum() const
-    {
-        return mJoysticks.size();
-    }
-    // ----------------------------------------------------------------------
-    bool InputManager::joystickAttached(uint16 id) const
+    bool InputManager::isJoystickAssigned(uint32 id) const
     {
         if (id == 0)
         {

@@ -33,6 +33,9 @@ POSSIBILITY OF SUCH DAMAGE.
 #   include <dirent.h>
 #endif
 #include "SonettoKernel.h"
+#include "SonettoDatabase.h"
+#include "SonettoInputManager.h"
+#include "SonettoScriptManager.h"
 #include "SonettoStaticTextElement.h"
 
 namespace Sonetto
@@ -44,9 +47,16 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     void Kernel::initialize()
     {
+        if (mInitialized)
+        {
+            SONETTO_THROW("Kernel was already initialized");
+        }
+
         Ogre::NameValuePairList wndParamList;
         SDL_SysWMinfo wmInfo;
         const char *defaultCfgName = "defaultcfg.dat";
+        mScreenWidth = DEFAULT_SCREEN_WIDTH;
+        mScreenHeight = DEFAULT_SCREEN_HEIGHT;
 
         // Checks if wasn't initialized yet
         if (mInitialized)
@@ -267,6 +277,11 @@ namespace Sonetto
         // Flips loading screen (temporary)
         SDL_Flip(mWindow);
 
+        mScriptMan = new ScriptManager();
+
+        mDatabase = new Database();
+        mDatabase->initialize();
+
         // Initializes input manager
         mInputMan = new InputManager(4);
         mInputMan->initialize();
@@ -316,6 +331,10 @@ namespace Sonetto
 
             // Remove and delete all Sonetto Resources.
             delete Ogre::ResourceGroupManager::getSingleton()._getResourceManager("SFont");
+
+            delete mScriptMan;
+
+            delete mDatabase;
 
             // Deletes Ogre
             delete mOgre;
@@ -436,11 +455,6 @@ namespace Sonetto
                 mNextModuleType = Module::MT_NONE;
             break;
         }
-    }
-    // ----------------------------------------------------------------------
-    Ogre::Root * Kernel::getOgre()
-    {
-        return mOgre;
     }
     // ----------------------------------------------------------------------
     Ogre::RenderWindow * Kernel::getRenderWindow()
