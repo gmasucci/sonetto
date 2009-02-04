@@ -30,12 +30,12 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTO_FONT_H
 #define SONETTO_FONT_H
 
-#include "SonettoPrerequisites.h"
-
 #include <OgreResourceManager.h>
 #include <OgreVector2.h>
 #include <OgreMaterial.h>
 #include <OgreTexture.h>
+#include "SonettoPrerequisites.h"
+#include "SonettoSharedPtr.h"
 
 namespace Sonetto
 {
@@ -110,44 +110,7 @@ namespace Sonetto
 
     };
 
-    class SONETTO_API FontPtr : public Ogre::SharedPtr<Font>
-    {
-    public:
-        FontPtr() : Ogre::SharedPtr<Font>() {}
-        explicit FontPtr(Font *rep) : Ogre::SharedPtr<Font>(rep) {}
-        FontPtr(const FontPtr &r) : Ogre::SharedPtr<Font>(r) {}
-        FontPtr(const Ogre::ResourcePtr &r) : Ogre::SharedPtr<Font>()
-        {
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-                OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-                pRep = static_cast<Font*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-        }
-
-        /// Operator used to convert a ResourcePtr to a FontPtr
-        FontPtr& operator=(const Ogre::ResourcePtr& r)
-        {
-            if (pRep == static_cast<Font*>(r.getPointer()))
-                return *this;
-            release();
-            // lock & copy other mutex pointer
-            OGRE_LOCK_MUTEX(*r.OGRE_AUTO_MUTEX_NAME)
-                OGRE_COPY_AUTO_SHARED_MUTEX(r.OGRE_AUTO_MUTEX_NAME)
-                pRep = static_cast<Font*>(r.getPointer());
-            pUseCount = r.useCountPointer();
-            if (pUseCount)
-            {
-                ++(*pUseCount);
-            }
-            return *this;
-        }
-    };
-
+    typedef SharedPtr<Font> FontPtr;
 } // namespace
 
 #endif // SONETTO_FONT_H

@@ -28,23 +28,14 @@ POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
 #include <SDL/SDL.h>
-#include "SonettoInputManager.h"
 #include "GenericBootModule.h"
-
-#include "SonettoPrerequisites.h"
-#include "SonettoKernel.h"
-#include "SonettoFontManager.h"
-#include "SonettoFont.h"
-#include "SonettoFontSerializer.h"
-#include "SonettoStaticTextElement.h"
 
 namespace BootModule
 {
     // ----------------------------------------------------------------------
     // BootModule::GenericBootModule implementation
     // ----------------------------------------------------------------------
-    GenericBootModule::GenericBootModule() : BootModule::BootModule()
-    {}
+    GenericBootModule::GenericBootModule() : BootModule::BootModule() {}
     // ----------------------------------------------------------------------
     GenericBootModule::~GenericBootModule() {}
     // ----------------------------------------------------------------------

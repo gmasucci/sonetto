@@ -87,6 +87,20 @@ namespace Sonetto
     class FontSerializer;
     class StaticTextElement;
     class StaticTextElementFactory;
+    class ScriptManager;
+    class ScriptFile;
+    class Script;
+    class OpcodeHandler;
+    class OpcodeArgument;
+    class Opcode;
+    class OpFlowStop;
+    class OpFlowJmp;
+    class OpFlowCJmp;
+    class ScriptFlowHandler;
+    class Database;
+    class Savemap;
+    class Variable;
+    class ScriptDataHandler;
 
     // <todo> Find a good place for this (I don't think this is a good place to
     // put things we don't know where to put; it will probably lead to problems of

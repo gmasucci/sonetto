@@ -35,30 +35,15 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <SDL/SDL_video.h>
 #include <Ogre.h>
 #include "SonettoPrerequisites.h"
+#include "SonettoDatabase.h"
 #include "SonettoModule.h"
 #include "SonettoModuleFactory.h"
-#include "SonettoInputManager.h"
 #include "SonettoFontManager.h"
 
 namespace Sonetto
 {
-    // Move this to its own file, I've just put it here to test the TextElement.
-    struct GameSystem
-    {
-        float textSize;
-        float textAnimationSpeed;
-        float textFadeInSpeed;
-        float textFadeOutSpeed;
-        float textHorizontalScale;
-        float textVerticalSpacing;
-        //Font * defaultFont;
-        uint8 defaultColor;
-    };
-    class SONETTO_API Database
-    {
-    public:
-        GameSystem system;
-    };
+    const size_t DEFAULT_SCREEN_WIDTH = 640;
+    const size_t DEFAULT_SCREEN_HEIGHT = 480;
 
     /** Sonetto Kernel
 
@@ -113,11 +98,10 @@ namespace Sonetto
             Kernel::initialize().
         */
         Kernel(const ModuleFactory *moduleFactory)
-                : mModuleFactory(moduleFactory),
-                  mScreenWidth(640),mScreenHeight(480),
+                : mAspectRatio(640.0f/480.0f),
+                  mModuleFactory(moduleFactory),
                   mIsFullScreen(false),
-                  mInitialized(false),
-                  mAspectRatio(640.0f/480.0f) {}
+                  mInitialized(false) {}
 
         /** Destructor
 
@@ -215,11 +199,11 @@ namespace Sonetto
         void setAction(KernelAction kact,ModuleAction mact = MA_NONE,
                 Module::ModuleType modtype = Module::MT_NONE);
 
-        /** Returns the ogre root. */
-        Ogre::Root * getOgre();
-
         /** Get the Render Window */
         Ogre::RenderWindow * getRenderWindow();
+
+        /// Reads a string from an std::ifstream given a preceeding uint16 (Temporary)
+        std::string readString(std::ifstream &stream);
 
         /// Current Screen Pixel Aspect Ratio.
         float mAspectRatio;
@@ -229,10 +213,6 @@ namespace Sonetto
 
         /// Pointer to OverlayManager.
         Ogre::OverlayManager *mOverlayMan;
-
-        Database mDatabase;
-
-        FontManager * mFontMan;
 
         // Sonetto Managers
 
@@ -270,11 +250,6 @@ namespace Sonetto
         /// Reads the Sonetto Project File
         void readSPF();
 
-    public:
-        /// Reads a string from an std::ifstream given a preceeding uint16 (Temporary)
-        std::string readString(std::ifstream &stream);
-    private:
-
         /// Ogre::Root instance
         Ogre::Root *mOgre;
 
@@ -283,6 +258,12 @@ namespace Sonetto
 
         /// SDL Surface (Window)
         SDL_Surface *mWindow;
+
+        FontManager *mFontMan;
+
+        Database *mDatabase;
+
+        ScriptManager *mScriptMan;
 
         /// InputManager
         InputManager *mInputMan;

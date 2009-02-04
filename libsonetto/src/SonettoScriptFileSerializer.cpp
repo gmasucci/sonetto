@@ -14,6 +14,7 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
+
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -27,63 +28,40 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_MODULE_H
-#define SONETTO_MODULE_H
+#include "SonettoScript.h"
+#include "SonettoScriptFile.h"
+#include "SonettoScriptFileSerializer.h"
 
-#include <stack>
-#include <Ogre.h>
-#include "SonettoPrerequisites.h"
-
-namespace Sonetto
-{
-    class SONETTO_API Module
+namespace Sonetto {
+    //--------------------------------------------------------------------------
+    // Sonetto::ScriptFileSerializer implementation.
+    //--------------------------------------------------------------------------
+    ScriptFileSerializer::ScriptFileSerializer()
     {
-    public:
-        enum ModuleType
+    }
+    //--------------------------------------------------------------------------
+    ScriptFileSerializer::~ScriptFileSerializer()
+    {
+    }
+    //--------------------------------------------------------------------------
+    void ScriptFileSerializer::importScriptFile(Ogre::DataStreamPtr &stream,
+            ScriptFile *pDest)
+    {
+        uint32 fourcc;
+        size_t size = stream->size() - sizeof(fourcc);    // Gets stream size
+        ScriptData &scriptData = pDest->_getScriptData(); // Gets script data
+
+        stream->read(&fourcc,sizeof(fourcc));
+
+        if (fourcc != MKFOURCC('S','S','F','0'))
         {
-            MT_NONE,
-            MT_BOOT,
-            MT_TITLE,
-            MT_MAP,
-            MT_MENU,
-            MT_WORLD,
-            MT_BATTLE
-        };
+            SONETTO_THROW("Invalid identification in script file (" +
+                    stream->getName() + ")");
+        }
 
-        Module(){}
-        virtual ~Module() {}
-
-        virtual void initialize();
-        virtual void update();
-        virtual void deinitialize();
-
-        virtual void halt();
-        virtual void resume();
-
-        /** Change the viewport background color */
-        void setBgColor(const Ogre::ColourValue &col);
-
-    protected:
-        /// Pointer to the scene manager for this module.
-        Ogre::SceneManager * mSceneMan;
-
-        /// Pointer to the overlay for this module.
-        Ogre::Overlay * mOverlay;
-
-        /// Pointer to this module's camera.
-        Ogre::Camera * mCamera;
-
-        /// Pointer to the module viewport.
-        Ogre::Viewport * mViewport;
-
-        /// String containing the Overlay name for this module.
-        std::string mOverlayName;
-
-        /// Current background color for this module's viewport.
-        Ogre::ColourValue mBgColor;
-    };
-
-    typedef std::stack<Module *> ModuleStack;
+        // Reads opcodes
+        scriptData.resize(size);
+        stream->read(&scriptData[0],size);
+    }
+    //--------------------------------------------------------------------------
 } // namespace
-
-#endif

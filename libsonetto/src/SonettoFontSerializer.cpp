@@ -112,7 +112,7 @@ namespace Sonetto
         uint32 colsize = (uint32)pFont->mColorList.size();
         fwrite(&colsize,sizeof(uint32), 1, mpfFile);
 
-        for(int32 i = 0; i != colsize; ++i)
+        for(uint32 i = 0; i != colsize; ++i)
         {
             fwrite(pFont->mColorList[i].ptr(),sizeof(float)*4, 1, mpfFile);
         }

@@ -198,14 +198,14 @@ namespace Sonetto
             inline const KeyState getBtnState(Button btn) const { return mBtnStates[btn]; }
 
             /// Gets an axis current values
-            Ogre::Vector2 getAxisValue(Axis axs);
+            Ogre::Vector2 getAnalogValue(Axis axs);
 
         private:
             /// Whether this PlayerInput is enabled or not
             bool mEnabled;
 
             /// Joystick ID (0 for none)
-            uint16 mJoyID;
+            uint32 mJoyID;
 
             /// Joystick shared pointer from which this PlayerInput will get its input from
             JoystickPtr mJoy;

@@ -27,42 +27,34 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_INPUTMANAGER_H
-#define SONETTO_INPUTMANAGER_H
+#ifndef SONETTO_DATABASE_H
+#define SONETTO_DATABASE_H
 
 #include <OgreSingleton.h>
 #include "SonettoPrerequisites.h"
-#include "SonettoPlayerInput.h"
-#include "SonettoJoystick.h"
-#include "SonettoScriptInputHandler.h"
+#include "SonettoSavemap.h"
+#include "SonettoScriptDataHandler.h"
 
 namespace Sonetto
 {
-    /** Class responsible for managing input resources
+    struct GameSystem
+    {
+        float textSize;
+        float textAnimationSpeed;
+        float textFadeInSpeed;
+        float textFadeOutSpeed;
+        float textHorizontalScale;
+        float textVerticalSpacing;
+        //Font * defaultFont;
+        uint8 defaultColor;
+    };
 
-        From this class, you can get Sonetto::PlayerInput instances, which you
-        can use for retrieving input from joysticks and keyboard.
-    */
-    class SONETTO_API InputManager : public Ogre::Singleton<InputManager>
+    class SONETTO_API Database : public Ogre::Singleton<Database>
     {
     public:
-        /** Constructor
+        Database() : mInitialized(false) {}
+        ~Database();
 
-        @param
-            players Number of PlayerInputs to be created
-        */
-        InputManager(size_t players);
-
-        /// Destructor
-        ~InputManager();
-
-        /** Initializes InputManager
-
-        @remarks
-            On Linux builds, this method takes no parameters
-        @param
-            hWnd Window handle (HWND) to be used with DirectInput.
-        */
         void initialize();
 
         /** Overrides standard Singleton retrieval
@@ -82,7 +74,7 @@ namespace Sonetto
             but the implementation stays in this single compilation unit,
             preventing link errors.
         */
-        static InputManager &getSingleton();
+        static Database &getSingleton();
 
         /** Overrides standard Singleton retrieval
 
@@ -101,79 +93,16 @@ namespace Sonetto
             but the implementation stays in this single compilation unit,
             preventing link errors.
         */
-        static InputManager *getSingletonPtr();
+        static Database *getSingletonPtr();
 
-        /** Updates all PlayerInputs.
+        GameSystem system;
 
-            This is called by Kernel::run(), so you
-            don't have to worry about it.
-        */
-        void update();
-
-        /** Retrieves a PlayerInput given its index
-
-        @remarks
-            Be careful not to access an index greater than
-            or equal to getPlayerNum().
-        */
-        PlayerInput *getPlayer(size_t num);
-
-        /// Retrieves the number of PlayerInputs in the manager
-        inline size_t getPlayerNum() const { return mPlayerNum; }
-
-        /** Gets a joystick to be used by a PlayerInput
-
-        @see
-            Joystick
-        */
-        JoystickPtr _getJoystick(uint32 id);
-
-        /// Returns the number of currently plugged joysticks
-        uint32 getJoystickNum() const { return mJoysticks.size(); }
-
-        /// Checks whether the joystick of the given ID is being used by a PlayerInput or not
-        bool isJoystickAssigned(uint32 id) const;
-
-        /** Directly checks a physical keyboard key state
-
-            This method is intended mainly for debugging, when user configuration is something
-            that should be avoided. It returns the state of a given keyboard key.
-        @param
-            key Key to be checked.
-        */
-        inline KeyState getDirectKeyState(uint8 key) const { return mKeyboardStates[key]; }
+        Savemap savemap;
 
     private:
-        /// Gets direct keyboard key state (either pressed or not)
-        bool getRawKeyState(uint32 key);
-
-        /// Vector of Joystick shared pointers
-        typedef std::vector<JoystickPtr> JoystickPtrVector;
-
-        /// PlayerInput vector
-        PlayerInputVector mPlayers;
-
-        /// Number of player inputs
-        size_t mPlayerNum;
-
-        /** Vector of Joystick shared pointers
-
-        @see
-            _getJoystick()
-        */
-        JoystickPtrVector mJoysticks;
-
-        /// Whether this singleton is initialized or not
         bool mInitialized;
 
-        /** Keyboard keystates
-
-        @see
-            getDirectKeyState()
-        */
-        KeyState mKeyboardStates[256];
-
-        ScriptInputHandler mScriptInputHandler;
+        ScriptDataHandler mScriptDataHandler;
     };
 } // namespace
 
