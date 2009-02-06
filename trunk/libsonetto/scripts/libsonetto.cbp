@@ -110,8 +110,13 @@
 			<Add library="winmm" />
 			<Add library="dxguid" />
 			<Add library="dinput8" />
+			<Add library="openal" />
+			<Add library="vorbisfile" />
+			<Add library="vorbis" />
+			<Add library="ogg" />
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
+		<Unit filename="..\include\SonettoAudioManager.h" />
 		<Unit filename="..\include\SonettoBattleModule.h" />
 		<Unit filename="..\include\SonettoBootModule.h" />
 		<Unit filename="..\include\SonettoDatabase.h" />
@@ -119,16 +124,20 @@
 		<Unit filename="..\include\SonettoFont.h" />
 		<Unit filename="..\include\SonettoFontManager.h" />
 		<Unit filename="..\include\SonettoFontSerializer.h" />
+		<Unit filename="..\include\SonettoFootstepSoundSource.h" />
 		<Unit filename="..\include\SonettoInputManager.h" />
 		<Unit filename="..\include\SonettoInputSource.h" />
 		<Unit filename="..\include\SonettoJoystick.h" />
 		<Unit filename="..\include\SonettoKernel.h" />
 		<Unit filename="..\include\SonettoMapModule.h" />
+		<Unit filename="..\include\SonettoMath.h" />
 		<Unit filename="..\include\SonettoMenuModule.h" />
 		<Unit filename="..\include\SonettoModule.h" />
 		<Unit filename="..\include\SonettoModuleFactory.h" />
 		<Unit filename="..\include\SonettoOpcode.h" />
 		<Unit filename="..\include\SonettoOpcodeHandler.h" />
+		<Unit filename="..\include\SonettoMusic.h" />
+		<Unit filename="..\include\SonettoMusicStream.h" />
 		<Unit filename="..\include\SonettoPlayerInput.h" />
 		<Unit filename="..\include\SonettoPrerequisites.h" />
 		<Unit filename="..\include\SonettoSavemap.h" />
@@ -141,6 +150,9 @@
 		<Unit filename="..\include\SonettoScriptManager.h" />
 		<Unit filename="..\include\SonettoSharedPtr.h" />
 		<Unit filename="..\include\SonettoStaticTextElement.h" />
+		<Unit filename="..\include\SonettoSoundSet.h" />
+		<Unit filename="..\include\SonettoSoundSetSource.h" />
+		<Unit filename="..\include\SonettoSoundSource.h" />
 		<Unit filename="..\include\SonettoTitleModule.h" />
 		<Unit filename="..\include\SonettoVariable.h" />
 		<Unit filename="..\include\SonettoWorldModule.h" />
@@ -152,12 +164,14 @@
 			<Option compilerVar="WINDRES" />
 			<Option target="Win32 Debug" />
 		</Unit>
+		<Unit filename="..\src\SonettoAudioManager.cpp" />
 		<Unit filename="..\src\SonettoBattleModule.cpp" />
 		<Unit filename="..\src\SonettoDatabase.cpp" />
 		<Unit filename="..\src\SonettoException.cpp" />
 		<Unit filename="..\src\SonettoFont.cpp" />
 		<Unit filename="..\src\SonettoFontManager.cpp" />
 		<Unit filename="..\src\SonettoFontSerializer.cpp" />
+		<Unit filename="..\src\SonettoFootstepSoundSource.cpp" />
 		<Unit filename="..\src\SonettoInputManager.cpp" />
 		<Unit filename="..\src\SonettoJoystick.cpp" />
 		<Unit filename="..\src\SonettoKernel.cpp" />
@@ -166,6 +180,8 @@
 		<Unit filename="..\src\SonettoModule.cpp" />
 		<Unit filename="..\src\SonettoModuleFactory.cpp" />
 		<Unit filename="..\src\SonettoOpcode.cpp" />
+		<Unit filename="..\src\SonettoMusic.cpp" />
+		<Unit filename="..\src\SonettoMusicStream.cpp" />
 		<Unit filename="..\src\SonettoPlayerInput.cpp" />
 		<Unit filename="..\src\SonettoSavemap.cpp" />
 		<Unit filename="..\src\SonettoScript.cpp" />
@@ -177,6 +193,8 @@
 		<Unit filename="..\src\SonettoScriptManager.cpp" />
 		<Unit filename="..\src\SonettoStaticTextElement.cpp" />
 		<Unit filename="..\src\SonettoVariable.cpp" />
+		<Unit filename="..\src\SonettoSoundSetSource.cpp" />
+		<Unit filename="..\src\SonettoSoundSource.cpp" />
 		<Unit filename="..\src\SonettoWorldModule.cpp" />
 		<Extensions>
 			<code_completion />

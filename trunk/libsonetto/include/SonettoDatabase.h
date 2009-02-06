@@ -34,6 +34,9 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "SonettoPrerequisites.h"
 #include "SonettoSavemap.h"
 #include "SonettoScriptDataHandler.h"
+#include "SonettoMusic.h"
+#include "SonettoSoundSource.h"
+#include "SonettoSoundSet.h"
 
 namespace Sonetto
 {
@@ -48,6 +51,16 @@ namespace Sonetto
         //Font * defaultFont;
         uint8 defaultColor;
     };
+
+    struct GroundType
+    {
+        IDVector defaultFootsteps;
+    };
+
+    typedef std::vector<GroundType> GroundTypeVector;
+
+    typedef std::map<uint32,IDVector> FootwearSounds;
+    typedef std::vector<FootwearSounds> FootwearSoundsVector;
 
     class SONETTO_API Database : public Ogre::Singleton<Database>
     {
@@ -98,6 +111,13 @@ namespace Sonetto
         GameSystem system;
 
         Savemap savemap;
+
+        MusicVector musics;
+        SoundDefVector sounds;
+        SoundSetVector soundSets;
+
+        GroundTypeVector groundTypes;
+        FootwearSoundsVector footwears;
 
     private:
         bool mInitialized;
