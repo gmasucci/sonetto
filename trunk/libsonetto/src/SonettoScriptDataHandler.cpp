@@ -271,7 +271,6 @@ namespace Sonetto
 
         std::cout << ((tVar.type == VT_INT32) ? tVar._int : tVar._float) << " ("
                 << ((tVar.type == VT_INT32) ? "int32" : "float") << ")\n";
-        system("pause");
 
         return SCRIPT_CONTINUE;
     }

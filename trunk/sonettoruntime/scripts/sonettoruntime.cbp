@@ -23,7 +23,6 @@
 				<Linker>
 					<Add library="sonetto_d" />
 					<Add library="genericbootmodule_d" />
-					<Add library="sonetto_d" />
 					<Add library="OgreMain_d" />
 					<Add directory="..\..\dependencies\lib\win32" />
 					<Add directory="..\..\lib\win32" />
