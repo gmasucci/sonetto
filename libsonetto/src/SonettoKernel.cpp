@@ -329,12 +329,11 @@ namespace Sonetto
             // Deletes input manager
             delete mInputMan;
 
-            // Remove and delete all Sonetto Resources.
-            delete Ogre::ResourceGroupManager::getSingleton()._getResourceManager("SFont");
-
-            delete mScriptMan;
-
             delete mDatabase;
+
+            // Remove and delete all Sonetto Resources.
+            delete mFontMan;
+            delete mScriptMan;
 
             // Deletes Ogre
             delete mOgre;
