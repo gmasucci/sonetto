@@ -27,39 +27,36 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include "GenericBootModule.h"
+#ifndef SONETTO_MUSIC_H
+#define SONETTO_MUSIC_H
 
-namespace BootModule
+#include <vector>
+#include <string>
+#include "SonettoPrerequisites.h"
+
+namespace Sonetto
 {
-    // ----------------------------------------------------------------------
-    // BootModule::GenericBootModule implementation
-    // ----------------------------------------------------------------------
-    GenericBootModule::GenericBootModule() : BootModule::BootModule() {}
-    // ----------------------------------------------------------------------
-    GenericBootModule::~GenericBootModule() {}
-    // ----------------------------------------------------------------------
-    void GenericBootModule::initialize()
+	/// Describes a music to be played, either as a BGM or an ME
+    struct SONETTO_API Music
     {
-        BootModule::initialize();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::update()
-    {
-        BootModule::update();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::deinitialize()
-    {
-        BootModule::deinitialize();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::halt()
-    {
-        BootModule::halt();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::resume()
-    {
-        BootModule::resume();
-    }
+        /// Subdirectory in which the musics are saved
+        static const char *FOLDER;
+
+        /// Constructor
+        Music(std::string aFilename,size_t aLoopPoint)
+                : filename(aFilename), loopPoint(aLoopPoint) {}
+
+        /// Filename of this music inside FOLDER
+        std::string filename;
+
+        /// Loop point in PCM samples to where this music should loop
+        /// when it reaches the end
+        size_t loopPoint;
+    };
+
+    /// Vector of Music structures
+    typedef std::vector<Music> MusicVector;
 } // namespace
+
+#endif
+

@@ -259,11 +259,13 @@ namespace Sonetto
         /// SDL Surface (Window)
         SDL_Surface *mWindow;
 
-        FontManager *mFontMan;
-
         Database *mDatabase;
 
+        FontManager *mFontMan;
+
         ScriptManager *mScriptMan;
+
+        AudioManager *mAudioMan;
 
         /// InputManager
         InputManager *mInputMan;

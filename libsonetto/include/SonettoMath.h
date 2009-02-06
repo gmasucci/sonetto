@@ -27,39 +27,32 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include "GenericBootModule.h"
+#ifndef SONETTO_MATH_H
+#define SONETTO_MATH_H
 
-namespace BootModule
+#include "SonettoPrerequisites.h"
+
+namespace Sonetto
 {
-    // ----------------------------------------------------------------------
-    // BootModule::GenericBootModule implementation
-    // ----------------------------------------------------------------------
-    GenericBootModule::GenericBootModule() : BootModule::BootModule() {}
-    // ----------------------------------------------------------------------
-    GenericBootModule::~GenericBootModule() {}
-    // ----------------------------------------------------------------------
-    void GenericBootModule::initialize()
-    {
-        BootModule::initialize();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::update()
-    {
-        BootModule::update();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::deinitialize()
-    {
-        BootModule::deinitialize();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::halt()
-    {
-        BootModule::halt();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::resume()
-    {
-        BootModule::resume();
-    }
+	class Math
+	{
+	public:
+		Math() {}
+		~Math() {}
+
+		template<class type>
+		static inline type clamp(type value,type min,type max)
+		{
+		    if (value < min) {
+		        return min;
+		    } else
+		    if (value > max) {
+		        return max;
+		    }
+
+		    return value;
+		}
+	};
 } // namespace
+
+#endif

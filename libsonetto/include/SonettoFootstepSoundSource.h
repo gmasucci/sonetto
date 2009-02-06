@@ -27,39 +27,35 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include "GenericBootModule.h"
+#ifndef SONETTO_FOOTSTEPSOUNDSOURCE_H
+#define SONETTO_FOOTSTEPSOUNDSOURCE_H
 
-namespace BootModule
+#include <map>
+#include "SonettoPrerequisites.h"
+#include "SonettoSoundSource.h"
+
+namespace Sonetto
 {
-    // ----------------------------------------------------------------------
-    // BootModule::GenericBootModule implementation
-    // ----------------------------------------------------------------------
-    GenericBootModule::GenericBootModule() : BootModule::BootModule() {}
-    // ----------------------------------------------------------------------
-    GenericBootModule::~GenericBootModule() {}
-    // ----------------------------------------------------------------------
-    void GenericBootModule::initialize()
+    class SONETTO_API FootstepSoundSource : public SoundSource
     {
-        BootModule::initialize();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::update()
-    {
-        BootModule::update();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::deinitialize()
-    {
-        BootModule::deinitialize();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::halt()
-    {
-        BootModule::halt();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::resume()
-    {
-        BootModule::resume();
-    }
+    public:
+        FootstepSoundSource() : SoundSource() {}
+        virtual ~FootstepSoundSource() {}
+
+        virtual inline uint32 getGround() const { return mGround; }
+        virtual void setGround(uint32 ground);
+
+        virtual inline uint32 getFootwear() const { return mFootwear; }
+        virtual void setFootwear(uint32 footwear);
+
+        virtual void play();
+
+    protected:
+        uint32 mGround;
+        uint32 mFootwear;
+    };
+
+    typedef Ogre::SharedPtr<FootstepSoundSource> FootstepSoundSourcePtr;
 } // namespace
+
+#endif

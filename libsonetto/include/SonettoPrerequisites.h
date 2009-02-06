@@ -30,6 +30,9 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTO_PREREQUISITES_H
 #define SONETTO_PREREQUISITES_H
 
+#include <vector>
+#include <map>
+
 // SONETTO_API definition
 #ifdef WINDOWS // Under Windows we must import/export object definitions
 #   ifdef SONETTO_DLL_BUILD
@@ -67,6 +70,9 @@ namespace Sonetto
     typedef signed short int16;
     typedef signed char int8;
 
+    typedef std::vector<uint32> IDVector;
+    typedef std::map<uint32,uint32> IDIDMap;
+
     // Forward declarations
     class Kernel;
     class Exception;
@@ -101,6 +107,12 @@ namespace Sonetto
     class Savemap;
     class Variable;
     class ScriptDataHandler;
+    class AudioManager;
+    class Music;
+    class MusicStream;
+    class SoundDef;
+    class SoundSource;
+    class InputManager;
 
     // <todo> Find a good place for this (I don't think this is a good place to
     // put things we don't know where to put; it will probably lead to problems of

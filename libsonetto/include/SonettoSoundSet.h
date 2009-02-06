@@ -27,39 +27,27 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include "GenericBootModule.h"
+#ifndef SONETTO_SOUNDSET_H
+#define SONETTO_SOUNDSET_H
 
-namespace BootModule
+#include <vector>
+#include "SonettoPrerequisites.h"
+
+namespace Sonetto
 {
-    // ----------------------------------------------------------------------
-    // BootModule::GenericBootModule implementation
-    // ----------------------------------------------------------------------
-    GenericBootModule::GenericBootModule() : BootModule::BootModule() {}
-    // ----------------------------------------------------------------------
-    GenericBootModule::~GenericBootModule() {}
-    // ----------------------------------------------------------------------
-    void GenericBootModule::initialize()
+    class SoundSet
     {
-        BootModule::initialize();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::update()
-    {
-        BootModule::update();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::deinitialize()
-    {
-        BootModule::deinitialize();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::halt()
-    {
-        BootModule::halt();
-    }
-    // ----------------------------------------------------------------------
-    void GenericBootModule::resume()
-    {
-        BootModule::resume();
-    }
+    public:
+        SoundSet() {}
+
+        IDVector &getSounds() { return sounds; }
+        const IDVector &getSounds() const { return sounds; }
+
+    private:
+        IDVector sounds;
+    };
+
+    typedef std::vector<SoundSet> SoundSetVector;
 } // namespace
+
+#endif

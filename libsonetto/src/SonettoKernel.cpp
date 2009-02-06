@@ -28,6 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
 #include <cstdlib>
+#include <ctime>
 #ifndef WINDOWS
 #   include <sys/stat.h>
 #   include <dirent.h>
@@ -37,6 +38,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "SonettoInputManager.h"
 #include "SonettoScriptManager.h"
 #include "SonettoStaticTextElement.h"
+#include "SonettoAudioManager.h"
 
 namespace Sonetto
 {
@@ -63,6 +65,9 @@ namespace Sonetto
         {
             SONETTO_THROW("Kernel is already initialized");
         }
+
+        // Seeds pseudo-random number generator
+        srand(time(NULL));
 
         // Reads Sonetto Project File
         readSPF();
@@ -279,13 +284,17 @@ namespace Sonetto
 
         mScriptMan = new ScriptManager();
 
-        mDatabase = new Database();
-        mDatabase->initialize();
+        mAudioMan = new AudioManager();
+        mAudioMan->initialize();
 
         // Initializes input manager
         mInputMan = new InputManager(4);
         mInputMan->initialize();
+
         mFontMan = new FontManager();
+
+        mDatabase = new Database();
+        mDatabase->initialize();
 
         // Initialize Objects/Elements;
         StaticTextElementFactory * mTextElementFactory = new StaticTextElementFactory();
@@ -330,6 +339,8 @@ namespace Sonetto
             delete mInputMan;
 
             delete mDatabase;
+
+            delete mAudioMan;
 
             // Remove and delete all Sonetto Resources.
             delete mFontMan;
@@ -401,6 +412,9 @@ namespace Sonetto
 
                 default: break;
             }
+
+            // <todo> Use deltatime
+            mAudioMan->_update(0.001f);
 
             // Updates input manager
             mInputMan->update();
