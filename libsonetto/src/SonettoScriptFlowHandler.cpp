@@ -37,6 +37,34 @@ POSSIBILITY OF SUCH DAMAGE.
 namespace Sonetto
 {
     //--------------------------------------------------------------------------
+    // Sonetto::OpFlowJmp implementation.
+    //--------------------------------------------------------------------------
+    OpFlowJmp::OpFlowJmp(OpcodeHandler *aHandler) : Opcode(aHandler)
+    {
+        arguments.push_back(OpcodeArgument(sizeof(address),&address));
+
+        calculateArgsSize();
+    }
+    //--------------------------------------------------------------------------
+    // Sonetto::OpFlowCJmp implementation.
+    //--------------------------------------------------------------------------
+    OpFlowCJmp::OpFlowCJmp(OpcodeHandler *aHandler) : Opcode(aHandler)
+    {
+        arguments.push_back(OpcodeArgument(sizeof(scope),&scope));
+        arguments.push_back(OpcodeArgument(sizeof(cmpIndex),&cmpIndex));
+        arguments.push_back(OpcodeArgument(sizeof(comparator),&comparator));
+
+        arguments.push_back(
+                OpcodeArgument(sizeof(variable._getRawType()),
+                &variable._getRawType()));
+        arguments.push_back(
+                OpcodeArgument(sizeof(variable._int),&variable._int));
+
+        arguments.push_back(OpcodeArgument(sizeof(address),&address));
+
+        calculateArgsSize();
+    }
+    //--------------------------------------------------------------------------
     // Sonetto::ScriptFlowHandler implementation.
     //--------------------------------------------------------------------------
     void ScriptFlowHandler::registerOpcodes()
@@ -58,7 +86,7 @@ namespace Sonetto
         scriptMan._unregisterOpcode(OP_CJMP);
     }
     //--------------------------------------------------------------------------
-    int ScriptFlowHandler::handleOpcode(Script *script,size_t id,Opcode *opcode)
+    int ScriptFlowHandler::handleOpcode(ScriptPtr script,size_t id,Opcode *opcode)
     {
         // Calls opcode handler methods
         switch (id)
@@ -76,7 +104,7 @@ namespace Sonetto
             break;
 
             default:
-                SONETTO_THROW("Script flow error: Unrecognized opcode");
+                SONETTO_THROW("Script flow handler error: Unrecognized opcode");
             break;
         }
     }
@@ -87,7 +115,7 @@ namespace Sonetto
         return opcode->address;
     }
     //--------------------------------------------------------------------------
-    int ScriptFlowHandler::cjmp(Script *script,OpFlowCJmp *opcode)
+    int ScriptFlowHandler::cjmp(ScriptPtr script,OpFlowCJmp *opcode)
     {
         assert(opcode);
 
@@ -96,13 +124,6 @@ namespace Sonetto
         VariableMap *rvars;
         int retn = SCRIPT_CONTINUE;
 
-        // The jump address is based on the beginning of the script,
-        // so it cannot be lesser than zero
-        if (opcode->address < 0)
-        {
-            SONETTO_THROW("Script flow error: Invalid jump address");
-        }
-
         // Gets variable desired to do the checking
         switch (opcode->scope)
         {
@@ -110,6 +131,12 @@ namespace Sonetto
             // the script's local variable map
             case VS_LOCAL:
                 rvars = script->getLocals();
+
+                if (!rvars)
+                {
+                    SONETTO_THROW("Script flow handler error: Script has no "
+                            "local variables");
+                }
             break;
 
             // And the variable can be global, in which case it is taken from
@@ -120,19 +147,16 @@ namespace Sonetto
 
             // Or it might also be a terrible corruption problem :-)
             default:
-                SONETTO_THROW("Script flow error: Unregonized conditional "
+                SONETTO_THROW("Script flow handler error: Unregonized conditional "
                             "jump scope");
             break;
         }
 
-        if (rvars)
-        {
-            VariableMap::iterator iter = rvars->find(opcode->cmpIndex);
+        VariableMap::iterator iter = rvars->find(opcode->cmpIndex);
 
-            if (iter != rvars->end())
-            {
-                lvar = iter->second;
-            }
+        if (iter != rvars->end())
+        {
+            lvar = iter->second;
         }
 
         if (lvar.compare((VariableComparator)(opcode->comparator),

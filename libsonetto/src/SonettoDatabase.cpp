@@ -58,10 +58,10 @@ namespace Sonetto
         mScriptDataHandler.registerOpcodes();
         savemap.load("savegame001.lrs");
 
-        musics.push_back(Music("music.ogg",0));
+        /*musics.push_back(Music("music.ogg",0));
 
         sounds.push_back(SoundDef("rmsystem_accept.ogg"));
-        sounds.push_back(SoundDef("sound.ogg"));
+        sounds.push_back(SoundDef("rmsystem_move.ogg"));
         sounds.push_back(SoundDef("rmsystem_cancel.ogg"));
 
         SoundSet set;
@@ -76,10 +76,10 @@ namespace Sonetto
         groundTypes.push_back(ground);
 
         FootwearSounds footwear;
-        /*IDVector &sounds = footwear[1];
+        IDVector &sounds = footwear[1];
         sounds.push_back(1);
-        sounds.push_back(3);*/
-        footwears.push_back(footwear);
+        sounds.push_back(3);
+        footwears.push_back(footwear);*/
 
         mInitialized = true;
     }

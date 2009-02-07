@@ -42,7 +42,7 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     SONETTO_SINGLETON_IMPLEMENT(InputManager);
     // ----------------------------------------------------------------------
-    InputManager::InputManager(size_t players)
+    InputManager::InputManager(uint32 players)
             : mPlayerNum(players), mInitialized(false)
     {
         memset(mKeyboardStates,0x00,sizeof(mKeyboardStates));
@@ -173,15 +173,15 @@ namespace Sonetto
         return false;
     }
     // ----------------------------------------------------------------------
-    PlayerInput *InputManager::getPlayer(size_t num)
+    PlayerInput *InputManager::getPlayer(uint32 id)
     {
         // Checks bounds
-        if (num >= mPlayerNum)
+        if (id > mPlayerNum)
         {
             return NULL;
         }
 
         // Returns requested PlayerInput
-        return mPlayers[num];
+        return mPlayers[id - 1];
     }
 };

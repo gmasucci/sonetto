@@ -28,19 +28,19 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include "SonettoPrerequisites.h"
-#include "SonettoOpcodeHandler.h"
+#include "SonettoOpcode.h"
 
 namespace Sonetto
 {
     //--------------------------------------------------------------------------
-    // Sonetto::OpcodeHandler implementation.
+    // Sonetto::Opcode implementation.
     //--------------------------------------------------------------------------
-    OpcodeHandler::~OpcodeHandler()
+    void Opcode::calculateArgsSize()
     {
-        if (mRegistered)
+        mArgsSize = 0;
+        for (size_t i = 0;i < arguments.size();++i)
         {
-            unregisterOpcodes();
+            mArgsSize += arguments[i].size;
         }
     }
 } // namespace

@@ -134,14 +134,15 @@
 		<Unit filename="..\include\SonettoMenuModule.h" />
 		<Unit filename="..\include\SonettoModule.h" />
 		<Unit filename="..\include\SonettoModuleFactory.h" />
-		<Unit filename="..\include\SonettoOpcode.h" />
-		<Unit filename="..\include\SonettoOpcodeHandler.h" />
 		<Unit filename="..\include\SonettoMusic.h" />
 		<Unit filename="..\include\SonettoMusicStream.h" />
+		<Unit filename="..\include\SonettoOpcode.h" />
+		<Unit filename="..\include\SonettoOpcodeHandler.h" />
 		<Unit filename="..\include\SonettoPlayerInput.h" />
 		<Unit filename="..\include\SonettoPrerequisites.h" />
 		<Unit filename="..\include\SonettoSavemap.h" />
 		<Unit filename="..\include\SonettoScript.h" />
+		<Unit filename="..\include\SonettoScriptAudioHandler.h" />
 		<Unit filename="..\include\SonettoScriptDataHandler.h" />
 		<Unit filename="..\include\SonettoScriptFile.h" />
 		<Unit filename="..\include\SonettoScriptFileSerializer.h" />
@@ -149,10 +150,10 @@
 		<Unit filename="..\include\SonettoScriptInputHandler.h" />
 		<Unit filename="..\include\SonettoScriptManager.h" />
 		<Unit filename="..\include\SonettoSharedPtr.h" />
-		<Unit filename="..\include\SonettoStaticTextElement.h" />
 		<Unit filename="..\include\SonettoSoundSet.h" />
 		<Unit filename="..\include\SonettoSoundSetSource.h" />
 		<Unit filename="..\include\SonettoSoundSource.h" />
+		<Unit filename="..\include\SonettoStaticTextElement.h" />
 		<Unit filename="..\include\SonettoTitleModule.h" />
 		<Unit filename="..\include\SonettoVariable.h" />
 		<Unit filename="..\include\SonettoWorldModule.h" />
@@ -179,22 +180,24 @@
 		<Unit filename="..\src\SonettoMenuModule.cpp" />
 		<Unit filename="..\src\SonettoModule.cpp" />
 		<Unit filename="..\src\SonettoModuleFactory.cpp" />
-		<Unit filename="..\src\SonettoOpcode.cpp" />
 		<Unit filename="..\src\SonettoMusic.cpp" />
 		<Unit filename="..\src\SonettoMusicStream.cpp" />
+		<Unit filename="..\src\SonettoOpcode.cpp" />
+		<Unit filename="..\src\SonettoOpcodeHandler.cpp" />
 		<Unit filename="..\src\SonettoPlayerInput.cpp" />
 		<Unit filename="..\src\SonettoSavemap.cpp" />
 		<Unit filename="..\src\SonettoScript.cpp" />
+		<Unit filename="..\src\SonettoScriptAudioHandler.cpp" />
 		<Unit filename="..\src\SonettoScriptDataHandler.cpp" />
 		<Unit filename="..\src\SonettoScriptFile.cpp" />
 		<Unit filename="..\src\SonettoScriptFileSerializer.cpp" />
 		<Unit filename="..\src\SonettoScriptFlowHandler.cpp" />
 		<Unit filename="..\src\SonettoScriptInputHandler.cpp" />
 		<Unit filename="..\src\SonettoScriptManager.cpp" />
-		<Unit filename="..\src\SonettoStaticTextElement.cpp" />
-		<Unit filename="..\src\SonettoVariable.cpp" />
 		<Unit filename="..\src\SonettoSoundSetSource.cpp" />
 		<Unit filename="..\src\SonettoSoundSource.cpp" />
+		<Unit filename="..\src\SonettoStaticTextElement.cpp" />
+		<Unit filename="..\src\SonettoVariable.cpp" />
 		<Unit filename="..\src\SonettoWorldModule.cpp" />
 		<Extensions>
 			<code_completion />

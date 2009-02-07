@@ -35,25 +35,17 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "SonettoOpcodeHandler.h"
 #include "SonettoOpcode.h"
 #include "SonettoVariable.h"
+#include "SonettoScript.h"
 
 namespace Sonetto
 {
     class OpDataPush : public Opcode
     {
     public:
-        OpDataPush(OpcodeHandler *aHandler)
-                : Opcode(aHandler) {}
+        OpDataPush(OpcodeHandler *aHandler);
 
-        OpDataPush *create() const
-        {
-            OpDataPush *opcode = new OpDataPush(handler);
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(variable.type),&opcode->variable.type));
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(variable._int),&opcode->variable._int));
-
-            return opcode;
-        }
+        inline OpDataPush *create() const
+                { return new OpDataPush(handler); }
 
         Variable variable;
     };
@@ -61,52 +53,22 @@ namespace Sonetto
     class OpDataPushVar : public Opcode
     {
     public:
-        OpDataPushVar(OpcodeHandler *aHandler)
-                : Opcode(aHandler) {}
+        OpDataPushVar(OpcodeHandler *aHandler);
 
-        OpDataPushVar *create() const
-        {
-            OpDataPushVar *opcode = new OpDataPushVar(handler);
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(scope),&opcode->scope));
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(varIndex),&opcode->varIndex));
-
-            return opcode;
-        }
+        inline OpDataPushVar *create() const
+                { return new OpDataPushVar(handler); }
 
         char scope;
         uint32 varIndex;
     };
 
-    class OpDataPop : public Opcode
-    {
-    public:
-        OpDataPop(OpcodeHandler *aHandler)
-            : Opcode(aHandler) {}
-
-        OpDataPop *create() const
-        {
-            return new OpDataPop(handler);
-        }
-    };
-
     class OpDataPopVar : public Opcode
     {
     public:
-        OpDataPopVar(OpcodeHandler *aHandler)
-            : Opcode(aHandler) {}
+        OpDataPopVar(OpcodeHandler *aHandler);
 
-        OpDataPopVar *create() const
-        {
-            OpDataPopVar *opcode = new OpDataPopVar(handler);
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(scope),&opcode->scope));
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(varIndex),&opcode->varIndex));
-
-            return opcode;
-        }
+        inline OpDataPopVar *create() const
+                { return new OpDataPopVar(handler); }
 
         char scope;
         uint32 varIndex;
@@ -130,21 +92,10 @@ namespace Sonetto
     class OpDataVarChg : public Opcode
     {
     public:
-        OpDataVarChg(OpcodeHandler *aHandler)
-                : Opcode(aHandler) {}
+        OpDataVarChg(OpcodeHandler *aHandler);
 
-        OpDataVarChg *create() const
-        {
-            OpDataVarChg *opcode = new OpDataVarChg(handler);
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(scope),&opcode->scope));
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(varIndex),&opcode->varIndex));
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(operation),&opcode->operation));
-
-            return opcode;
-        }
+        inline OpDataVarChg *create() const
+                { return new OpDataVarChg(handler); }
 
         char scope;
         uint32 varIndex;
@@ -169,14 +120,7 @@ namespace Sonetto
 
         void registerOpcodes();
         void unregisterOpcodes();
-        int handleOpcode(Script *script,size_t id,Opcode *opcode);
-
-    private:
-        int push(Script *script,OpDataPush *opcode);
-        int pushv(Script *script,OpDataPushVar *opcode);
-        int pop(Script *script,OpDataPop *opcode);
-        int popv(Script *script,OpDataPopVar *opcode);
-        int vchg(Script *script,OpDataVarChg *opcode);
+        int handleOpcode(ScriptPtr script,size_t id,Opcode *opcode);
     };
 } // namespace
 

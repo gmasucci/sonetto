@@ -35,6 +35,25 @@ namespace Sonetto
     //--------------------------------------------------------------------------
     // Sonetto::Script implementation.
     //--------------------------------------------------------------------------
+    const Variable &Script::stackPeek()
+    {
+        if (mVarStack.empty())
+        {
+            SONETTO_THROW("Script stack is empty");
+        }
 
+        return mVarStack.top();
+    }
     //--------------------------------------------------------------------------
+    Variable Script::stackPop()
+    {
+        if (mVarStack.empty())
+        {
+            SONETTO_THROW("Script stack is empty");
+        }
+
+        Variable retn(mVarStack.top());
+        mVarStack.pop();
+        return retn;
+    }
 } // namespace Sonetto

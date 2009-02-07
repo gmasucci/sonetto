@@ -33,26 +33,6 @@ POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sonetto
 {
-    /*namespace __GCC_SINF_HACK
-    {
-        float w00t(float x)
-        {
-            static const float pi = 3.14159265f;
-            static const float circle = pi * 2;
-            static const float quarterCircle = circle / 4;
-
-            float shifted = x - quarterCircle;
-            if (shifted < 0.0f)
-            {
-                shifted = circle - shifted;
-            }
-
-            return cos(shifted);
-        }
-    }
-
-    #define gccsinfhack __GCC_SINF_HACK::w00t*/
-
     //--------------------------------------------------------------------------
     // Temporary simplePow helper function
     //--------------------------------------------------------------------------
@@ -80,10 +60,10 @@ namespace Sonetto
     //--------------------------------------------------------------------------
     bool Variable::operator==(const Variable &rhs)
     {
-        switch (type)
+        switch (getType())
         {
             case VT_INT32:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
                         return (_int == rhs._int);
@@ -96,7 +76,7 @@ namespace Sonetto
             break;
 
             case VT_FLOAT:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
                         return (_float == rhs._int);
@@ -114,10 +94,10 @@ namespace Sonetto
     //--------------------------------------------------------------------------
     bool Variable::operator!=(const Variable &rhs)
     {
-        switch (type)
+        switch (getType())
         {
             case VT_INT32:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
                         return (_int != rhs._int);
@@ -130,7 +110,7 @@ namespace Sonetto
             break;
 
             case VT_FLOAT:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
                         return (_float != rhs._int);
@@ -148,10 +128,10 @@ namespace Sonetto
     //--------------------------------------------------------------------------
     bool Variable::operator>(const Variable &rhs)
     {
-        switch (type)
+        switch (getType())
         {
             case VT_INT32:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
                         return (_int > rhs._int);
@@ -164,7 +144,7 @@ namespace Sonetto
             break;
 
             case VT_FLOAT:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
                         return (_float > rhs._int);
@@ -182,10 +162,10 @@ namespace Sonetto
     //--------------------------------------------------------------------------
     bool Variable::operator>=(const Variable &rhs)
     {
-        switch (type)
+        switch (getType())
         {
             case VT_INT32:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
                         return (_int >= rhs._int);
@@ -198,7 +178,7 @@ namespace Sonetto
             break;
 
             case VT_FLOAT:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
                         return (_float >= rhs._int);
@@ -216,10 +196,10 @@ namespace Sonetto
     //--------------------------------------------------------------------------
     bool Variable::operator<(const Variable &rhs)
     {
-        switch (type)
+        switch (getType())
         {
             case VT_INT32:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
                         return (_int < rhs._int);
@@ -232,7 +212,7 @@ namespace Sonetto
             break;
 
             case VT_FLOAT:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
                         return (_float < rhs._int);
@@ -250,10 +230,10 @@ namespace Sonetto
     //--------------------------------------------------------------------------
     bool Variable::operator<=(const Variable &rhs)
     {
-        switch (type)
+        switch (getType())
         {
             case VT_INT32:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
                         return (_int <= rhs._int);
@@ -266,7 +246,7 @@ namespace Sonetto
             break;
 
             case VT_FLOAT:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
                         return (_float <= rhs._int);
@@ -318,329 +298,273 @@ namespace Sonetto
     //--------------------------------------------------------------------------
     Variable Variable::operator+(const Variable &rhs)
     {
-        Variable retn;
-        retn.type = 3;
-
-        switch (type)
+        switch (getType())
         {
             case VT_INT32:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
-                        retn = Variable(VT_INT32,_int + rhs._int);
+                        return Variable(VT_INT32,_int + rhs._int);
                     break;
 
                     case VT_FLOAT:
-                        retn = Variable(VT_FLOAT,_int + rhs._float);
+                        return Variable(VT_FLOAT,_int + rhs._float);
                     break;
                 }
             break;
 
             case VT_FLOAT:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
-                        retn = Variable(VT_FLOAT,_float + rhs._int);
+                        return Variable(VT_FLOAT,_float + rhs._int);
                     break;
 
                     case VT_FLOAT:
-                        retn = Variable(VT_FLOAT,_float + rhs._float);
+                        return Variable(VT_FLOAT,_float + rhs._float);
                     break;
                 }
             break;
         }
 
-        switch (retn.type)
-        {
-            case VT_FLOAT:
-                retn.floatCheck();
-            case VT_INT32:
-                return retn;
-            break;
-
-            default:
-                SONETTO_THROW("Variable has invalid type");
-            break;
-        }
+        // Avoids warnings
+        return Variable();
     }
     //--------------------------------------------------------------------------
     Variable Variable::operator-(const Variable &rhs)
     {
-        Variable retn;
-        retn.type = 3;
-
-        switch (type)
+        switch (getType())
         {
             case VT_INT32:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
-                        retn = Variable(VT_INT32,_int - rhs._int);
+                        return Variable(VT_INT32,_int - rhs._int);
                     break;
 
                     case VT_FLOAT:
-                        retn = Variable(VT_FLOAT,_int - rhs._float);
+                        return Variable(VT_FLOAT,_int - rhs._float);
                     break;
                 }
             break;
 
             case VT_FLOAT:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
-                        retn = Variable(VT_FLOAT,_float - rhs._int);
+                        return Variable(VT_FLOAT,_float - rhs._int);
                     break;
 
                     case VT_FLOAT:
-                        retn = Variable(VT_FLOAT,_float - rhs._float);
+                        return Variable(VT_FLOAT,_float - rhs._float);
                     break;
                 }
             break;
         }
 
-        switch (retn.type)
-        {
-            case VT_FLOAT:
-                retn.floatCheck();
-            case VT_INT32:
-                return retn;
-            break;
-
-            default:
-                SONETTO_THROW("Variable has invalid type");
-            break;
-        }
+        // Avoids warnings
+        return Variable();
     }
     //--------------------------------------------------------------------------
     Variable Variable::operator*(const Variable &rhs)
     {
-        Variable retn;
-        retn.type = 3;
-
-        switch (type)
+        switch (getType())
         {
             case VT_INT32:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
-                        retn = Variable(VT_INT32,_int * rhs._int);
+                        return Variable(VT_INT32,_int * rhs._int);
                     break;
 
                     case VT_FLOAT:
-                        retn = Variable(VT_FLOAT,_int * rhs._float);
+                        return Variable(VT_FLOAT,_int * rhs._float);
                     break;
                 }
             break;
 
             case VT_FLOAT:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
-                        retn = Variable(VT_FLOAT,_float * rhs._int);
+                        return Variable(VT_FLOAT,_float * rhs._int);
                     break;
 
                     case VT_FLOAT:
-                        retn = Variable(VT_FLOAT,_float * rhs._float);
+                        return Variable(VT_FLOAT,_float * rhs._float);
                     break;
                 }
             break;
         }
 
-        switch (retn.type)
-        {
-            case VT_FLOAT:
-                retn.floatCheck();
-            case VT_INT32:
-                return retn;
-            break;
-
-            default:
-                SONETTO_THROW("Variable has invalid type");
-            break;
-        }
+        // Avoids warnings
+        return Variable();
     }
     //--------------------------------------------------------------------------
     Variable Variable::operator/(const Variable &rhs)
     {
-        Variable retn;
-        retn.type = 3;
-
-        switch (type)
+        switch (getType())
         {
             case VT_INT32:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
-                        retn = Variable(VT_FLOAT,(float)(_int) / (float)(rhs._int));
+                        return Variable(VT_FLOAT,(float)(_int) / (float)(rhs._int));
                     break;
 
                     case VT_FLOAT:
-                        retn = Variable(VT_FLOAT,_int / rhs._float);
+                        return Variable(VT_FLOAT,_int / rhs._float);
                     break;
                 }
             break;
 
             case VT_FLOAT:
-                switch (rhs.type)
+                switch (rhs.getType())
                 {
                     case VT_INT32:
-                        retn = Variable(VT_FLOAT,_float / rhs._int);
+                        return Variable(VT_FLOAT,_float / rhs._int);
                     break;
 
                     case VT_FLOAT:
-                        retn = Variable(VT_FLOAT,_float / rhs._float);
+                        return Variable(VT_FLOAT,_float / rhs._float);
                     break;
                 }
             break;
         }
 
-        switch (retn.type)
-        {
-            case VT_FLOAT:
-                retn.floatCheck();
-            case VT_INT32:
-                return retn;
-            break;
-
-            default:
-                SONETTO_THROW("Variable has invalid type");
-            break;
-        }
+        // Avoids warnings
+        return Variable();
     }
     //--------------------------------------------------------------------------
-    Variable Variable::pow(const Variable &exp)
+    Variable Variable::pow(const Variable &base,const Variable &exp)
     {
-        Variable retn;
-        retn.type = 3;
-
-        switch (type)
+        switch (base.getType())
         {
             case VT_INT32:
-                switch (exp.type)
+                switch (exp.getType())
                 {
                     case VT_INT32:
                         if (exp._int < 0) {
-                            //retn = Variable(VT_FLOAT,std::pow((float)_int,(float)exp._int));
+                            //return Variable(VT_FLOAT,std::pow(
+                            //        (float)base._int,(float)exp._int));
                         } else {
-                            retn = Variable(VT_INT32,simplePow(_int,exp._int));
+                            return Variable(VT_INT32,
+                                    simplePow(base._int,exp._int));
                         }
                     break;
 
                     case VT_FLOAT:
-                        //retn = Variable(VT_FLOAT,std::pow((float)_int,exp._float));
+                        //return Variable(VT_FLOAT,std::pow(
+                        //        (float)base._int,exp._float));
                     break;
                 }
             break;
 
             case VT_FLOAT:
-                switch (exp.type)
+                switch (exp.getType())
                 {
                     case VT_INT32:
-                        //retn = Variable(VT_FLOAT,std::pow(_float,(float)exp._int));
+                        //return Variable(VT_FLOAT,std::pow(
+                        //        base._float,(float)exp._int));
                     break;
 
                     case VT_FLOAT:
-                        //retn = Variable(VT_FLOAT,std::pow(_float,exp._float));
+                        //return Variable(VT_FLOAT,std::pow(
+                        //        base._float,exp._float));
                     break;
                 }
             break;
         }
 
-        switch (retn.type)
-        {
-            case VT_FLOAT:
-                retn.floatCheck();
-            case VT_INT32:
-                return retn;
-            break;
-
-            default:
-                SONETTO_THROW("Variable has invalid type");
-            break;
-        }
+        // Avoids warnings
+        return Variable();
     }
     //--------------------------------------------------------------------------
-    Variable Variable::sqrt()
+    Variable Variable::sqrt(const Variable &value)
     {
-        Variable retn;
-        retn.type = 3;
-
-        switch (type)
+        switch (value.getType())
         {
             case VT_INT32:
-                retn = Variable(VT_FLOAT,std::sqrt((float)_int));
+                return Variable(VT_FLOAT,std::sqrt((float)value._int));
             break;
 
             case VT_FLOAT:
-                retn = Variable(VT_FLOAT,std::sqrt(_float));
+                return Variable(VT_FLOAT,std::sqrt(value._float));
             break;
         }
 
-        switch (retn.type)
-        {
-            case VT_FLOAT:
-                retn.floatCheck();
-            case VT_INT32:
-                return retn;
-            break;
-
-            default:
-                SONETTO_THROW("Variable has invalid type");
-            break;
-        }
+        // Avoids warnings
+        return Variable();
     }
     //--------------------------------------------------------------------------
-    Variable Variable::sin(const Variable &rhs)
+    Variable Variable::sin(const Variable &radians)
     {
-        switch (rhs.type)
+        switch (radians.getType())
         {
             case VT_INT32:
-                //return Variable(VT_FLOAT,gccsinfhack((float)rhs._int));
+                //return Variable(VT_FLOAT,gccsinfhack((float)radians._int));
             break;
 
             case VT_FLOAT:
-                //return Variable(VT_FLOAT,gccsinfhack(rhs._float));
-            break;
-
-            default:
-                SONETTO_THROW("Variable has invalid type");
+                //return Variable(VT_FLOAT,gccsinfhack(radians._float));
             break;
         }
+
+        // Avoids warnings
+        return Variable();
     }
     //--------------------------------------------------------------------------
-    Variable Variable::cos(const Variable &rhs)
+    Variable Variable::cos(const Variable &radians)
     {
-        switch (rhs.type)
+        switch (radians.getType())
         {
             case VT_INT32:
-                return Variable(VT_FLOAT,std::cos((float)rhs._int));
+                return Variable(VT_FLOAT,std::cos((float)radians._int));
             break;
 
             case VT_FLOAT:
-                return Variable(VT_FLOAT,std::cos(rhs._float));
-            break;
-
-            default:
-                SONETTO_THROW("Variable has invalid type");
+                return Variable(VT_FLOAT,std::cos(radians._float));
             break;
         }
+
+        // Avoids warnings
+        return Variable();
     }
     //--------------------------------------------------------------------------
-    Variable Variable::tan(const Variable &rhs)
+    Variable Variable::tan(const Variable &radians)
     {
-        switch (rhs.type)
+        switch (radians.getType())
         {
             case VT_INT32:
-                return Variable(VT_FLOAT,std::tan((float)rhs._int));
+                return Variable(VT_FLOAT,std::tan((float)radians._int));
             break;
 
             case VT_FLOAT:
-                return Variable(VT_FLOAT,std::tan(rhs._float));
-            break;
-
-            default:
-                SONETTO_THROW("Variable has invalid type");
+                return Variable(VT_FLOAT,std::tan(radians._float));
             break;
         }
+
+        // Avoids warnings
+        return Variable();
+    }
+    //--------------------------------------------------------------------------
+    void Variable::setType(VariableType type)
+    {
+        if (type != VT_INT32 && type != VT_FLOAT)
+        {
+            SONETTO_THROW("Variable type is corrupted");
+        }
+
+        mType = type;
+    }
+    //--------------------------------------------------------------------------
+    VariableType Variable::getType() const
+    {
+        if (mType != VT_INT32 && mType != VT_FLOAT)
+        {
+            SONETTO_THROW("Variable type is corrupted");
+        }
+
+        return (VariableType)mType;
     }
 } // namespace

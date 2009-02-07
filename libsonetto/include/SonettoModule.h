@@ -62,19 +62,22 @@ namespace Sonetto
 
         /** Change the viewport background color */
         void setBgColor(const Ogre::ColourValue &col);
+        inline const Ogre::ColourValue &getBgColor() const { return mBgColor; }
+
+        inline Ogre::Camera *getCamera() const { return mCamera; }
 
     protected:
         /// Pointer to the scene manager for this module.
-        Ogre::SceneManager * mSceneMan;
+        Ogre::SceneManager *mSceneMan;
 
         /// Pointer to the overlay for this module.
-        Ogre::Overlay * mOverlay;
+        Ogre::Overlay *mOverlay;
 
         /// Pointer to this module's camera.
-        Ogre::Camera * mCamera;
+        Ogre::Camera *mCamera;
 
         /// Pointer to the module viewport.
-        Ogre::Viewport * mViewport;
+        Ogre::Viewport *mViewport;
 
         /// String containing the Overlay name for this module.
         std::string mOverlayName;
