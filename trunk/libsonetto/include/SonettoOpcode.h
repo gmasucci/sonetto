@@ -33,6 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include <vector>
 #include <map>
+#include "SonettoPrerequisites.h"
 
 namespace Sonetto
 {
@@ -51,14 +52,20 @@ namespace Sonetto
     {
     public:
         Opcode(OpcodeHandler *aHandler)
-                : handler(aHandler) {}
-
+                : handler(aHandler),mArgsSize(0) {}
         virtual ~Opcode() {}
 
-        virtual Opcode *create() const = 0;
+        virtual inline Opcode *create() const { return new Opcode(handler); }
+
+        virtual inline size_t getArgsSize() const { return mArgsSize; }
 
         OpcodeHandler *handler;
         ArgumentVector arguments;
+
+    protected:
+        virtual void calculateArgsSize();
+
+        size_t mArgsSize;
     };
 
     typedef std::map<size_t,const Opcode *> OpcodeTable;

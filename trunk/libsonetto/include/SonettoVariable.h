@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTO_VARIABLE_H
 #define SONETTO_VARIABLE_H
 
+#include <typeinfo>
 #include <cmath>
 #include <map>
 #include <stack>
@@ -62,12 +63,13 @@ namespace Sonetto
     class SONETTO_API Variable
     {
     public:
-        inline Variable() : type(VT_INT32),_int(0) {}
+        inline Variable() : _int(0),mType(VT_INT32) {}
 
         inline Variable(VariableType aType,float value)
-                : type(aType)
         {
-            switch (aType)
+            setType(aType);
+
+            switch (mType)
             {
                 case VT_INT32:
                     _int = static_cast<int32>(value);
@@ -75,6 +77,7 @@ namespace Sonetto
 
                 case VT_FLOAT:
                     _float = value;
+                    floatCheck();
                 break;
             }
         }
@@ -96,13 +99,46 @@ namespace Sonetto
         Variable operator/(const Variable &rhs);
         inline void operator/=(const Variable &rhs) { *this = (*this) / rhs; }
 
-        Variable pow(const Variable &exp);
-        Variable sqrt();
+        static Variable pow(const Variable &base,const Variable &exp);
+        static Variable sqrt(const Variable &value);
         static Variable sin(const Variable &radians);
         static Variable cos(const Variable &radians);
         static Variable tan(const Variable &radians);
 
-        char type;
+        template<typename T> T getValue(bool strongTyping) const
+        {
+            if (typeid(T) == typeid(int32)) {
+                if (mType == VT_INT32) {
+                    return static_cast<T>(_int);
+                } else {
+                    if (!strongTyping) {
+                        return static_cast<T>(_float);
+                    } else {
+                        SONETTO_THROW("Variable isn't of requested type "
+                                "(requested int32)");
+                    }
+                }
+            } else
+            if (typeid(T) == typeid(float)) {
+                if (mType == VT_FLOAT) {
+                    return static_cast<T>(_float);
+                } else {
+                    if (!strongTyping) {
+                        return static_cast<T>(_int);
+                    } else {
+                        SONETTO_THROW("Variable isn't of requested type "
+                                "(requested float)");
+                    }
+                }
+            } else {
+                SONETTO_THROW("Cannot convert Variable to type `" +
+                        std::string(typeid(T).name()) + "'");
+            }
+        }
+
+        VariableType getType() const;
+        inline char &_getRawType() { return mType; }
+
         union
         {
             int32 _int;
@@ -110,21 +146,19 @@ namespace Sonetto
         };
 
     private:
-        inline bool floatCheck()
-        {
-            float floored = std::floor(_float);
-            int32 nint = (int32)floored;
+        void setType(VariableType type);
 
+        inline void floatCheck()
+        {
+            int32 nint = (int32)(std::floor(_float));
             if (nint == _float)
             {
-                type = VT_INT32;
+                mType = VT_INT32;
                 _int = nint;
-
-                return true;
             }
-
-            return false;
         }
+
+        char mType;
     };
 
     typedef std::map<int,Variable> VariableMap;

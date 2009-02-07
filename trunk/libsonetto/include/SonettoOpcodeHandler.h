@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #define SONETTO_OPCODEHANDLER_H
 
 #include "SonettoPrerequisites.h"
+#include "SonettoScript.h"
 
 namespace Sonetto
 {
@@ -41,7 +42,7 @@ namespace Sonetto
         OpcodeHandler() : mRegistered(false) {}
         virtual ~OpcodeHandler();
 
-        virtual int handleOpcode(Script *script,
+        virtual int handleOpcode(ScriptPtr script,
             size_t id,Opcode *opcode) = 0;
 
         virtual void registerOpcodes() { mRegistered = true; }

@@ -43,7 +43,7 @@ namespace Sonetto {
 
 namespace Sonetto
 {
-    class Script
+    class SONETTO_API Script
     {
     public:
         Script(ScriptFilePtr file)
@@ -62,9 +62,9 @@ namespace Sonetto
 
         virtual inline void stackPush(const Variable &var) { mVarStack.push(var); }
 
-        virtual inline void stackPop() { mVarStack.pop(); }
+        virtual const Variable &stackPeek();
 
-        virtual inline const Variable &stackPeek() { return mVarStack.top(); }
+        virtual Variable stackPop();
 
     protected:
         /** ScriptFile pointer
@@ -79,6 +79,8 @@ namespace Sonetto
 
         VariableStack mVarStack;
     };
+
+    typedef SharedPtr<Script> ScriptPtr;
 } // namespace Sonetto
 
 #endif

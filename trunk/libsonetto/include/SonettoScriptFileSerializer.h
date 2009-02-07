@@ -39,8 +39,8 @@ namespace Sonetto {
     class ScriptFileSerializer : public Ogre::Serializer
     {
     public:
-        ScriptFileSerializer();
-        virtual ~ScriptFileSerializer();
+        ScriptFileSerializer() {}
+        virtual ~ScriptFileSerializer() {}
 
         // void exportScriptFile(const ScriptFile *pFile,
         //      const Ogre::String &fileName);

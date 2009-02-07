@@ -30,10 +30,18 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef BOOTMODULE_GENERICBOOTMODULE_H
 #define BOOTMODULE_GENERICBOOTMODULE_H
 
+#include "SonettoPrerequisites.h"
 #include "SonettoBootModule.h"
 
 namespace BootModule
 {
+    using Sonetto::int8;
+    using Sonetto::uint8;
+    using Sonetto::int16;
+    using Sonetto::uint16;
+    using Sonetto::int32;
+    using Sonetto::uint32;
+
     class GenericBootModule : public Sonetto::BootModule
     {
     public:

@@ -38,7 +38,7 @@ namespace Sonetto
 
     const int SCRIPT_STOP         = -4;
     const int SCRIPT_SUSPEND      = -3;
-    const int SCRIPT_SUSPEND_NEXT = -3;
+    const int SCRIPT_SUSPEND_NEXT = -2;
     const int SCRIPT_CONTINUE     = -1;
 }
 
@@ -101,13 +101,14 @@ namespace Sonetto
                 const Ogre::String &group);
 
         template<class ScriptImpl>
-        inline ScriptImpl *createScript(const std::string &scriptName,
-            const std::string &groupName)
+        inline SharedPtr<ScriptImpl> createScript(
+            const std::string &scriptName,const std::string &groupName)
         {
-            return new ScriptImpl(load(scriptName,groupName));
+            return SharedPtr<ScriptImpl>(
+                    new ScriptImpl(load(scriptName,groupName)));
         }
 
-        void updateScript(Script *script);
+        void updateScript(ScriptPtr script);
 
         void _registerOpcode(size_t id,const Opcode *opcode);
         void _unregisterOpcode(size_t id);
@@ -118,12 +119,13 @@ namespace Sonetto
                 bool isManual,Ogre::ManualResourceLoader *loader,
                 const Ogre::NameValuePairList *createParams);
 
-        void readScriptData(Script *script,void *dest,size_t bytes);
+        void readScriptData(ScriptPtr script,void *dest,
+                size_t bytes,bool updateCursor);
 
-        Opcode *readOpcode(Script *script,size_t &id,
+        Opcode *readOpcode(ScriptPtr script,size_t &id,
                 size_t &bytesRead);
 
-        size_t seekOpcode(Script *script,size_t opIndex);
+        size_t seekOpcode(ScriptPtr script,size_t opIndex);
 
         OpcodeTable mOpcodeTable;
 

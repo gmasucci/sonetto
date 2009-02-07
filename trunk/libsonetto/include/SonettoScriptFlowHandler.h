@@ -35,6 +35,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "SonettoOpcodeHandler.h"
 #include "SonettoOpcode.h"
 #include "SonettoVariable.h"
+#include "SonettoScript.h"
 
 namespace Sonetto
 {
@@ -50,16 +51,9 @@ namespace Sonetto
     class OpFlowJmp : public Opcode
     {
     public:
-        OpFlowJmp(OpcodeHandler *aHandler)
-                : Opcode(aHandler) {}
+        OpFlowJmp(OpcodeHandler *aHandler);
 
-        OpFlowJmp *create() const {
-            OpFlowJmp *opcode = new OpFlowJmp(handler);
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(address),&opcode->address));
-
-            return opcode;
-        }
+        OpFlowJmp *create() const { return new OpFlowJmp(handler); }
 
         uint32 address;
     };
@@ -67,36 +61,15 @@ namespace Sonetto
     class OpFlowCJmp : public Opcode
     {
     public:
-        OpFlowCJmp(OpcodeHandler *aHandler)
-                : Opcode(aHandler) {}
+        OpFlowCJmp(OpcodeHandler *aHandler);
 
-        OpFlowCJmp *create() const
-        {
-            OpFlowCJmp *opcode = new OpFlowCJmp(handler);
-
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(scope),&opcode->scope));
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(cmpIndex),&opcode->cmpIndex));
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(comparator),&opcode->comparator));
-
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(variable.type),&opcode->variable.type));
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(variable._int),&opcode->variable._int));
-
-            opcode->arguments.push_back(
-                    OpcodeArgument(sizeof(address),&opcode->address));
-
-            return opcode;
-        }
+        OpFlowCJmp *create() const { return new OpFlowCJmp(handler); }
 
         char scope;
         uint32 cmpIndex;
         char comparator;
         Variable variable;
-        int address;
+        uint32 address;
     };
 
     class ScriptFlowHandler : public OpcodeHandler
@@ -115,11 +88,11 @@ namespace Sonetto
 
         void registerOpcodes();
         void unregisterOpcodes();
-        int handleOpcode(Script *script,size_t id,Opcode *opcode);
+        int handleOpcode(ScriptPtr script,size_t id,Opcode *opcode);
 
     private:
         int jmp(OpFlowJmp *opcode);
-        int cjmp(Script *script,OpFlowCJmp *opcode);
+        int cjmp(ScriptPtr script,OpFlowCJmp *opcode);
     };
 } // namespace Sonetto
 

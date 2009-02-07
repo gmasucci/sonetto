@@ -82,7 +82,7 @@ namespace Sonetto
         return new ScriptFile(this,name,handle,group,isManual,loader);
     }
     //--------------------------------------------------------------------------
-    void ScriptManager::updateScript(Script *script)
+    void ScriptManager::updateScript(ScriptPtr script)
     {
         size_t scriptSize = script->getScriptFile()->calculateSize();
 
@@ -98,15 +98,15 @@ namespace Sonetto
             size_t opID,oplength;
             int opmove;
             Opcode *opcode;
-            ArgumentVector *args;
+            //ArgumentVector *args;
 
             // Reads opcode from script file
             opcode = readOpcode(script,opID,oplength);
 
-            std::cout << " --> readOpcode (id: " << opID << ", length: "
-                    << oplength << ")\n";
+            //std::cout << " --> readOpcode (id: " << opID << ", length: "
+            //        << oplength << ")\n";
 
-            args = &opcode->arguments;
+            /*args = &opcode->arguments;
             std::cout << "Arguments dump (" << args->size() << "):\n-----\n";
             for (size_t i = 0;i < args->size();++i)
             {
@@ -135,14 +135,14 @@ namespace Sonetto
 
                 std::cout << std::endl;
             }
-            std::cout << "-----\n";
+            std::cout << "-----\n";*/
 
             // Send opcode to its handler and deletes it
             opmove = opcode->handler->handleOpcode(script,opID,opcode);
             delete opcode;
 
-            std::cout << " --> handleOpcode (id: " << opID << ", move: "
-                    << opmove << ")\n";
+            //std::cout << " --> handleOpcode (id: " << opID << ", move: "
+            //        << opmove << ")\n";
 
             if (opmove == SCRIPT_STOP) {
                 seekOpcode(script,0);
@@ -154,6 +154,11 @@ namespace Sonetto
                 break;
             } else
             if (opmove == SCRIPT_SUSPEND_NEXT) {
+                if (script->_getOffset() == scriptSize)
+                {
+                    seekOpcode(script,0);
+                }
+
                 break;
             } else
             if (opmove >= 0) {
@@ -195,7 +200,8 @@ namespace Sonetto
         mOpcodeTable.erase(iter);
     }
     //--------------------------------------------------------------------------
-    void ScriptManager::readScriptData(Script *script,void *dest,size_t bytes)
+    void ScriptManager::readScriptData(ScriptPtr script,void *dest,
+            size_t bytes,bool updateCursor)
     {
         size_t offset = script->_getOffset();
         const ScriptData &data = script->getScriptFile()->_getScriptData();
@@ -205,18 +211,22 @@ namespace Sonetto
             SONETTO_THROW("Requested read length overflows script data");
         }
 
+        if (updateCursor)
+        {
+            script->_setOffset(offset + bytes);
+        }
+
         memcpy(dest,&data[offset],bytes);
     }
     //--------------------------------------------------------------------------
-    Opcode *ScriptManager::readOpcode(Script *script,size_t &id,
+    Opcode *ScriptManager::readOpcode(ScriptPtr script,size_t &id,
             size_t &bytesRead)
     {
         OpcodeTable::iterator iter;
         Opcode *opcode;
 
         // Reads ID and moves forward
-        readScriptData(script,&id,sizeof(id));
-        script->_setOffset(script->_getOffset() + sizeof(id));
+        readScriptData(script,&id,sizeof(id),true);
         bytesRead = sizeof(id);
 
         // Gets iterator to the corresponding mOpcodeTable entry for
@@ -226,7 +236,7 @@ namespace Sonetto
         // Checks whether the opcode is registered in mOpcodeTable
         if (iter == mOpcodeTable.end())
         {
-            SONETTO_THROW("Script error: Invalid opcode");
+            SONETTO_THROW("Script manager error: Invalid opcode");
         }
 
         // Creates the desired opcode
@@ -236,11 +246,8 @@ namespace Sonetto
         for (size_t i = 0;i < opcode->arguments.size();++i)
         {
             readScriptData(script,opcode->arguments[i].arg,
-                    opcode->arguments[i].size);
+                    opcode->arguments[i].size,true);
 
-            // Moves offset forward by amount of bytes read
-            script->_setOffset(script->_getOffset() +
-                    opcode->arguments[i].size);
             bytesRead += opcode->arguments[i].size;
         }
 
@@ -248,20 +255,33 @@ namespace Sonetto
         return opcode;
     }
     //--------------------------------------------------------------------------
-    size_t ScriptManager::seekOpcode(Script *script,size_t opIndex)
+    size_t ScriptManager::seekOpcode(ScriptPtr script,size_t opIndex)
     {
         script->_setOffset(0);
         for (size_t opnum = 0;opnum < opIndex;++opnum)
         {
+            OpcodeTable::iterator iter;
             size_t opID,oplength;
-            Opcode *opcode;
 
-            // Skips opcode
-            opcode = readOpcode(script,opID,oplength);
-            delete opcode;
+            readScriptData(script,&opID,sizeof(opID),true);
+
+            iter = mOpcodeTable.find(opID);
+            if (iter == mOpcodeTable.end())
+            {
+                SONETTO_THROW("Script manager error: Invalid opcode");
+            }
+
+            oplength = iter->second->getArgsSize();
+            if (script->_getOffset() + oplength >
+                    script->getScriptFile()->_getScriptData().size())
+            {
+                SONETTO_THROW("Script manager error: Opcode length overflows "
+                        "script data");
+            }
+
+            script->_setOffset(script->_getOffset() + oplength);
         }
 
         return script->_getOffset();
     }
-    //--------------------------------------------------------------------------
 } // namespace

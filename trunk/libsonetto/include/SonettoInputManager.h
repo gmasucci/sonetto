@@ -51,7 +51,7 @@ namespace Sonetto
         @param
             players Number of PlayerInputs to be created
         */
-        InputManager(size_t players);
+        InputManager(uint32 players);
 
         /// Destructor
         ~InputManager();
@@ -116,10 +116,10 @@ namespace Sonetto
             Be careful not to access an index greater than
             or equal to getPlayerNum().
         */
-        PlayerInput *getPlayer(size_t num);
+        PlayerInput *getPlayer(uint32 id);
 
         /// Retrieves the number of PlayerInputs in the manager
-        inline size_t getPlayerNum() const { return mPlayerNum; }
+        inline uint32 getPlayerNum() const { return mPlayerNum; }
 
         /** Gets a joystick to be used by a PlayerInput
 
@@ -154,7 +154,7 @@ namespace Sonetto
         PlayerInputVector mPlayers;
 
         /// Number of player inputs
-        size_t mPlayerNum;
+        uint32 mPlayerNum;
 
         /** Vector of Joystick shared pointers
 

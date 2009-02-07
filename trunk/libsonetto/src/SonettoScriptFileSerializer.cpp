@@ -36,14 +36,6 @@ namespace Sonetto {
     //--------------------------------------------------------------------------
     // Sonetto::ScriptFileSerializer implementation.
     //--------------------------------------------------------------------------
-    ScriptFileSerializer::ScriptFileSerializer()
-    {
-    }
-    //--------------------------------------------------------------------------
-    ScriptFileSerializer::~ScriptFileSerializer()
-    {
-    }
-    //--------------------------------------------------------------------------
     void ScriptFileSerializer::importScriptFile(Ogre::DataStreamPtr &stream,
             ScriptFile *pDest)
     {
