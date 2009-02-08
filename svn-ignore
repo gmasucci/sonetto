@@ -1,0 +1,15 @@
+obj
+*.depend
+*.layout
+commit.txt
+*.exe
+*.dll
+*.a
+*.bmp
+*.lib
+*.dat
+*.spf
+*.ogg
+*.ssf
+*.rarc
+*.carc
