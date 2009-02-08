@@ -29,6 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include <cstdlib>
 #include "SonettoDatabase.h"
+#include "SonettoMath.h"
 #include "SonettoFootstepSoundSource.h"
 
 namespace Sonetto
@@ -85,8 +86,8 @@ namespace Sonetto
 
             if (footsteps->size() > 0)
             {
-                // <todo> It's about time to create a Sonetto::Math helper class
-                SoundSource::setSoundID((*footsteps)[rand() % footsteps->size()]);
+                SoundSource::setSoundID(
+                        (*footsteps)[Math::irand(0,footsteps->size() - 1)]);
                 SoundSource::play();
             }
         }

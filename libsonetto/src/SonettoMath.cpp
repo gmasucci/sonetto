@@ -14,6 +14,7 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
+
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -27,42 +28,41 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_MATH_H
-#define SONETTO_MATH_H
-
-#include "SonettoPrerequisites.h"
+#include <cmath>
+#include "SonettoMath.h"
 
 namespace Sonetto
 {
-	class Math
-	{
-	public:
-		Math() {}
-		~Math() {}
-
-		template<class type>
-		static inline type clamp(type value,type min,type max)
-		{
-		    if (value < min) {
-		        return min;
-		    } else
-		    if (value > max) {
-		        return max;
-		    }
-
-		    return value;
-		}
-
-		static int ipow(int base,int exp);
-
-		static inline int irand(int from,int to)
-		{
-		    assert(to - from > 0);
-		    return from + (rand() % ((to - from) + 1));
+    //--------------------------------------------------------------------------
+    // Sonetto::Math implementation.
+    //--------------------------------------------------------------------------
+    int Math::ipow(int base,int exp)
+    {
+        if (exp < 0)
+        {
+            return 0;
         }
 
-        static float frand(float from,float to);
-	};
-} // namespace
+        if (exp == 0)
+        {
+            return 1;
+        }
 
-#endif
+        for (int i = 0;i < exp;++i)
+        {
+            base *= base;
+        }
+
+        return base;
+    }
+    //--------------------------------------------------------------------------
+    float Math::frand(float from,float to)
+    {
+        assert(to - from > 0.0f);
+
+        // <todo> Take into account std::RAND_MAX in 64bit platforms
+        uint32 val = ((rand() & RAND_MAX) << 4) | (rand() & RAND_MAX);
+        uint32 max = (RAND_MAX << 4) | RAND_MAX;
+        return from + ( ((float)val / (float)max) * (to - from) );
+    }
+}

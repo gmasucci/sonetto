@@ -177,6 +177,7 @@
 		<Unit filename="..\src\SonettoJoystick.cpp" />
 		<Unit filename="..\src\SonettoKernel.cpp" />
 		<Unit filename="..\src\SonettoMapModule.cpp" />
+		<Unit filename="..\src\SonettoMath.cpp" />
 		<Unit filename="..\src\SonettoMenuModule.cpp" />
 		<Unit filename="..\src\SonettoModule.cpp" />
 		<Unit filename="..\src\SonettoModuleFactory.cpp" />

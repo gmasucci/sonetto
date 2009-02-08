@@ -44,6 +44,7 @@ namespace Sonetto
 {
     const size_t DEFAULT_SCREEN_WIDTH = 640;
     const size_t DEFAULT_SCREEN_HEIGHT = 480;
+    const size_t DEFAULT_SCREEN_COLOR_DEPTH = 32;
 
     /** Sonetto Kernel
 
@@ -98,9 +99,7 @@ namespace Sonetto
             Kernel::initialize().
         */
         Kernel(const ModuleFactory *moduleFactory)
-                : mAspectRatio(640.0f/480.0f),
-                  mModuleFactory(moduleFactory),
-                  mIsFullScreen(false),
+                : mModuleFactory(moduleFactory),mIsFullScreen(false),
                   mInitialized(false) {}
 
         /** Destructor
@@ -202,6 +201,13 @@ namespace Sonetto
         /** Get the Render Window */
         Ogre::RenderWindow * getRenderWindow();
 
+        inline void setFullScreen(bool fullScreen)
+        {
+            mIsFullScreen = fullScreen;
+            mRenderWindow->setFullscreen(fullScreen,mScreenWidth,
+                    mScreenHeight);
+        }
+
         /// Reads a string from an std::ifstream given a preceeding uint16 (Temporary)
         std::string readString(std::ifstream &stream);
 
@@ -293,6 +299,8 @@ namespace Sonetto
 
         /// Current Screen Resolution (Height)
         int mScreenHeight;
+
+        int mScreenColorDepth;
 
         /// Screen Mode (Full / Window)
         bool mIsFullScreen;

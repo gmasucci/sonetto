@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTO_INPUTMANAGER_H
 #define SONETTO_INPUTMANAGER_H
 
+#include <SDL/SDL.h>
 #include <OgreSingleton.h>
 #include "SonettoPrerequisites.h"
 #include "SonettoPlayerInput.h"
@@ -141,12 +142,9 @@ namespace Sonetto
         @param
             key Key to be checked.
         */
-        inline KeyState getDirectKeyState(uint8 key) const { return mKeyboardStates[key]; }
+        inline KeyState getDirectKeyState(uint16 key) const { return mKeyboardStates[key]; }
 
     private:
-        /// Gets direct keyboard key state (either pressed or not)
-        bool getRawKeyState(uint32 key);
-
         /// Vector of Joystick shared pointers
         typedef std::vector<JoystickPtr> JoystickPtrVector;
 
@@ -171,7 +169,7 @@ namespace Sonetto
         @see
             getDirectKeyState()
         */
-        KeyState mKeyboardStates[256];
+        KeyState mKeyboardStates[SDLK_LAST + 1];
 
         ScriptInputHandler mScriptInputHandler;
     };
