@@ -30,31 +30,10 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include <cmath>
 #include "SonettoVariable.h"
+#include "SonettoMath.h"
 
 namespace Sonetto
 {
-    //--------------------------------------------------------------------------
-    // Temporary simplePow helper function
-    //--------------------------------------------------------------------------
-    inline int simplePow(int base,int exp)
-    {
-        if (exp < 0)
-        {
-            return 0;
-        }
-
-        if (exp == 0)
-        {
-            return 1;
-        }
-
-        for (int i = 0;i < exp;++i)
-        {
-            base *= base;
-        }
-
-        return base;
-    }
     //--------------------------------------------------------------------------
     // Sonetto::Variable implementation.
     //--------------------------------------------------------------------------
@@ -449,7 +428,7 @@ namespace Sonetto
                             //        (float)base._int,(float)exp._int));
                         } else {
                             return Variable(VT_INT32,
-                                    simplePow(base._int,exp._int));
+                                    Math::ipow(base._int,exp._int));
                         }
                     break;
 

@@ -54,11 +54,11 @@ namespace Sonetto
             SONETTO_THROW("Kernel was already initialized");
         }
 
+        SDL_Surface *loading = NULL;
+        SDL_Rect loadingSrc,loadingDest;
         Ogre::NameValuePairList wndParamList;
         SDL_SysWMinfo wmInfo;
         const char *defaultCfgName = "defaultcfg.dat";
-        mScreenWidth = DEFAULT_SCREEN_WIDTH;
-        mScreenHeight = DEFAULT_SCREEN_HEIGHT;
 
         // Checks if wasn't initialized yet
         if (mInitialized)
@@ -81,9 +81,14 @@ namespace Sonetto
             SONETTO_THROW("Could not initialize SDL");
         }
 
+        mAspectRatio = (float)(DEFAULT_SCREEN_WIDTH) /
+                (float)(DEFAULT_SCREEN_HEIGHT);
+
         // Creates SDL rendering window with default resolutions
-        // (resize later to the desired resolution)
-        mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,32,0);
+        // (resized later to the desired resolution)
+        mWindow = SDL_SetVideoMode(DEFAULT_SCREEN_WIDTH,DEFAULT_SCREEN_HEIGHT,
+                DEFAULT_SCREEN_COLOR_DEPTH,0);
+
         if (!mWindow)
         {
             SONETTO_THROW("Could not create SDL window");
@@ -93,16 +98,13 @@ namespace Sonetto
         SDL_ShowCursor(SDL_DISABLE);
         SDL_WM_SetCaption("Now Loading...","Now Loading...");
 
-        /*if (mLoadingImg.size() > 0)
-        {*/
-            SDL_Surface *loading;
-            SDL_Rect src,dest;
+        // Fills the screen with the background colour
+        // taken from the SPF file
+        SDL_FillRect(mWindow,NULL,SDL_MapRGB(mWindow->format,
+                mLoadingBGR,mLoadingBGG,mLoadingBGB));
 
-            // Fills the screen with the background colour
-            // taken from the SPF file
-            SDL_FillRect(mWindow,NULL,SDL_MapRGB(mWindow->format,
-                    mLoadingBGR,mLoadingBGG,mLoadingBGB));
-
+        if (mLoadingImg.size() > 0)
+        {
             // Loads loading image and checks for errors
             loading = SDL_LoadBMP(mLoadingImg.c_str());
             if (!loading)
@@ -111,22 +113,22 @@ namespace Sonetto
             }
 
             // Source rectangle: Full image
-            src.x = src.y = 0;
-            src.w = loading->w;
-            src.h = loading->h;
+            loadingSrc.x = loadingSrc.y = 0;
+            loadingSrc.w = loading->w;
+            loadingSrc.h = loading->h;
 
             // Destination rectangle: Position took from SPF file
-            dest.x = mLoadingImgLeft;
-            dest.y = mLoadingImgTop;
+            loadingDest.x = mLoadingImgLeft;
+            loadingDest.y = mLoadingImgTop;
 
             // Blits loading image into screen buffer and flips it
-            SDL_BlitSurface(loading,&src,mWindow,&dest);
+            SDL_BlitSurface(loading,&loadingSrc,mWindow,&loadingDest);
             SDL_Flip(mWindow);
 
             // Frees loaded loading image
-            //SDL_BlitSurface(loading,&src,mWindow,&dest);
+            //SDL_BlitSurface(loading,&loadingSrc,mWindow,&loadingDest);
             //SDL_FreeSurface(loading);
-        /*}*/
+        }
 
         // Get window info to attach Ogre at it
         SDL_VERSION(&wmInfo.version);
@@ -237,7 +239,7 @@ namespace Sonetto
         // -------------------
         // Produce logs only on debug compilations
 #ifdef DEBUG
-        mOgre = new Ogre::Root("","",mGameDataPath+"game.log");
+        mOgre = new Ogre::Root("","",mGameDataPath + "game.log");
 #else
         mOgre = new Ogre::Root("","","");
 #endif
@@ -254,23 +256,8 @@ namespace Sonetto
 #endif
 
         // Load and configure Sonetto
-        loadConfig(mGameDataPath+mGameIdentifier+".INI",wndParamList);
+        loadConfig(mGameDataPath+mGameIdentifier + ".INI",wndParamList);
 
-        int sdlwindowcfg = 0;
-
-        // Resets video mode to loaded configurations
-        if(mIsFullScreen)
-        {
-            sdlwindowcfg = SDL_FULLSCREEN;
-        } else {
-            sdlwindowcfg = 0;
-        }
-        mWindow = SDL_SetVideoMode(640,480, 32,sdlwindowcfg);
-
-        SDL_FillRect(mWindow,NULL,SDL_MapRGB(mWindow->format,
-                    mLoadingBGR,mLoadingBGG,mLoadingBGB));
-        SDL_BlitSurface(loading,&src,mWindow,&dest);
-        SDL_FreeSurface(loading);
         SDL_Flip(mWindow);
 
         // Initialize Ogre Root
@@ -300,10 +287,18 @@ namespace Sonetto
         StaticTextElementFactory * mTextElementFactory = new StaticTextElementFactory();
         mOverlayMan->addOverlayElementFactory(mTextElementFactory);
 
+        int sdlscreenflags;
+        if(mIsFullScreen) {
+            sdlscreenflags = SDL_FULLSCREEN;
+        } else {
+            sdlscreenflags = 0;
+        }
+
+        mAspectRatio = mScreenWidth / mScreenHeight;
+
         // Resets video mode to loaded configurations
         mWindow = SDL_SetVideoMode(mScreenWidth,mScreenHeight,
-                Ogre::StringConverter::parseUnsignedInt(
-                wndParamList["colourDepth"]),sdlwindowcfg);
+                mScreenColorDepth,sdlscreenflags);
 
         // Create the Ogre Render Window
         mRenderWindow = mOgre->createRenderWindow("",mScreenWidth,
@@ -384,6 +379,18 @@ namespace Sonetto
                         break;
                     }
                 }
+            }
+
+            if (mInputMan->getDirectKeyState(SDLK_LALT) == KS_HOLD &&
+                mInputMan->getDirectKeyState(SDLK_F4) == KS_PRESS)
+            {
+                mKernelAction = KA_SHUTDOWN;
+            }
+
+            if (mInputMan->getDirectKeyState(SDLK_LALT) == KS_HOLD &&
+                mInputMan->getDirectKeyState(SDLK_RETURN) == KS_PRESS)
+            {
+                setFullScreen(!mIsFullScreen);
             }
 
             switch (mKernelAction)
@@ -552,13 +559,17 @@ namespace Sonetto
                           "file");
         }
 
+        Ogre::String colorDepthStr =
+                config.getSetting("colorDepth",videoSectName);
+        mScreenColorDepth =
+                Ogre::StringConverter::parseUnsignedInt(colorDepthStr);
+
         // Gets other config strings and set them as
         // window parameters accordingly
         wndParamList["vsync"] = config.getSetting("vsync",videoSectName);
         wndParamList["displayFrequency"] = config.
                 getSetting("displayFrequency",videoSectName);
-        wndParamList["colourDepth"] = config.
-                getSetting("colourDepth",videoSectName);
+        wndParamList["colourDepth"] = colorDepthStr;
         wndParamList["FSAA"] = config.getSetting("FSAA",videoSectName);
     }
     // ----------------------------------------------------------------------

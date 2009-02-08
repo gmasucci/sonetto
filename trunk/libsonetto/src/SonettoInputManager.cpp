@@ -91,7 +91,7 @@ namespace Sonetto
     void InputManager::update()
     {
         // Updates keyboard states
-        for (size_t i = 0;i < 256;++i)
+        for (size_t i = SDLK_FIRST;i <= SDLK_LAST;++i)
         {
             bool rawState = SDL_GetKeyState(NULL)[i];
 
