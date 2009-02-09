@@ -106,7 +106,7 @@ namespace Sonetto
         static AudioManager *getSingletonPtr();
 
         /// Updates
-        void _update(float deltatime);
+        void _update();
 
         /// @see mInitialised
         inline bool isInitialised() const { return mInitialised; }

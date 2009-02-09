@@ -34,5 +34,5 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     // Sonetto::MenuModule implementation
     // ----------------------------------------------------------------------
-    MenuModule::_MenuData MenuModule::MenuData;
+    MenuModule::_MenuData MenuModule::StaticData;
 } // namespace

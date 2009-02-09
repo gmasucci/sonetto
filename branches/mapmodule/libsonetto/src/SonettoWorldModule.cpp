@@ -34,5 +34,5 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     // Sonetto::WorldModule implementation
     // ----------------------------------------------------------------------
-    WorldModule::_WorldData WorldModule::WorldData;
+    WorldModule::_WorldData WorldModule::StaticData;
 } // namespace

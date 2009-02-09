@@ -58,7 +58,7 @@ namespace Sonetto
         mScriptDataHandler.registerOpcodes();
         savemap.load("savegame001.lrs");
 
-        /*musics.push_back(Music("music.ogg",0));
+        musics.push_back(Music("music.ogg",0));
 
         sounds.push_back(SoundDef("rmsystem_accept.ogg"));
         sounds.push_back(SoundDef("rmsystem_move.ogg"));
@@ -79,7 +79,9 @@ namespace Sonetto
         IDVector &sounds = footwear[1];
         sounds.push_back(1);
         sounds.push_back(3);
-        footwears.push_back(footwear);*/
+        footwears.push_back(footwear);
+
+        system.startMap = 1;
 
         mInitialized = true;
     }

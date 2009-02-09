@@ -275,6 +275,7 @@ namespace Sonetto
         mAudioMan->initialize();
 
         // Initializes input manager
+        // <todo> Load number of player inputs from SPF file
         mInputMan = new InputManager(4);
         mInputMan->initialize();
 
@@ -351,11 +352,72 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     void Kernel::run()
     {
+        size_t startTicks = SDL_GetTicks();
         bool running = true;
 
         while (running)
         {
             SDL_Event evt;
+
+            mFrameTime = (SDL_GetTicks() - startTicks) / 1000.0f;
+            startTicks = SDL_GetTicks();
+
+            if (mFrameTime < 1.0f / MINIMUM_FPS_CAP)
+            {
+                mFrameTime = 1.0f / MINIMUM_FPS_CAP;
+            }
+
+            #ifdef DEBUG
+            {
+                std::string caption = mGameTitle + " (FPS: " +
+                        Ogre::StringConverter::toString(mRenderWindow->
+                        getLastFPS()) + ")";
+                SDL_WM_SetCaption(caption.c_str(),mGameTitle.c_str());
+            }
+            #endif
+
+            switch (mFadingState)
+            {
+                case FAD_FADING_IN:
+                    mFadeAlpha -= mFadeSpeed * mFrameTime;
+
+                    if (mFadeAlpha < 0.0f)
+                    {
+                        mFadingState = FAD_FADED_IN;
+                        mFadeAlpha = 0.0f;
+                        mFadeSpeed = 0.0f;
+
+                        running = processAction(mFQKernelAction,
+                                mFQModuleAction,mFQModuleType);
+
+                        // Resets action parameters
+                        mFQKernelAction = KA_NONE;
+                        mFQModuleAction = MA_NONE;
+                        mFQModuleType   = Module::MT_NONE;
+                    }
+                break;
+
+                case FAD_FADING_OUT:
+                    mFadeAlpha += mFadeSpeed * mFrameTime;
+
+                    if (mFadeAlpha > 1.0f)
+                    {
+                        mFadingState = FAD_FADED_OUT;
+                        mFadeAlpha = 1.0f;
+                        mFadeSpeed = 0.0f;
+
+                        running = processAction(mFQKernelAction,
+                                mFQModuleAction,mFQModuleType);
+
+                        // Resets action parameters
+                        mFQKernelAction = KA_NONE;
+                        mFQModuleAction = MA_NONE;
+                        mFQModuleType   = Module::MT_NONE;
+                    }
+                break;
+
+                default: break;
+            }
 
             // Pump events
             while (SDL_PollEvent(&evt))
@@ -393,35 +455,20 @@ namespace Sonetto
                 setFullScreen(!mIsFullScreen);
             }
 
-            switch (mKernelAction)
-            {
-                case KA_CHANGE_MODULE:
-                    if (mModuleAction == MA_RETURN) {
-                        // Pops current module, returning to the previous one
-                        popModule();
-                    } else {
-                        // Pushes desired module with the desired action
-                        // (if action is MA_CHANGE, pushModule() will remove
-                        // the current one by itself)
-                        pushModule(mNextModuleType,mModuleAction);
-                    }
-
-                    // Resets action parameters
-                    mKernelAction   = KA_NONE;
-                    mModuleAction   = MA_NONE;
-                    mNextModuleType = Module::MT_NONE;
-                break;
-
-                case KA_SHUTDOWN:
-                    // Stops running
-                    running = false;
-                break;
-
-                default: break;
+            if (running) {
+                running = processAction(mKernelAction,mModuleAction,
+                        mNextModuleType);
+            } else {
+                processAction(mKernelAction,mModuleAction,
+                        mNextModuleType);
             }
 
-            // <todo> Use deltatime
-            mAudioMan->_update(0.001f);
+            // Resets action parameters
+            mKernelAction   = KA_NONE;
+            mModuleAction   = MA_NONE;
+            mNextModuleType = Module::MT_NONE;
+
+            mAudioMan->_update();
 
             // Updates input manager
             mInputMan->update();
@@ -573,6 +620,35 @@ namespace Sonetto
         wndParamList["FSAA"] = config.getSetting("FSAA",videoSectName);
     }
     // ----------------------------------------------------------------------
+    bool Kernel::processAction(KernelAction kact,ModuleAction mact,
+            Module::ModuleType modtype)
+    {
+        switch (kact)
+        {
+            case KA_NONE:
+                return true;
+            break;
+
+            case KA_CHANGE_MODULE:
+                if (mact == MA_RETURN) {
+                    // Pops current module, returning to the previous one
+                    popModule();
+                } else {
+                    // Pushes desired module with the desired action
+                    // (if action is MA_CHANGE, pushModule() will remove
+                    // the current one by itself)
+                    pushModule(modtype,mact);
+                }
+
+                return true;
+            break;
+
+            default: break;
+        }
+
+        return false;
+    }
+    // ----------------------------------------------------------------------
     void Kernel::pushModule(Module::ModuleType modtype,ModuleAction mact)
     {
         Module *newmod,*curmod = NULL;
@@ -676,5 +752,30 @@ namespace Sonetto
         std::string rstring = stringbuffer;
         delete[] stringbuffer;
         return rstring;
+    }
+    // ----------------------------------------------------------------------
+    void Kernel::changeFading(Fading fade,float speed)
+    {
+        assert(fade == FAD_FADING_IN || fade == FAD_FADING_OUT);
+
+        mFadeSpeed = speed;
+        if (speed == 0.0f) {
+            mFadingState = (Fading)(fade + 1);
+
+            switch (mFadingState)
+            {
+                case FAD_FADED_IN:
+                    mFadeAlpha = 0.0f;
+                break;
+
+                case FAD_FADED_OUT:
+                    mFadeAlpha = 1.0f;
+                break;
+
+                default: break;
+            }
+        } else {
+            mFadingState = fade;
+        }
     }
 } // namespace

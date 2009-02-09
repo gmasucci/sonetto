@@ -40,13 +40,13 @@ namespace Sonetto
     public:
         struct _MapData
         {
-            int heroCurTriangle;
+            uint32 id;
         };
 
         MapModule() {}
         virtual ~MapModule() {}
 
-        static _MapData MapData;
+        static _MapData StaticData;
     };
 } //namespace
 

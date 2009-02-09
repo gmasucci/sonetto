@@ -54,6 +54,9 @@ namespace BootModule
 
         void halt();
         void resume();
+
+    private:
+        void setActionNextModule();
     };
 } // namespace
 

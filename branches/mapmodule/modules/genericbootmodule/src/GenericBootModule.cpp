@@ -27,6 +27,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
+#include "SonettoKernel.h"
+#include "SonettoMapModule.h"
 #include "GenericBootModule.h"
 
 namespace BootModule
@@ -34,18 +36,39 @@ namespace BootModule
     // ----------------------------------------------------------------------
     // BootModule::GenericBootModule implementation
     // ----------------------------------------------------------------------
-    GenericBootModule::GenericBootModule() : BootModule::BootModule() {}
+    GenericBootModule::GenericBootModule() : BootModule::BootModule()
+    {
+        mBgColor = Ogre::ColourValue(0.0f,0.0f,0.0f,1.0f);
+    }
     // ----------------------------------------------------------------------
     GenericBootModule::~GenericBootModule() {}
     // ----------------------------------------------------------------------
     void GenericBootModule::initialize()
     {
         BootModule::initialize();
+
+        #ifndef DEBUG
+            Sonetto::Kernel &kernel = Sonetto::Kernel::getSingleton();
+
+            kernel.setFading(Sonetto::Kernel::FAD_FADED_OUT);
+            kernel.changeFading(Sonetto::Kernel::FAD_FADING_IN,1.0f);
+        #else
+            setActionNextModule();
+        #endif
     }
     // ----------------------------------------------------------------------
     void GenericBootModule::update()
     {
         BootModule::update();
+
+        #ifndef DEBUG
+            Sonetto::Kernel &kernel = Sonetto::Kernel::getSingleton();
+
+            if (kernel.getFadingState() == Sonetto::Kernel::FAD_FADED_IN)
+            {
+                setActionNextModule();
+            }
+        #endif
     }
     // ----------------------------------------------------------------------
     void GenericBootModule::deinitialize()
@@ -61,5 +84,22 @@ namespace BootModule
     void GenericBootModule::resume()
     {
         BootModule::resume();
+    }
+    // ----------------------------------------------------------------------
+    void GenericBootModule::setActionNextModule()
+    {
+        Sonetto::Kernel &kernel = Sonetto::Kernel::getSingleton();
+
+        Sonetto::MapModule::StaticData.id =
+                Sonetto::Database::getSingleton().system.startMap;
+
+        #ifndef DEBUG
+            kernel.setActionOnFadeEnd(Sonetto::Kernel::KA_CHANGE_MODULE,
+                    Sonetto::Kernel::MA_CHANGE,Sonetto::Module::MT_MAP);
+            kernel.changeFading(Sonetto::Kernel::FAD_FADING_OUT,1.0f);
+        #else
+            kernel.setAction(Sonetto::Kernel::KA_CHANGE_MODULE,
+                    Sonetto::Kernel::MA_CHANGE,Sonetto::Module::MT_MAP);
+        #endif
     }
 } // namespace
