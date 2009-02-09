@@ -122,7 +122,7 @@ namespace Sonetto
         inline MusicFading getFadingState() const { return mFade; }
 
         /// Updates music stream
-        void _update(float deltatime);
+        void _update();
 
         /** Plays the music
 

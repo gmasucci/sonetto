@@ -55,6 +55,8 @@ namespace Sonetto
     class SONETTO_API Kernel : public Ogre::Singleton<Kernel>
     {
     public:
+        static const float MINIMUM_FPS_CAP = 10.0f;
+
         /** Describes what to do after rendering
 
         @see
@@ -87,6 +89,14 @@ namespace Sonetto
             MA_RETURN
         };
 
+        enum Fading
+        {
+            FAD_FADING_IN,
+            FAD_FADED_IN,
+            FAD_FADING_OUT,
+            FAD_FADED_OUT
+        };
+
         /** Constructor
 
         @remarks
@@ -100,7 +110,11 @@ namespace Sonetto
         */
         Kernel(const ModuleFactory *moduleFactory)
                 : mModuleFactory(moduleFactory),mIsFullScreen(false),
-                  mInitialized(false) {}
+                  mInitialized(false),mKernelAction(KA_NONE),
+                  mModuleAction(MA_NONE),mNextModuleType(Module::MT_NONE),
+                  mFQKernelAction(KA_NONE),mFQModuleAction(MA_NONE),
+                  mFQModuleType(Module::MT_NONE),mFadingState(FAD_FADED_IN),
+                  mFadeSpeed(0.0f),mFadeAlpha(0.0f) {}
 
         /** Destructor
 
@@ -176,6 +190,15 @@ namespace Sonetto
         */
         inline Module *getActiveModule() { return mModuleStack.top(); }
 
+        inline void setActionOnFadeEnd(KernelAction kact,
+                ModuleAction mact = MA_NONE,
+                Module::ModuleType modtype = Module::MT_NONE)
+        {
+            mFQKernelAction = kact;
+            mFQModuleAction = mact;
+            mFQModuleType   = modtype;
+        }
+
         /** Sets kernel action to be done after rendering
 
             This method can be used for two things: to shutdown Sonetto and to
@@ -211,20 +234,32 @@ namespace Sonetto
         /// Reads a string from an std::ifstream given a preceeding uint16 (Temporary)
         std::string readString(std::ifstream &stream);
 
+        inline void setFading(Fading fade)
+        {
+            assert(fade == FAD_FADED_IN || fade == FAD_FADED_OUT);
+            changeFading((Fading)(fade - 1),0.0f);
+        }
+
+        void changeFading(Fading fade,float speed);
+
+        inline Fading getFadingState() const { return mFadingState; }
+        inline float getFadeSpeed() const { return mFadeSpeed; }
+        inline float getFadeAlpha() const { return mFadeAlpha; }
+
+        inline float getFrameTime() const { return mFrameTime; }
+
         /// Current Screen Pixel Aspect Ratio.
         float mAspectRatio;
-
-        /// Frame Time.
-        float mFrameTime;
 
         /// Pointer to OverlayManager.
         Ogre::OverlayManager *mOverlayMan;
 
-        // Sonetto Managers
-
     private:
         /// Loads configuration from file and configures Sonetto
         void loadConfig(const std::string &fname,Ogre::NameValuePairList &wndParamList);
+
+        bool processAction(KernelAction kact,ModuleAction mact = MA_NONE,
+                Module::ModuleType modtype = Module::MT_NONE);
 
         /** Pushes new module into stack
 
@@ -353,6 +388,16 @@ namespace Sonetto
             Sonetto::Kernel::setAction()
         */
         Module::ModuleType mNextModuleType;
+
+        KernelAction       mFQKernelAction;
+        ModuleAction       mFQModuleAction;
+        Module::ModuleType mFQModuleType;
+
+        Fading mFadingState;
+        float mFadeSpeed;
+        float mFadeAlpha;
+
+        float mFrameTime;
     };
 } // namespace
 

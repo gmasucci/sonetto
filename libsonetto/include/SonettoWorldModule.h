@@ -46,7 +46,7 @@ namespace Sonetto
         WorldModule() {}
         virtual ~WorldModule() {}
 
-        static _WorldData WorldData;
+        static _WorldData StaticData;
     };
 } // namespace
 

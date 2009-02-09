@@ -74,7 +74,7 @@ namespace Sonetto
                                 "Failed destroying music buffers");
     }
     //-----------------------------------------------------------------------------
-    void MusicStream::_update(float deltatime)
+    void MusicStream::_update()
     {
         if (mMusic != 0)
         {
@@ -86,7 +86,7 @@ namespace Sonetto
             switch (mFade)
             {
                 case MF_FADE_IN:
-                    mFadeVolume += mFadeSpd*deltatime;
+                    mFadeVolume += mFadeSpd * Kernel::getSingleton().getFrameTime();
 
                     if (mFadeVolume >= 1.0f)
                     {
@@ -98,7 +98,7 @@ namespace Sonetto
                 break;
 
                 case MF_FADE_OUT:
-                    mFadeVolume -= mFadeSpd*deltatime;
+                    mFadeVolume -= mFadeSpd * Kernel::getSingleton().getFrameTime();
 
                     if (mFadeVolume <= 0.0f)
                     {

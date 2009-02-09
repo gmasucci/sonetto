@@ -23,6 +23,7 @@
 				<Linker>
 					<Add library="sonetto_d" />
 					<Add library="genericbootmodule_d" />
+					<Add library="genericmapmodule_d" />
 					<Add library="OgreMain_d" />
 					<Add directory="..\..\dependencies\lib\win32" />
 					<Add directory="..\..\lib\win32" />
@@ -50,6 +51,7 @@
 					<Add option="-s" />
 					<Add library="sonetto" />
 					<Add library="genericbootmodule" />
+					<Add library="genericmapmodule" />
 					<Add library="OgreMain" />
 					<Add directory="..\..\dependencies\lib\win32" />
 					<Add directory="..\..\lib\win32" />
@@ -74,6 +76,7 @@
 				<Linker>
 					<Add library="sonetto_d" />
 					<Add library="genericbootmodule_d" />
+					<Add library="genericmapmodule_d" />
 					<Add library="OgreMain_d" />
 					<Add directory="..\..\dependencies\lib\linux" />
 					<Add directory="..\..\lib\linux" />
@@ -99,6 +102,7 @@
 					<Add option="-s" />
 					<Add library="sonetto" />
 					<Add library="genericbootmodule" />
+					<Add library="genericmapmodule" />
 					<Add library="OgreMain" />
 					<Add directory="..\..\dependencies\lib\linux" />
 					<Add directory="..\..\lib\linux" />

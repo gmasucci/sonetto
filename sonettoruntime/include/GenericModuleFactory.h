@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "SonettoModuleFactory.h"
 #include "GenericBootModule.h"
+#include "GenericMapModule.h"
 
 class GenericModuleFactory : public Sonetto::ModuleFactory
 {
@@ -39,11 +40,18 @@ public:
     GenericModuleFactory() {}
     ~GenericModuleFactory() {}
 
-    Sonetto::BootModule *createBootModule() const { return new BootModule::GenericBootModule(); }
+    inline Sonetto::BootModule *createBootModule() const
+            { return new BootModule::GenericBootModule(); }
+
     Sonetto::TitleModule *createTitleModule() const { return NULL; }
-    Sonetto::MapModule *createMapModule() const { return NULL; }
+
+    inline Sonetto::MapModule *createMapModule() const
+            { return new MapModule::GenericMapModule(); }
+
     Sonetto::MenuModule *createMenuModule() const { return NULL; }
+
     Sonetto::WorldModule *createWorldModule() const { return NULL; }
+
     Sonetto::BattleModule *createBattleModule() const { return NULL; }
 };
 

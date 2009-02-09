@@ -232,7 +232,7 @@ namespace Sonetto
         mMusicStream->_pause(Math::clamp(fadeOut,0.0f,1.0f));
     }
     //-----------------------------------------------------------------------------
-    void AudioManager::_update(float deltatime)
+    void AudioManager::_update()
     {
         Ogre::Vector3 listenerPos;
 
@@ -243,7 +243,7 @@ namespace Sonetto
                 "position");
 
         // Updates music stream
-        mMusicStream->_update(deltatime);
+        mMusicStream->_update();
 
         // Updates sound sources
         for (size_t i = 0;i < mSoundSources.size();++i)

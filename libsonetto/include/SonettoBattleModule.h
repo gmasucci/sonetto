@@ -46,7 +46,7 @@ namespace Sonetto
         BattleModule() {}
         virtual ~BattleModule() {}
 
-        static _BattleData BattleData;
+        static _BattleData StaticData;
     };
 } //namespace
 

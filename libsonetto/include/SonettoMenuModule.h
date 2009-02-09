@@ -46,7 +46,7 @@ namespace Sonetto
         MenuModule() {}
         virtual ~MenuModule() {}
 
-        static _MenuData MenuData;
+        static _MenuData StaticData;
     };
 } //namespace
 

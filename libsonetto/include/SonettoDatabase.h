@@ -50,6 +50,8 @@ namespace Sonetto
         float textVerticalSpacing;
         //Font * defaultFont;
         uint8 defaultColor;
+
+        uint32 startMap;
     };
 
     struct GroundType
