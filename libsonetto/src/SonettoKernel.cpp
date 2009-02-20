@@ -33,6 +33,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #   include <sys/stat.h>
 #   include <dirent.h>
 #endif
+#include "SonettoUtil.h"
 #include "SonettoKernel.h"
 #include "SonettoDatabase.h"
 #include "SonettoInputManager.h"
@@ -45,7 +46,7 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     // Sonetto::Kernel implementation
     // ----------------------------------------------------------------------
-    SONETTO_SINGLETON_IMPLEMENT(Kernel);
+    SONETTO_SINGLETON_IMPLEMENT(SONETTO_API,Kernel);
     // ----------------------------------------------------------------------
     void Kernel::initialize()
     {
@@ -317,6 +318,12 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     Kernel::~Kernel()
     {
+        // <todo> Deinitialize each item individually; not that I care much
+        // (doesn't Windows and Linux deallocate the heap for programs
+        // that close?), but this if (mInitialized) would cause memory leaks
+        // when the Kernel fails to initialize by throwing its exceptions
+        // Check other classes too
+
         // Deinitialize if initialized
         if (mInitialized)
         {
@@ -353,7 +360,7 @@ namespace Sonetto
     void Kernel::run()
     {
         size_t startTicks = SDL_GetTicks();
-        bool running = true;
+        bool running = true,fullScreenMaximize = false;
 
         while (running)
         {
@@ -429,14 +436,30 @@ namespace Sonetto
                 }
             }
 
+            if (!(SDL_GetAppState() & SDL_APPINPUTFOCUS))
+            {
+                if (mIsFullScreen)
+                {
+                    fullScreenMaximize = true;
+                    setFullScreen(false);
+                    SDL_WM_IconifyWindow();
+                }
+            }
+
             // Stops game while window is deactivated (minimised)
-            if (!(SDL_GetAppState() & SDL_APPACTIVE))
+            if (!(SDL_GetAppState() & SDL_APPACTIVE) || fullScreenMaximize)
             {
                 // Loop until the window gets activated again
                 while (SDL_WaitEvent(&evt))
                 {
                     if (SDL_GetAppState() & SDL_APPACTIVE)
                     {
+                        if (fullScreenMaximize)
+                        {
+                            setFullScreen(true);
+                            fullScreenMaximize = false;
+                        }
+
                         // Window activated; break the loop and continue the game
                         break;
                     }
@@ -449,6 +472,10 @@ namespace Sonetto
                 mKernelAction = KA_SHUTDOWN;
             }
 
+            // <todo> Load from game.spf wheter it should be possible
+            // for the player to toggle fullscreen mode during the game
+            // using Alt-Enter (or maybe a configurable combination of
+            // keys?)
             if (mInputMan->getDirectKeyState(SDLK_LALT) == KS_HOLD &&
                 mInputMan->getDirectKeyState(SDLK_RETURN) == KS_PRESS)
             {
@@ -728,10 +755,10 @@ namespace Sonetto
         gamespf.seekg(4,std::ios_base::cur);
 
         // Reads information from file
-        mGameTitle = readString(gamespf);
-        mGameIdentifier = readString(gamespf);
-        mGameAuthor = readString(gamespf);
-        mLoadingImg = readString(gamespf);
+        mGameTitle = Util::readString(gamespf);
+        mGameIdentifier = Util::readString(gamespf);
+        mGameAuthor = Util::readString(gamespf);
+        mLoadingImg = Util::readString(gamespf);
         gamespf.read((char *)&mLoadingImgLeft,sizeof(mLoadingImgLeft));
         gamespf.read((char *)&mLoadingImgTop,sizeof(mLoadingImgTop));
         gamespf.read((char *)&mLoadingBGR,sizeof(mLoadingBGR));
@@ -742,16 +769,18 @@ namespace Sonetto
         gamespf.close();
     }
     // ----------------------------------------------------------------------
-    std::string Kernel::readString(std::ifstream &stream)
+    void Kernel::setFullScreen(bool fullScreen)
     {
-        uint16 strsize;
-        stream.read((char*)&strsize, sizeof(strsize));
-        char * stringbuffer = new char[strsize+1];
-        stream.read((char*)stringbuffer, strsize);
-        stringbuffer[strsize] = '\0';
-        std::string rstring = stringbuffer;
-        delete[] stringbuffer;
-        return rstring;
+        // <todo> Find out the correct way to switch to and from fullscreen
+        // mode (I'm pretty sure just setting the render window like this is
+        // wrong; it doesn't even work, sometimes, in which cases the window,
+        // when toggled from fullscreen mode, does not appear)
+        if (mIsFullScreen != fullScreen)
+        {
+            mIsFullScreen = fullScreen;
+            mRenderWindow->setFullscreen(fullScreen,mScreenWidth,
+                        mScreenHeight);
+        }
     }
     // ----------------------------------------------------------------------
     void Kernel::changeFading(Fading fade,float speed)

@@ -40,7 +40,7 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     // Sonetto::InputManager implementation
     // ----------------------------------------------------------------------
-    SONETTO_SINGLETON_IMPLEMENT(InputManager);
+    SONETTO_SINGLETON_IMPLEMENT(SONETTO_API,InputManager);
     // ----------------------------------------------------------------------
     InputManager::InputManager(uint32 players)
             : mPlayerNum(players), mInitialized(false)

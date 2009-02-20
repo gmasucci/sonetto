@@ -104,6 +104,8 @@ namespace Sonetto
         inline SharedPtr<ScriptImpl> createScript(
             const std::string &scriptName,const std::string &groupName)
         {
+            // <todo> Do not use SharedPtr here; let the creator destroy
+            // the object when done
             return SharedPtr<ScriptImpl>(
                     new ScriptImpl(load(scriptName,groupName)));
         }
@@ -114,10 +116,13 @@ namespace Sonetto
         void _unregisterOpcode(size_t id);
 
     protected:
-        Ogre::Resource *createImpl(const Ogre::String &name,
+        inline Ogre::Resource *createImpl(const Ogre::String &name,
                 Ogre::ResourceHandle handle,const Ogre::String &group,
                 bool isManual,Ogre::ManualResourceLoader *loader,
-                const Ogre::NameValuePairList *createParams);
+                const Ogre::NameValuePairList *createParams)
+        {
+            return new ScriptFile(this,name,handle,group,isManual,loader);
+        }
 
         void readScriptData(ScriptPtr script,void *dest,
                 size_t bytes,bool updateCursor);

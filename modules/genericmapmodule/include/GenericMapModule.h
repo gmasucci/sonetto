@@ -27,26 +27,19 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef BOOTMODULE_GENERICMAPMODULE_H
-#define BOOTMODULE_GENERICMAPMODULE_H
+#ifndef GENERICMAPMODULE_MODULE_H
+#define GENERICMAPMODULE_MODULE_H
 
-#include "SonettoPrerequisites.h"
-#include "SonettoMapModule.h"
+#include <SonettoMapModule.h>
+#include "GenericMapPrerequisites.h"
 
-namespace MapModule
+namespace GenericMapModule
 {
-    using Sonetto::int8;
-    using Sonetto::uint8;
-    using Sonetto::int16;
-    using Sonetto::uint16;
-    using Sonetto::int32;
-    using Sonetto::uint32;
-
-    class GenericMapModule : public Sonetto::MapModule
+    class MapModule : public Sonetto::MapModule
     {
     public:
-        GenericMapModule();
-        ~GenericMapModule();
+        MapModule() {}
+        ~MapModule() {}
 
         void initialize();
         void update();
@@ -54,6 +47,11 @@ namespace MapModule
 
         void halt();
         void resume();
+
+    private:
+        std::string mMapFolder;
+
+        MapManager *mMapMan;
     };
 } // namespace
 

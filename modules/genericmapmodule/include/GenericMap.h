@@ -14,7 +14,6 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
-
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -28,60 +27,57 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifdef WINDOWS
-#   include <windows.h>
-#endif
+#ifndef GENERICMAPMODULE_MAP_H
+#define GENERICMAPMODULE_MAP_H
 
-#include <exception>
-#include <OgreLogManager.h>
-#include "SonettoKernel.h"
-#include "GenericModuleFactory.h"
+#include <OgrePrerequisites.h>
+#include <OgreResource.h>
+#include <SonettoSharedPtr.h>
+#include "GenericMapPrerequisites.h"
+#include "GenericMapWalkmesh.h"
 
-void reportException(const char *msg);
-
-#ifdef WINDOWS
-INT WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,INT)
-#else
-int main(int argc,char *argv[])
-#endif
+namespace GenericMapModule
 {
-    GenericModuleFactory factory;
-    Sonetto::Kernel kernel(&factory);
+    class Map : public Ogre::Resource
+    {
+    public:
+        Map(Ogre::ResourceManager *creator,const Ogre::String &name,
+                Ogre::ResourceHandle handle,const Ogre::String &group,
+                bool isManual = false,Ogre::ManualResourceLoader *loader = 0)
+                : Ogre::Resource(creator,name,handle,group,isManual,loader) {}
 
-    try {
-        kernel.initialize();
-        kernel.run();
-    } catch(Sonetto::Exception &e) {
-        const char *what = e.what();
+        virtual ~Map();
 
-        if (!what)
-        {
-            what = "An unknown error has happened.\n"
-                   "It was not possible to identify the error.";
-        }
+        size_t calculateSize() const;
 
-        reportException(what);
-    } catch(Ogre::FileNotFoundException &e) {
-        reportException(("A game file could not be found.\n" +
-                e.getDescription()).c_str());
-    } catch(std::exception &e) {
-        reportException(e.what());
-    }
+        inline void _setMapName(const std::string &name) { mMapName = name; }
+        inline const std::string &getMapName() const { return mMapName; }
 
-    return 0;
-}
+        inline void _setStaticGeometry(Ogre::StaticGeometry *geom)
+                { mStaticGeom = geom; }
+        inline Ogre::StaticGeometry *_getStaticGeometry() const
+                { return mStaticGeom; }
+        inline void _setStaticGeomSize(size_t size) { mStaticGeomSize = size; }
 
-void reportException(const char *msg)
-{
-    std::string logMessage = "\n[!] Game Runtime Error\n" + std::string(msg);
+        inline const Walkmesh &getWalkmesh() const { return mWalkmesh; }
 
-    Ogre::LogManager::getSingleton().getDefaultLog()->
-            logMessage(logMessage,Ogre::LML_CRITICAL);
+        // Used by serializer to get populated with data
+        inline Walkmesh &_getWalkmesh() { return mWalkmesh; }
 
-    #ifdef WINDOWS
-        MessageBox(NULL,msg,"Game Runtime Error",
-                MB_OK | MB_ICONERROR | MB_TASKMODAL);
-    #else
-        cerr << logMessage << '\n';
-    #endif
-}
+    protected:
+        // Ogre::Resource interface implementation
+        void loadImpl();
+        void unloadImpl();
+
+        std::string mMapName;
+
+        Ogre::StaticGeometry *mStaticGeom;
+        size_t mStaticGeomSize;
+
+        Walkmesh mWalkmesh;
+    };
+
+    typedef Sonetto::SharedPtr<Map> MapPtr;
+} // namespace
+
+#endif

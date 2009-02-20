@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include <string>
 #include <exception>
+#include "SonettoPrerequisites.h"
 
 namespace Sonetto
 {
@@ -39,7 +40,7 @@ namespace Sonetto
 
         Carries information about an error that ocurred during Sonetto execution.
     */
-    class Exception : public std::exception
+    class SONETTO_API Exception : public std::exception
     {
     public:
         /** Default constructor

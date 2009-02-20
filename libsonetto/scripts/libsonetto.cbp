@@ -155,6 +155,7 @@
 		<Unit filename="..\include\SonettoSoundSource.h" />
 		<Unit filename="..\include\SonettoStaticTextElement.h" />
 		<Unit filename="..\include\SonettoTitleModule.h" />
+		<Unit filename="..\include\SonettoUtil.h" />
 		<Unit filename="..\include\SonettoVariable.h" />
 		<Unit filename="..\include\SonettoWorldModule.h" />
 		<Unit filename="..\resource\resource.rc">
@@ -198,6 +199,7 @@
 		<Unit filename="..\src\SonettoSoundSetSource.cpp" />
 		<Unit filename="..\src\SonettoSoundSource.cpp" />
 		<Unit filename="..\src\SonettoStaticTextElement.cpp" />
+		<Unit filename="..\src\SonettoUtil.cpp" />
 		<Unit filename="..\src\SonettoVariable.cpp" />
 		<Unit filename="..\src\SonettoWorldModule.cpp" />
 		<Extensions>

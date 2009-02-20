@@ -28,6 +28,7 @@ POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
 #include <cstdlib>
+#include "SonettoKernel.h"
 #include "SonettoDatabase.h"
 #include "SonettoMath.h"
 #include "SonettoFootstepSoundSource.h"

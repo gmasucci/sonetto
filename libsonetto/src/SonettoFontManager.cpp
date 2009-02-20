@@ -34,7 +34,7 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     // Sonetto::FontManager implementation.
     // ----------------------------------------------------------------------
-    SONETTO_SINGLETON_IMPLEMENT(FontManager);
+    SONETTO_SINGLETON_IMPLEMENT(SONETTO_API,FontManager);
     // ----------------------------------------------------------------------
     FontManager::FontManager()
     {

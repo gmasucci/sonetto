@@ -30,9 +30,9 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTORUNTIME_GENERICMODULEFACTORY_H
 #define SONETTORUNTIME_GENERICMODULEFACTORY_H
 
+#include <GenericBootModule.h>
+#include <GenericMapModule.h>
 #include "SonettoModuleFactory.h"
-#include "GenericBootModule.h"
-#include "GenericMapModule.h"
 
 class GenericModuleFactory : public Sonetto::ModuleFactory
 {
@@ -46,7 +46,7 @@ public:
     Sonetto::TitleModule *createTitleModule() const { return NULL; }
 
     inline Sonetto::MapModule *createMapModule() const
-            { return new MapModule::GenericMapModule(); }
+            { return new GenericMapModule::MapModule(); }
 
     Sonetto::MenuModule *createMenuModule() const { return NULL; }
 

@@ -36,7 +36,7 @@ namespace Sonetto
     //--------------------------------------------------------------------------
     // Sets ScriptManager singleton pointer to NULL
     //--------------------------------------------------------------------------
-    SONETTO_SINGLETON_IMPLEMENT(ScriptManager);
+    SONETTO_SINGLETON_IMPLEMENT(SONETTO_API,ScriptManager);
     //--------------------------------------------------------------------------
     ScriptManager::ScriptManager()
     {
@@ -72,14 +72,6 @@ namespace Sonetto
 
         scriptf->load();
         return scriptf;
-    }
-    //--------------------------------------------------------------------------
-    Ogre::Resource *ScriptManager::createImpl(const Ogre::String &name,
-            Ogre::ResourceHandle handle,const Ogre::String &group,bool isManual,
-            Ogre::ManualResourceLoader *loader,
-            const Ogre::NameValuePairList *createParams)
-    {
-        return new ScriptFile(this,name,handle,group,isManual,loader);
     }
     //--------------------------------------------------------------------------
     void ScriptManager::updateScript(ScriptPtr script)

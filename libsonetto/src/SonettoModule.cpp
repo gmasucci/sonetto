@@ -36,20 +36,27 @@ namespace Sonetto
     void Module::initialize()
     {
         Kernel *kernel = Kernel::getSingletonPtr();
+        Ogre::RenderWindow *renderWnd = kernel->getRenderWindow();
 
-        if (kernel->getRenderWindow()->getNumViewports() > 0)
+        if (renderWnd->getNumViewports() > 0)
         {
-            kernel->getRenderWindow()->removeAllViewports();
+            renderWnd->removeAllViewports();
         }
 
         // Create the scene manager for this module.
         mSceneMan = Ogre::Root::getSingleton().
                 createSceneManager(Ogre::ST_GENERIC);
 
-        mCamera = mSceneMan->createCamera(Ogre::StringUtil::BLANK);
-        mViewport = kernel->getRenderWindow()->addViewport(mCamera);
+        mCamera = mSceneMan->createCamera("MODULE_CAMERA");
+
+        mViewport = renderWnd->addViewport(mCamera);
+        mViewport->setBackgroundColour(mBgColor);
+
         mCamera->setAspectRatio(kernel->mAspectRatio);
-        setBgColor(mBgColor);
+        mCamera->setNearClipDistance(5);
+        mCamera->setFarClipDistance(1000);
+
+        Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
 
         mOverlay = Ogre::OverlayManager::getSingleton().create(mOverlayName);
         mOverlay->show();

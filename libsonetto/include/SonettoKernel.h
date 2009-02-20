@@ -224,15 +224,7 @@ namespace Sonetto
         /** Get the Render Window */
         Ogre::RenderWindow * getRenderWindow();
 
-        inline void setFullScreen(bool fullScreen)
-        {
-            mIsFullScreen = fullScreen;
-            mRenderWindow->setFullscreen(fullScreen,mScreenWidth,
-                    mScreenHeight);
-        }
-
-        /// Reads a string from an std::ifstream given a preceeding uint16 (Temporary)
-        std::string readString(std::ifstream &stream);
+        void setFullScreen(bool fullScreen);
 
         inline void setFading(Fading fade)
         {

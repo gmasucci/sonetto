@@ -35,14 +35,6 @@ namespace Sonetto {
     //--------------------------------------------------------------------------
     // Sonetto::ScriptFile implementation.
     //--------------------------------------------------------------------------
-    ScriptFile::ScriptFile(Ogre::ResourceManager *creator,const Ogre::String &name,
-            Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual,
-            Ogre::ManualResourceLoader *loader) :
-            Ogre::Resource(creator,name,handle,group,isManual,loader)
-    {
-
-    }
-    //--------------------------------------------------------------------------
     ScriptFile::~ScriptFile()
     {
         unload();
@@ -65,5 +57,4 @@ namespace Sonetto {
     {
         return mScriptData.size();
     }
-    //--------------------------------------------------------------------------
 } // namespace

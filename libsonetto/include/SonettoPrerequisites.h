@@ -49,14 +49,16 @@ POSSIBILITY OF SUCH DAMAGE.
 
 // Macro for implementing Ogre::Singletons (avoids typos and
 // makes code cleaner)
-#define SONETTO_SINGLETON_IMPLEMENT(singleton) \
-    template<> SONETTO_API singleton *Ogre::Singleton<singleton>::ms_Singleton = NULL; \
+#define SONETTO_SINGLETON_IMPLEMENT(attrib,singleton) \
+    template<> attrib singleton *Ogre::Singleton<singleton>::ms_Singleton = NULL; \
     singleton &singleton::getSingleton() \
     { \
+        assert(ms_Singleton); \
         return *ms_Singleton; \
     } \
     singleton *singleton::getSingletonPtr() \
     { \
+        assert(ms_Singleton); \
         return ms_Singleton; \
     }
 

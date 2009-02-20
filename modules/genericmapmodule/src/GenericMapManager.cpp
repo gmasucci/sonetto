@@ -27,83 +27,44 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#include <OgreResourceGroupManager.h>
 #include "GenericMapManager.h"
-#include "GenericMapModule.h"
 
 namespace GenericMapModule
 {
     // ----------------------------------------------------------------------
-    // GenericMapModule::MapModule implementation.
+    // GenericMapModule::MapManager implementation.
     // ----------------------------------------------------------------------
-    void MapModule::initialize()
+    SONETTO_SINGLETON_IMPLEMENT(MODULE_API,MapManager);
+    // ----------------------------------------------------------------------
+    MapManager::MapManager()
     {
-        mBgColor = Ogre::ColourValue(0.0f,1.0f,0.0f);
-        Sonetto::MapModule::initialize();
+        mResourceType = "GenericMap";
 
-        if (StaticData.id == 0)
+        // low, because it will likely reference other resources
+        mLoadOrder = 30.0f;
+
+        // this is how we register the ResourceManager with OGRE
+        Ogre::ResourceGroupManager::getSingleton().
+                _registerResourceManager(mResourceType,this);
+    }
+    // ----------------------------------------------------------------------
+    MapManager::~MapManager()
+    {
+        Ogre::ResourceGroupManager::getSingleton().
+                _unregisterResourceManager(mResourceType);
+    }
+    // ----------------------------------------------------------------------
+    MapPtr MapManager::load(const Ogre::String &name,
+            const Ogre::String &group)
+    {
+        MapPtr map(getByName(name));
+
+        if (map.isNull())
         {
-            SONETTO_THROW("Unknown map ID");
+            map = create(name,group);
         }
 
-        // <todo> Use OGRE_NEW
-        mMapMan = new MapManager();
-
-        mMapFolder = "map_" + Ogre::StringConverter::
-                toString(StaticData.id - 1,2,'0');
-
-        Ogre::ResourceGroupManager &resGroupMan =
-                Ogre::ResourceGroupManager::getSingleton();
-
-        resGroupMan.addResourceLocation("map/" + mMapFolder,"FileSystem",
-                "MAP_LOCAL");
-        resGroupMan.initialiseResourceGroup("MAP_LOCAL");
-        resGroupMan.loadResourceGroup("MAP_LOCAL");
-
-        mMapMan->load("map_00.map","MAP_LOCAL");
-
-        mCamera->setPosition(0.0f,250.0f,-50.0f);
-        mCamera->lookAt(Ogre::Vector3::ZERO);
-    }
-    // ----------------------------------------------------------------------
-    void MapModule::update()
-    {
-        Sonetto::MapModule::update();
-
-        if (mViewport->_getNumRenderedFaces() > 0 ||
-            mViewport->_getNumRenderedBatches() > 0)
-        {
-            /*std::cout << mViewport->_getNumRenderedFaces() <<
-                " (rendered faces)\n";
-            std::cout << mViewport->_getNumRenderedBatches() <<
-                " (rendered batches)\n";*/
-
-            //system("pause");
-        }
-    }
-    // ----------------------------------------------------------------------
-    void MapModule::deinitialize()
-    {
-        Ogre::ResourceGroupManager::getSingleton().
-                destroyResourceGroup("MAP_LOCAL");
-        delete mMapMan;
-
-        Sonetto::MapModule::deinitialize();
-    }
-    // ----------------------------------------------------------------------
-    void MapModule::halt()
-    {
-        Ogre::ResourceGroupManager::getSingleton().
-                unloadResourceGroup("MAP_LOCAL");
-
-        Sonetto::MapModule::halt();
-    }
-    // ----------------------------------------------------------------------
-    void MapModule::resume()
-    {
-        Sonetto::MapModule::resume();
-
-        Ogre::ResourceGroupManager::getSingleton().
-                loadResourceGroup("MAP_LOCAL");
+        map->load();
+        return map;
     }
 } // namespace

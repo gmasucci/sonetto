@@ -27,48 +27,22 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_DATABASE_H
-#define SONETTO_DATABASE_H
+#ifndef GENERICMAPMODULE_MANAGER_H
+#define GENERICMAPMODULE_MANAGER_H
 
+#include <OgreResourceManager.h>
 #include <OgreSingleton.h>
-#include "SonettoPrerequisites.h"
-#include "SonettoSavemap.h"
-#include "SonettoScriptDataHandler.h"
-#include "SonettoMusic.h"
-#include "SonettoSoundSource.h"
-#include "SonettoSoundSet.h"
+#include "GenericMapPrerequisites.h"
+#include "GenericMap.h"
 
-namespace Sonetto
+namespace GenericMapModule
 {
-    struct GameSystem
-    {
-        float textSize;
-        float textAnimationSpeed;
-        float textFadeInSpeed;
-        float textFadeOutSpeed;
-        float textHorizontalScale;
-        float textVerticalSpacing;
-        //Font * defaultFont;
-        uint8 defaultColor;
-
-        uint32 startMap;
-    };
-
-    struct GroundType
-    {
-        IDVector defaultFootsteps;
-    };
-
-    typedef std::vector<GroundType> GroundTypeVector;
-
-    typedef std::map<uint32,IDVector> FootwearSounds;
-    typedef std::vector<FootwearSounds> FootwearSoundsVector;
-
-    class SONETTO_API Database : public Ogre::Singleton<Database>
+    class MapManager : public Ogre::ResourceManager,
+            public Ogre::Singleton<MapManager>
     {
     public:
-        Database() : mInitialized(false) {}
-        ~Database();
+        MapManager();
+        virtual ~MapManager();
 
         /** Overrides standard Singleton retrieval
 
@@ -87,7 +61,7 @@ namespace Sonetto
             but the implementation stays in this single compilation unit,
             preventing link errors.
         */
-        static Database &getSingleton();
+        static MapManager &getSingleton();
 
         /** Overrides standard Singleton retrieval
 
@@ -106,25 +80,19 @@ namespace Sonetto
             but the implementation stays in this single compilation unit,
             preventing link errors.
         */
-        static Database *getSingletonPtr();
+        static MapManager *getSingletonPtr();
 
-        void initialize();
+        virtual MapPtr load(const Ogre::String &name,
+                const Ogre::String &group);
 
-        GameSystem system;
-
-        Savemap savemap;
-
-        MusicVector musics;
-        SoundDefVector sounds;
-        SoundSetVector soundSets;
-
-        GroundTypeVector groundTypes;
-        FootwearSoundsVector footwears;
-
-    private:
-        bool mInitialized;
-
-        ScriptDataHandler mScriptDataHandler;
+    protected:
+        inline Ogre::Resource *createImpl(const Ogre::String &name,
+                Ogre::ResourceHandle handle,const Ogre::String &group,
+                bool isManual,Ogre::ManualResourceLoader *loader,
+                const Ogre::NameValuePairList *createParams)
+        {
+            return new Map(this,name,handle,group,isManual,loader);
+        }
     };
 } // namespace
 
