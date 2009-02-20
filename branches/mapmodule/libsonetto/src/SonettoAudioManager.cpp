@@ -40,7 +40,7 @@ namespace Sonetto
     //-----------------------------------------------------------------------------
     // Sonetto::AudioManager implementation.
     //-----------------------------------------------------------------------------
-    SONETTO_SINGLETON_IMPLEMENT(AudioManager);
+    SONETTO_SINGLETON_IMPLEMENT(SONETTO_API,AudioManager);
     //-----------------------------------------------------------------------------
     void AudioManager::initialize(const char *device)
     {

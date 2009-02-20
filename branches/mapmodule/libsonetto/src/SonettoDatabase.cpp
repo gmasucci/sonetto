@@ -38,7 +38,7 @@ namespace Sonetto
     //--------------------------------------------------------------------------
     // Sonetto::Database implementation.
     //--------------------------------------------------------------------------
-    SONETTO_SINGLETON_IMPLEMENT(Database);
+    SONETTO_SINGLETON_IMPLEMENT(SONETTO_API,Database);
     //--------------------------------------------------------------------------
     Database::~Database()
     {

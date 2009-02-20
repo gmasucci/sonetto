@@ -61,10 +61,14 @@ namespace Sonetto
         virtual void resume();
 
         /** Change the viewport background color */
-        void setBgColor(const Ogre::ColourValue &col);
-        inline const Ogre::ColourValue &getBgColor() const { return mBgColor; }
+        virtual void setBgColor(const Ogre::ColourValue &col);
+        virtual inline const Ogre::ColourValue &getBgColor() const
+                { return mBgColor; }
 
-        inline Ogre::Camera *getCamera() const { return mCamera; }
+        virtual inline Ogre::Camera *getCamera() const { return mCamera; }
+
+        virtual inline Ogre::SceneManager *getSceneMan() const
+                { return mSceneMan; }
 
     protected:
         /// Pointer to the scene manager for this module.

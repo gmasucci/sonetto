@@ -49,8 +49,9 @@ namespace Sonetto
     {
     public:
         ScriptFile(Ogre::ResourceManager *creator,const Ogre::String &name,
-        Ogre::ResourceHandle handle,const Ogre::String &group,
-        bool isManual = false,Ogre::ManualResourceLoader *loader = 0);
+                Ogre::ResourceHandle handle,const Ogre::String &group,
+                bool isManual = false,Ogre::ManualResourceLoader *loader = 0)
+                : Ogre::Resource(creator,name,handle,group,isManual,loader) {}
 
         virtual ~ScriptFile();
 

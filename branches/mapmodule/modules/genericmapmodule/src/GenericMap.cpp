@@ -14,6 +14,7 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
+
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -28,82 +29,38 @@ POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
 #include <OgreResourceGroupManager.h>
-#include "GenericMapManager.h"
-#include "GenericMapModule.h"
+#include <OgreDataStream.h>
+#include <OgreStaticGeometry.h>
+#include <SonettoKernel.h>
+#include "GenericMap.h"
+#include "GenericMapSerializer.h"
 
 namespace GenericMapModule
 {
     // ----------------------------------------------------------------------
-    // GenericMapModule::MapModule implementation.
+    // GenericMapModule::Map implementation.
     // ----------------------------------------------------------------------
-    void MapModule::initialize()
+    Map::~Map()
     {
-        mBgColor = Ogre::ColourValue(0.0f,1.0f,0.0f);
-        Sonetto::MapModule::initialize();
-
-        if (StaticData.id == 0)
-        {
-            SONETTO_THROW("Unknown map ID");
-        }
-
-        // <todo> Use OGRE_NEW
-        mMapMan = new MapManager();
-
-        mMapFolder = "map_" + Ogre::StringConverter::
-                toString(StaticData.id - 1,2,'0');
-
-        Ogre::ResourceGroupManager &resGroupMan =
-                Ogre::ResourceGroupManager::getSingleton();
-
-        resGroupMan.addResourceLocation("map/" + mMapFolder,"FileSystem",
-                "MAP_LOCAL");
-        resGroupMan.initialiseResourceGroup("MAP_LOCAL");
-        resGroupMan.loadResourceGroup("MAP_LOCAL");
-
-        mMapMan->load("map_00.map","MAP_LOCAL");
-
-        mCamera->setPosition(0.0f,250.0f,-50.0f);
-        mCamera->lookAt(Ogre::Vector3::ZERO);
+        unload();
     }
     // ----------------------------------------------------------------------
-    void MapModule::update()
+    size_t Map::calculateSize() const
     {
-        Sonetto::MapModule::update();
-
-        if (mViewport->_getNumRenderedFaces() > 0 ||
-            mViewport->_getNumRenderedBatches() > 0)
-        {
-            /*std::cout << mViewport->_getNumRenderedFaces() <<
-                " (rendered faces)\n";
-            std::cout << mViewport->_getNumRenderedBatches() <<
-                " (rendered batches)\n";*/
-
-            //system("pause");
-        }
+        return mStaticGeomSize;
     }
     // ----------------------------------------------------------------------
-    void MapModule::deinitialize()
+    void Map::loadImpl()
     {
-        Ogre::ResourceGroupManager::getSingleton().
-                destroyResourceGroup("MAP_LOCAL");
-        delete mMapMan;
-
-        Sonetto::MapModule::deinitialize();
+        Ogre::DataStreamPtr stream = Ogre::ResourceGroupManager::
+                getSingleton().openResource(mName,mGroup,true,this);
+        MapSerializer serializer(stream);
+        serializer.importMapFile(this);
     }
     // ----------------------------------------------------------------------
-    void MapModule::halt()
+    void Map::unloadImpl()
     {
-        Ogre::ResourceGroupManager::getSingleton().
-                unloadResourceGroup("MAP_LOCAL");
-
-        Sonetto::MapModule::halt();
-    }
-    // ----------------------------------------------------------------------
-    void MapModule::resume()
-    {
-        Sonetto::MapModule::resume();
-
-        Ogre::ResourceGroupManager::getSingleton().
-                loadResourceGroup("MAP_LOCAL");
+        Sonetto::Kernel::getSingleton().getActiveModule()->
+                getSceneMan()->destroyStaticGeometry(mStaticGeom);
     }
 } // namespace

@@ -65,8 +65,6 @@ namespace Sonetto
         /// Private destructor, only accessible by the Kernel
         ~AudioManager();
 
-        void initialize(const char *device = NULL);
-
         /** Overrides standard Singleton retrieval
 
         @remarks
@@ -104,6 +102,8 @@ namespace Sonetto
             preventing link errors.
         */
         static AudioManager *getSingletonPtr();
+
+        void initialize(const char *device = NULL);
 
         /// Updates
         void _update();

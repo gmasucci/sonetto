@@ -14,7 +14,6 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
-
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -28,60 +27,66 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifdef WINDOWS
-#   include <windows.h>
-#endif
+#ifndef GENERICMAPMODULE_MAPSERIALIZER_H
+#define GENERICMAPMODULE_MAPSERIALIZER_H
 
-#include <exception>
-#include <OgreLogManager.h>
-#include "SonettoKernel.h"
-#include "GenericModuleFactory.h"
+#include <OgreSerializer.h>
+#include <OgreDataStream.h>
+#include <OgreHardwareIndexBuffer.h>
+#include "GenericMapPrerequisites.h"
 
-void reportException(const char *msg);
-
-#ifdef WINDOWS
-INT WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,INT)
-#else
-int main(int argc,char *argv[])
-#endif
+namespace GenericMapModule
 {
-    GenericModuleFactory factory;
-    Sonetto::Kernel kernel(&factory);
+    class MapSerializer : public Ogre::Serializer
+    {
+    public:
+        static const uint32 FourCC = MKFOURCC('S','M','A','P');
 
-    try {
-        kernel.initialize();
-        kernel.run();
-    } catch(Sonetto::Exception &e) {
-        const char *what = e.what();
-
-        if (!what)
+        enum Version
         {
-            what = "An unknown error has happened.\n"
-                   "It was not possible to identify the error.";
-        }
+            VER_0_1     = 1,
+            VER_CURRENT = VER_0_1
+        };
 
-        reportException(what);
-    } catch(Ogre::FileNotFoundException &e) {
-        reportException(("A game file could not be found.\n" +
-                e.getDescription()).c_str());
-    } catch(std::exception &e) {
-        reportException(e.what());
-    }
+        enum VertexDeclarationElement
+        {
+            VDE_POSITION   = 1,
+            VDE_NORMAL     = 2,
+            VDE_DIFFUSE    = 4,
+            VDE_SPECULAR   = 8,
+            VDE_TEXCOORD_1 = 16,
+            VDE_TEXCOORD_2 = 32,
+            VDE_TEXCOORD_3 = 64,
+            VDE_TEXCOORD_4 = 128,
+            VDE_TEXCOORD_5 = 256,
+            VDE_TEXCOORD_6 = 512,
+            VDE_TEXCOORD_7 = 1024,
+            VDE_TEXCOORD_8 = 2048
+        };
 
-    return 0;
-}
+        MapSerializer(Ogre::DataStreamPtr &stream)
+                : mStream(stream) {}
+        virtual ~MapSerializer() {}
 
-void reportException(const char *msg)
-{
-    std::string logMessage = "\n[!] Game Runtime Error\n" + std::string(msg);
+        void importMapFile(Map *map);
 
-    Ogre::LogManager::getSingleton().getDefaultLog()->
-            logMessage(logMessage,Ogre::LML_CRITICAL);
+    protected:
+        Ogre::DataStreamPtr mStream;
 
-    #ifdef WINDOWS
-        MessageBox(NULL,msg,"Game Runtime Error",
-                MB_OK | MB_ICONERROR | MB_TASKMODAL);
-    #else
-        cerr << logMessage << '\n';
-    #endif
-}
+        size_t mTotalBuffersSize;
+
+        void importMapFile0_1(Map *map);
+
+        void importSubMesh(Ogre::MeshPtr mesh,
+            Ogre::HardwareIndexBufferSharedPtr sharedIndexBuffer,
+            size_t *offset);
+
+        void importVertexData(Ogre::VertexData *data);
+
+        size_t importIndexBuffer(
+            Ogre::HardwareIndexBufferSharedPtr indexBuffer,
+            size_t *offset);
+    };
+} // namespace
+
+#endif

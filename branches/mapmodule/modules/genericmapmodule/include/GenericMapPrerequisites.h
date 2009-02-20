@@ -14,7 +14,6 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
-
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -28,60 +27,29 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifdef WINDOWS
-#   include <windows.h>
-#endif
+#ifndef GENERICMAPMODULE_PREREQUISITES_H
+#define GENERICMAPMODULE_PREREQUISITES_H
 
-#include <exception>
-#include <OgreLogManager.h>
-#include "SonettoKernel.h"
-#include "GenericModuleFactory.h"
+#define MODULE_API
 
-void reportException(const char *msg);
+#include <SonettoPrerequisites.h>
 
-#ifdef WINDOWS
-INT WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,INT)
-#else
-int main(int argc,char *argv[])
-#endif
+namespace GenericMapModule
 {
-    GenericModuleFactory factory;
-    Sonetto::Kernel kernel(&factory);
+    // Important fixed-length data types took from Sonetto Core
+    using Sonetto::int8;
+    using Sonetto::uint8;
+    using Sonetto::int16;
+    using Sonetto::uint16;
+    using Sonetto::int32;
+    using Sonetto::uint32;
 
-    try {
-        kernel.initialize();
-        kernel.run();
-    } catch(Sonetto::Exception &e) {
-        const char *what = e.what();
+    // Forward declarations
+    class MapModule;
+    class Map;
+    class MapSerializer;
+    class MapManager;
+    class Walkmesh;
+} // namespace
 
-        if (!what)
-        {
-            what = "An unknown error has happened.\n"
-                   "It was not possible to identify the error.";
-        }
-
-        reportException(what);
-    } catch(Ogre::FileNotFoundException &e) {
-        reportException(("A game file could not be found.\n" +
-                e.getDescription()).c_str());
-    } catch(std::exception &e) {
-        reportException(e.what());
-    }
-
-    return 0;
-}
-
-void reportException(const char *msg)
-{
-    std::string logMessage = "\n[!] Game Runtime Error\n" + std::string(msg);
-
-    Ogre::LogManager::getSingleton().getDefaultLog()->
-            logMessage(logMessage,Ogre::LML_CRITICAL);
-
-    #ifdef WINDOWS
-        MessageBox(NULL,msg,"Game Runtime Error",
-                MB_OK | MB_ICONERROR | MB_TASKMODAL);
-    #else
-        cerr << logMessage << '\n';
-    #endif
-}
+#endif

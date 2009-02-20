@@ -57,15 +57,6 @@ namespace Sonetto
         /// Destructor
         ~InputManager();
 
-        /** Initializes InputManager
-
-        @remarks
-            On Linux builds, this method takes no parameters
-        @param
-            hWnd Window handle (HWND) to be used with DirectInput.
-        */
-        void initialize();
-
         /** Overrides standard Singleton retrieval
 
         @remarks
@@ -103,6 +94,15 @@ namespace Sonetto
             preventing link errors.
         */
         static InputManager *getSingletonPtr();
+
+        /** Initializes InputManager
+
+        @remarks
+            On Linux builds, this method takes no parameters
+        @param
+            hWnd Window handle (HWND) to be used with DirectInput.
+        */
+        void initialize();
 
         /** Updates all PlayerInputs.
 
