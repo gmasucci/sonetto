@@ -35,6 +35,9 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <SonettoSharedPtr.h>
 #include "GenericMapPrerequisites.h"
 #include "GenericMapWalkmesh.h"
+#include "GenericMapSkyEntityData.h"
+#include "GenericMapBillboardSetData.h"
+#include "GenericMapBillboardData.h"
 
 namespace GenericMapModule
 {
@@ -53,28 +56,48 @@ namespace GenericMapModule
         inline void _setMapName(const std::string &name) { mMapName = name; }
         inline const std::string &getMapName() const { return mMapName; }
 
+        inline Ogre::StaticGeometry *getStaticGeometry() const
+                { return mStaticGeom; }
         inline void _setStaticGeometry(Ogre::StaticGeometry *geom)
                 { mStaticGeom = geom; }
-        inline Ogre::StaticGeometry *_getStaticGeometry() const
-                { return mStaticGeom; }
-        inline void _setStaticGeomSize(size_t size) { mStaticGeomSize = size; }
 
         inline const Walkmesh &getWalkmesh() const { return mWalkmesh; }
-
-        // Used by serializer to get populated with data
         inline Walkmesh &_getWalkmesh() { return mWalkmesh; }
+
+        inline const SkyEntityDataMap &getSkyEntitiesData() const
+                { return mSkyEntitiesData; }
+        inline SkyEntityDataMap &_getSkyEntitiesData()
+                { return mSkyEntitiesData; }
+
+        inline const BillboardSetDataMap &getBillboardSetData() const
+                { return mBillboardSetData; }
+        inline BillboardSetDataMap &_getBillboardSetData()
+                { return mBillboardSetData; }
+
+        inline const BillboardDataMap &getBillboardData() const
+                { return mBillboardData; }
+        inline BillboardDataMap &_getBillboardData()
+                { return mBillboardData; }
+
+        inline void _setResourceSize(size_t size) { mResourceSize = size; }
 
     protected:
         // Ogre::Resource interface implementation
         void loadImpl();
         void unloadImpl();
 
+        size_t mResourceSize;
+
         std::string mMapName;
 
         Ogre::StaticGeometry *mStaticGeom;
-        size_t mStaticGeomSize;
 
         Walkmesh mWalkmesh;
+
+        SkyEntityDataMap mSkyEntitiesData;
+
+        BillboardSetDataMap mBillboardSetData;
+        BillboardDataMap mBillboardData;
     };
 
     typedef Sonetto::SharedPtr<Map> MapPtr;

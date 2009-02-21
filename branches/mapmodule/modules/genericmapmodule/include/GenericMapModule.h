@@ -30,8 +30,18 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef GENERICMAPMODULE_MODULE_H
 #define GENERICMAPMODULE_MODULE_H
 
-#include <SonettoMapModule.h>
 #include "GenericMapPrerequisites.h"
+
+// Forward declarations
+namespace GenericMapModule
+{
+    typedef std::map<uint32,Ogre::Entity *> EntityMap;
+    typedef std::map<uint32,Ogre::BillboardSet *> BillboardSetMap;
+    typedef std::map<uint32,Ogre::Billboard *> BillboardMap;
+}
+
+#include <SonettoMapModule.h>
+#include "GenericMap.h"
 
 namespace GenericMapModule
 {
@@ -48,10 +58,26 @@ namespace GenericMapModule
         void halt();
         void resume();
 
+        EntityMap &getSkyEntities() { return mSkyEntities; }
+        Ogre::Entity *getSkyEntity(uint32 id) { return mSkyEntities[id]; }
+
+        BillboardSetMap &getBillboardSets() { return mBillboardSets; }
+        Ogre::BillboardSet *getBillboardSet(uint32 id)
+                { return mBillboardSets[id]; }
+
     private:
+        void createScene();
+
         std::string mMapFolder;
 
         MapManager *mMapMan;
+        MapPtr      mCurrentMap;
+
+        Ogre::SceneNode *mSkyEntitiesNode;
+        EntityMap mSkyEntities;
+
+        BillboardSetMap mBillboardSets;
+        BillboardMap mBillboards;
     };
 } // namespace
 

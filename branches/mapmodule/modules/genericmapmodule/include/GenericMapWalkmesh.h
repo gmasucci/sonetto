@@ -43,12 +43,7 @@ namespace GenericMapModule
         {
             Triangle() {}
 
-            Triangle(Ogre::Vector3 aPosition,uint32 aGroundType,
-                    uint32 aBattleBackground) :
-                    position(aPosition),groundType(aGroundType),
-                    battleBackground(aBattleBackground) {}
-
-            Ogre::Vector3 position;
+            Ogre::Vector3 vertices[3];
             uint32 edgeLinks[3];
 
             uint32 groundType;
