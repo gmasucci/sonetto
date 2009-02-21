@@ -60,26 +60,18 @@ namespace GenericMapModule
         resGroupMan.initialiseResourceGroup("MAP_LOCAL");
         resGroupMan.loadResourceGroup("MAP_LOCAL");
 
-        mMapMan->load("map_00.map","MAP_LOCAL");
+        mCurrentMap = mMapMan->load("map_00.map","MAP_LOCAL");
+        createScene();
 
-        mCamera->setPosition(0.0f,250.0f,-50.0f);
-        mCamera->lookAt(Ogre::Vector3::ZERO);
+        mCamera->setPosition(0.0f,10.0f,-50.0f);
+        mCamera->lookAt(Ogre::Vector3(0.0f,0.0f,50.0f));
     }
     // ----------------------------------------------------------------------
     void MapModule::update()
     {
         Sonetto::MapModule::update();
 
-        if (mViewport->_getNumRenderedFaces() > 0 ||
-            mViewport->_getNumRenderedBatches() > 0)
-        {
-            /*std::cout << mViewport->_getNumRenderedFaces() <<
-                " (rendered faces)\n";
-            std::cout << mViewport->_getNumRenderedBatches() <<
-                " (rendered batches)\n";*/
-
-            //system("pause");
-        }
+        //mSkyEntitiesNode->setPosition(mCamera->getDerivedPosition());
     }
     // ----------------------------------------------------------------------
     void MapModule::deinitialize()
@@ -105,5 +97,95 @@ namespace GenericMapModule
 
         Ogre::ResourceGroupManager::getSingleton().
                 loadResourceGroup("MAP_LOCAL");
+    }
+    // ----------------------------------------------------------------------
+    void MapModule::createScene()
+    {
+        assert(!mCurrentMap.isNull());
+
+        // Creates scene nodes
+        mSkyEntitiesNode = mSceneMan->getRootSceneNode()->
+                createChildSceneNode();
+
+        // Shows map's static geometry
+        mCurrentMap->getStaticGeometry()->setVisible(true);
+
+        // Creates sky entities
+        const SkyEntityDataMap &skyEntitiesMap =
+                mCurrentMap->getSkyEntitiesData();
+
+        for (SkyEntityDataMap::const_iterator iter = skyEntitiesMap.begin();
+            iter != skyEntitiesMap.end();++iter)
+        {
+            const SkyEntityData &entityData = iter->second;
+
+            Ogre::Entity *entity = mSceneMan->createEntity(
+                    "MAP_SKYLAYER_ENTITY_" +
+                    Ogre::StringConverter::toString(iter->first,3,'0'),
+                    entityData.mesh->getName());
+
+            // Sets render queue group
+            // <todo> Check why this isn't working
+            entity->setRenderQueueGroup(Ogre::RENDER_QUEUE_SKIES_EARLY);
+
+            // Sets visibility
+            entity->setVisible(entityData.initialVisibility);
+
+            // Creates and attaches to scene node
+            Ogre::SceneNode *entityNode = mSkyEntitiesNode->
+                    createChildSceneNode(entityData.initialPosition);
+            entityNode->attachObject(entity);
+
+            // Adds to sky entities vector
+            mSkyEntities[iter->first] = entity;
+        }
+
+        // Creates billboards and billboard sets
+        const BillboardSetDataMap &mapBillboardSetData = mCurrentMap->
+                getBillboardSetData();
+        const BillboardDataMap &mapBillboardsData = mCurrentMap->
+                getBillboardData();
+
+        for (BillboardSetDataMap::const_iterator iter =
+            mapBillboardSetData.begin();iter !=
+            mapBillboardSetData.end();++iter)
+        {
+            const BillboardSetData &billboardSetData = iter->second;
+
+            Ogre::BillboardSet *billboardSet = mSceneMan->
+                    createBillboardSet("MAP_BILLBOARDLAYER_" +
+                    Ogre::StringConverter::toString(iter->first),
+                    billboardSetData.poolSize);
+
+            billboardSet->setMaterialName(billboardSetData.materialName);
+
+            Ogre::SceneNode *setNode = mSceneMan->getRootSceneNode()->
+                    createChildSceneNode(billboardSetData.position);
+            setNode->attachObject(billboardSet);
+
+            mBillboardSets[iter->first] = billboardSet;
+
+            // <todo> Stop using [i] in this kind of loop
+            // Use iterators instead
+            for (size_t i = 0;i < billboardSetData.billboards.size();++i)
+            {
+                uint32 id = billboardSetData.billboards[i];
+                const BillboardData &billboardData =
+                        mapBillboardsData.find(id)->second;
+
+                Ogre::Billboard *billboard = billboardSet->createBillboard(
+                        billboardData.position,billboardData.color);
+
+                if (billboardSetData.defaultSize != billboardData.size)
+                {
+                    billboard->setDimensions(billboardData.size.x,
+                            billboardData.size.y);
+                }
+
+                billboard->setTexcoordRect(billboardData.texCoord);
+
+                mBillboards[id] = billboard;
+            }
+        }
     }
 } // namespace

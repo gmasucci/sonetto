@@ -73,9 +73,11 @@ namespace GenericMapModule
     protected:
         Ogre::DataStreamPtr mStream;
 
-        size_t mTotalBuffersSize;
+        size_t mTotalResourceSize;
 
         void importMapFile0_1(Map *map);
+
+        void importMeshBounds(Ogre::MeshPtr mesh);
 
         void importSubMesh(Ogre::MeshPtr mesh,
             Ogre::HardwareIndexBufferSharedPtr sharedIndexBuffer,

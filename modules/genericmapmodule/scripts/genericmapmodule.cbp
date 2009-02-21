@@ -102,10 +102,13 @@
 			<Add directory="$(OGRE_HOME)\lib" />
 		</Linker>
 		<Unit filename="..\include\GenericMap.h" />
+		<Unit filename="..\include\GenericMapBillboardData.h" />
+		<Unit filename="..\include\GenericMapBillboardSetData.h" />
 		<Unit filename="..\include\GenericMapManager.h" />
 		<Unit filename="..\include\GenericMapModule.h" />
 		<Unit filename="..\include\GenericMapPrerequisites.h" />
 		<Unit filename="..\include\GenericMapSerializer.h" />
+		<Unit filename="..\include\GenericMapSkyEntityData.h" />
 		<Unit filename="..\include\GenericMapWalkmesh.h" />
 		<Unit filename="..\src\GenericMap.cpp" />
 		<Unit filename="..\src\GenericMapManager.cpp" />

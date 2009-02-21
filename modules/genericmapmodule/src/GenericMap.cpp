@@ -47,7 +47,7 @@ namespace GenericMapModule
     // ----------------------------------------------------------------------
     size_t Map::calculateSize() const
     {
-        return mStaticGeomSize;
+        return mResourceSize;
     }
     // ----------------------------------------------------------------------
     void Map::loadImpl()
@@ -60,7 +60,34 @@ namespace GenericMapModule
     // ----------------------------------------------------------------------
     void Map::unloadImpl()
     {
+        Ogre::MeshManager &meshMan = Ogre::MeshManager::getSingleton();
+
+        // Clears map name
+        mMapName.clear();
+
+        // Destroys static geometry
         Sonetto::Kernel::getSingleton().getActiveModule()->
                 getSceneMan()->destroyStaticGeometry(mStaticGeom);
+
+        // Clears walkmesh triangles
+        mWalkmesh.triangles.clear();
+
+        // Destroys and clears Sky Entities data
+        while (!mSkyEntitiesData.empty())
+        {
+            SkyEntityDataMap::iterator iter = mSkyEntitiesData.begin();
+
+            meshMan.remove(iter->second.mesh->getHandle());
+            mSkyEntitiesData.erase(iter);
+        }
+
+        // Clears Billboard Set data
+        mBillboardSetData.clear();
+
+        // Clears Billboard data
+        mBillboardData.clear();
+
+        // Resets resource size
+        mResourceSize = 0;
     }
 } // namespace
