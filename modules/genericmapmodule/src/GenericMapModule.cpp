@@ -173,6 +173,7 @@ namespace GenericMapModule
                 const BillboardData &billboardData =
                         mapBillboardsData.find(id)->second;
 
+                // <todo> Check why color parameter isn't actually changing anything
                 Ogre::Billboard *billboard = billboardSet->createBillboard(
                         billboardData.position,billboardData.color);
 

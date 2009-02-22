@@ -14,7 +14,6 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
-
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -28,72 +27,66 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_SCRIPTFLOWHANDLER_H
-#define SONETTO_SCRIPTFLOWHANDLER_H
+#ifndef GENERICMAPMODULE_EVENTPAGE_H
+#define GENERICMAPMODULE_EVENTPAGE_H
 
-#include "SonettoPrerequisites.h"
-#include "SonettoOpcodeHandler.h"
-#include "SonettoOpcode.h"
-#include "SonettoVariable.h"
-#include "SonettoScript.h"
+#include <vector>
+#include <SonettoVariable.h>
+#include <SonettoScriptFile.h>
+#include <SonettoPlayerInput.h>
+#include "GenericMapPrerequisites.h"
 
-namespace Sonetto
+namespace GenericMapModule
 {
-    class OpFlowStop : public Opcode
+    struct EventPage
     {
-    public:
-        OpFlowStop(OpcodeHandler *aHandler)
-                : Opcode(aHandler) {}
-
-        OpFlowStop *create() const { return new OpFlowStop(handler); }
-    };
-
-    class OpFlowJmp : public Opcode
-    {
-    public:
-        OpFlowJmp(OpcodeHandler *aHandler);
-
-        OpFlowJmp *create() const { return new OpFlowJmp(handler); }
-
-        uint32 address;
-    };
-
-    class OpFlowCJmp : public Opcode
-    {
-    public:
-        OpFlowCJmp(OpcodeHandler *aHandler);
-
-        OpFlowCJmp *create() const { return new OpFlowCJmp(handler); }
-
-        char scope;
-        uint32 variableID;
-        char comparator;
-        Variable variable;
-        uint32 address;
-    };
-
-    class ScriptFlowHandler : public OpcodeHandler
-    {
-    public:
-        enum Opcodes
+        enum TriggerCondition
         {
-            OP_FLOW_BASE = 1000,
-            OP_STOP = OP_FLOW_BASE,
-            OP_JMP,
-            OP_CJMP
+            TRG_BUTTON,
+            TRG_EVENT_TOUCH,
+            TRG_AUTORUN,
+            TRG_PARALLEL_PROCESS
         };
 
-        ScriptFlowHandler() {}
-        virtual ~ScriptFlowHandler() {}
+        enum MeshSource
+        {
+            MSS_NONE,
+            MSS_NPC,
+            MSS_PARTY
+        };
 
-        void registerOpcodes();
-        void unregisterOpcodes();
-        int handleOpcode(ScriptPtr script,size_t id,Opcode *opcode);
+        EventPage() {}
 
-    private:
-        int jmp(OpFlowJmp *opcode);
-        int cjmp(ScriptPtr script,OpFlowCJmp *opcode);
+        Sonetto::VariableConditionVector conditions;
+
+        TriggerCondition triggerCondition;
+        union trigger
+        {
+            struct button
+            {
+                uint32 playerInputID;
+                uint32 btnID;
+                Sonetto::KeyState btnState;
+            };
+
+            struct eventTouch
+            {
+                uint32 eventID;
+            };
+
+            struct autorun
+            {
+                bool blockEnabled;
+            };
+        };
+
+        MeshSource meshSource;
+        uint32 meshID;
+
+        Sonetto::ScriptFilePtr scriptFile;
     };
-} // namespace Sonetto
+
+    typedef std::vector<EventPage> EventPageVector;
+} // namespace
 
 #endif

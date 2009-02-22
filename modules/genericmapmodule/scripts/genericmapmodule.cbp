@@ -104,6 +104,7 @@
 		<Unit filename="..\include\GenericMap.h" />
 		<Unit filename="..\include\GenericMapBillboardData.h" />
 		<Unit filename="..\include\GenericMapBillboardSetData.h" />
+		<Unit filename="..\include\GenericMapEventPage.h" />
 		<Unit filename="..\include\GenericMapManager.h" />
 		<Unit filename="..\include\GenericMapModule.h" />
 		<Unit filename="..\include\GenericMapPrerequisites.h" />
