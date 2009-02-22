@@ -38,9 +38,17 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "GenericMapSkyEntityData.h"
 #include "GenericMapBillboardSetData.h"
 #include "GenericMapBillboardData.h"
+#include "GenericMapEventPage.h"
 
 namespace GenericMapModule
 {
+    struct EventData
+    {
+        EventPageVector pages;
+    };
+
+    typedef std::map<uint32,EventData> EventDataMap;
+
     class Map : public Ogre::Resource
     {
     public:
@@ -79,6 +87,9 @@ namespace GenericMapModule
         inline BillboardDataMap &_getBillboardData()
                 { return mBillboardData; }
 
+        inline const EventDataMap &getEventData() const { return mEventData; }
+        inline EventDataMap &_getEventData() { return mEventData; }
+
         inline void _setResourceSize(size_t size) { mResourceSize = size; }
 
     protected:
@@ -98,6 +109,8 @@ namespace GenericMapModule
 
         BillboardSetDataMap mBillboardSetData;
         BillboardDataMap mBillboardData;
+
+        EventDataMap mEventData;
     };
 
     typedef Sonetto::SharedPtr<Map> MapPtr;

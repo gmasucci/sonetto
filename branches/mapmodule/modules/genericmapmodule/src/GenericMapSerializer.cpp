@@ -31,6 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <OgreStringConverter.h>
 #include <SonettoUtil.h>
 #include <SonettoKernel.h>
+#include <SonettoScriptManager.h>
 #include "GenericMap.h"
 #include "GenericMapModule.h"
 #include "GenericMapSerializer.h"
@@ -169,8 +170,8 @@ namespace GenericMapModule
             uint32 triangleCount;
 
             mStream->read(&triangleCount,sizeof(triangleCount));
-            walkmesh.triangles.resize(triangleCount);
             std::cout << triangleCount << " (triangleCount)\n";
+            walkmesh.triangles.resize(triangleCount);
             for (size_t i = 0;i < triangleCount;++i)
             {
                 Walkmesh::Triangle &triangle = walkmesh.triangles[i];
@@ -448,7 +449,96 @@ namespace GenericMapModule
 
         // - Event Layer serialization
         {
-            // <todo> Finish later
+            uint32 eventCount;
+            EventDataMap &eventsData = map->_getEventData();
+
+            mStream->read(&eventCount,sizeof(eventCount));
+            std::cout << eventCount << " (eventCount)\n";
+            for (size_t i = 0;i < eventCount;++i)
+            {
+                uint32 id,pageCount;
+
+                mStream->read(&id,sizeof(id));
+                std::cout << id << " (id)\n";
+                if (eventsData.find(id) != eventsData.end())
+                {
+                    SONETTO_THROW("Event ID already in use");
+                }
+
+                if (id == 0)
+                {
+                    SONETTO_THROW("Invalid event ID");
+                }
+
+                EventData &eventData = eventsData[id];
+
+                mStream->read(&pageCount,sizeof(pageCount));
+                std::cout << pageCount << " (pageCount)\n";
+                eventData.pages.resize(pageCount);
+                for (size_t j = 0;j < pageCount;++j)
+                {
+                    uint32 conditionCount;
+                    uint8 meshSource;
+                    std::string scriptFileName;
+                    EventPage &page = eventData.pages[j];
+
+                    mStream->read(&conditionCount,sizeof(conditionCount));
+                    std::cout << conditionCount << " (conditionCount)\n";
+                    page.conditions.resize(conditionCount);
+                    for (size_t k = 0;k < conditionCount;++k)
+                    {
+                        Sonetto::VariableCondition &condition =
+                                page.conditions[k];
+
+                        mStream->read(&condition.scope,sizeof(condition.scope));
+                        std::cout << condition.scope << " (condition.scope)\n";
+
+                        mStream->read(&condition.variableID,
+                                sizeof(condition.variableID));
+                        std::cout << condition.variableID <<
+                                " (condition.variableID)\n";
+
+                        mStream->read(&condition.comparator,
+                                sizeof(condition.comparator));
+                        std::cout << condition.comparator <<
+                                " (condition.comparator)\n";
+
+                        mStream->read(&condition.rhsValue._getRawType(),
+                                sizeof(condition.rhsValue._getRawType()));
+                        std::cout << condition.rhsValue.getType() <<
+                                " (condition.rhsValue.getType())\n";
+
+                        mStream->read(&condition.rhsValue._int,
+                                sizeof(condition.rhsValue._int));
+                        std::cout << condition.rhsValue._int <<
+                                " (condition.rhsValue._int)\n";
+                    }
+
+                    mStream->read(&meshSource,sizeof(meshSource));
+                    std::cout << meshSource << " (meshSource)\n";
+                    page.meshSource = (EventPage::MeshSource)meshSource;
+                    switch (meshSource)
+                    {
+                        case EventPage::MSS_NONE:
+                        break;
+
+                        case EventPage::MSS_NPC:
+                        case EventPage::MSS_PARTY:
+                            mStream->read(&page.meshID,sizeof(page.meshID));
+                            std::cout << page.meshID << " (page.meshID)\n";
+                        break;
+
+                        default:
+                            SONETTO_THROW("Invalid mesh source");
+                        break;
+                    }
+
+                    scriptFileName = Sonetto::Util::readString(mStream);
+                    std::cout << scriptFileName << " (scriptFileName)\n";
+                    page.scriptFile = Sonetto::ScriptManager::getSingleton().
+                            load(scriptFileName,"MAP_LOCAL");
+                }
+            }
         }
 
         map->_setResourceSize(mTotalResourceSize);
@@ -588,7 +678,7 @@ namespace GenericMapModule
         // <todo> Check exceptions to retry; couldn't find documentation
         // about exceptions that could be thrown here and Ogre *doesn't seem*
         // to throw any indeed, but who knows..
-        mStream->read(vBufPtr->lock(Ogre::HardwareBuffer::HBL_NORMAL),bytes);
+        mStream->read(vBufPtr->lock(Ogre::HardwareBuffer::HBL_DISCARD),bytes);
         vBufPtr->unlock();
 
         data->vertexBufferBinding->setBinding(0,vBufPtr);
@@ -609,7 +699,7 @@ namespace GenericMapModule
         std::cout << *offset << " (offset)\n";
         bytes = (triangleCount * 3 * 2);
         mStream->read((char *)(indexBuffer->lock(
-                Ogre::HardwareBuffer::HBL_NORMAL)) + *offset,bytes);
+                Ogre::HardwareBuffer::HBL_DISCARD)) + *offset,bytes);
         indexBuffer->unlock();
         *offset += bytes;
 

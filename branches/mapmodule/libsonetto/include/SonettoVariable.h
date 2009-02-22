@@ -34,6 +34,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <cmath>
 #include <map>
 #include <stack>
+#include <vector>
 #include "SonettoPrerequisites.h"
 
 namespace Sonetto
@@ -107,6 +108,10 @@ namespace Sonetto
 
         template<typename T> T getValue(bool strongTyping) const
         {
+            // <todo> Remove RTTI; I didn't know it was
+            // slow like people say it is
+            // I could even have used VariableType here as template
+            // parameter; I'd better separate this in two methods, though
             if (typeid(T) == typeid(int32)) {
                 if (mType == VT_INT32) {
                     return static_cast<T>(_int);
@@ -161,8 +166,19 @@ namespace Sonetto
         char mType;
     };
 
+    struct VariableCondition
+    {
+        VariableCondition() {}
+
+        uint8 scope;
+        uint32 variableID;
+        uint8 comparator;
+        Variable rhsValue;
+    };
+
     typedef std::map<int,Variable> VariableMap;
     typedef std::stack<Variable> VariableStack;
+    typedef std::vector<VariableCondition> VariableConditionVector;
 } // namespace
 
 #endif

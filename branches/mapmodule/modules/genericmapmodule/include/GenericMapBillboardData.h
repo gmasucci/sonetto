@@ -14,7 +14,6 @@ modification, are permitted provided that the following conditions are met:
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
-
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -28,72 +27,31 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef SONETTO_SCRIPTFLOWHANDLER_H
-#define SONETTO_SCRIPTFLOWHANDLER_H
+#ifndef GENERICMAPMODULE_BILLBOARDDATA_H
+#define GENERICMAPMODULE_BILLBOARDDATA_H
 
-#include "SonettoPrerequisites.h"
-#include "SonettoOpcodeHandler.h"
-#include "SonettoOpcode.h"
-#include "SonettoVariable.h"
-#include "SonettoScript.h"
+#include <map>
+#include <OgreCommon.h>
+#include <OgreVector3.h>
+#include "GenericMapPrerequisites.h"
 
-namespace Sonetto
+namespace GenericMapModule
 {
-    class OpFlowStop : public Opcode
+    struct BillboardData
     {
-    public:
-        OpFlowStop(OpcodeHandler *aHandler)
-                : Opcode(aHandler) {}
+        BillboardData() {}
 
-        OpFlowStop *create() const { return new OpFlowStop(handler); }
+        BillboardData(const Ogre::Vector3 &aPosition,
+                const Ogre::FloatRect &aTexCoord) : position(aPosition),
+                texCoord(aTexCoord) {}
+
+        Ogre::Vector3 position;
+        Ogre::Vector2 size;
+        Ogre::FloatRect texCoord;
+        Ogre::ColourValue color;
     };
 
-    class OpFlowJmp : public Opcode
-    {
-    public:
-        OpFlowJmp(OpcodeHandler *aHandler);
-
-        OpFlowJmp *create() const { return new OpFlowJmp(handler); }
-
-        uint32 address;
-    };
-
-    class OpFlowCJmp : public Opcode
-    {
-    public:
-        OpFlowCJmp(OpcodeHandler *aHandler);
-
-        OpFlowCJmp *create() const { return new OpFlowCJmp(handler); }
-
-        char scope;
-        uint32 variableID;
-        char comparator;
-        Variable variable;
-        uint32 address;
-    };
-
-    class ScriptFlowHandler : public OpcodeHandler
-    {
-    public:
-        enum Opcodes
-        {
-            OP_FLOW_BASE = 1000,
-            OP_STOP = OP_FLOW_BASE,
-            OP_JMP,
-            OP_CJMP
-        };
-
-        ScriptFlowHandler() {}
-        virtual ~ScriptFlowHandler() {}
-
-        void registerOpcodes();
-        void unregisterOpcodes();
-        int handleOpcode(ScriptPtr script,size_t id,Opcode *opcode);
-
-    private:
-        int jmp(OpFlowJmp *opcode);
-        int cjmp(ScriptPtr script,OpFlowCJmp *opcode);
-    };
-} // namespace Sonetto
+    typedef std::map<uint32,BillboardData> BillboardDataMap;
+} // namespace
 
 #endif

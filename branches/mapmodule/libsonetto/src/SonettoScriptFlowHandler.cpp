@@ -51,7 +51,7 @@ namespace Sonetto
     OpFlowCJmp::OpFlowCJmp(OpcodeHandler *aHandler) : Opcode(aHandler)
     {
         arguments.push_back(OpcodeArgument(sizeof(scope),&scope));
-        arguments.push_back(OpcodeArgument(sizeof(cmpIndex),&cmpIndex));
+        arguments.push_back(OpcodeArgument(sizeof(variableID),&variableID));
         arguments.push_back(OpcodeArgument(sizeof(comparator),&comparator));
 
         arguments.push_back(
@@ -152,7 +152,7 @@ namespace Sonetto
             break;
         }
 
-        VariableMap::iterator iter = rvars->find(opcode->cmpIndex);
+        VariableMap::iterator iter = rvars->find(opcode->variableID);
 
         if (iter != rvars->end())
         {
