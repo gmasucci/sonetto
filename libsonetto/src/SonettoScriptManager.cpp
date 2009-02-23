@@ -74,14 +74,14 @@ namespace Sonetto
         return scriptf;
     }
     //--------------------------------------------------------------------------
-    void ScriptManager::updateScript(ScriptPtr script)
+    bool ScriptManager::updateScript(Script *script)
     {
         size_t scriptSize = script->getScriptFile()->calculateSize();
 
         // Empty scripts are valid, but there is nothing to do with them
         if (scriptSize == 0)
         {
-            return;
+            return true;
         }
 
         // Starts executing the script
@@ -163,9 +163,11 @@ namespace Sonetto
             if (script->_getOffset() == scriptSize)
             {
                 seekOpcode(script,0);
-                break;
+                return true; // true, the script has ended
             }
         }
+
+        return false;
     }
     //--------------------------------------------------------------------------
     void ScriptManager::_registerOpcode(size_t id,const Opcode *opcode)
@@ -192,7 +194,7 @@ namespace Sonetto
         mOpcodeTable.erase(iter);
     }
     //--------------------------------------------------------------------------
-    void ScriptManager::readScriptData(ScriptPtr script,void *dest,
+    void ScriptManager::readScriptData(Script *script,void *dest,
             size_t bytes,bool updateCursor)
     {
         size_t offset = script->_getOffset();
@@ -211,7 +213,7 @@ namespace Sonetto
         memcpy(dest,&data[offset],bytes);
     }
     //--------------------------------------------------------------------------
-    Opcode *ScriptManager::readOpcode(ScriptPtr script,size_t &id,
+    Opcode *ScriptManager::readOpcode(Script *script,size_t &id,
             size_t &bytesRead)
     {
         OpcodeTable::iterator iter;
@@ -247,7 +249,7 @@ namespace Sonetto
         return opcode;
     }
     //--------------------------------------------------------------------------
-    size_t ScriptManager::seekOpcode(ScriptPtr script,size_t opIndex)
+    size_t ScriptManager::seekOpcode(Script *script,size_t opIndex)
     {
         script->_setOffset(0);
         for (size_t opnum = 0;opnum < opIndex;++opnum)

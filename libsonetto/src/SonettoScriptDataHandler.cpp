@@ -65,7 +65,7 @@ namespace Sonetto
         OpcodeHandler::unregisterOpcodes();
     }
     //--------------------------------------------------------------------------
-    int ScriptDataHandler::handleOpcode(ScriptPtr script,size_t id,
+    int ScriptDataHandler::handleOpcode(Script *script,size_t id,
             Opcode *opcode)
     {
         // Calls opcode handler methods

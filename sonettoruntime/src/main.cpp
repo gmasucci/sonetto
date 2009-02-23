@@ -64,6 +64,8 @@ int main(int argc,char *argv[])
     } catch(Ogre::FileNotFoundException &e) {
         reportException(("A game file could not be found.\n" +
                 e.getDescription()).c_str());
+    } catch(std::bad_alloc &e) {
+        reportException("Out of system memory.");
     } catch(std::exception &e) {
         reportException(e.what());
     }

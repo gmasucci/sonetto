@@ -449,18 +449,24 @@ namespace GenericMapModule
 
         // - Event Layer serialization
         {
+            std::cout << "\n// - Event Layer serialization\n";
             uint32 eventCount;
-            EventDataMap &eventsData = map->_getEventData();
+            ScriptedEventDataMap &scriptedEventsData =
+                    map->_getScriptedEventData();
 
             mStream->read(&eventCount,sizeof(eventCount));
             std::cout << eventCount << " (eventCount)\n";
             for (size_t i = 0;i < eventCount;++i)
             {
-                uint32 id,pageCount;
+                std::cout << "Event " << i << " ---->\n";
+                Ogre::Vector3 position;
+                Ogre::Quaternion rotation;
+                uint32 id;
+                uint8 eventTypeID;
 
                 mStream->read(&id,sizeof(id));
                 std::cout << id << " (id)\n";
-                if (eventsData.find(id) != eventsData.end())
+                if (scriptedEventsData.find(id) != scriptedEventsData.end())
                 {
                     SONETTO_THROW("Event ID already in use");
                 }
@@ -470,75 +476,166 @@ namespace GenericMapModule
                     SONETTO_THROW("Invalid event ID");
                 }
 
-                EventData &eventData = eventsData[id];
+                mStream->read(&position.x,sizeof(position.x));
+                mStream->read(&position.y,sizeof(position.y));
+                mStream->read(&position.z,sizeof(position.z));
+                std::cout << position << " (position)\n";
 
-                mStream->read(&pageCount,sizeof(pageCount));
-                std::cout << pageCount << " (pageCount)\n";
-                eventData.pages.resize(pageCount);
-                for (size_t j = 0;j < pageCount;++j)
+                mStream->read(&rotation.w,sizeof(rotation.w));
+                mStream->read(&rotation.x,sizeof(rotation.x));
+                mStream->read(&rotation.y,sizeof(rotation.y));
+                mStream->read(&rotation.z,sizeof(rotation.z));
+                std::cout << rotation << " (rotation)\n";
+
+                mStream->read(&eventTypeID,sizeof(eventTypeID));
+                std::cout << (int)eventTypeID << " (eventTypeID)\n";
+                switch (eventTypeID)
                 {
-                    uint32 conditionCount;
-                    uint8 meshSource;
-                    std::string scriptFileName;
-                    EventPage &page = eventData.pages[j];
-
-                    mStream->read(&conditionCount,sizeof(conditionCount));
-                    std::cout << conditionCount << " (conditionCount)\n";
-                    page.conditions.resize(conditionCount);
-                    for (size_t k = 0;k < conditionCount;++k)
+                    case 0: // ScriptedEvent
                     {
-                        Sonetto::VariableCondition &condition =
-                                page.conditions[k];
+                        uint32 pageCount;
 
-                        mStream->read(&condition.scope,sizeof(condition.scope));
-                        std::cout << condition.scope << " (condition.scope)\n";
+                        ScriptedEventData &eventData = scriptedEventsData[id];
 
-                        mStream->read(&condition.variableID,
-                                sizeof(condition.variableID));
-                        std::cout << condition.variableID <<
-                                " (condition.variableID)\n";
+                        eventData.position = position;
+                        eventData.rotation = rotation;
 
-                        mStream->read(&condition.comparator,
-                                sizeof(condition.comparator));
-                        std::cout << condition.comparator <<
-                                " (condition.comparator)\n";
+                        mStream->read(&pageCount,sizeof(pageCount));
+                        std::cout << pageCount << " (pageCount)\n";
+                        eventData.pages.resize(pageCount);
+                        for (size_t j = 0;j < pageCount;++j)
+                        {
+                            uint32 conditionCount;
+                            uint8 triggerCondition,meshSource;
+                            std::string scriptFileName;
+                            ScriptedEventPage &page = eventData.pages[j];
 
-                        mStream->read(&condition.rhsValue._getRawType(),
-                                sizeof(condition.rhsValue._getRawType()));
-                        std::cout << condition.rhsValue.getType() <<
-                                " (condition.rhsValue.getType())\n";
+                            mStream->read(&conditionCount,sizeof(conditionCount));
+                            std::cout << conditionCount << " (conditionCount)\n";
+                            page.conditions.resize(conditionCount);
+                            for (size_t k = 0;k < conditionCount;++k)
+                            {
+                                Sonetto::VariableCondition &condition =
+                                        page.conditions[k];
 
-                        mStream->read(&condition.rhsValue._int,
-                                sizeof(condition.rhsValue._int));
-                        std::cout << condition.rhsValue._int <<
-                                " (condition.rhsValue._int)\n";
+                                mStream->read(&condition.scope,sizeof(condition.scope));
+                                std::cout << condition.scope << " (condition.scope)\n";
+
+                                mStream->read(&condition.variableID,
+                                        sizeof(condition.variableID));
+                                std::cout << condition.variableID <<
+                                        " (condition.variableID)\n";
+
+                                mStream->read(&condition.comparator,
+                                        sizeof(condition.comparator));
+                                std::cout << condition.comparator <<
+                                        " (condition.comparator)\n";
+
+                                mStream->read(&condition.rhsValue._getRawType(),
+                                        sizeof(condition.rhsValue._getRawType()));
+                                std::cout << condition.rhsValue.getType() <<
+                                        " (condition.rhsValue.getType())\n";
+
+                                mStream->read(&condition.rhsValue._int,
+                                        sizeof(condition.rhsValue._int));
+                                std::cout << condition.rhsValue._int <<
+                                        " (condition.rhsValue._int)\n";
+                            }
+
+                            mStream->read(&triggerCondition,sizeof(triggerCondition));
+                            std::cout << (int)triggerCondition << " (triggerCondition)\n";
+                            page.triggerCondition =
+                                    (ScriptedEventPage::TriggerCondition)triggerCondition;
+                            switch (triggerCondition)
+                            {
+                                case ScriptedEventPage::TRG_BUTTON:
+                                {
+                                    uint8 btnState;
+
+                                    mStream->read(&page.button.playerInputID,
+                                            sizeof(page.button.playerInputID));
+                                    std::cout << page.button.playerInputID <<
+                                            " (page.button.playerInputID)\n";
+
+                                    mStream->read(&page.button.btnID,
+                                            sizeof(page.button.btnID));
+                                    std::cout << page.button.btnID <<
+                                            " (page.trigger.button.btnID)\n";
+
+                                    mStream->read(&btnState,sizeof(btnState));
+                                    page.button.btnState =
+                                            (Sonetto::KeyState)btnState;
+                                    std::cout << page.button.btnState <<
+                                            " (page.button.btnState)\n";
+                                    if (btnState != Sonetto::KS_NONE &&
+                                        btnState != Sonetto::KS_PRESS &&
+                                        btnState != Sonetto::KS_RELEASE &&
+                                        btnState != Sonetto::KS_HOLD)
+                                    {
+                                        SONETTO_THROW("Invalid key state used in "
+                                                "event trigger condition");
+                                    }
+                                }
+                                break;
+
+                                case ScriptedEventPage::TRG_EVENT_TOUCH:
+                                    mStream->read(&page.eventTouch.eventID,
+                                            sizeof(page.eventTouch.eventID));
+                                    std::cout << page.eventTouch.eventID <<
+                                            " (page.eventTouch.eventID)\n";
+                                break;
+
+                                case ScriptedEventPage::TRG_AUTORUN:
+                                    mStream->read(&page.autorun.blockEnabled,
+                                            sizeof(page.autorun.blockEnabled));
+                                    std::cout << page.autorun.blockEnabled <<
+                                            " (page.autorun.blockEnabled)\n";
+
+                                    page.autorun.executed = false;
+                                break;
+
+                                case ScriptedEventPage::TRG_PARALLEL_PROCESS:
+                                break;
+
+                                default:
+                                    SONETTO_THROW("Invalid trigger condition type");
+                                break;
+                            }
+
+                            mStream->read(&meshSource,sizeof(meshSource));
+                            std::cout << (int)meshSource << " (meshSource)\n";
+                            page.meshSource = (Event::MeshSource)meshSource;
+                            switch (meshSource)
+                            {
+                                case Event::MES_NONE:
+                                break;
+
+                                case Event::MES_NPC:
+                                case Event::MES_PARTY_MEMBER:
+                                    mStream->read(&page.meshID,sizeof(page.meshID));
+                                    std::cout << page.meshID << " (page.meshID)\n";
+                                break;
+
+                                default:
+                                    SONETTO_THROW("Invalid mesh source");
+                                break;
+                            }
+
+                            scriptFileName = Sonetto::Util::readString(mStream);
+                            std::cout << scriptFileName << " (scriptFileName)\n";
+                            page.scriptFile = Sonetto::ScriptManager::getSingleton().
+                                    load(scriptFileName,"MAP_LOCAL");
+                        }
                     }
+                    break;
 
-                    mStream->read(&meshSource,sizeof(meshSource));
-                    std::cout << meshSource << " (meshSource)\n";
-                    page.meshSource = (EventPage::MeshSource)meshSource;
-                    switch (meshSource)
-                    {
-                        case EventPage::MSS_NONE:
-                        break;
-
-                        case EventPage::MSS_NPC:
-                        case EventPage::MSS_PARTY:
-                            mStream->read(&page.meshID,sizeof(page.meshID));
-                            std::cout << page.meshID << " (page.meshID)\n";
-                        break;
-
-                        default:
-                            SONETTO_THROW("Invalid mesh source");
-                        break;
-                    }
-
-                    scriptFileName = Sonetto::Util::readString(mStream);
-                    std::cout << scriptFileName << " (scriptFileName)\n";
-                    page.scriptFile = Sonetto::ScriptManager::getSingleton().
-                            load(scriptFileName,"MAP_LOCAL");
+                    default:
+                        SONETTO_THROW("Unrecognized event type ID");
+                    break;
                 }
             }
+
+            std::cout << "<----\n";
         }
 
         map->_setResourceSize(mTotalResourceSize);

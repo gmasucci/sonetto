@@ -47,12 +47,11 @@ namespace Sonetto
     {
     public:
         Script(ScriptFilePtr file)
-                : mScriptFile(file), mOffset(0),mLocals(NULL) {}
+                : mScriptFile(file), mOffset(0) {}
 
         virtual ~Script() {}
 
-        virtual inline void setLocals(VariableMap *locals) { mLocals = locals; }
-        virtual inline VariableMap *getLocals() { return mLocals; }
+        virtual inline VariableMap *getLocals() { return NULL; }
 
         virtual inline ScriptFilePtr getScriptFile() { return mScriptFile; }
 
@@ -75,12 +74,10 @@ namespace Sonetto
 
         size_t mOffset;
 
-        VariableMap *mLocals;
-
         VariableStack mVarStack;
     };
 
-    typedef SharedPtr<Script> ScriptPtr;
+    typedef std::vector<Script *> ScriptVector;
 } // namespace Sonetto
 
 #endif

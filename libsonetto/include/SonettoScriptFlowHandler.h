@@ -88,11 +88,11 @@ namespace Sonetto
 
         void registerOpcodes();
         void unregisterOpcodes();
-        int handleOpcode(ScriptPtr script,size_t id,Opcode *opcode);
+        int handleOpcode(Script *script,size_t id,Opcode *opcode);
 
     private:
         int jmp(OpFlowJmp *opcode);
-        int cjmp(ScriptPtr script,OpFlowCJmp *opcode);
+        int cjmp(Script *script,OpFlowCJmp *opcode);
     };
 } // namespace Sonetto
 

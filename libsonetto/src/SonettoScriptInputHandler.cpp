@@ -64,7 +64,7 @@ namespace Sonetto
         scriptMan._unregisterOpcode(OP_GET_PLAYER_ANALOG_VALUE);
     }
     //--------------------------------------------------------------------------
-    int ScriptInputHandler::handleOpcode(ScriptPtr script,size_t id,
+    int ScriptInputHandler::handleOpcode(Script *script,size_t id,
             Opcode *opcode)
     {
         InputManager &inputMan = InputManager::getSingleton();

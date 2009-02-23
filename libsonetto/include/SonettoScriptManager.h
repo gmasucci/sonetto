@@ -101,16 +101,21 @@ namespace Sonetto
                 const Ogre::String &group);
 
         template<class ScriptImpl>
-        inline SharedPtr<ScriptImpl> createScript(
+        inline ScriptImpl *createScript(
             const std::string &scriptName,const std::string &groupName)
         {
-            // <todo> Do not use SharedPtr here; let the creator destroy
-            // the object when done
-            return SharedPtr<ScriptImpl>(
-                    new ScriptImpl(load(scriptName,groupName)));
+            ScriptImpl *script = new ScriptImpl(load(scriptName,groupName));
+            mScripts.push_back(script);
+            return script;
         }
 
-        void updateScript(ScriptPtr script);
+        inline void destroyScript(Sonetto::Script *script)
+        {
+            mScripts.erase(std::find(mScripts.begin(),mScripts.end(),script));
+            delete script;
+        }
+
+        bool updateScript(Script *script);
 
         void _registerOpcode(size_t id,const Opcode *opcode);
         void _unregisterOpcode(size_t id);
@@ -124,17 +129,19 @@ namespace Sonetto
             return new ScriptFile(this,name,handle,group,isManual,loader);
         }
 
-        void readScriptData(ScriptPtr script,void *dest,
+        void readScriptData(Script *script,void *dest,
                 size_t bytes,bool updateCursor);
 
-        Opcode *readOpcode(ScriptPtr script,size_t &id,
+        Opcode *readOpcode(Script *script,size_t &id,
                 size_t &bytesRead);
 
-        size_t seekOpcode(ScriptPtr script,size_t opIndex);
+        size_t seekOpcode(Script *script,size_t opIndex);
 
         OpcodeTable mOpcodeTable;
 
         ScriptFlowHandler mFlowHandler;
+
+        ScriptVector mScripts;
     };
 } // namespace Sonetto
 

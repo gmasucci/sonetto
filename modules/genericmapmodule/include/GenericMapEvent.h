@@ -27,36 +27,60 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef GENERICMAPMODULE_PREREQUISITES_H
-#define GENERICMAPMODULE_PREREQUISITES_H
+#ifndef GENERICMAPMODULE_EVENT_H
+#define GENERICMAPMODULE_EVENT_H
 
-#define MODULE_API
-
-#include <SonettoPrerequisites.h>
+#include <OgreEntity.h>
+#include <SonettoVariable.h>
+#include "GenericMapPrerequisites.h"
 
 namespace GenericMapModule
 {
-    // Important fixed-length data types took from Sonetto Core
-    using Sonetto::int8;
-    using Sonetto::uint8;
-    using Sonetto::int16;
-    using Sonetto::uint16;
-    using Sonetto::int32;
-    using Sonetto::uint32;
+    class Event
+    {
+    public:
+        enum MeshSource
+        {
+            MES_NONE = 0,
+            MES_NPC,
+            MES_PARTY_MEMBER
+        };
 
-    // Forward declarations
-    class MapModule;
-    class Map;
-    class MapSerializer;
-    class MapManager;
-    class SkyEntityData;
-    class Walkmesh;
-    class BillboardSetData;
-    class BillboardData;
-    class Event;
-    class ScriptedEvent;
-    class ScriptedEventPage;
-    class EventScript;
+        Event(uint32 id,const Ogre::Vector3 &position = Ogre::Vector3::ZERO,
+            const Ogre::Quaternion &rotation = Ogre::Quaternion::IDENTITY);
+
+        virtual ~Event();
+
+        virtual inline uint32 getID() const { return mID; }
+
+        virtual inline Sonetto::VariableMap &getLocals() { return mLocals; }
+
+        virtual void update() = 0;
+
+        virtual inline Ogre::SceneNode *getSceneNode() const
+                { return mSceneNode; }
+
+        virtual inline Ogre::Entity *getEntity() const { return mEntity; }
+
+        virtual inline bool getBlockEnabled() { return mBlockEnabled; }
+
+    protected:
+        virtual void setEntityMesh(MeshSource source,uint32 id);
+
+        uint32 mID;
+
+        Sonetto::VariableMap mLocals;
+
+        Ogre::SceneNode *mSceneNode;
+        Ogre::Entity *mEntity;
+
+        MeshSource mCurMeshSource;
+        uint32 mCurMeshID;
+
+        bool mBlockEnabled;
+    };
+
+    typedef std::map<uint32,Event *> EventMap;
 } // namespace
 
 #endif
