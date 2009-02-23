@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef GENERICMAPMODULE_MODULE_H
 #define GENERICMAPMODULE_MODULE_H
 
+#include <SonettoMapModule.h>
 #include "GenericMapPrerequisites.h"
 
 // Forward declarations
@@ -40,8 +41,8 @@ namespace GenericMapModule
     typedef std::map<uint32,Ogre::Billboard *> BillboardMap;
 }
 
-#include <SonettoMapModule.h>
 #include "GenericMap.h"
+#include "GenericMapEvent.h"
 
 namespace GenericMapModule
 {
@@ -65,6 +66,9 @@ namespace GenericMapModule
         Ogre::BillboardSet *getBillboardSet(uint32 id)
                 { return mBillboardSets[id]; }
 
+        EventMap &getEvents() { return mEvents; }
+        Event *getEvent(uint32 id) { return mEvents[id]; }
+
     private:
         void createScene();
 
@@ -78,6 +82,8 @@ namespace GenericMapModule
 
         BillboardSetMap mBillboardSets;
         BillboardMap mBillboards;
+
+        EventMap mEvents;
     };
 } // namespace
 

@@ -27,36 +27,61 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef GENERICMAPMODULE_PREREQUISITES_H
-#define GENERICMAPMODULE_PREREQUISITES_H
+#ifndef GENERICMAPMODULE_SCRIPTEDEVENTPAGE_H
+#define GENERICMAPMODULE_SCRIPTEDEVENTPAGE_H
 
-#define MODULE_API
-
-#include <SonettoPrerequisites.h>
+#include <vector>
+#include <SonettoVariable.h>
+#include <SonettoScriptFile.h>
+#include <SonettoPlayerInput.h>
+#include "GenericMapPrerequisites.h"
+#include "GenericMapEvent.h"
 
 namespace GenericMapModule
 {
-    // Important fixed-length data types took from Sonetto Core
-    using Sonetto::int8;
-    using Sonetto::uint8;
-    using Sonetto::int16;
-    using Sonetto::uint16;
-    using Sonetto::int32;
-    using Sonetto::uint32;
+    struct ScriptedEventPage
+    {
+        enum TriggerCondition
+        {
+            TRG_BUTTON,
+            TRG_EVENT_TOUCH,
+            TRG_AUTORUN,
+            TRG_PARALLEL_PROCESS
+        };
 
-    // Forward declarations
-    class MapModule;
-    class Map;
-    class MapSerializer;
-    class MapManager;
-    class SkyEntityData;
-    class Walkmesh;
-    class BillboardSetData;
-    class BillboardData;
-    class Event;
-    class ScriptedEvent;
-    class ScriptedEventPage;
-    class EventScript;
+        ScriptedEventPage() {}
+
+        Sonetto::VariableConditionVector conditions;
+
+        TriggerCondition triggerCondition;
+        union
+        {
+            struct
+            {
+                uint32 playerInputID;
+                uint32 btnID;
+                Sonetto::KeyState btnState;
+            } button;
+
+            struct
+            {
+                uint32 eventID;
+            } eventTouch;
+
+            struct
+            {
+                bool blockEnabled;
+                bool executed;
+            } autorun;
+        };
+
+        Event::MeshSource meshSource;
+        uint32 meshID;
+
+        Sonetto::ScriptFilePtr scriptFile;
+    };
+
+    typedef std::vector<ScriptedEventPage> ScriptedEventPageVector;
 } // namespace
 
 #endif

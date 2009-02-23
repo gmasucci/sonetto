@@ -27,66 +27,30 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef GENERICMAPMODULE_EVENTPAGE_H
-#define GENERICMAPMODULE_EVENTPAGE_H
+#ifndef GENERICMAPMODULE_EVENTSCRIPT_H
+#define GENERICMAPMODULE_EVENTSCRIPT_H
 
-#include <vector>
-#include <SonettoVariable.h>
 #include <SonettoScriptFile.h>
-#include <SonettoPlayerInput.h>
+#include <SonettoScript.h>
 #include "GenericMapPrerequisites.h"
 
 namespace GenericMapModule
 {
-    struct EventPage
+    class EventScript : public Sonetto::Script
     {
-        enum TriggerCondition
-        {
-            TRG_BUTTON,
-            TRG_EVENT_TOUCH,
-            TRG_AUTORUN,
-            TRG_PARALLEL_PROCESS
-        };
+    public:
+        EventScript(Sonetto::ScriptFilePtr file) : Sonetto::Script(file) {}
+        virtual ~EventScript() {}
 
-        enum MeshSource
-        {
-            MSS_NONE,
-            MSS_NPC,
-            MSS_PARTY
-        };
+        virtual inline Sonetto::VariableMap *getLocals() const
+                { return &mOwner->getLocals(); }
 
-        EventPage() {}
+        virtual inline void setOwner(Event *owner) { mOwner = owner; }
+        virtual inline Event *getOwner() const { return mOwner; }
 
-        Sonetto::VariableConditionVector conditions;
-
-        TriggerCondition triggerCondition;
-        union trigger
-        {
-            struct button
-            {
-                uint32 playerInputID;
-                uint32 btnID;
-                Sonetto::KeyState btnState;
-            };
-
-            struct eventTouch
-            {
-                uint32 eventID;
-            };
-
-            struct autorun
-            {
-                bool blockEnabled;
-            };
-        };
-
-        MeshSource meshSource;
-        uint32 meshID;
-
-        Sonetto::ScriptFilePtr scriptFile;
+    protected:
+        Event *mOwner;
     };
-
-    typedef std::vector<EventPage> EventPageVector;
 } // namespace
 
 #endif

@@ -60,7 +60,7 @@ namespace Sonetto
 
         void registerOpcodes();
         void unregisterOpcodes();
-        int handleOpcode(ScriptPtr script,size_t id,Opcode *opcode);
+        int handleOpcode(Script *script,size_t id,Opcode *opcode);
     };
 } // namespace
 

@@ -42,7 +42,7 @@ namespace Sonetto
         OpcodeHandler() : mRegistered(false) {}
         virtual ~OpcodeHandler();
 
-        virtual int handleOpcode(ScriptPtr script,
+        virtual int handleOpcode(Script *script,
             size_t id,Opcode *opcode) = 0;
 
         virtual void registerOpcodes() { mRegistered = true; }

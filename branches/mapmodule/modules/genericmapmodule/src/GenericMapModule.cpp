@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <OgreResourceGroupManager.h>
 #include "GenericMapManager.h"
 #include "GenericMapModule.h"
+#include "GenericMapScriptedEvent.h"
 
 namespace GenericMapModule
 {
@@ -187,6 +188,22 @@ namespace GenericMapModule
 
                 mBillboards[id] = billboard;
             }
+        }
+
+        // Create scripted events
+        const ScriptedEventDataMap &scriptedEventsData =
+                mCurrentMap->getScriptedEventData();
+
+        ScriptedEventDataMap::const_iterator i;
+        for (i = scriptedEventsData.begin();i != scriptedEventsData.end();++i)
+        {
+            const ScriptedEventData &eventData = i->second;
+            ScriptedEvent *evt = new ScriptedEvent(i->first,
+                    eventData.position,eventData.rotation);
+
+            // Copy pages from eventData
+            ScriptedEventPageVector &pages = evt->_getPages();
+            pages = eventData.pages;
         }
     }
 } // namespace

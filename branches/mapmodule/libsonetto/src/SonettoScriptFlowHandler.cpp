@@ -86,7 +86,7 @@ namespace Sonetto
         scriptMan._unregisterOpcode(OP_CJMP);
     }
     //--------------------------------------------------------------------------
-    int ScriptFlowHandler::handleOpcode(ScriptPtr script,size_t id,Opcode *opcode)
+    int ScriptFlowHandler::handleOpcode(Script *script,size_t id,Opcode *opcode)
     {
         // Calls opcode handler methods
         switch (id)
@@ -115,7 +115,7 @@ namespace Sonetto
         return opcode->address;
     }
     //--------------------------------------------------------------------------
-    int ScriptFlowHandler::cjmp(ScriptPtr script,OpFlowCJmp *opcode)
+    int ScriptFlowHandler::cjmp(Script *script,OpFlowCJmp *opcode)
     {
         assert(opcode);
 

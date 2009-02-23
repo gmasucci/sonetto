@@ -27,36 +27,55 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
-#ifndef GENERICMAPMODULE_PREREQUISITES_H
-#define GENERICMAPMODULE_PREREQUISITES_H
+#ifndef GENERICMAPMODULE_SCRIPTEDEVENT_H
+#define GENERICMAPMODULE_SCRIPTEDEVENT_H
 
-#define MODULE_API
-
-#include <SonettoPrerequisites.h>
+#include "GenericMapPrerequisites.h"
+#include "GenericMapEvent.h"
+#include "GenericMapScriptedEventPage.h"
 
 namespace GenericMapModule
 {
-    // Important fixed-length data types took from Sonetto Core
-    using Sonetto::int8;
-    using Sonetto::uint8;
-    using Sonetto::int16;
-    using Sonetto::uint16;
-    using Sonetto::int32;
-    using Sonetto::uint32;
+    class ScriptedEvent : public Event
+    {
+    public:
+        ScriptedEvent(size_t id,
+                const Ogre::Vector3 &position = Ogre::Vector3::ZERO,
+                const Ogre::Quaternion &rotation = Ogre::Quaternion::IDENTITY)
+                : Event(id,position,rotation),mCurPage(NULL) {}
 
-    // Forward declarations
-    class MapModule;
-    class Map;
-    class MapSerializer;
-    class MapManager;
-    class SkyEntityData;
-    class Walkmesh;
-    class BillboardSetData;
-    class BillboardData;
-    class Event;
-    class ScriptedEvent;
-    class ScriptedEventPage;
-    class EventScript;
+        virtual ~ScriptedEvent() {}
+
+        virtual ScriptedEventPageVector &_getPages() { return mPages; }
+        virtual inline const ScriptedEventPage *getCurrentPage() const
+                { return mCurPage; }
+
+        virtual void update();
+
+        virtual inline ScriptedEventPage *getCurrentPage()
+        {
+            updatePage();
+            return mCurPage;
+        }
+
+        virtual bool getBlockEnabled();
+
+    protected:
+        ScriptedEventPage *selectPage();
+        void setPage(ScriptedEventPage *page);
+        void updatePage();
+
+        void setCurrentScript(Sonetto::ScriptFilePtr scriptFile);
+
+        Sonetto::VariableMap mLocals;
+
+        ScriptedEventPageVector mPages;
+        ScriptedEventPage *mCurPage;
+
+        MeshSource mCurMeshSource;
+
+        EventScript *mCurScript;
+    };
 } // namespace
 
 #endif

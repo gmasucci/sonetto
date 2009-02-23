@@ -114,7 +114,7 @@ namespace Sonetto
         scriptMan._unregisterOpcode(OP_PLAY_SOUND);
     }
     //--------------------------------------------------------------------------
-    int ScriptAudioHandler::handleOpcode(ScriptPtr script,size_t id,
+    int ScriptAudioHandler::handleOpcode(Script *script,size_t id,
             Opcode *opcode)
     {
         Database &database = Database::getSingleton();
