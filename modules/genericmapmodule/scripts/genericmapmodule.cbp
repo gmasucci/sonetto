@@ -104,16 +104,21 @@
 		<Unit filename="..\include\GenericMap.h" />
 		<Unit filename="..\include\GenericMapBillboardData.h" />
 		<Unit filename="..\include\GenericMapBillboardSetData.h" />
-		<Unit filename="..\include\GenericMapEventPage.h" />
+		<Unit filename="..\include\GenericMapEvent.h" />
+		<Unit filename="..\include\GenericMapEventScript.h" />
 		<Unit filename="..\include\GenericMapManager.h" />
 		<Unit filename="..\include\GenericMapModule.h" />
 		<Unit filename="..\include\GenericMapPrerequisites.h" />
+		<Unit filename="..\include\GenericMapScriptedEvent.h" />
+		<Unit filename="..\include\GenericMapScriptedEventPage.h" />
 		<Unit filename="..\include\GenericMapSerializer.h" />
 		<Unit filename="..\include\GenericMapSkyEntityData.h" />
 		<Unit filename="..\include\GenericMapWalkmesh.h" />
 		<Unit filename="..\src\GenericMap.cpp" />
+		<Unit filename="..\src\GenericMapEvent.cpp" />
 		<Unit filename="..\src\GenericMapManager.cpp" />
 		<Unit filename="..\src\GenericMapModule.cpp" />
+		<Unit filename="..\src\GenericMapScriptedEvent.cpp" />
 		<Unit filename="..\src\GenericMapSerializer.cpp" />
 		<Extensions>
 			<code_completion />
