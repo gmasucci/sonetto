@@ -30,11 +30,12 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef SONETTO_MATH_H
 #define SONETTO_MATH_H
 
+#include <OgreVector3.h>
 #include "SonettoPrerequisites.h"
 
 namespace Sonetto
 {
-	class Math
+	class SONETTO_API Math
 	{
 	public:
 		Math() {}
@@ -62,6 +63,13 @@ namespace Sonetto
         }
 
         static float frand(float from,float to);
+
+        static float sideOfVector(const Ogre::Vector3 &point,
+            const Ogre::Vector3 &p1,const Ogre::Vector3 &p2);
+
+        static float pointElevation(const Ogre::Vector3 &point,
+            const Ogre::Vector3 &A,const Ogre::Vector3 &B,
+            const Ogre::Vector3 &C);
 	};
 } // namespace
 

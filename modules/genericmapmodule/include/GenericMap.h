@@ -46,6 +46,9 @@ namespace GenericMapModule
     {
         Ogre::Vector3 position;
         Ogre::Quaternion rotation;
+        uint32 triangleID;
+        float height;
+        float radius;
         ScriptedEventPageVector pages;
     };
 

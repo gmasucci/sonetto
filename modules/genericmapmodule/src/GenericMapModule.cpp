@@ -111,6 +111,9 @@ namespace GenericMapModule
         // Shows map's static geometry
         mCurrentMap->getStaticGeometry()->setVisible(true);
 
+        // Sets WalkmeshSubManager walkmesh
+        mWalkmeshMan.setWalkmesh(&mCurrentMap->getWalkmesh());
+
         // Creates sky entities
         const SkyEntityDataMap &skyEntitiesMap =
                 mCurrentMap->getSkyEntitiesData();
@@ -201,9 +204,27 @@ namespace GenericMapModule
             ScriptedEvent *evt = new ScriptedEvent(i->first,
                     eventData.position,eventData.rotation);
 
+            evt->setCurrentTriangle(eventData.triangleID);
+            evt->setHeight(eventData.height);
+            evt->setRadius(eventData.radius);
+
             // Copy pages from eventData
             ScriptedEventPageVector &pages = evt->_getPages();
             pages = eventData.pages;
+
+            // Registers with WalkmeshSubManager
+            mWalkmeshMan.registerEvent(evt);
+
+            if (eventData.triangleID == 0) {
+                mWalkmeshMan.setEventPosition(evt,eventData.position);
+            } else {
+                if (!mWalkmeshMan.isEventOverTriangle(evt,
+                        eventData.triangleID))
+                {
+                    SONETTO_THROW("Event is not over the triangle ID "
+                            "it specifies");
+                }
+            }
         }
     }
 } // namespace

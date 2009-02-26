@@ -65,4 +65,25 @@ namespace Sonetto
         uint32 max = (RAND_MAX << 4) | RAND_MAX;
         return from + ( ((float)val / (float)max) * (to - from) );
     }
+    //--------------------------------------------------------------------------
+    float Math::sideOfVector(const Ogre::Vector3 &point,
+            const Ogre::Vector3 &p1,const Ogre::Vector3 &p2)
+    {
+        Ogre::Vector3 AB = p2 - p1;
+        Ogre::Vector3 AP = point - p1;
+        return AB.x * AP.z - AB.z * AP.x;
+    }
+    //--------------------------------------------------------------------------
+    float Math::pointElevation(const Ogre::Vector3 &point,
+            const Ogre::Vector3 &A,const Ogre::Vector3 &B,
+            const Ogre::Vector3 &C)
+    {
+        float _A = A.y * (B.z - C.z) + B.y * (C.z - A.z) + C.y * (A.z - B.z);
+        float _B = A.z * (B.x - C.x) + B.z * (C.x - A.x) + C.z * (A.x - B.x);
+        float _C = A.x * (B.y - C.y) + B.x * (C.y - A.y) + C.x * (A.y - B.y);
+        float _D = A.x * (B.y * C.z - C.y * B.z) + B.x *
+                (C.y * A.z - A.y * C.z) + C.x * (A.y * B.z - B.y * A.z);
+
+        return (_D - _C * point.z - _A * point.x) / _B;
+    }
 }

@@ -461,7 +461,8 @@ namespace GenericMapModule
                 std::cout << "Event " << i << " ---->\n";
                 Ogre::Vector3 position;
                 Ogre::Quaternion rotation;
-                uint32 id;
+                uint32 id,triangleID;
+                float height,radius;
                 uint8 eventTypeID;
 
                 mStream->read(&id,sizeof(id));
@@ -487,6 +488,15 @@ namespace GenericMapModule
                 mStream->read(&rotation.z,sizeof(rotation.z));
                 std::cout << rotation << " (rotation)\n";
 
+                mStream->read(&triangleID,sizeof(triangleID));
+                std::cout << triangleID << " (triangleID)\n";
+
+                mStream->read(&height,sizeof(height));
+                std::cout << height << " (height)\n";
+
+                mStream->read(&radius,sizeof(radius));
+                std::cout << radius << " (radius)\n";
+
                 mStream->read(&eventTypeID,sizeof(eventTypeID));
                 std::cout << (int)eventTypeID << " (eventTypeID)\n";
                 switch (eventTypeID)
@@ -499,6 +509,9 @@ namespace GenericMapModule
 
                         eventData.position = position;
                         eventData.rotation = rotation;
+                        eventData.triangleID = triangleID;
+                        eventData.height = height;
+                        eventData.radius = radius;
 
                         mStream->read(&pageCount,sizeof(pageCount));
                         std::cout << pageCount << " (pageCount)\n";
@@ -601,6 +614,9 @@ namespace GenericMapModule
                                     SONETTO_THROW("Invalid trigger condition type");
                                 break;
                             }
+
+                            mStream->read(&page.walkSpeed,sizeof(page.walkSpeed));
+                            std::cout << page.walkSpeed << " (page.walkSpeed)\n";
 
                             mStream->read(&meshSource,sizeof(meshSource));
                             std::cout << (int)meshSource << " (meshSource)\n";

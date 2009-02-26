@@ -43,6 +43,7 @@ namespace GenericMapModule
 
 #include "GenericMap.h"
 #include "GenericMapEvent.h"
+#include "GenericMapWalkmeshSubManager.h"
 
 namespace GenericMapModule
 {
@@ -83,6 +84,7 @@ namespace GenericMapModule
         BillboardSetMap mBillboardSets;
         BillboardMap mBillboards;
 
+        WalkmeshSubManager mWalkmeshMan;
         EventMap mEvents;
     };
 } // namespace

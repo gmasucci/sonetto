@@ -55,6 +55,31 @@ namespace GenericMapModule
         Walkmesh() {}
         ~Walkmesh() {}
 
+        inline const Ogre::Vector3 &getTriangleVertex(uint32 triID,
+                size_t vertexIndex) const
+        {
+            assert(triID != 0);
+            return triangles[triID - 1].vertices[vertexIndex];
+        }
+
+        inline uint32 getEdgeLink(uint32 triID,size_t edgeIndex) const
+        {
+            assert(triID != 0);
+            return triangles[triID - 1].edgeLinks[edgeIndex];
+        }
+
+        inline uint32 getGroundType(uint32 triID) const
+        {
+            assert(triID != 0);
+            return triangles[triID - 1].groundType;
+        }
+
+        inline uint32 getBattleBackground(uint32 triID) const
+        {
+            assert(triID != 0);
+            return triangles[triID - 1].battleBackground;
+        }
+
         TriangleVector triangles;
     };
 } // namespace

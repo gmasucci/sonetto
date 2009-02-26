@@ -40,7 +40,8 @@ namespace GenericMapModule
     // ----------------------------------------------------------------------
     Event::Event(uint32 id,const Ogre::Vector3 &position,
             const Ogre::Quaternion &rotation) :
-            mID(id),mEntity(NULL),mBlockEnabled(false)
+            mID(id),mEntity(NULL),mBlockEnabled(false),mWalkSpeed(1.0f),
+            mHeight(4.0f),mRadius(0.5f)
     {
         Ogre::SceneManager *sceneMan = Sonetto::Kernel::getSingleton().
                 getActiveModule()->getSceneMan();
