@@ -30,6 +30,8 @@ POSSIBILITY OF SUCH DAMAGE.
 #ifndef GENERICMAPMODULE_EVENT_H
 #define GENERICMAPMODULE_EVENT_H
 
+#include <map>
+#include <vector>
 #include <OgreEntity.h>
 #include <SonettoVariable.h>
 #include "GenericMapPrerequisites.h"
@@ -64,6 +66,19 @@ namespace GenericMapModule
 
         virtual inline bool getBlockEnabled() { return mBlockEnabled; }
 
+        virtual inline void setCurrentTriangle(uint32 id) { mCurTriangle = id; }
+        virtual inline uint32 getCurrentTriangle() const
+                { return mCurTriangle; }
+
+        virtual inline void setWalkSpeed(float speed) { mWalkSpeed = speed; }
+        virtual inline float getWalkSpeed() const { return mWalkSpeed; }
+
+        virtual inline void setHeight(float height) { mHeight = height; }
+        virtual inline float getHeight() const { return mHeight; }
+
+        virtual inline void setRadius(float radius) { mRadius = radius; }
+        virtual inline float getRadius() const { return mRadius; }
+
     protected:
         virtual void setEntityMesh(MeshSource source,uint32 id);
 
@@ -78,9 +93,18 @@ namespace GenericMapModule
         uint32 mCurMeshID;
 
         bool mBlockEnabled;
+
+        uint32 mCurTriangle;
+
+        float mWalkSpeed;
+
+        // <todo> Make possible to use other types of collision checking
+        float mHeight;
+        float mRadius;
     };
 
     typedef std::map<uint32,Event *> EventMap;
+    typedef std::vector<Event *> EventVector;
 } // namespace
 
 #endif

@@ -39,8 +39,6 @@ namespace GenericMapModule
     // ----------------------------------------------------------------------
     void ScriptedEvent::update()
     {
-        Ogre::SceneManager *sceneMan = Sonetto::Kernel::getSingleton().
-                getActiveModule()->getSceneMan();
         Sonetto::ScriptManager *scriptMan =
                 Sonetto::ScriptManager::getSingletonPtr();
 
@@ -184,11 +182,6 @@ namespace GenericMapModule
     // ----------------------------------------------------------------------
     void ScriptedEvent::setPage(ScriptedEventPage *page)
     {
-        Ogre::SceneManager *sceneMan = Sonetto::Kernel::getSingleton().
-                getActiveModule()->getSceneMan();
-        Sonetto::ScriptManager *scriptMan =
-                Sonetto::ScriptManager::getSingletonPtr();
-
         // Sets current page pointer
         mCurPage = page;
 
@@ -198,6 +191,9 @@ namespace GenericMapModule
 
             // Updates script
             setCurrentScript(page->scriptFile);
+
+            // Updates walk speed
+            mWalkSpeed = page->walkSpeed;
         } else { // If page is NULL, clears event
             mCurPage = NULL;
 
@@ -206,6 +202,9 @@ namespace GenericMapModule
 
             // Destroys script
             setCurrentScript(Sonetto::ScriptFilePtr());
+
+            // Resets walk speed
+            mWalkSpeed = 1.0f;
         }
     }
     // ----------------------------------------------------------------------

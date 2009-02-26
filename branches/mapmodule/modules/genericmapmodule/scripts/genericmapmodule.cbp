@@ -114,12 +114,14 @@
 		<Unit filename="..\include\GenericMapSerializer.h" />
 		<Unit filename="..\include\GenericMapSkyEntityData.h" />
 		<Unit filename="..\include\GenericMapWalkmesh.h" />
+		<Unit filename="..\include\GenericMapWalkmeshSubManager.h" />
 		<Unit filename="..\src\GenericMap.cpp" />
 		<Unit filename="..\src\GenericMapEvent.cpp" />
 		<Unit filename="..\src\GenericMapManager.cpp" />
 		<Unit filename="..\src\GenericMapModule.cpp" />
 		<Unit filename="..\src\GenericMapScriptedEvent.cpp" />
 		<Unit filename="..\src\GenericMapSerializer.cpp" />
+		<Unit filename="..\src\GenericMapWalkmeshSubManager.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

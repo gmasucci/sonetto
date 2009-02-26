@@ -75,6 +75,8 @@ namespace GenericMapModule
             } autorun;
         };
 
+        float walkSpeed;
+
         Event::MeshSource meshSource;
         uint32 meshID;
 
