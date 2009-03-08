@@ -33,11 +33,58 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <OgreSerializer.h>
 #include "SonettoPrerequisites.h"
 
-namespace SONETTO_API Sonetto
+namespace Sonetto
 {
+    struct MaterialPass
+    {
+        // Material Flags:
+        // 0x1: Use Separate Blending
+        // 0x2: Use Alpha to Coverage (Alpha Rejection)
+        // 0x4,   0x8,   0x10,  0x20,  0x40,   0x80: Unused
+        // 0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000: Unused
+        uint32 flags0;
+        uint32 sceneBlendSource;
+        uint32 sceneBlendDest;
+        uint32 sceneBlendAlphaSource;
+        uint32 sceneBlendAlphaDest;
+        uint32 alphaRejectFunction;
+        uint32 alphaRejectValue;
+        uint32 numTextureUnit; // Number of Texture Units in this material
+    };
+    struct MaterialTextureUnit
+    {
+        uint32 textureType; // Texture Type
+        uint32 configFlags; // 0x1 Is Alpha, 0x2 Use Extended Color Operation
+        uint32 textureCoordSet; // Set the texcoord id
+        // Color Opration
+        uint32 colorOperation;
+        uint32 colorOperationEx;
+        uint32 colorOpExSrc1;
+        uint32 colorOpExSrc2;
+        float colorOpColorArgR1;
+        float colorOpColorArgG1;
+        float colorOpColorArgB1;
+        float colorOpColorArgA1;
+        float colorOpColorArgR2;
+        float colorOpColorArgG2;
+        float colorOpColorArgB2;
+        float colorOpColorArgA2;
+        float colorOpManualBlend;
+        // Alpha Operation
+        uint32 alphaOperationEx;
+        uint32 alphaOpExSrc1;
+        uint32 alphaOpExSrc2;
+        float alphaOpAlphaArg1;
+        float alphaOpAlphaArg2;
+        float alphaOpManualBlend;
+        // Texture Filtering Options
+        uint32 textureFilteringMin;
+        uint32 textureFilteringMag;
+    };
+
     class WindowSkin;
 
-	class WindowSkinSerializer : Ogre::Serializer
+	class SONETTO_API WindowSkinSerializer : Ogre::Serializer
 	{
 	public:
 		WindowSkinSerializer() {}

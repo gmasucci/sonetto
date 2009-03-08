@@ -27,12 +27,16 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 -----------------------------------------------------------------------------*/
 
+#include <OgreResourceGroupManager.h>
+#include <OgreMaterial.h>
+
+#include "SonettoWindowSkinSerializer.h"
 #include "SonettoWindowSkin.h"
 
 namespace Sonetto
 {
     // ----------------------------------------------------------------------
-    uint32 Font::mFourCC = MKFOURCC('S','W','N','0');
+    uint32 WindowSkin::mFourCC = MKFOURCC('S','W','N','0');
     // ----------------------------------------------------------------------
     WindowSkin::WindowSkin( Ogre::ResourceManager *creator, const Ogre::String &name,
                 Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual,
@@ -43,7 +47,7 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     WindowSkin::~WindowSkin()
     {
-        unload()
+        unload();
     }
     // ----------------------------------------------------------------------
     void WindowSkin::loadImpl()

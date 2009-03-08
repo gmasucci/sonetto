@@ -117,7 +117,7 @@ namespace Sonetto
                   mScreenWidth(640),mScreenHeight(480),
                   mIsFullScreen(false),
                   mInitialized(false),
-                  mAspectRatio(640.0f/480.0f) {}
+                  mAspectRatio(1280.0f/720.0f) {}
 
         /** Destructor
 
@@ -128,6 +128,11 @@ namespace Sonetto
             Kernel::initialize()
         */
         ~Kernel();
+
+        float getFrameTime()
+        {
+            return mFrameTime;
+        }
 
         /** Overrides standard Singleton retrieval
 

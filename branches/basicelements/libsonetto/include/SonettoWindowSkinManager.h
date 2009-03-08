@@ -32,6 +32,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include <OgreResourceManager.h>
 #include "SonettoPrerequisites.h"
+#include "SonettoWindowSkin.h"
 
 namespace Sonetto
 {
@@ -48,8 +49,8 @@ namespace Sonetto
 
 		virtual WindowSkinPtr load(const Ogre::String &name, const Ogre::String &group);
 
-        static WindowSkin &getSingleton();
-        static WindowSkin *getSingletonPtr();
+        static WindowSkinManager &getSingleton();
+        static WindowSkinManager *getSingletonPtr();
 
 	};
 }
