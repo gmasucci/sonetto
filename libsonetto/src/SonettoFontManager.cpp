@@ -47,7 +47,7 @@ namespace Sonetto
     // ----------------------------------------------------------------------
     FontManager::FontManager()
     {
-        mResourceType = "WindowSkin";
+        mResourceType = "SFont";
 
         // low, because it will likely reference other resources
         mLoadOrder = 30.0f;

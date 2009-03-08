@@ -31,5 +31,14 @@ POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sonetto
 {
+    // ----------------------------------------------------------------------
+    void WindowSkinSerializer::exportWindowSkin(const WindowSkin *pWindowSkin, const Ogre::String &fileName)
+    {
+    }
+    // ----------------------------------------------------------------------
+    void WindowSkinSerializer::importWindowSkin(Ogre::DataStreamPtr &stream, WindowSkin *pDest)
+    {
+    }
+    // ----------------------------------------------------------------------
 
 } // namespace

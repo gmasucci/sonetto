@@ -51,6 +51,9 @@ namespace BootModule
 
     private:
         Sonetto::StaticTextElement *mDebugText;
+        Sonetto::StaticTextElement *mAxisInfoText;
+        Ogre::Entity * mpEntity;
+        Ogre::SceneNode * mpEntityNode;
     };
 
     // Temporary ----------------------------------------------------

@@ -3,7 +3,7 @@
 	<Workspace title="Sonetto Workspace">
 		<Project filename="libsonetto\scripts\libsonetto.cbp" />
 		<Project filename="sonettoruntime\scripts\sonettoruntime.cbp" active="1">
-			<Depends filename="libsonetto\scripts\libsonetto.cbp" />
+			<Depends filename="modules\genericbootmodule\scripts\genericbootmodule.cbp" />
 		</Project>
 		<Project filename="modules\genericbootmodule\scripts\genericbootmodule.cbp" />
 	</Workspace>

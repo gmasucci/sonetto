@@ -35,59 +35,87 @@ POSSIBILITY OF SUCH DAMAGE.
 
 namespace Sonetto
 {
-    struct TexCoordSet
+    struct TileCoord
     {
-        // Material ID
-        uint8 matID;
+        float topLeftX;
+        float topLeftY;
+        float topRightX;
+        float topRightY;
+        float bottomLeftX;
+        float bottomLeftY;
+        float bottomRightX;
+        float bottomRightY;
+    };
 
-        uint8 matNumTexCoords; // Max 8 TexCoords
+    struct WindowGeneral
+    {
+        // Cursor
+        // 0x01: Use cursor horizontal animation
+        // 0x02: Use cursor vertical animation
+        // 0x04: Invert horizontal animation
+        // 0x08: Invert hertical animation
+        // 0x10: Use cursor trail (ToDo)
+        uint32 cursorFlags;
+        uint32 cursorMatId;
+        TileCoord cursorCoords;
+        float cursorColorR;
+        float cursorColorG;
+        float cursorColorB;
+        float cursorColorA;
+        float cursorAnimationSpeedX;
+        float cursorAnimationSpeedY;
+        float cursorAnimationAmplitudeX;
+        float cursorAnimationAmplitudeY;
+        uint32 cursorTrailNumIterations;
+        uint32 cursorTrailMaterial;
+        float cursorTrailSpeed;
+    };
 
-        // TextCoordType: 0 - Don't Use, 1 - Use Border Coords, 2 - Use Strech, 3 - Use Tiling
-        uint8 matTexCoordType0;
-        uint8 matTexCoordType1;
-        uint8 matTexCoordType2;
-        uint8 matTexCoordType3;
+    struct WindowStyle
+    {
+        uint32 flags0;          // 0x1: Have Border
 
-        // Tiling, only used if TextCoordType is 2 or 3
-        float matTextCoordTilingX0;
-        float matTextCoordTilingY0;
-        float matTextCoordTilingX1;
-        float matTextCoordTilingY1;
-        float matTextCoordTilingX2;
-        float matTextCoordTilingY2;
-        float matTextCoordTilingX3;
-        float matTextCoordTilingY3;
+        uint32 flags1;          // Reserved
 
-        float borderTopSize;
-        float borderLeftSize;
-        float borderRightSize;
-        float borderBottomSize;
-        float tailSizeX;
-        float tailSizeY;
-        float slimHeight;
-        float slimLeftSize;
-        float slimRightSize;
+        uint32 materialID;      // Material used in this Window Style
 
-        // Window Coordinate Structure
-        struct
-        {
-            float tTLX;
-            float tTLY;
-            float tTRX;
-            float tTRY;
-            float tBLX;
-            float tBLY;
-            float tBRX;
-            float tBRY;
-        }   winTopLeft,
-            winTopCenter,
-            winTopRight,
-            winCenterLeft,
-            winCenter,
-            winCenterRight,
-            winBottomLeft,
-            winBottomCenter,
-            winBottomRight;
+        uint32 texCoordSettings;
+        //FFFF - 0: Do not use, 1: Use Coords, 2: Use Stretch, 3: Use Tile
+        //|||+-- TexCoord0
+        //||+--- TexCoord1
+        //|+---- TexCoord2
+        //+----- TexCoord3
+
+        float texCoordTileX0;
+        float texCoordTileY0;
+        float texCoordTileX1;
+        float texCoordTileY1;
+        float texCoordTileX2;
+        float texCoordTileY2;
+        float texCoordTileX3;
+        float texCoordTileY3;
+
+        TileCoord tileTopLeft;
+        TileCoord tileTopCenter;
+        TileCoord tileTopRight;
+        TileCoord tileMiddleLeft;
+        TileCoord tileMiddleCenter;
+        TileCoord tileMiddleRight;
+        TileCoord tileBottomLeft;
+        TileCoord tileBottomCenter;
+        TileCoord tileBottomRight;
+        // Tailed Window Coords
+        TileCoord tileTailTop;
+        TileCoord tileTailBottom;
+        // Alternative Corner Coords
+        TileCoord tileTopLeftB;
+        TileCoord tileTopRightB;
+        TileCoord tileBottomLeftB;
+        TileCoord tileBottomRightB;
+        // Slim Windows Tex Coords
+        TileCoord tileSlimLeft;
+        TileCoord tileSlimCenter;
+        TileCoord tileSlimRight;
     };
 
 	class SONETTO_API WindowSkin : public Ogre::Resource
@@ -103,12 +131,14 @@ namespace Sonetto
 	public:
 		WindowSkin( Ogre::ResourceManager *creator, const Ogre::String &name,
                     Ogre::ResourceHandle handle, const Ogre::String &group, bool isManual = false,
-                    Ogre::ManualResourceLoader *loader = 0) {}
-		virtual ~WindowSkin() {}
+                    Ogre::ManualResourceLoader *loader = 0);
+		virtual ~WindowSkin();
 
 		static uint32 mFourCC;
 
-		std::vector<TexCoordSet> mTexCoordSet;
+
+
+		std::vector<WindowStyle> mTexCoordSet;
 
 		std::vector<Ogre::MaterialPtr> mMaterial;
 

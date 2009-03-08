@@ -43,7 +43,7 @@ namespace Sonetto
     mStringSize(0),
     mAllocatedSize(0),
     mAlpha(1.0f),
-    mTextSize(Ogre::Vector2(0.07f,0.07f)),
+    mTextSize(Ogre::Vector2(40.0f/720.0f,40.0f/720.0f)),
     mpFont(NULL)
     {
     }

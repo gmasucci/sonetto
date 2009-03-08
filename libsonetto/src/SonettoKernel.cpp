@@ -331,6 +331,8 @@ namespace Sonetto
 
         while (running)
         {
+            Ogre::ControllerValueRealPtr tmpFTV = Ogre::ControllerManager::getSingleton().getFrameTimeSource();
+            mFrameTime = tmpFTV->getValue();
             SDL_Event evt;
 
             // Pump events
@@ -386,6 +388,11 @@ namespace Sonetto
 
             // Updates input manager
             mInputMan->update();
+
+            if(mInputMan->getDirectKeyState(SDLK_ESCAPE))
+            {
+                mKernelAction = KA_SHUTDOWN;
+            }
 
             // Checks whether the stack is empty
             if (mModuleStack.empty())
