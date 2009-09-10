@@ -21,38 +21,42 @@ The following lines are examples of how this works:
 {{{
 // Example 1 - Fully bringing into memory two Database items
 
-// Pick handy reference to Database singleton
+// Picks handy reference to Database singleton
 Sonetto::Database &db = Sonetto::Database::getSingleton();
 
-// Instantiate a File class to access game database
+// Instantiates a File class to access game database
 // This will be either a binary file, a folder or a region of a big binary
 // file depending on the underlying file system model
 Sonetto::File dbFile("database");
 
-// Creates a Loader instance from "database" file
-Sonetto::DatabaseLoader dbLdr(db,dbFile);
+// Gets Database Loader pointer; the static cast is needed because the Loader
+// implementation can be changed using db.setLoader<LoaderClassType>()
+Sonetto::DatabaseLoader *dbLdr = static_cast<Sonetto::DatabaseLoader *>(db.loader());
+
+// Sets Loader File to "database" file
+dbLdr->setFile(&dbFile);
 
 // Upon these method calls, the loading thread will start streaming data from
 // disc, decompress and decrypt it as needed, and then queue it to be interpreted
 // by the main thread; these methods return immediately.
-dbLdr.loadDatabase();
-dbLdr.loadItem(2);
-dbLdr.loadItem(3);
+dbLdr->loadDatabase();
+dbLdr->loadItem(2);
+dbLdr->loadItem(3);
 
 // [Show loading screen]
-// Loop until finished
-while (!dbLdr.finished())
+// Loop until finished (one could also use dbLdr.waitFinish() for this)
+while (!dbLdr->finished())
 {
     // Wait...
 }
 // [Hide loading screen]
 
-// If only dbLdr.loadDatabase() was called, all items' information would be loaded,
+// If only dbLdr->loadDatabase() was called, all items' information would be loaded,
 // but the meshes and textures some use (e.g. weapons have models) would still not be
 // ready
 std::cout << db.loaded() << '\n'; // prints 1
 
-// However, we have called dbLdr.loadItem(), causing further subresources of items of
+// However, we have called dbLdr->loadItem(), causing further subresources of items of
 // IDs 2 and 3 to be loaded; they are now in-memory
 std::cout << db.items()[2].loaded() << '\n'; // prints 1
 
@@ -63,9 +67,32 @@ std::cout << db.items()[4].loaded() << '\n'; // prints 0; ID 4 was not loaded
 {{{
 // Example 2 - Digging a game map's subresources
 
+// Picks handy reference to MapManager singleton
+Sonetto::MapManager &mapMan = Sonetto::MapManager::getSingleton();
+
+// Instantiates File class to access "map" and setups Map Loader to load from it
 Sonetto::File mapsFile("map");
-Sonetto::MapsLoader mapsLdr(mapsFile);
+Sonetto::MapsLoader *mapsLdr = static_cast<Sonetto::MapsLoader *>(mapMan.loader());
+mapsLdr->setFile(&mapsFile);
 
 // Loads all maps' informations (name, BGM ID, etc.)
-mapsLdr.loadMaps();
+mapsLdr->loadMaps();
+mapsLdr->waitFinish();
+
+std::cout << mapMan.maps()[1].name() << '\n'; // prints Black Forest (example)
+
+// Kickstarts Black Forest's load process
+// This will take a while, since it has to load all models, textures, animations,
+// sounds and scripts for this map
+mapsLdr->loadMap(1);
+
+// Waits...
+mapsLdr->waitFinish();
+
+// Maps strongly depend upon its subresources, so, when you call mapsLdr->loadMap(),
+// that loads everything needed by the map to run
+Sonetto::Mesh &mesh = mapMan.maps()[1].events()[2].pages()[1].entity().mesh();
+std::cout << mesh.loaded() << '\n'; // prints 1; The mesh of the entity of the first
+                                    // page of the event of ID 2 of the Black Forest
+                                    // map is loaded
 }}}
