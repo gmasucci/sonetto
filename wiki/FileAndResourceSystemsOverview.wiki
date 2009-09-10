@@ -16,7 +16,7 @@ http://img3.imageshack.us/img3/8080/phpqg49tdpm.jpg
 
 Image 1 - File and resource system overview
 
-As can be seen in Image 1, the loaders reflect the real resource file and client code hierarchy by letting Sonetto and client code control when to load and unload resources and subresources. It is up to the loader to expose an interface that makes sense in the context of itself. For example, the Database Loader exposes methods to load and unload items and skins by their ID. To load themselves, these subresources need other loaders that expose further interfaces to get deeper into the resource hierarchy, seamlessly. There are no filenames or directories, just plain C++ code giving access to those.
+As can be seen in Image 1, the loaders reflect the real resource file and client code hierarchy by letting Sonetto and client code control when to load and unload resources and subresources. It is up to the Loader to expose an interface that makes sense in the context of itself. For example, the Database Loader exposes methods to load and unload items and skins by their ID. To load themselves, these subresources need other loaders that expose further interfaces to get deeper into the resource hierarchy, seamlessly. There are no filenames or directories, just plain C++ code giving access to those.
 The following lines are examples of how this works:
 {{{
 // Example 1 - Fully bringing into memory two Database items
@@ -96,3 +96,6 @@ std::cout << mesh.loaded() << '\n'; // prints 1; The mesh of the entity of the f
                                     // page of the event of ID 2 of the Black Forest
                                     // map is loaded
 }}}
+
+= Loaders =
+[todo]
