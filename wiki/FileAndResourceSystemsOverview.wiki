@@ -1,0 +1,11 @@
+#summary File and Resource Systems overview
+
+= Introduction =
+Sonetto supports three file system models that can be used interchangeably without requiring modifications to source code:
+  Expanded FS (EFS, or Expanded File System) - Meant for development purposes, the EFS model displaces resources in an as sparse as possible way. That is, it uses folders as much as possible to hold resources in a way that makes it easy to modify these files. Obviously, when the game is ready to be released, an application packs these files and folders in fewer files that constitute the Compact File System (CFS) or in a single, big binary file that constitute the Advanced Compact File System (ACFS) for direct IO access. This file system model's implementation is absent in release builds of Sonetto for security purposes.
+  Compact FS (CFS, or Compact File System) - A good way to displace files in a hard drive for release, because it's clean and yet doesn't require direct IO access, what would require the game to run with administrative privileges (uncool).
+  Advanced Compact FS (ACFS, or Advanced Compact File System) - An experimental way to improve read access rates from optical discs. The ACFS model packs all game resources in a single binary file for fast, uncached media access.
+
+These models are abstracted from client code. Sonetto will do the job of threading the IO access to disc data, handing in-memory, unencrypted and decompressed data blocks to be properly interpreted by client code.
+
+The data loaded from disc is mapped into Resource class instances, such as DatabaseItem class instances, by Loader classes, such as DatabaseItemLoader classes. This segregation of Loader classes from their respective Resource classes is motivated by two factors, the first one being organizational purposes; distribution of responsabilities between various classes make code easier to understand and modify. The second one is the fact Sonetto loaders have well defined behavior that can be abstracted, ensuring cleaner, reusable, (generally) faster and a plethora-of-other-good-adjectives code.
