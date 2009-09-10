@@ -6,8 +6,66 @@ Sonetto supports three file system models that can be used interchangeably witho
 
   * Compact FS (CFS, or Compact File System) - A good way to displace files in a hard drive for release, because it's clean and yet doesn't require direct IO access, what would require the game to run with administrative privileges (uncool).
 
-  * Advanced Compact FS (ACFS, or Advanced Compact File System) - An experimental way to improve read access rates from optical discs. The ACFS model packs all game resources in a single binary file for fast, uncached media access.
+  * Advanced Compact FS (ACFS, or Advanced Compact File System) - An experimental way to improve read access rates from optical discs. The ACFS model packs all game resources in a single binary file for fast, uncached media access. If ACFS proves to be practical, it will be the preferred way to distribute a game, as Sonetto games are intended for setupless, "out-of-the-disc" running and ACFS model exposes advantages in these types of distribution.
 
-These models are abstracted from client code. Sonetto will do the job of threading the IO access to disc data, handing in-memory, unencrypted and decompressed data blocks to be properly interpreted by client code.
+These models are abstracted from client code. Sonetto will do the job of threading the disc access, handing in-memory, unencrypted and decompressed data blocks to be properly interpreted by client code.
 
-The data loaded from disc is mapped into Resource class instances, such as DatabaseItem class instances, by Loader classes, such as DatabaseItemLoader classes. This segregation of Loader classes from their respective Resource classes is motivated by two factors, the first one being organizational purposes; distribution of responsabilities between various classes make code easier to understand and modify. The second one is the fact Sonetto loaders have well defined behavior that can be abstracted, ensuring cleaner, reusable, (generally) faster and a plethora-of-other-good-adjectives code.
+The data loaded from disc is mapped into Resource class instances, such as DatabaseItem class instances, by Loader classes, such as DatabaseItemLoader classes. This segregation of Loader classes from their respective Resource class counterparts is motivated by two factors, the first one being organizational purposes; distribution of responsabilities between various classes make code easier to understand and modify. The second one is the fact that Sonetto loaders have some considerable well defined behavior that can be abstracted, ensuring cleaner, reusable, (generally) faster and a plethora-of-other-good-adjectives code.
+
+http://img3.imageshack.us/img3/8080/phpqg49tdpm.jpg
+
+Image 1 - File and resource system overview
+
+As can be seen in Image 1, the loaders reflect the real resource file and client code hierarchy by letting Sonetto and client code control when to load and unload resources and subresources. It is up to the loader to expose an interface that makes sense in the context of itself. For example, the Database Loader exposes methods to load and unload items and skins by their ID. To load themselves, these subresources need other loaders that expose further interfaces to get deeper into the resource hierarchy, seamlessly. There are no filenames or directories, just plain C++ code giving access to those.
+The following lines are examples of how this works:
+{{{
+// Example 1 - Fully bringing into memory two Database items
+
+// Pick handy reference to Database singleton
+Sonetto::Database &db = Sonetto::Database::getSingleton();
+
+// Instantiate a File class to access game database
+// This will be either a binary file, a folder or a region of a big binary
+// file depending on the underlying file system model
+Sonetto::File dbFile("database");
+
+// Creates a Loader instance from "database" file
+Sonetto::DatabaseLoader dbLdr(db,dbFile);
+
+// Upon these method calls, the loading thread will start streaming data from
+// disc, decompress and decrypt it as needed, and then queue it to be interpreted
+// by the main thread; these methods return immediately.
+dbLdr.loadDatabase();
+dbLdr.loadItem(2);
+dbLdr.loadItem(3);
+
+// [Show loading screen]
+// Loop until finished
+while (!dbLdr.finished())
+{
+    // Wait...
+}
+// [Hide loading screen]
+
+// If only dbLdr.loadDatabase() was called, all items' information would be loaded,
+// but the meshes and textures some use (e.g. weapons have models) would still not be
+// ready
+std::cout << db.loaded() << '\n'; // prints 1
+
+// However, we have called dbLdr.loadItem(), causing further subresources of items of
+// IDs 2 and 3 to be loaded; they are now in-memory
+std::cout << db.items()[2].loaded() << '\n'; // prints 1
+
+// Other items' subresources were not loaded, so they're unavailable
+std::cout << db.items()[4].loaded() << '\n'; // prints 0; ID 4 was not loaded
+}}}
+
+{{{
+// Example 2 - Digging a game map's subresources
+
+Sonetto::File mapsFile("map");
+Sonetto::MapsLoader mapsLdr(mapsFile);
+
+// Loads all maps' informations (name, BGM ID, etc.)
+mapsLdr.loadMaps();
+}}}
