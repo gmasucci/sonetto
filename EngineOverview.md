@@ -1,0 +1,27 @@
+# A word of thanks before beginning #
+Sonetto, as being an attempt to prove that even us, amateurs, can and should act as professionals, will have its bases quite similar to [Q-Gears](http://q-gears.sourceforge.net/), another RPG Engine, which is based on Square's Final Fantasy 7. That said, thanks to them. It's been really helpful to us.
+Also, a great thanks to the Ogre3D, OIS, and OpenAL teams, and all the Open Source community. Without them we wouldn't even think about doing real code.
+
+# The Engine's heart: Kernel #
+Sonetto will have many distinctly coded modules, acting together when glued by Kernel. Kernel is a singleton(Sonetto::Kernel), which is a container for everything in the Engine. It is the entrypoint of the game, and it'll be composed by the list of modules and managers. These managers will be something like an "API" for the modules. Calls to its methods will have sequences of posterior calls to Ogre3D methods, which will change the game world. They will straighten Ogre3D to be more friendly with RPGs. As Managers define the game world appearance(visual, aural, and so on), Modules will change game behaviour. That is, they will be the ones who, based on given scripts, will call the manager's methods, giving life to the world.
+
+Kernel will have a stack object containing its loaded Modules, but only the last one will receive updates. That's a way of pausing the others, by the time being unused. But Kernel won't simply start/stop updating Modules. There are ways to prepare them to this start/stop procedure. Such ways are shown in the next section.
+
+# Modules #
+A Module is an abstract thing to talk about. It has five methods, plus the constructor and destructor. Each of these methods will get called by Kernel, and inform Module what is currently happening. It's quite simple to push a Module to the stack top(that way activating this new and halting the old one):
+```
+Module *newModule = new Module();
+
+Kernel::getSingleton()->pushModule(newModule,true);
+```
+
+This piece of code would call the stack's top halt() method, place the new module on the top, and call this new module's enter(). The second argument, here set to true, defaults to false. Setting it to false would cause Kernel to call the old module's exit() method, pop it out of the stack and deallocate it. When halting is used, the old Module remains in memory, and it will only be updated again when it assumes back the top of the stack. When a Module wants to end its execution, it just needs to call Kernel::popModule();, which would call the Module's exit() method, deallocate it and pull it out of the stack. After doing that, the old Module would be on the top, so the Kernel calls for its wakeup(), restarting the update cycle.
+
+# Managers #
+Managers, contrary to the Modules, are real members of the Kernel. They aren't inside any stack, but they are variables which reside within the Kernel. Also, they're all updated on each loop. They're vital to the Modules' survival and to the maintenance of the used libraries. Here follows a list of Managers and a brief description:
+
+| InputManager | Talks with OIS to provide keyboard and joystick input (Sonetto won't support a Mouse) |
+|:-------------|:--------------------------------------------------------------------------------------|
+| AudioManager | Talks with OpenAL to provide audio output. It has EAX Reverb enabled on machines that support EAX 3.0, but it can run without it |
+
+That's all for now.

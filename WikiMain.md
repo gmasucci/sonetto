@@ -1,0 +1,1 @@
+Sonetto's wiki is hosted at Wikia.com. Please, go to http://sonetto.wikia.com/.

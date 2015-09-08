@@ -1,0 +1,99 @@
+# Introduction #
+Sonetto supports three file system models that can be used interchangeably without requiring modifications to source code:
+  * Expanded FS (EFS, or Expanded File System) - Meant for development purposes, the EFS model displaces resources in an as sparse as possible way. That is, it uses folders as much as possible to hold resources in a way that makes it easy to modify these files. Obviously, when the game is ready to be released, an application packs these files and folders in fewer files that constitute the Compact File System (CFS) or in a single, big binary file that constitute the Advanced Compact File System (ACFS) for direct IO access. This file system model's implementation is absent in release builds of Sonetto for security purposes.
+
+  * Compact FS (CFS, or Compact File System) - A good way to displace files in a hard drive for release, because it's clean and yet doesn't require direct IO access, what would require the game to run with administrative privileges (uncool).
+
+  * Advanced Compact FS (ACFS, or Advanced Compact File System) - An experimental way to improve read access rates from optical discs. The ACFS model packs all game resources in a single binary file for fast, uncached media access. If ACFS proves to be practical, it will be the preferred way to distribute a game, as Sonetto games are intended for setupless, "out-of-the-disc" running and ACFS model exposes advantages in these types of distribution.
+
+These models are abstracted from client code. Sonetto will do the job of threading the disc access, handing in-memory, unencrypted and decompressed data blocks to be properly interpreted by client code.
+
+The data loaded from disc is mapped into Resource class instances, such as DatabaseItem class instances, by Loader classes, such as DatabaseItemLoader classes. This segregation of Loader classes from their respective Resource class counterparts is motivated by two factors, the first one being organizational purposes; distribution of responsabilities between various classes make code easier to understand and modify. The second one is the fact that Sonetto loaders have some considerable well defined behavior that can be abstracted, ensuring cleaner, reusable, (generally) faster and a plethora-of-other-good-adjectives code.
+
+![http://img3.imageshack.us/img3/8080/phpqg49tdpm.jpg](http://img3.imageshack.us/img3/8080/phpqg49tdpm.jpg)
+
+Image 1 - File and resource system overview
+
+As can be seen in Image 1, the loaders reflect the real resource file and client code hierarchy by letting Sonetto and client code control when to load and unload resources and subresources. It is up to the Loader to expose an interface that makes sense in the context of itself. For example, the Database Loader exposes methods to load and unload items and skins by their ID. To load themselves, these subresources need other loaders that expose further interfaces to get deeper into the resource hierarchy, seamlessly. There are no filenames or directories, just plain C++ code giving access to those.
+The following lines are examples of how this works:
+```
+// Example 1 - Fully bringing into memory two Database items
+
+// Picks handy reference to Database singleton
+Sonetto::Database &db = Sonetto::Database::getSingleton();
+
+// Instantiates a File class to access game database
+// This will be either a binary file, a folder or a region of a big binary
+// file depending on the underlying file system model
+Sonetto::File dbFile("database");
+
+// Gets Database Loader pointer; the static cast is needed because the Loader
+// implementation can be changed using db.setLoader<LoaderClassType>()
+Sonetto::DatabaseLoader *dbLdr = static_cast<Sonetto::DatabaseLoader *>(db.loader());
+
+// Sets Loader File to "database" file
+dbLdr->setFile(&dbFile);
+
+// Upon these method calls, the loading thread will start streaming data from
+// disc, decompress and decrypt it as needed, and then queue it to be interpreted
+// by the main thread; these methods return immediately.
+dbLdr->loadDatabase();
+dbLdr->loadItem(2);
+dbLdr->loadItem(3);
+
+// [Show loading screen]
+// Loop until finished (one could also use dbLdr.waitFinish() for this)
+while (!dbLdr->finished())
+{
+    // Wait...
+}
+// [Hide loading screen]
+
+// If only dbLdr->loadDatabase() was called, all items' information would be loaded,
+// but the meshes and textures some use (e.g. weapons have models) would still not be
+// ready
+std::cout << db.loaded() << '\n'; // prints 1
+
+// However, we have called dbLdr->loadItem(), causing further subresources of items of
+// IDs 2 and 3 to be loaded; they are now in-memory
+std::cout << db.items()[2].loaded() << '\n'; // prints 1
+
+// Other items' subresources were not loaded, so they're unavailable
+std::cout << db.items()[4].loaded() << '\n'; // prints 0; ID 4 was not loaded
+```
+
+```
+// Example 2 - Digging a game map's subresources
+
+// Picks handy reference to MapManager singleton
+Sonetto::MapManager &mapMan = Sonetto::MapManager::getSingleton();
+
+// Instantiates File class to access "map" and setups Map Loader to load from it
+Sonetto::File mapsFile("map");
+Sonetto::MapsLoader *mapsLdr = static_cast<Sonetto::MapsLoader *>(mapMan.loader());
+mapsLdr->setFile(&mapsFile);
+
+// Loads all maps' informations (name, BGM ID, etc.)
+mapsLdr->loadMaps();
+mapsLdr->waitFinish();
+
+std::cout << mapMan.maps()[1].name() << '\n'; // prints Black Forest (example)
+
+// Kickstarts Black Forest's load process
+// This will take a while, since it has to load all models, textures, animations,
+// sounds and scripts for this map
+mapsLdr->loadMap(1);
+
+// Waits...
+mapsLdr->waitFinish();
+
+// Maps strongly depend upon its subresources, so, when you call mapsLdr->loadMap(),
+// that loads everything needed by the map to run
+Sonetto::Mesh &mesh = mapMan.maps()[1].events()[2].pages()[1].entity().mesh();
+std::cout << mesh.loaded() << '\n'; // prints 1; The mesh of the entity of the first
+                                    // page of the event of ID 2 of the Black Forest
+                                    // map is loaded
+```
+
+# Loaders #
+[todo](todo.md)
